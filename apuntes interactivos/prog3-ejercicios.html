@@ -270,6 +270,37 @@ table.dp td.cur{border-color:var(--acc);background:var(--acc-w);font-weight:700;
 .c11-section pre.ps{overflow-x:auto;max-width:100%}
 @media(max-width:1100px){.c11-sim .sim-body{grid-template-columns:1fr}}
 @media(max-width:600px){.c11-sim .code{max-height:300px}.c11-sim .inputs{width:100%}.c11-sim .inputs label{flex-basis:100%}}
+
+/* --- guía · Backtracking (solo esta página) --- */
+.bt-sim .sim-body{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.bt-sim .inputs{min-width:0;max-width:100%}
+.bt-sim .inputs input,.bt-sim .inputs select{max-width:100%;min-width:0}
+.bt-sim .inputs input.bt-wide{width:min(100%,600px)}
+.bt-sim .inputs input.bt-short{width:70px}
+.bt-sim .explain,.bt-sim .setbox{overflow-wrap:anywhere}
+.bt-sim small{color:var(--mut)}
+.bt-presets{display:flex;flex-wrap:wrap;gap:8px;padding:12px 18px;border-bottom:1px solid var(--line)}
+.bt-grid{display:block;width:100%;max-width:380px;align-self:center}
+.bt-grid .sq{fill:#fbfcfd;stroke:var(--line);stroke-width:1}
+.bt-grid .sq.grass{fill:#e8f5ed;stroke:#a9d6bc}
+.bt-grid .sq.step{fill:var(--line-soft)}
+.bt-grid .sq.path{fill:var(--acc-w);stroke:var(--acc);stroke-width:2}
+.bt-grid .sq.best{fill:#e8f5ed;stroke:var(--ok);stroke-width:2}
+.bt-grid .sq.now{stroke-width:3.5}
+.bt-grid .wall{stroke:var(--ink);stroke-width:5;stroke-linecap:round}
+.bt-grid .one{fill:var(--ink-soft)}
+.bt-grid .trail{fill:none;stroke:var(--acc);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;opacity:.75}
+.bt-grid .trail.best{stroke:var(--ok)}
+.bt-grid .trail.close{stroke:var(--ok);stroke-dasharray:6 5}
+.bt-grid .trail.close.no{stroke:var(--bad)}
+.bt-grid text{text-anchor:middle;dominant-baseline:central;font-family:var(--sans);fill:var(--ink)}
+.bt-grid text{pointer-events:none}
+.bt-grid .val{font-size:21px;font-weight:700;paint-order:stroke;stroke:var(--paper);stroke-width:4px;stroke-linejoin:round}
+.bt-grid .lab{font-size:11px;font-weight:700;fill:#a24b12}
+.bt-grid .axis{font-family:var(--mono);font-size:12px;fill:var(--mut)}
+.bt-grid .dim{fill:var(--mut)}
+@media(max-width:1100px){.bt-sim .sim-body{grid-template-columns:1fr}}
+@media(max-width:600px){.bt-sim .code{max-height:300px}.bt-sim .inputs{width:100%}.bt-sim .inputs label{flex-basis:100%}.bt-sim .inputs input.bt-wide{width:100%}}
 </style>
 </head>
 <body>
@@ -305,6 +336,12 @@ table.dp td.cur{border-color:var(--acc);background:var(--acc-w);font-weight:700;
     <li><a href="#ej-g13">2 · Las revistas de Howard</a></li>
     <li><a href="#ej-g14">3 · Compras en el shopping</a></li>
   </ol>
+  <div class="navgroup">Guía · Backtracking</div>
+  <ol>
+    <li><a href="#ej-g15">1 · Tareas a procesadores</a></li>
+    <li><a href="#ej-g16">2 · Laberinto de longitud mínima</a></li>
+    <li><a href="#ej-g17">3 · El caballo de Atila</a></li>
+  </ol>
   <div class="navgroup">Integración · Primer parcial</div>
   <ol>
     <li><a href="#ej-i1">1 · Actividades compatibles</a></li>
@@ -330,7 +367,7 @@ table.dp td.cur{border-color:var(--acc);background:var(--acc-w);font-weight:700;
   que lo intentes solo; recién ahí, apretando un botón, aparece la resolución completa: estrategia,
   pseudocódigo y un simulador para ejecutarlo paso a paso con el ejemplo del enunciado.</p>
   <div class="hero-meta">
-    <b>20 ejercicios</b><b>20 simuladores</b><b>Divide y Conquista · Greedy · Grafos · Programación Dinámica</b><b>Primer parcial 16/09/2026 · Integrador 11/11/2026</b>
+    <b>23 ejercicios</b><b>23 simuladores</b><b>Divide y Conquista · Greedy · Grafos · Programación Dinámica · Backtracking</b><b>Primer parcial 16/09/2026 · Integrador 11/11/2026</b>
   </div>
   <p style="margin-top:18px"><button class="primary" id="abrir-todo">Abrir todas las resoluciones</button>
   <span class="srcnote" style="border:0;padding:0;margin-left:10px">o abrí cada una por separado, después de pensarla</span></p>
@@ -339,14 +376,15 @@ table.dp td.cur{border-color:var(--acc);background:var(--acc-w);font-weight:700;
     <a href="#ej-g5"><b>Guía · Greedy</b><span>4 ejercicios: plazo fijo, tiempo de espera, cintas, mecánico</span></a>
     <a href="#ej-g9"><b>Guía · Grafos</b><span>3 ejercicios: caminos mínimos y árbol de recubrimiento</span></a>
     <a href="#ej-g12"><b>Guía · Programación Dinámica</b><span>3 ejercicios: cubrir un monto, mochila 0/1 y compras con hasta 3 unidades</span></a>
+    <a href="#ej-g15"><b>Guía · Backtracking</b><span>3 ejercicios: tareas a procesadores, laberinto de longitud mínima y el caballo de Atila</span></a>
     <a href="#ej-i1"><b>Integración · Primer parcial</b><span>6 ejercicios de reconocimiento de técnica</span></a>
     <a href="#mapa"><b>Mapa de reconocimiento</b><span>Señales del enunciado → técnica → algoritmo → complejidad</span></a>
-    <a href="index.html"><b>← Volver al apunte</b><span>La teoría de las 10 clases de la cursada</span></a>
+    <a href="index.html"><b>← Volver al apunte</b><span>La teoría de las 11 clases de la cursada</span></a>
   </div>
   <div class="note"><b>Alcance de esta página</b>
   Divide y Conquista, Greedy y Grafos (los temas del <b>primer parcial</b>, 16/09/2026) y, desde la
-  clase 7, <b>Programación Dinámica</b> (que entra en el <b>integrador</b>, 11/11/2026). El bloque de
-  <b>Backtracking</b> de la guía está pendiente de incorporación. La teoría y el ejercicio de procesadores ya están resueltos en la <a href="index.html#clase10">clase 10 del apunte</a>. La <a href="index.html#clase11">clase 11</a> desarrolla cotas, la mejora de procesadores con Greedy y Mochila con cota superior.</div>
+  clase 7, <b>Programación Dinámica</b> (que entra en el <b>integrador</b>, 11/11/2026) y, desde la
+  clase 10, <b>Backtracking</b>. La teoría de Backtracking está en la <a href="index.html#clase10">clase 10 del apunte</a>; la <a href="index.html#clase11">clase 11</a> desarrolla cotas, la mejora de procesadores con Greedy y Mochila con cota superior.</div>
 </header>
 
 <div class="exbar" id="bloque-dyc"><span>Guía</span><b>Divide y Conquista</b><em>Se pide: a) estrategia · b) pseudocódigo · c) complejidad temporal</em></div>
@@ -2036,6 +2074,386 @@ m·(K + 1) celdas × Θ(1) por celda (≤ 4 opciones) → <span class="tag t-cua
 <hr class="rule">
 </section>
 
+<div class="exbar" id="bloque-bt"><span>Guía</span><b>Backtracking</b><em>Se pide: a) estrategia · b) pseudocódigo · c) complejidad temporal</em></div>
+
+<div class="first" style="max-width:76ch"><b>Qué tiene que tener el punto a) en Backtracking</b>
+Seis cosas, las de la <a href="index.html#backtracking-c10">clase 10</a>: qué es la <b>solución parcial S</b> y qué significa cada posición; la <b>etapa</b> y sus <b>alternativas</b>; la condición de <b>factibilidad</b> (y qué se poda con ella); el <b>caso base</b> (cuándo S está completa); el <b>retroceso</b> (qué se deshace al volver) y si buscás <b>una</b> solución, <b>todas</b> o <b>la mejor</b>. Los tres ejercicios son una de cada: procesadores busca la mejor, el laberinto también, y el caballo de Atila corta en la primera.</div>
+
+<!-- Backtracking 1 -->
+<section id="ej-g15">
+<h2>Guía · Backtracking 1 — Asignación de tareas a procesadores</h2>
+<p class="sub">Backtracking · buscar la mejor solución · <span class="tag t-exp">O((m+n)·mⁿ)</span></p>
+
+<div class="enun"><b>Enunciado</b>
+Se tienen m procesadores idénticos y n tareas con un tiempo de ejecución dado. Se requiere encontrar una asignación de tareas a procesadores de manera de minimizar el tiempo de ejecución del total de tareas.</div>
+
+<h3>Qué te están pidiendo</h3>
+<p>Cada tarea se le da <b>completa</b> a un único procesador. Los procesadores trabajan en paralelo y cada uno hace sus tareas una detrás de otra, así que el trabajo termina cuando termina <b>el último procesador</b>: el tiempo total es la <b>mayor carga</b>, no la suma de todo. Hay que elegir la asignación que haga esa mayor carga lo más chica posible. Este ejercicio también está resuelto en la <a href="index.html#procesadores-c10">clase 10</a> y mejorado con una cota inicial Greedy en la <a href="index.html#procesadores-c11">clase 11</a>.</p>
+
+<h3>Razonamientos antes de mirar la resolución</h3>
+<ol class="razon">
+  <li><b>¿Qué número querés minimizar?</b> Pensá en dos procesadores y las tareas {2, 3, 4, 5}. ¿Cuánto vale la suma de las cargas, pongas lo que pongas? Entonces, ¿esa suma puede ser el objetivo?</li>
+  <li><b>¿Qué es S y qué alternativas tiene cada etapa?</b> Una posición por tarea: ¿qué guardás en ella? ¿Cuántos valores distintos puede tomar?</li>
+  <li><b>¿Cuántas asignaciones completas hay?</b> m alternativas por cada una de las n tareas.</li>
+  <li><b>¿Cuándo una asignación parcial ya no puede mejorar la mejor que tenés?</b> Si seguís agregando tareas, ¿la carga de un procesador puede bajar? ¿Y la mayor de todas?</li>
+  <li><b>¿Qué se deshace al volver de una llamada y qué se tiene que copiar?</b> Las cargas son compartidas; la mejor asignación, también. ¿Cuál de las dos sigue cambiando mientras buscás?</li>
+  <li><b>¿Buscás una solución, todas o la mejor?</b> ¿Alcanza con la primera asignación completa que encontrás?</li>
+</ol>
+
+<button class="primary rev" data-sol="sol-g15">Ver la resolución</button>
+<div class="sol" id="sol-g15">
+
+<h3>a) Estrategia de Backtracking</h3>
+<div class="grid2">
+  <div class="def"><h4>Solución parcial S</h4>Vector de n posiciones: <code>S[E]</code> es el procesador (0…m−1) de la tarea E. Las posiciones posteriores a la etapa actual todavía no cuentan. Además, un vector <code>cargas</code> de m posiciones con el tiempo acumulado de cada procesador.</div>
+  <div class="def"><h4>Etapa y alternativas</h4>La etapa E es «¿a qué procesador va la tarea E?». Las alternativas son los m procesadores. Se arranca en E = 0.</div>
+  <div class="def"><h4>Factibilidad y poda</h4>Toda asignación es factible (no hay restricciones). Lo que se poda es por <b>optimalidad</b>: si la carga máxima parcial ya es ≥ <code>mejorTiempo</code>, ninguna continuación mejora, porque las duraciones no son negativas y las cargas solo suben.</div>
+  <div class="def"><h4>Caso base</h4>E = n − 1: todas las tareas quedaron asignadas. Si <code>máximo(cargas)</code> es menor que <code>mejorTiempo</code>, se guarda <b>una copia</b> de S.</div>
+  <div class="def"><h4>Retroceso</h4>Al volver se resta la duración de la tarea a <code>cargas[p]</code> y se libera <code>S[E]</code>. <code>mejorTiempo</code> y <code>mejorS</code> no se restauran: son lo que se conserva.</div>
+  <div class="def"><h4>Objetivo</h4>La <b>mejor</b> solución: no se corta en la primera asignación completa; se explora todo lo que no se pueda podar.</div>
+</div>
+
+<h3>b) Pseudocódigo</h3>
+<div class="card">
+<pre class="ps">Algoritmo AsignarTareas
+Entrada: tiempos[0..n−1], m: cantidad de procesadores
+S ← vector de n posiciones sin asignar
+cargas ← vector de m ceros
+mejorTiempo ← ∞; mejorS ← sin solución
+Asignar(0)
+devolver mejorTiempo, mejorS
+
+Procedimiento Asignar(E)
+para p = 0 hasta m − 1
+    S[E] ← p
+    cargas[p] ← cargas[p] + tiempos[E]
+    actual ← máximo(cargas)
+    si E = n − 1
+        si actual &lt; mejorTiempo
+            mejorTiempo ← actual; mejorS ← copia(S)
+        fin si
+    sino
+        si actual &lt; mejorTiempo
+            Asignar(E + 1)
+        fin si
+    fin si
+    cargas[p] ← cargas[p] − tiempos[E]
+    S[E] ← sin asignar
+fin para</pre>
+</div>
+<div class="note"><b>Pseudocódigo propio</b>
+La cátedra plantea el ejercicio pero no publica el pseudocódigo; este es el de la <a href="index.html#procesadores-c10">clase 10</a>, el mismo para que no haya dos versiones. Los ejemplos de la guía no traen números: el del simulador ({2, 3, 4, 5} con m = 2, óptimo 7) es propio. Una mejora que no cambia la complejidad pero poda mucho antes es arrancar con la asignación de Greedy como <code>mejorTiempo</code> inicial (<a href="index.html#procesadores-c11">clase 11</a>).</div>
+
+<h3>Ejecutalo paso a paso</h3>
+<div class="sim bt-sim" id="sim-g15">
+  <div class="sim-head">
+    <div class="title">Asignar tareas<small>Entrada: duraciones y m · Salida: tiempo mínimo y una asignación que lo logra</small></div>
+    <div class="inputs">
+      <label for="g15-t">duraciones (1–6)</label><input type="text" id="g15-t" value="2,3,4,5">
+      <label for="g15-m">m</label><input type="number" class="bt-short" id="g15-m" value="2" min="1" max="3">
+      <button class="ghost" data-reload>Ejecutar</button>
+    </div>
+  </div>
+  <div class="bt-presets">
+    <button class="ghost" data-bt-sim="proc" data-bt-preset="{&quot;g15-t&quot;: &quot;2,3,4,5&quot;, &quot;g15-m&quot;: 2}">Ejemplo: óptimo 7</button>
+    <button class="ghost" data-bt-sim="proc" data-bt-preset="{&quot;g15-t&quot;: &quot;2,3,4,5&quot;, &quot;g15-m&quot;: 1}">Un procesador</button>
+    <button class="ghost" data-bt-sim="proc" data-bt-preset="{&quot;g15-t&quot;: &quot;4&quot;, &quot;g15-m&quot;: 3}">Más procesadores que tareas</button>
+    <button class="ghost" data-bt-sim="proc" data-bt-preset="{&quot;g15-t&quot;: &quot;0,0&quot;, &quot;g15-m&quot;: 2}">Duraciones cero</button>
+  </div>
+  <div class="sim-body">
+    <div class="code" data-code>
+<div class="cl" data-l="1"><span class="ln">1</span><span class="tx">para p = 0 hasta m − 1</span></div>
+<div class="cl" data-l="2"><span class="ln">2</span><span class="tx">    S[E] ← p</span></div>
+<div class="cl" data-l="3"><span class="ln">3</span><span class="tx">    cargas[p] ← cargas[p] + tiempos[E]</span></div>
+<div class="cl" data-l="4"><span class="ln">4</span><span class="tx">    actual ← máximo(cargas)</span></div>
+<div class="cl" data-l="5"><span class="ln">5</span><span class="tx">    si E = n − 1</span></div>
+<div class="cl" data-l="6"><span class="ln">6</span><span class="tx">        si actual &lt; mejorTiempo</span></div>
+<div class="cl" data-l="7"><span class="ln">7</span><span class="tx">            mejorTiempo ← actual; mejorS ← copia(S)</span></div>
+<div class="cl" data-l="60"><span class="ln">8</span><span class="tx">        fin si</span></div>
+<div class="cl" data-l="8"><span class="ln">9</span><span class="tx">    sino</span></div>
+<div class="cl" data-l="9"><span class="ln">10</span><span class="tx">        si actual &lt; mejorTiempo</span></div>
+<div class="cl" data-l="10"><span class="ln">11</span><span class="tx">            Asignar(E + 1)</span></div>
+<div class="cl" data-l="11"><span class="ln">12</span><span class="tx">        fin si</span></div>
+<div class="cl" data-l="12"><span class="ln">13</span><span class="tx">    fin si</span></div>
+<div class="cl" data-l="13"><span class="ln">14</span><span class="tx">    cargas[p] ← cargas[p] − tiempos[E]</span></div>
+<div class="cl" data-l="14"><span class="ln">15</span><span class="tx">    S[E] ← sin asignar</span></div>
+<div class="cl" data-l="15"><span class="ln">16</span><span class="tx">fin para</span></div>
+    </div>
+    <div class="viz" data-viz></div>
+  </div>
+  <div class="explain" data-explain></div>
+  <div class="controls" data-controls></div>
+</div>
+
+<h3>c) Complejidad temporal</h3>
+<p>El árbol de decisiones tiene profundidad n y m alternativas por etapa: hay <b>mⁿ asignaciones completas</b>. Si cada nodo costara Θ(1), la cantidad de nodos sería <code>1 + m + m² + … + mⁿ = Θ(mⁿ)</code> para m ≥ 2. En este pseudocódigo cada alternativa calcula <code>máximo(cargas)</code>, que recorre m posiciones, y cada mejora copia S en Θ(n). Una cota que incluye las dos cosas es <b>O((m + n)·mⁿ)</b>.</p>
+<div class="card" style="font-family:var(--mono);text-align:center">
+mⁿ asignaciones × (máximo O(m) + copia O(n)) → <span class="tag t-exp" style="font-size:15px">O((m + n)·mⁿ)</span> para m ≥ 2
+</div>
+<div class="first"><b>La poda no cambia el peor caso</b>
+La poda hace que en muchas entradas se visiten bastante menos nodos que mⁿ, pero la cota que se da en el parcial es la del <b>peor caso</b>, y ahí no se puede garantizar una búsqueda polinomial. Con m = 1 hay un solo camino y el costo es Θ(n). No alcanza con escribir «tiene poda» para justificar una complejidad menor.</div>
+</div>
+<hr class="rule">
+</section>
+
+<!-- Backtracking 2 -->
+<section id="ej-g16">
+<h2>Guía · Backtracking 2 — Laberinto de longitud mínima</h2>
+<p class="sub">Backtracking · buscar la mejor solución · <span class="tag t-exp">O(n²·3<sup>n²</sup>)</span></p>
+
+<div class="enun"><b>Enunciado</b>
+Dado un laberinto consistente en una matriz cuadrada que tiene en cada posición un valor natural y cuatro valores booleanos, indicando estos últimos si desde esa casilla se puede ir al norte, este, sur y oeste, encontrar un camino de longitud mínima entre dos casillas dadas, siendo la longitud de un camino la suma de los valores naturales de las casillas por las que pasa.</div>
+<div class="note"><b>El enunciado de la guía sale cortado</b>
+En el PDF esta consigna es una imagen y le falta el borde derecho: se lee «…un valor natural y cuatro valores booleanos, indicando estos últimos si desde esa casilla se puede i…», «…dadas,». Se transcribió con la lectura natural de esas palabras; si en la hoja impresa dice otra cosa, vale lo de la hoja.</div>
+
+<h3>Qué te están pidiendo</h3>
+<p>Un tablero de n × n casillas. Cada casilla tiene un <b>número</b> (lo que «cuesta» pasar por ella) y <b>cuatro booleanos</b>: si desde ahí se puede salir hacia el norte, el este, el sur o el oeste. Dadas una casilla de origen y una de destino, hay que encontrar el camino cuya <b>suma de valores</b> es mínima, contando todas las casillas por las que pasa, también la primera y la última. No pide el camino con menos pasos: un camino corto por casillas caras puede perder contra uno más largo por casillas baratas.</p>
+
+<h3>Razonamientos antes de mirar la resolución</h3>
+<ol class="razon">
+  <li><b>¿Qué significa «longitud»?</b> Releé la última parte del enunciado. ¿Es la cantidad de casillas o la suma de lo que dice cada una? ¿Entra el valor del origen?</li>
+  <li><b>¿Qué es S?</b> Pensá en un camino que va creciendo casilla por casilla. ¿Qué guardás para saber por dónde pasaste? ¿Y qué es una «etapa»?</li>
+  <li><b>¿Cuántas alternativas tiene cada etapa y cuándo una es factible?</b> Hay cuatro direcciones, pero ¿todas se pueden usar? Mirá los booleanos de la casilla actual, los bordes del tablero, y qué pasaría si volvieras a una casilla que ya está en tu camino.</li>
+  <li><b>¿El booleano «este» de una casilla A es el mismo que el «oeste» de la que está a su derecha?</b> ¿El enunciado dice que tienen que coincidir?</li>
+  <li><b>¿Qué hacés al llegar al destino y qué poda podés aplicar?</b> Los valores son naturales: ¿puede bajar la longitud si seguís agregando casillas? Entonces, ¿cuándo conviene dejar de seguir un camino?</li>
+  <li><b>¿Qué se deshace al retroceder?</b> Hay una marca por casilla y una longitud acumulada. Y recordá: la mejor solución se guarda como copia.</li>
+</ol>
+
+<button class="primary rev" data-sol="sol-g16">Ver la resolución</button>
+<div class="sol" id="sol-g16">
+
+<h3>a) Estrategia de Backtracking</h3>
+<div class="grid2">
+  <div class="def"><h4>Solución parcial S</h4>El <code>camino</code> actual: la secuencia de casillas desde el origen hasta la casilla en que estás. Va con una matriz <code>visitada</code> (n × n) que marca las casillas de ese camino y un acumulador <code>long</code> con la suma de sus valores. Filas y columnas desde 1.</div>
+  <div class="def"><h4>Etapa y alternativas</h4>La etapa es la posición en el camino (la casilla número k). Las alternativas son las cuatro direcciones: norte, este, sur y oeste.</div>
+  <div class="def"><h4>Factibilidad y poda</h4>Una dirección es <b>factible</b> si el booleano de esa dirección en la casilla actual es verdadero, la vecina está dentro del tablero y <b>no está visitada</b>. Se <b>poda</b> por optimalidad: si <code>long + valor[vecina] ≥ mejorLong</code>, esa rama no puede mejorar (los valores no son negativos).</div>
+  <div class="def"><h4>Caso base</h4>La casilla actual es el destino. Si <code>long &lt; mejorLong</code>, se guarda una <b>copia</b> del camino. No se sigue más allá: el camino ya terminó (y no podría volver a pasar por el destino).</div>
+  <div class="def"><h4>Retroceso</h4>Al volver se desmarca <code>visitada[f,c]</code> y se saca la casilla del camino. El acumulador no hay que restaurarlo si va como parámetro (cada llamada tiene el suyo). <code>mejorLong</code> y <code>mejorCamino</code> se conservan.</div>
+  <div class="def"><h4>Objetivo</h4>La <b>mejor</b> solución: la de menor longitud. Se exploran todos los caminos que no se puedan podar, sin cortar en el primero que llega.</div>
+</div>
+
+<h3>b) Pseudocódigo</h3>
+<div class="card">
+<pre class="ps">Algoritmo Laberinto
+Entrada: L: Matriz n × n, cada casilla con valor y abre[N], abre[E], abre[S], abre[O]
+         (fO, cO): casilla de origen · (fD, cD): casilla de destino
+Salida: la longitud mínima y un camino que la logra
+visitada ← matriz n × n de falso; camino ← vector vacío
+mejorLong ← ∞; mejorCamino ← sin camino
+Explorar(fO, cO, L[fO,cO].valor)
+devolver mejorLong, mejorCamino
+
+Procedimiento Explorar(f, c, long)
+    visitada[f,c] ← verdadero; agregar(camino, (f,c))
+    si (f,c) = (fD,cD)
+        si long &lt; mejorLong
+            mejorLong ← long; mejorCamino ← copia(camino)
+        fin si
+    sino
+        para cada dirección d ∈ {N, E, S, O}
+            (nf,nc) ← casilla vecina de (f,c) hacia d
+            si L[f,c].abre[d] Y dentro(nf,nc) Y NO visitada[nf,nc]
+                si long + L[nf,nc].valor &lt; mejorLong
+                    Explorar(nf, nc, long + L[nf,nc].valor)
+                fin si
+            fin si
+        fin para
+    fin si
+    visitada[f,c] ← falso; eliminar(camino)</pre>
+</div>
+<div class="note"><b>Pseudocódigo y ejemplo propios</b>
+La cátedra no publica pseudocódigo de este ejercicio: este está derivado de la estrategia. <code>dentro(nf,nc)</code> es <code>1 ≤ nf ≤ n Y 1 ≤ nc ≤ n</code>; un booleano verdadero en el borde no saca del tablero. Los booleanos <b>no tienen por qué ser simétricos</b>: «de A se puede ir al este» no implica «de la casilla de al lado se puede ir al oeste». Eso da pasajes de un solo sentido, que el simulador dibuja con una flecha. Los valores del ejemplo son propios (el enunciado no trae números); el simulador acepta también 0, y el algoritmo funciona igual.</div>
+<div class="note"><b>Sin la marca «visitada» no termina</b>
+Si no se marcan las casillas del camino, se puede ir y volver entre dos casillas abiertas una y otra vez. Mientras no haya una solución guardada (<code>mejorLong = ∞</code>) la poda no corta nada, así que la búsqueda podría no llegar nunca al destino; y con valores 0 la longitud ni siquiera crece. La marca es lo que hace que cada camino sea <b>simple</b> y que el árbol sea finito.</div>
+
+<h3>Ejecutalo paso a paso</h3>
+<div class="sim bt-sim" id="sim-g16">
+  <div class="sim-head">
+    <div class="title">Laberinto<small>Naranja: camino actual · verde: mejor camino guardado · gruesa: pared · ▶: pasaje de un solo sentido</small></div>
+    <div class="inputs">
+      <label for="g16-lab">laberinto</label><input type="text" class="bt-wide" id="g16-lab" value="5E 7ESO 6S 9S / 2ES 7NESO 3NO 5NS / 2NES 7SO 3E 7NSO / 1NE 3NEO 7EO 1NO">
+      <label for="g16-o">origen</label><input type="text" class="bt-short" id="g16-o" value="1,1">
+      <label for="g16-d">destino</label><input type="text" class="bt-short" id="g16-d" value="4,4">
+      <button class="ghost" data-reload>Ejecutar</button>
+    </div>
+  </div>
+  <div class="bt-presets">
+    <button class="ghost" data-bt-sim="maze" data-bt-preset="{&quot;g16-lab&quot;: &quot;5E 7ESO 6S 9S / 2ES 7NESO 3NO 5NS / 2NES 7SO 3E 7NSO / 1NE 3NEO 7EO 1NO&quot;, &quot;g16-o&quot;: &quot;1,1&quot;, &quot;g16-d&quot;: &quot;4,4&quot;}">Ejemplo 4×4</button>
+    <button class="ghost" data-bt-sim="maze" data-bt-preset="{&quot;g16-lab&quot;: &quot;1ES 9SO / 1N 1NO&quot;, &quot;g16-o&quot;: &quot;1,1&quot;, &quot;g16-d&quot;: &quot;2,2&quot;}">Un pasaje de un solo sentido</button>
+    <button class="ghost" data-bt-sim="maze" data-bt-preset="{&quot;g16-lab&quot;: &quot;1ES 1ESO 1SO / 1N 1N 1N / 1 1 1&quot;, &quot;g16-o&quot;: &quot;1,1&quot;, &quot;g16-d&quot;: &quot;3,3&quot;}">Sin camino</button>
+    <button class="ghost" data-bt-sim="maze" data-bt-preset="{&quot;g16-lab&quot;: &quot;5E 7ESO 6S 9S / 2ES 7NESO 3NO 5NS / 2NES 7SO 3E 7NSO / 1NE 3NEO 7EO 1NO&quot;, &quot;g16-o&quot;: &quot;1,1&quot;, &quot;g16-d&quot;: &quot;1,1&quot;}">Origen = destino</button>
+  </div>
+  <div class="sim-body">
+    <div class="code" data-code>
+<div class="cl" data-l="1"><span class="ln">1</span><span class="tx">visitada ← matriz n × n de falso; camino ← vacío</span></div>
+<div class="cl" data-l="2"><span class="ln">2</span><span class="tx">mejorLong ← ∞; mejorCamino ← sin camino</span></div>
+<div class="cl" data-l="3"><span class="ln">3</span><span class="tx">Explorar(fO, cO, L[fO,cO].valor)</span></div>
+<div class="cl" data-l="4"><span class="ln">4</span><span class="tx">devolver mejorLong, mejorCamino</span></div>
+<div class="cl hdr" data-l="5"><span class="ln">5</span><span class="tx">Procedimiento Explorar(f, c, long)</span></div>
+<div class="cl" data-l="6"><span class="ln">6</span><span class="tx">    visitada[f,c] ← verdadero; agregar(camino, (f,c))</span></div>
+<div class="cl" data-l="7"><span class="ln">7</span><span class="tx">    si (f,c) = (fD,cD)</span></div>
+<div class="cl" data-l="8"><span class="ln">8</span><span class="tx">        si long &lt; mejorLong</span></div>
+<div class="cl" data-l="9"><span class="ln">9</span><span class="tx">            mejorLong ← long; mejorCamino ← copia(camino)</span></div>
+<div class="cl" data-l="10"><span class="ln">10</span><span class="tx">        fin si</span></div>
+<div class="cl" data-l="11"><span class="ln">11</span><span class="tx">    sino</span></div>
+<div class="cl" data-l="12"><span class="ln">12</span><span class="tx">        para cada dirección d ∈ {N, E, S, O}</span></div>
+<div class="cl" data-l="13"><span class="ln">13</span><span class="tx">            (nf,nc) ← casilla vecina de (f,c) hacia d</span></div>
+<div class="cl" data-l="14"><span class="ln">14</span><span class="tx">            si L[f,c].abre[d] Y dentro(nf,nc) Y NO visitada[nf,nc]</span></div>
+<div class="cl" data-l="15"><span class="ln">15</span><span class="tx">                si long + L[nf,nc].valor &lt; mejorLong</span></div>
+<div class="cl" data-l="16"><span class="ln">16</span><span class="tx">                    Explorar(nf, nc, long + L[nf,nc].valor)</span></div>
+<div class="cl" data-l="17"><span class="ln">17</span><span class="tx">                fin si</span></div>
+<div class="cl" data-l="18"><span class="ln">18</span><span class="tx">            fin si</span></div>
+<div class="cl" data-l="19"><span class="ln">19</span><span class="tx">        fin para</span></div>
+<div class="cl" data-l="20"><span class="ln">20</span><span class="tx">    fin si</span></div>
+<div class="cl" data-l="21"><span class="ln">21</span><span class="tx">    visitada[f,c] ← falso; eliminar(camino)</span></div>
+    </div>
+    <div class="viz" data-viz></div>
+  </div>
+  <div class="explain" data-explain></div>
+  <div class="controls" data-controls></div>
+</div>
+<p class="srcnote" style="max-width:76ch">Cómo se escribe el laberinto: filas separadas por <code>/</code> y casillas por espacios. Cada casilla es su valor seguido de las letras de las direcciones abiertas (N, E, S, O); por ejemplo <code>3ES</code> es una casilla de valor 3 desde la que se puede ir al este y al sur. Filas y columnas desde 1; el origen y el destino se escriben <code>fila,columna</code>. Hasta 4 × 4. Si la búsqueda necesitara más de 400 pasos para mostrarse, el simulador lo avisa.</p>
+
+<h3>c) Complejidad temporal</h3>
+<p>Sea N = n² la cantidad de casillas. Como no se repiten casillas en un camino, la profundidad del árbol es a lo sumo N. Desde el origen hay hasta 4 alternativas; desde cada casilla siguiente, a lo sumo 3 (una de las cuatro direcciones lleva a la casilla de la que se vino, que ya está visitada). Entonces hay a lo sumo <code>1 + 4 + 4·3 + 4·3² + … + 4·3<sup>N−1</sup> = O(3<sup>N</sup>)</code> nodos, cada uno con trabajo constante (se miran 4 direcciones). Cada vez que se mejora la solución se copia el camino, en O(N).</p>
+<div class="card" style="font-family:var(--mono);text-align:center">
+O(3<sup>N</sup>) nodos × O(1) por nodo, y copias de O(N) → <span class="tag t-exp" style="font-size:15px">O(n²·3<sup>n²</sup>)</span>
+</div>
+<p>Se justifica contando el árbol, no con el teorema de recurrencias: la ramificación (3) y la profundidad (N) no salen de dividir ni de restar una constante al tamaño de un parámetro de entrada. La poda <code>long + valor ≥ mejorLong</code> ahorra ramas pero no cambia el peor caso.</p>
+<div class="first"><b>El mismo problema, mucho más barato</b>
+Este laberinto es un grafo dirigido con peso en las casillas, y camino mínimo con pesos no negativos es el problema de <b>Dijkstra</b>, que es <a href="#graf-cajas">O(N²)</a> con la matriz o mejor con una cola de prioridad. La guía lo pone en el bloque de Backtracking para practicar la técnica con un problema que se entiende de un vistazo; en un parcial que no lo exija, conviene saber decir que existe una solución polinomial.</div>
+</div>
+<hr class="rule">
+</section>
+
+<!-- Backtracking 3 -->
+<section id="ej-g17">
+<h2>Guía · Backtracking 3 — El caballo de Atila</h2>
+<p class="sub">Backtracking · buscar una solución · <span class="tag t-exp">O(3<sup>n²</sup>)</span></p>
+
+<div class="enun"><b>Enunciado · Caballo de Atila</b>
+Todos sabemos que por donde pisa el caballo de Atila jamás vuelve a crecer el pasto. El caballo fue directamente hacia el jardín de n x n casillas. Empezó su paseo por una casilla cualquiera y volvió a ella, es decir hizo un recorrido cerrado. No visitó dos veces una misma casilla, se movió de una casilla a otra vecina en forma horizontal o vertical, pero nunca en diagonal. Por donde pisó el caballo, el pasto jamás volvió a crecer. Luego de terminado el recorrido en algunas casillas todavía había pasto (señal de que en ellas no había estado el caballo). Escriba un algoritmo que deduzca el recorrido completo que hizo el caballo.</div>
+
+<h3>Qué te están pidiendo</h3>
+<p>Te dan el jardín <b>después</b> del paseo: cada casilla tiene pasto o no. Las que <b>no tienen pasto son exactamente las que pisó el caballo</b>. Hay que reconstruir en qué orden las pisó: una secuencia que las use a todas una sola vez, avance siempre a una casilla vecina de arriba, abajo, izquierda o derecha, y termine al lado de donde empezó (para poder cerrar el recorrido). Se pide <b>un</b> recorrido, no todos. El enunciado no dice qué recibe el algoritmo: se interpreta que la entrada es el jardín, con las casillas con pasto marcadas.</p>
+
+<h3>Razonamientos antes de mirar la resolución</h3>
+<ol class="razon">
+  <li><b>¿Importa desde qué casilla empezás a deducir el recorrido?</b> Si el caballo hizo un ciclo, ¿cambia algo si lo describís arrancando en otra casilla pisada?</li>
+  <li><b>¿Cuándo está completa S?</b> Cuando visitaste todas las casillas sin pasto. ¿Alcanza con eso para que sea un recorrido <i>cerrado</i>? ¿Qué más hay que mirar al final?</li>
+  <li><b>¿Qué alternativas tiene cada etapa y cuáles son factibles?</b> Cuatro vecinas. Pensá qué las descarta: el borde, el pasto, y algo que el caballo no hizo.</li>
+  <li><b>¿Buscás una, todas o la mejor?</b> ¿Qué hacés cuando S cierra? Pensá en cómo termina el algoritmo de Reinas.</li>
+  <li><b>¿Puede no haber recorrido?</b> Dibujá un jardín de 3 × 3 sin nada de pasto. Pintalo como un tablero de ajedrez y fijate de qué color es cada casilla a medida que avanzás: ¿qué pasa con los colores en un recorrido que vuelve al principio?</li>
+  <li><b>¿Cuántas alternativas hay por etapa y cuántas etapas?</b> Es la cuenta de la complejidad: ¿cuántas vecinas libres puede tener cada casilla del recorrido, sin contar la de la que venís?</li>
+</ol>
+
+<button class="primary rev" data-sol="sol-g17">Ver la resolución</button>
+<div class="sol" id="sol-g17">
+
+<h3>a) Estrategia de Backtracking</h3>
+<div class="grid2">
+  <div class="def"><h4>Solución parcial S</h4>Vector de <code>k</code> posiciones, donde k es la cantidad de casillas <b>pisadas</b> (sin pasto). <code>S[E]</code> es la casilla (fila, columna) que el caballo pisó en el paso E. Además, una matriz <code>visitada</code>. <code>S[0]</code> queda fija: como el recorrido es cerrado, se puede empezar en cualquier casilla pisada; se toma la primera por filas.</div>
+  <div class="def"><h4>Etapa y alternativas</h4>La etapa E es «¿a qué casilla va el caballo en el paso E?». Las alternativas son las cuatro vecinas ortogonales de <code>S[E−1]</code>: norte, este, sur y oeste.</div>
+  <div class="def"><h4>Factibilidad y poda</h4>Una vecina es factible si está <b>dentro del jardín</b>, <b>no tiene pasto</b> y <b>no fue visitada</b>. Es poda por factibilidad: ninguna continuación por una casilla que no se puede pisar sirve.</div>
+  <div class="def"><h4>Caso base</h4>E = k: ya están todas. Es solución si la última casilla, <code>S[k−1]</code>, es <b>vecina de</b> <code>S[0]</code> (el recorrido cierra). Si no cierra, se vuelve atrás: tener todas las casillas no alcanza.</div>
+  <div class="def"><h4>Retroceso</h4>Se desmarca <code>visitada</code> de la casilla probada y se prueba otra dirección. Como se busca una sola solución, al encontrarla se devuelve <b>verdadero</b> hacia arriba y nadie sigue buscando; <code>S</code> queda con el recorrido.</div>
+  <div class="def"><h4>Objetivo</h4>Una solución. Si se agotan todas las alternativas desde <code>S[0]</code>, devuelve falso: no existe un recorrido cerrado que pise exactamente esas casillas.</div>
+</div>
+
+<h3>b) Pseudocódigo</h3>
+<div class="card">
+<pre class="ps">Algoritmo Atila
+Entrada: J: Matriz n × n de booleanos (verdadero = pisada, sin pasto), n: entero
+Salida: verdadero-falso (y S con el recorrido, si existe)
+k ← cantidad de casillas pisadas de J
+si k &lt; 4
+    devolver falso
+fin si
+S[0] ← primera casilla pisada, recorriendo J por filas
+visitada ← matriz n × n de falso; visitada[S[0]] ← verdadero
+devolver Recorrer(1)
+
+Algoritmo Recorrer
+Entrada: E: entero
+Salida: verdadero-falso
+si E = k
+    devolver esVecina(S[E−1], S[0])
+fin si
+para cada dirección d ∈ {N, E, S, O}
+    (nf,nc) ← casilla vecina de S[E−1] hacia d
+    si dentro(nf,nc) Y J[nf,nc] Y NO visitada[nf,nc]
+        S[E] ← (nf,nc); visitada[nf,nc] ← verdadero
+        si Recorrer(E + 1)
+            devolver verdadero
+        fin si
+        visitada[nf,nc] ← falso
+    fin si
+fin para
+devolver falso</pre>
+</div>
+<div class="note"><b>Pseudocódigo propio</b>
+La cátedra no publica pseudocódigo de este ejercicio: este sigue la forma del de Reinas (devuelve verdadero y corta). <code>esVecina(a, b)</code> es verdadero si las casillas difieren en 1 en la fila o en 1 en la columna (no en las dos). <code>k &lt; 4</code> se pide aparte porque con 2 casillas contiguas <code>esVecina</code> daría verdadero, pero ir y volver pisa dos veces cada una: un recorrido cerrado sin repetir necesita al menos 4.</div>
+<div class="note"><b>No es el caballo del ajedrez</b>
+Acá el caballo se mueve de a una casilla, en horizontal o vertical (el enunciado lo dice: «nunca en diagonal»); no hace la L. Y como el recorrido es un ciclo, <b>cada recorrido se puede dar vuelta</b> y sigue siendo válido: el algoritmo devuelve el primero que encuentra, en el orden norte, este, sur, oeste. Un jardín puede admitir varios ciclos distintos (el de 4 × 4 sin nada de pasto admite 6); el enunciado pide «el recorrido» y la guía no dice cuál. Con una sola solución basta.</div>
+<div class="first"><b>Una poda que no está en el pseudocódigo</b>
+Los movimientos cambian el color de la casilla en un tablero de ajedrez, así que un ciclo vuelve al color de partida después de una cantidad <b>par</b> de pasos: con k impar no hay solución, y se puede responder en O(1) sin buscar. Del mismo modo, si una casilla pisada tiene menos de 2 vecinas pisadas, ningún ciclo pasa por ella. Son chequeos previos válidos y baratos, pero el pseudocódigo de arriba se mantiene base: el simulador del jardín de 3 × 3 sin pasto (k = 9) muestra lo que cuesta no tenerlos.</div>
+
+<h3>Ejecutalo paso a paso</h3>
+<div class="sim bt-sim" id="sim-g17">
+  <div class="sim-head">
+    <div class="title">Recorrido del caballo<small>Verde claro: con pasto · gris: pisada · naranja: recorrido actual · verde: recorrido encontrado</small></div>
+    <div class="inputs">
+      <label for="g17-jardin">jardín</label><input type="text" class="bt-wide" id="g17-jardin" value=".###./####./#.##./####./.##..">
+      <button class="ghost" data-reload>Ejecutar</button>
+    </div>
+  </div>
+  <div class="bt-presets">
+    <button class="ghost" data-bt-sim="atila" data-bt-preset="{&quot;g17-jardin&quot;: &quot;.###./####./#.##./####./.##..&quot;}">Ejemplo 5×5</button>
+    <button class="ghost" data-bt-sim="atila" data-bt-preset="{&quot;g17-jardin&quot;: &quot;####/#..#/#..#/####&quot;}">Un anillo</button>
+    <button class="ghost" data-bt-sim="atila" data-bt-preset="{&quot;g17-jardin&quot;: &quot;####/####/####/####&quot;}">Hay más de un recorrido</button>
+    <button class="ghost" data-bt-sim="atila" data-bt-preset="{&quot;g17-jardin&quot;: &quot;###/###/###&quot;}">Cantidad impar de pisadas</button>
+    <button class="ghost" data-bt-sim="atila" data-bt-preset="{&quot;g17-jardin&quot;: &quot;###../#.#../###../.#.../.#...&quot;}">Una casilla colgada</button>
+  </div>
+  <div class="sim-body">
+    <div class="code" data-code>
+<div class="cl hdr" data-l="1"><span class="ln">1</span><span class="tx">Algoritmo Atila(J, n)</span></div>
+<div class="cl" data-l="2"><span class="ln">2</span><span class="tx">    k ← cantidad de casillas pisadas de J</span></div>
+<div class="cl" data-l="3"><span class="ln">3</span><span class="tx">    si k &lt; 4: devolver falso</span></div>
+<div class="cl" data-l="4"><span class="ln">4</span><span class="tx">    S[0] ← primera pisada por filas; visitada[S[0]] ← verdadero</span></div>
+<div class="cl" data-l="5"><span class="ln">5</span><span class="tx">    devolver Recorrer(1)</span></div>
+<div class="cl hdr" data-l="7"><span class="ln">6</span><span class="tx">Algoritmo Recorrer(E)</span></div>
+<div class="cl" data-l="8"><span class="ln">7</span><span class="tx">    si E = k</span></div>
+<div class="cl" data-l="9"><span class="ln">8</span><span class="tx">        devolver esVecina(S[E−1], S[0])</span></div>
+<div class="cl" data-l="10"><span class="ln">9</span><span class="tx">    fin si</span></div>
+<div class="cl" data-l="11"><span class="ln">10</span><span class="tx">    para cada dirección d ∈ {N, E, S, O}</span></div>
+<div class="cl" data-l="12"><span class="ln">11</span><span class="tx">        (nf,nc) ← casilla vecina de S[E−1] hacia d</span></div>
+<div class="cl" data-l="13"><span class="ln">12</span><span class="tx">        si dentro(nf,nc) Y J[nf,nc] Y NO visitada[nf,nc]</span></div>
+<div class="cl" data-l="14"><span class="ln">13</span><span class="tx">            S[E] ← (nf,nc); visitada[nf,nc] ← verdadero</span></div>
+<div class="cl" data-l="15"><span class="ln">14</span><span class="tx">            si Recorrer(E + 1)</span></div>
+<div class="cl" data-l="16"><span class="ln">15</span><span class="tx">                devolver verdadero</span></div>
+<div class="cl" data-l="17"><span class="ln">16</span><span class="tx">            fin si</span></div>
+<div class="cl" data-l="18"><span class="ln">17</span><span class="tx">            visitada[nf,nc] ← falso</span></div>
+<div class="cl" data-l="19"><span class="ln">18</span><span class="tx">        fin si</span></div>
+<div class="cl" data-l="20"><span class="ln">19</span><span class="tx">    fin para</span></div>
+<div class="cl" data-l="21"><span class="ln">20</span><span class="tx">    devolver falso</span></div>
+    </div>
+    <div class="viz" data-viz></div>
+  </div>
+  <div class="explain" data-explain></div>
+  <div class="controls" data-controls></div>
+</div>
+<p class="srcnote" style="max-width:76ch">Cómo se escribe el jardín: filas separadas por <code>/</code>; <code>#</code> es una casilla pisada (sin pasto) y <code>.</code> una que todavía tiene pasto. El jardín es cuadrado, de 2 × 2 a 5 × 5. Filas y columnas desde 1. Si la búsqueda necesitara más de 400 pasos para mostrarse (jardines de 5 × 5 casi sin pasto), el simulador lo avisa.</p>
+
+<h3>c) Complejidad temporal</h3>
+<p>Sea k la cantidad de casillas pisadas, con k ≤ n². La profundidad del árbol es k. Desde <code>S[0]</code> hay hasta 4 alternativas; desde cada casilla siguiente, a lo sumo 3, porque una de las cuatro vecinas es de la que se viene y ya está visitada. Hay entonces a lo sumo <code>1 + 4 + 4·3 + … + 4·3<sup>k−1</sup> = O(3<sup>k</sup>)</code> nodos. En cada uno el trabajo es constante: se miran 4 direcciones y, en las hojas, <code>esVecina</code> compara dos casillas.</p>
+<div class="card" style="font-family:var(--mono);text-align:center">
+O(3<sup>k</sup>) nodos × O(1) por nodo, con k ≤ n² → <span class="tag t-exp" style="font-size:15px">O(3<sup>n²</sup>)</span>
+</div>
+<p>Es exponencial en la cantidad de casillas pisadas. La poda por factibilidad (pasto, borde, visitada) recorta ramas, pero no garantiza una cota polinomial: encontrar un ciclo que pase una sola vez por todas las casillas de un grafo es el problema del ciclo hamiltoniano, para el que no se conoce un algoritmo polinomial. Si el recorrido existe y se encuentra pronto, el algoritmo corta antes; la cota es del peor caso.</p>
+</div>
+<hr class="rule">
+</section>
+
 <div class="exbar" id="bloque-integ"><span>Integración</span><b>Primer parcial</b><em>Se pide, por ejercicio: a) técnica · b) estrategia · c) pseudocódigo · d) complejidad temporal</em></div>
 
 <div class="note" style="max-width:76ch"><b>Numeración</b>
@@ -2686,9 +3104,11 @@ filtrado Θ(a) + Dijkstra(G') O(n²) → <span class="tag t-cuad" style="font-si
 <tr><td>Pide conectar todos al <b>mayor</b> costo total</td><td>Grafos</td><td>reducción peso' = M − peso, después Kruskal o Prim tal cual</td><td>la de la caja elegida</td></tr>
 <tr><td>Pide <b>maximizar</b> con un <b>límite</b> (de peso, de presupuesto), cada elemento una sola vez o hasta una cantidad, y un criterio local <b>falla</b> (hay contraejemplo)</td><td>Programación Dinámica</td><td>tabla n × (límite + 1): cada término del <code>máx</code> rotulado («no lo uso» / «lo uso» / «k unidades») y apuntando a la fila anterior</td><td><span class="tag t-cuad">Θ(n·P)</span></td></tr>
 <tr><td>Pide <b>cubrir al menos</b> un monto con el <b>menor</b> gasto posible (o llegar justo)</td><td>Programación Dinámica</td><td>tabla del menor gasto que cubre al menos j: «no lo compro» / «lo compro y cubro el resto»</td><td><span class="tag t-cuad">Θ(n·X)</span></td></tr>
+<tr><td>Pide <b>la mejor</b> solución (o todas) entre muchas combinaciones de decisiones, y no hay un criterio local seguro ni subproblemas que se repitan</td><td>Backtracking</td><td>árbol de decisiones: S, etapa, alternativas, factibilidad y poda, retroceso; la mejor se guarda como copia y se explora todo lo que no se pueda podar</td><td><span class="tag t-exp">exponencial</span></td></tr>
+<tr><td>Pide <b>un</b> recorrido o disposición que cumpla restricciones (no repetir casillas, cerrar el ciclo, no atacarse), o avisar que no existe</td><td>Backtracking</td><td>el mismo árbol, pero al encontrar una solución se devuelve verdadero y se corta (como Reinas)</td><td><span class="tag t-exp">exponencial</span></td></tr>
 </table>
 
-<h3>Los 20 ejercicios, en una línea cada uno</h3>
+<h3>Los 23 ejercicios, en una línea cada uno</h3>
 <table>
 <tr><th>Ejercicio</th><th>Técnica</th><th>Criterio / clave</th><th>Complejidad</th></tr>
 <tr><td><a href="#ej-g1">G · DyC 1</a> ¿ordenada?</td><td>DyC división</td><td>2 mitades + costura S[medio] ≤ S[medio+1]</td><td><span class="tag t-lin">O(n)</span></td></tr>
@@ -2705,6 +3125,9 @@ filtrado Θ(a) + Dijkstra(G') O(n²) → <span class="tag t-cuad" style="font-si
 <tr><td><a href="#ej-g12">G · PD 1</a> regalo de Darío</td><td>Programación Dinámica</td><td>G[i,j] = menor gasto que cubre ≥ j: no lo compro / lo compro y cubro el resto (fila i−1)</td><td><span class="tag t-cuad">Θ(n·X)</span></td></tr>
 <tr><td><a href="#ej-g13">G · PD 2</a> revistas de Howard</td><td>Programación Dinámica</td><td>Mochila 0/1: no la compro / la compro (fila i−1)</td><td><span class="tag t-cuad">Θ(n·P)</span></td></tr>
 <tr><td><a href="#ej-g14">G · PD 3</a> compras en el shopping</td><td>Programación Dinámica</td><td>hasta 3 unidades, costos p / 2p−1 / 3p−3: máx de hasta 4 opciones, todas a la fila i−1</td><td><span class="tag t-cuad">Θ(m·K)</span></td></tr>
+<tr><td><a href="#ej-g15">G · Backtracking 1</a> tareas a procesadores</td><td>Backtracking (la mejor)</td><td>S[tarea] = procesador; minimizar la carga máxima; podar si el máximo parcial ≥ mejor</td><td><span class="tag t-exp">O((m+n)·mⁿ)</span></td></tr>
+<tr><td><a href="#ej-g16">G · Backtracking 2</a> laberinto</td><td>Backtracking (la mejor)</td><td>S = camino con casillas marcadas; 4 direcciones; podar si long + valor ≥ mejor</td><td><span class="tag t-exp">O(n²·3<sup>n²</sup>)</span></td></tr>
+<tr><td><a href="#ej-g17">G · Backtracking 3</a> caballo de Atila</td><td>Backtracking (una)</td><td>S = recorrido de las k pisadas; 4 vecinas factibles; cierra si S[k−1] es vecina de S[0]</td><td><span class="tag t-exp">O(3<sup>n²</sup>)</span></td></tr>
 <tr><td><a href="#ej-i1">I · 1</a> actividades compatibles</td><td>Greedy</td><td>por fin ↑, tomar si c ≥ finUltima</td><td><span class="tag t-nlogn">O(n log n)</span></td></tr>
 <tr><td><a href="#ej-i2">I · 2</a> vector bitónico</td><td>DyC división</td><td>binaria: comparar A[m] con A[m+1]</td><td><span class="tag t-log">O(log n)</span></td></tr>
 <tr><td><a href="#ej-i5">I · 5</a> salón de convenciones</td><td>Greedy</td><td>pago único ⇒ = I·1 (maximizar cantidad)</td><td><span class="tag t-nlogn">O(n log n)</span></td></tr>
@@ -2735,6 +3158,10 @@ filtrado Θ(a) + Dijkstra(G') O(n²) → <span class="tag t-cuad" style="font-si
   <li><b>PD, la fila equivocada:</b> en «lo compro» mirar la misma fila (<code>M[i, j − p]</code>) cuando cada elemento se puede usar una sola vez (o hasta un tope): permite repetirlo sin límite. Es lo correcto solo si la cantidad es ilimitada, como en el Cambio.</li>
   <li><b>PD, el borde:</b> usar <code>j − p</code> sin separar el caso «no entra»: lee una columna negativa. Y no poner <code>j ≥ 1</code> en los demás casos del Cambio o del regalo: se pisan con <code>j = 0</code>.</li>
   <li><b>PD 3:</b> usar el costo de <b>una</b> unidad donde va el costo <b>acumulado</b>. La 2.ª unidad cuesta p − 1 y la 3.ª p − 2, pero juntas 2 unidades cuestan 2p − 1 y 3 unidades 3p − 3 (no 2(p − 1) ni 3(p − 2)). Y no aclarar que se asume p ≥ 2.</li>
+  <li><b>Backtracking 1:</b> minimizar la <b>suma</b> de las cargas (es constante) en vez de la carga máxima, o quedarse con la primera asignación completa.</li>
+  <li><b>Backtracking 2:</b> no marcar las casillas visitadas (la búsqueda puede no terminar), contar la longitud como cantidad de pasos en vez de suma de valores, o suponer que los booleanos son simétricos.</li>
+  <li><b>Backtracking 3:</b> dar por buena una S con todas las casillas sin comprobar que la última es vecina de la primera (el recorrido tiene que <b>cerrar</b>), o no devolver verdadero hacia arriba y seguir buscando después de encontrarlo.</li>
+  <li><b>Backtracking, la complejidad:</b> decir que es polinomial «porque hay poda». Se cuenta el árbol: alternativas por etapa ^ profundidad, por el costo de cada nodo, y se aclara que es el peor caso.</li>
   <li><b>Grafos:</b> aplicar Dijkstra (camino mínimo, dirigido) a un problema de conectar todos los nodos (recubrimiento, no dirigido), o al revés.</li>
   <li><b>Grafos, el más caro:</b> reescribir el <code>mientras</code> de Dijkstra o el <code>para cada arista</code> de Kruskal en el punto e) en vez de invocar la caja y resolver el problema alrededor. El punto e) pide el pseudocódigo <em>de la resolución</em>, no el del algoritmo.</li>
 </ul>
@@ -2747,6 +3174,7 @@ filtrado Θ(a) + Dijkstra(G') O(n²) → <span class="tag t-cuad" style="font-si
   <li><input type="checkbox"><span><strong>d)</strong> La <b>complejidad</b> justificada: identificar a, b, k y el caso (resta/división) en DyC; qué domina (ordenar, un ciclo, la cola de prioridad) en Greedy; en Grafos, la complejidad de la caja (O(n²) Dijkstra/Prim, Θ(a log a) Kruskal) más el costo de cualquier preproceso o posproceso propio.</span></li>
   <li><input type="checkbox"><span>Si es Greedy, ¿aclaré si el criterio es <b>siempre óptimo</b> o depende de los datos?</span></li>
   <li><input type="checkbox"><span>Si es Programación Dinámica: ¿dije <b>qué guarda cada celda</b>, los <b>casos base</b>, la recurrencia <b>caso por caso</b> con cada término rotulado, las <b>dimensiones</b> de la tabla y <b>en qué celda está la respuesta</b>? ¿Dije si los índices son 0-based o 1-based?</span></li>
+  <li><input type="checkbox"><span>Si es Backtracking: ¿dije qué es <b>S</b>, la <b>etapa</b> y sus <b>alternativas</b>, la <b>factibilidad</b> y qué se poda, el <b>caso base</b>, qué se <b>deshace</b> al volver y si busco <b>una</b>, <b>todas</b> o <b>la mejor</b>? ¿Copié la mejor solución?</span></li>
   <li><input type="checkbox"><span>¿Verifiqué el algoritmo con el <b>ejemplo del enunciado</b> antes de darlo por cerrado?</span></li>
 </ul>
 
@@ -3991,6 +4419,286 @@ document.querySelectorAll("#sim-g14 [data-g14-p]").forEach(b=>b.addEventListener
   document.getElementById("g14-u").value=b.dataset.g14U;
   document.getElementById("g14-k").value=b.dataset.g14K;
   document.querySelector("#sim-g14 [data-reload]").click();
+}));
+
+/* ===== Guía · Backtracking ===== */
+/* Builders puros (sin DOM): la interfaz y las pruebas ejecutan exactamente la misma búsqueda.
+   Cada paso guarda sus propias copias de los vectores; la búsqueda nunca se corta para acortar la animación. */
+const BT_MAX_STEPS=400;
+const BT_DIRS=[{k:"N",df:-1,dc:0,nombre:"norte"},{k:"E",df:0,dc:1,nombre:"este"},{k:"S",df:1,dc:0,nombre:"sur"},{k:"O",df:0,dc:-1,nombre:"oeste"}];
+function btPush(steps,st){
+  if(steps.length>=BT_MAX_STEPS) throw new Error("La búsqueda necesita más de "+BT_MAX_STEPS+" pasos para mostrarse. Probá con un tablero más chico o con más paredes (o más pasto).");
+  steps.push(st);
+}
+const btPos=(f,c)=>"("+f+","+c+")";
+
+/* ---------- Guía · Backtracking 1: tareas a procesadores (mismo árbol que la clase 10) ---------- */
+function btProcesadores(A,m){
+  const S=new Array(A.length).fill(null),loads=new Array(m).fill(0),steps=[];
+  let best=Infinity,bestAssignment=null,decisions=0,pruned=0;
+  const push=(line,msg,stage)=>steps.push({kind:"processors",input:A.slice(),arr:S.slice(),loads:loads.slice(),stage,line,msg,best,
+    bestAssignment:bestAssignment?bestAssignment.slice():null,vars:["decisiones: "+decisions,"ramas podadas: "+pruned]});
+  push(1,"Todas las cargas empiezan en 0 y mejorTiempo = ∞. Cada tarea se ejecuta completa en un único procesador. Se busca minimizar el momento en que termina el último.",0);
+  function visit(E){
+    for(let p=0;p<m;p++){
+      S[E]=p; loads[p]+=A[E]; decisions++;
+      const maximum=Math.max(...loads),leaf=E===A.length-1;
+      if(leaf){
+        const improves=maximum<best,previous=best;
+        if(improves){best=maximum;bestAssignment=S.slice();}
+        push(improves?7:6,"Tarea "+(E+1)+" ("+A[E]+") → P"+(p+1)+". Asignación completa: máx("+loads.join(", ")+") = "+maximum+". "+(improves?"Mejora el mejorTiempo anterior ("+(previous===Infinity?"∞":previous)+"): ahora vale "+maximum+" y guardo una copia de S.":"No mejora "+best+": conservo la primera mejor asignación."),E);
+      }else if(maximum>=best){
+        pruned++;
+        push(9,"Tarea "+(E+1)+" → P"+(p+1)+". La carga máxima parcial "+maximum+" ≥ mejorTiempo "+best+". Las duraciones no son negativas: esta rama no puede mejorar, así que la podo.",E);
+      }else{
+        push(10,"Tarea "+(E+1)+" ("+A[E]+") → P"+(p+1)+"; cargas ["+loads.join(", ")+"]. Sigo con la próxima tarea. Al volver resto esta duración antes de probar otro procesador.",E);
+        visit(E+1);
+      }
+      loads[p]-=A[E]; S[E]=null;
+    }
+  }
+  visit(0);
+  push(undefined,"Terminé de explorar todas las ramas que podían mejorar. Las cargas de trabajo volvieron a 0; la mejor asignación quedó guardada aparte.",undefined);
+  Object.assign(steps[steps.length-1],{result:"Tiempo mínimo = "+best,rcls:"good"});
+  return steps;
+}
+
+/* ---------- Guía · Backtracking 2: laberinto ---------- */
+/* Texto: filas separadas por «/», casillas por espacios; cada casilla es «valor» + letras de las
+   direcciones abiertas (N, E, S, O). Filas y columnas desde 1, como las matrices de PD. */
+function btParseLab(text){
+  const t=String(text).trim();
+  const rows=t?t.split("/").map(r=>r.trim().split(/\s+/)):[];
+  const n=rows.length;
+  if(!n||n>4||rows.some(r=>r.length!==n)) throw new Error("El laberinto tiene que ser cuadrado, de 1×1 a 4×4: filas separadas por «/» y casillas por espacios.");
+  return rows.map((r,f)=>r.map((tok,c)=>{
+    const m=/^(\d{1,3})([NESO]*)$/i.exec(tok);
+    if(!m) throw new Error("Casilla "+btPos(f+1,c+1)+" inválida: «"+tok+"». Escribí un número seguido de las direcciones abiertas, por ejemplo 3ES.");
+    const letters=m[2].toUpperCase();
+    if(new Set(letters).size!==letters.length) throw new Error("Casilla "+btPos(f+1,c+1)+": hay una dirección repetida en «"+tok+"».");
+    const abre={}; BT_DIRS.forEach(d=>{abre[d.k]=letters.includes(d.k);});
+    return {valor:+m[1],abre};
+  }));
+}
+function btParseCasilla(text,n,label){
+  const m=/^\s*(\d+)\s*,\s*(\d+)\s*$/.exec(String(text));
+  if(!m||+m[1]<1||+m[1]>n||+m[2]<1||+m[2]>n) throw new Error(label+": escribí fila,columna entre 1 y "+n+" (por ejemplo 1,1).");
+  return [+m[1],+m[2]];
+}
+function btLaberinto(L,origen,destino){
+  const n=L.length,visitada=L.map(r=>r.map(()=>false)),camino=[],steps=[];
+  let mejor=Infinity,mejorCamino=null,llamadas=0,podas=0,pendiente=[];
+  const push=(line,msg,largo,extra)=>btPush(steps,Object.assign({kind:"maze",grid:L,n,origen,destino,path:camino.map(p=>p.slice()),
+    best:mejorCamino?mejorCamino.map(p=>p.slice()):null,largo,mejor,line,msg,
+    vars:["llamadas: "+llamadas,"ramas podadas: "+podas,"largo actual: "+largo,"mejor largo: "+(mejor===Infinity?"∞":mejor)]},extra));
+  const flush=()=>{const t=pendiente.length?pendiente.join(" ")+" ":"";pendiente=[];return t;};
+  function explorar(f,c,largo,desde){
+    llamadas++;
+    visitada[f-1][c-1]=true; camino.push([f,c]);
+    const esDestino=f===destino[0]&&c===destino[1];
+    const celda=L[f-1][c-1];
+    const estaticas=[];
+    if(!esDestino) BT_DIRS.forEach(d=>{
+      const nf=f+d.df,nc=c+d.dc;
+      if(!celda.abre[d.k]) estaticas.push(d.nombre+" (pared)");
+      else if(nf<1||nf>n||nc<1||nc>n) estaticas.push(d.nombre+" (fuera del tablero)");
+      else if(visitada[nf-1][nc-1]) estaticas.push(d.nombre+" (ya la visité en este camino)");
+    });
+    if(esDestino){
+      const mejora=largo<mejor,prev=mejor;
+      if(mejora){mejor=largo;mejorCamino=camino.map(p=>p.slice());}
+      push(mejora?9:8,flush()+"Llegué al destino "+btPos(f,c)+" con largo "+largo+". "+(mejora?"Mejora el mejorLong anterior ("+(prev===Infinity?"∞":prev)+"): ahora vale "+largo+" y guardo una copia del camino.":"No mejora "+mejor+": no lo guardo."),largo);
+    }else{
+      push(6,flush()+"Entro a "+btPos(f,c)+" (valor "+celda.valor+"): largo "+largo+". La marco como visitada."+(estaticas.length?" No puedo ir al "+estaticas.join(", ")+".":""),largo);
+      BT_DIRS.forEach(d=>{
+        const nf=f+d.df,nc=c+d.dc;
+        if(!celda.abre[d.k]||nf<1||nf>n||nc<1||nc>n||visitada[nf-1][nc-1]) return;
+        const nuevo=largo+L[nf-1][nc-1].valor;
+        if(nuevo>=mejor){podas++;pendiente.push("Poda: ir al "+d.nombre+", a "+btPos(nf,nc)+", da "+largo+" + "+L[nf-1][nc-1].valor+" = "+nuevo+" ≥ mejor "+mejor+".");return;}
+        explorar(nf,nc,nuevo,[f,c]);
+      });
+    }
+    visitada[f-1][c-1]=false; camino.pop();
+    pendiente.push("Agoto "+btPos(f,c)+" y la desmarco"+(desde?"; vuelvo a "+btPos(desde[0],desde[1])+".":"."));
+  }
+  push(3,"Arranco en el origen "+btPos(origen[0],origen[1])+": la longitud ya incluye su valor, "+L[origen[0]-1][origen[1]-1].valor+". mejorLong = ∞. El destino es "+btPos(destino[0],destino[1])+".",0);
+  explorar(origen[0],origen[1],L[origen[0]-1][origen[1]-1].valor,null);
+  push(4,flush()+"Se agotó el árbol de caminos. "+(mejorCamino?"Devuelvo el largo mínimo y la copia guardada.":"Nunca llegué al destino: no hay camino."),0,
+    {result:mejorCamino?"Longitud mínima = "+mejor+" · "+mejorCamino.map(p=>btPos(p[0],p[1])).join(" → "):"No existe un camino de "+btPos(origen[0],origen[1])+" a "+btPos(destino[0],destino[1]),rcls:mejorCamino?"good":"bad"});
+  return steps;
+}
+
+/* ---------- Guía · Backtracking 3: el caballo de Atila ---------- */
+/* Texto: filas separadas por «/»; «#» = casilla pisada (sin pasto), «.» = con pasto. Cuadrado de 2×2 a 5×5. */
+function btParseJardin(text){
+  const t=String(text).trim();
+  const rows=t?t.split("/").map(r=>r.trim()):[];
+  const n=rows.length;
+  if(n<2||n>5||rows.some(r=>r.length!==n||/[^#.]/.test(r))) throw new Error("El jardín tiene que ser cuadrado, de 2×2 a 5×5: filas separadas por «/», con «#» para las casillas sin pasto y «.» para las que todavía tienen pasto.");
+  return rows.map(r=>r.split("").map(ch=>ch==="#"));
+}
+function btAtila(J){
+  const n=J.length,steps=[],visitada=J.map(r=>r.map(()=>false)),S=[];
+  let k=0,inicio=null; J.forEach((r,f)=>r.forEach((p,c)=>{if(p){k++;if(!inicio)inicio=[f+1,c+1];}}));
+  let llamadas=0,retrocesos=0,pendiente=[];
+  const flush=()=>{const t=pendiente.length?pendiente.join(" ")+" ":"";pendiente=[];return t;};
+  const push=(line,msg,extra)=>btPush(steps,Object.assign({kind:"atila",grid:J,n,k,path:S.map(p=>p.slice()),line,msg,
+    vars:["pisadas: "+k,"visitadas: "+S.length,"llamadas: "+llamadas,"retrocesos: "+retrocesos]},extra));
+  if(k<4){
+    push(3,"Hay "+k+" casilla"+(k===1?"":"s")+" pisada"+(k===1?"":"s")+". Un recorrido cerrado sin repetir casillas necesita al menos 4: devuelvo falso sin buscar.",{found:false,result:"Sin recorrido cerrado",rcls:"bad"});
+    return steps;
+  }
+  S.push(inicio); visitada[inicio[0]-1][inicio[1]-1]=true;
+  push(4,"Hay "+k+" casillas pisadas. Como el recorrido es cerrado, puedo empezar en cualquiera: tomo la primera por filas, "+btPos(inicio[0],inicio[1])+".");
+  const veci=(a,b)=>Math.abs(a[0]-b[0])+Math.abs(a[1]-b[1])===1;
+  function recorrer(E){
+    llamadas++;
+    if(E===k){
+      const cierra=veci(S[E-1],S[0]);
+      push(9,flush()+"Ya pisé las "+k+" casillas. ¿La última, "+btPos(S[E-1][0],S[E-1][1])+", es vecina de la primera, "+btPos(S[0][0],S[0][1])+"? → <b>"+(cierra?"sí: el recorrido cierra":"no: no cierra")+"</b>.",{closing:cierra});
+      if(!cierra) pendiente.push("El recorrido no cierra; deshago la última casilla.");
+      return cierra;
+    }
+    const cur=S[E-1];
+    for(const d of BT_DIRS){
+      const nf=cur[0]+d.df,nc=cur[1]+d.dc;
+      let motivo=null;
+      if(nf<1||nf>n||nc<1||nc>n) motivo="fuera del jardín";
+      else if(!J[nf-1][nc-1]) motivo="tiene pasto";
+      else if(visitada[nf-1][nc-1]) motivo="ya la pisó en este recorrido";
+      if(motivo){pendiente.push("Desde "+btPos(cur[0],cur[1])+" al "+d.nombre+": "+motivo+".");continue;}
+      S.push([nf,nc]); visitada[nf-1][nc-1]=true;
+      push(14,flush()+"Desde "+btPos(cur[0],cur[1])+" avanzo al "+d.nombre+", a "+btPos(nf,nc)+": está pisada y libre. Es la casilla "+(E+1)+" de "+k+".");
+      if(recorrer(E+1)) return true;
+      visitada[nf-1][nc-1]=false; S.pop(); retrocesos++;
+      pendiente.push("Retiro "+btPos(nf,nc)+" y pruebo otra dirección desde "+btPos(cur[0],cur[1])+".");
+    }
+    pendiente.push("Desde "+btPos(cur[0],cur[1])+" no queda ninguna dirección: devuelvo falso.");
+    return false;
+  }
+  const found=recorrer(1);
+  if(found) push(16,flush()+"El recorrido cerró: devuelvo verdadero sin probar más y S queda con el recorrido completo.",{found:true,result:"Recorrido: "+S.map(p=>btPos(p[0],p[1])).join(" → ")+" → "+btPos(S[0][0],S[0][1]),rcls:"good"});
+  else push(21,flush()+"Se agotaron todas las alternativas desde "+btPos(inicio[0],inicio[1])+": no existe un recorrido cerrado que pise exactamente estas casillas.",{found:false,result:"Sin recorrido cerrado",rcls:"bad"});
+  return steps;
+}
+
+/* ---------- renderers ---------- */
+const btFoot=st=>(st.vars?'<div class="vars">'+st.vars.map(x=>'<span>'+esc(x)+'</span>').join("")+'</div>':"")+
+  (st.result?'<div class="result '+st.rcls+'">'+esc(st.result)+'</div>':"");
+const btError=st=>'<div class="result bad" role="alert">'+esc(st.error)+'</div>';
+function btItems(A,S,value){
+  const sel=A.map((x,i)=>S[i]===value?esc(x)+" <small>(tarea "+(i+1)+")</small>":null).filter(x=>x!==null);
+  return sel.length?"{ "+sel.join("; ")+" }":"∅";
+}
+function btProcRender(st){
+  if(st.error) return btError(st);
+  const marks={}; if(st.stage!==undefined) marks[st.stage]={cls:"act",p:"E"};
+  let out='<div><div class="vlabel">Duraciones (tareas desde 1)</div>'+cells(st.input,{},1)+'</div>';
+  out+='<div><div class="vlabel">S[tarea]: número de procesador (desde 1) · «·» = pendiente</div>'+cells(st.arr.map(x=>x===null?null:x+1),marks,1)+'</div>';
+  out+='<div class="c10-loads">'+st.loads.map((load,p)=>'<div class="setbox"><span class="k">P'+(p+1)+' · carga actual '+load+'</span><div class="c10-load"><i style="width:'+(100*load/Math.max(1,...st.loads))+'%"></i></div>'+btItems(st.input,st.arr,p)+'</div>').join("")+'</div>';
+  out+='<div class="setbox"><span class="k">Mejor tiempo: '+(st.best===Infinity?"∞":st.best)+'</span>';
+  if(st.bestAssignment) for(let p=0;p<st.loads.length;p++) out+='<div>P'+(p+1)+': '+btItems(st.input,st.bestAssignment,p)+' · carga '+st.input.reduce((a,x,i)=>a+(st.bestAssignment[i]===p?x:0),0)+'</div>';
+  else out+='Todavía no hay asignación completa.';
+  return out+'</div>'+btFoot(st);
+}
+/* Tablero SVG compartido por el laberinto y el jardín: la misma grilla, otros marcadores. */
+const BT_CELL=64,BT_MARGIN=22;
+function btFrame(n,label,inner){
+  const dim=BT_MARGIN+n*BT_CELL+6; let ax="";
+  for(let i=0;i<n;i++) ax+='<text class="axis" x="'+(BT_MARGIN+i*BT_CELL+BT_CELL/2)+'" y="11">'+(i+1)+'</text><text class="axis" x="11" y="'+(BT_MARGIN+i*BT_CELL+BT_CELL/2)+'">'+(i+1)+'</text>';
+  return '<svg class="bt-grid" viewBox="0 0 '+dim+' '+dim+'" role="img" aria-label="'+esc(label)+'">'+ax+inner+'</svg>';
+}
+const btCx=c=>BT_MARGIN+c*BT_CELL+BT_CELL/2, btCy=f=>BT_MARGIN+f*BT_CELL+BT_CELL/2;
+const btPts=P=>P.map(p=>btCx(p[1]-1)+","+btCy(p[0]-1)).join(" ");
+function btMazeBoard(st){
+  const n=st.n,L=st.grid,inPath={},inBest={},S=BT_CELL,M=BT_MARGIN;
+  st.path.forEach(p=>{inPath[p[0]+","+p[1]]=true;}); (st.best||[]).forEach(p=>{inBest[p[0]+","+p[1]]=true;});
+  const now=st.path.length?st.path[st.path.length-1].join(","):"";
+  let o="",texts=""; // los textos van en una capa aparte, encima de los trazos y de las paredes
+  for(let f=0;f<n;f++)for(let c=0;c<n;c++){
+    const key=(f+1)+","+(c+1),cls="sq"+(inPath[key]?" path":inBest[key]?" best":"")+(key===now?" now":"");
+    o+='<g><title>Casilla '+btPos(f+1,c+1)+', valor '+L[f][c].valor+'</title><rect class="'+cls+'" x="'+(M+c*S)+'" y="'+(M+f*S)+'" width="'+S+'" height="'+S+'"/></g>';
+    texts+='<text class="val" x="'+btCx(c)+'" y="'+btCy(f)+'">'+L[f][c].valor+'</text>';
+    if(f+1===st.origen[0]&&c+1===st.origen[1]) texts+='<text class="lab" x="'+(M+c*S+10)+'" y="'+(M+f*S+11)+'">O</text>';
+    if(f+1===st.destino[0]&&c+1===st.destino[1]) texts+='<text class="lab" x="'+(M+(c+1)*S-10)+'" y="'+(M+(f+1)*S-11)+'">D</text>';
+  }
+  if(st.best&&st.best.length>1) o+='<polyline class="trail best" points="'+btPts(st.best)+'"/>';
+  if(st.path.length>1) o+='<polyline class="trail" points="'+btPts(st.path)+'"/>';
+  const arrow=(pts,title)=>'<g><title>'+title+'</title><polygon class="one" points="'+pts+'"/></g>';
+  for(let f=0;f<n;f++)for(let c=0;c<n;c++){
+    if(c+1<n){ // arista vertical entre (f,c) y (f,c+1)
+      const a=L[f][c].abre.E,b=L[f][c+1].abre.O,x=M+(c+1)*S,y0=M+f*S,ym=y0+S/2;
+      if(!a&&!b) o+='<line class="wall" x1="'+x+'" y1="'+y0+'" x2="'+x+'" y2="'+(y0+S)+'"/>';
+      else if(a&&!b) o+=arrow((x-7)+","+(ym-9)+" "+(x-7)+","+(ym+9)+" "+(x+9)+","+ym,"Un solo sentido: de "+btPos(f+1,c+1)+" a "+btPos(f+1,c+2));
+      else if(!a&&b) o+=arrow((x+7)+","+(ym-9)+" "+(x+7)+","+(ym+9)+" "+(x-9)+","+ym,"Un solo sentido: de "+btPos(f+1,c+2)+" a "+btPos(f+1,c+1));
+    }
+    if(f+1<n){ // arista horizontal entre (f,c) y (f+1,c)
+      const a=L[f][c].abre.S,b=L[f+1][c].abre.N,y=M+(f+1)*S,x0=M+c*S,xm=x0+S/2;
+      if(!a&&!b) o+='<line class="wall" x1="'+x0+'" y1="'+y+'" x2="'+(x0+S)+'" y2="'+y+'"/>';
+      else if(a&&!b) o+=arrow((xm-9)+","+(y-7)+" "+(xm+9)+","+(y-7)+" "+xm+","+(y+9),"Un solo sentido: de "+btPos(f+1,c+1)+" a "+btPos(f+2,c+1));
+      else if(!a&&b) o+=arrow((xm-9)+","+(y+7)+" "+(xm+9)+","+(y+7)+" "+xm+","+(y-9),"Un solo sentido: de "+btPos(f+2,c+1)+" a "+btPos(f+1,c+1));
+    }
+  }
+  o+='<rect class="wall" fill="none" x="'+M+'" y="'+M+'" width="'+(n*S)+'" height="'+(n*S)+'"/>';
+  return btFrame(n,"Laberinto de "+n+" por "+n+"; filas y columnas desde 1",o+texts);
+}
+function btMazeRender(st){
+  if(st.error) return btError(st);
+  const seq=P=>P.map(p=>btPos(p[0],p[1])).join(" → ");
+  return btMazeBoard(st)+'<div class="vlabel">Pared gruesa: no se puede pasar · ▶ pasaje de un solo sentido · O origen · D destino · naranja: camino actual · verde: mejor camino guardado.</div>'+
+    '<div class="setbox"><span class="k">Camino actual · largo '+st.largo+'</span>'+(st.path.length?seq(st.path):"vacío")+'</div>'+
+    '<div class="setbox"><span class="k">Mejor camino guardado · largo '+(st.mejor===Infinity?"∞":st.mejor)+'</span>'+(st.best?seq(st.best):"todavía ninguno")+'</div>'+btFoot(st);
+}
+function btGardenBoard(st){
+  const n=st.n,J=st.grid,S=BT_CELL,M=BT_MARGIN,order={},ok=st.found===true;
+  st.path.forEach((p,i)=>{order[p[0]+","+p[1]]=i;});
+  const now=st.path.length?st.path[st.path.length-1].join(","):"";
+  let o="",texts="";
+  for(let f=0;f<n;f++)for(let c=0;c<n;c++){
+    const key=(f+1)+","+(c+1),visited=order[key]!==undefined;
+    const cls="sq"+(!J[f][c]?" grass":visited?(ok?" best":" path"):" step")+(key===now&&!ok?" now":"");
+    o+='<g><title>Casilla '+btPos(f+1,c+1)+': '+(J[f][c]?(visited?'pisada, es la '+(order[key]+1)+' del recorrido':'pisada, todavía sin ubicar en el recorrido'):'con pasto')+'</title><rect class="'+cls+'" x="'+(M+c*S)+'" y="'+(M+f*S)+'" width="'+S+'" height="'+S+'"/></g>';
+    if(visited) texts+='<text class="val" x="'+btCx(c)+'" y="'+btCy(f)+'">'+(order[key]+1)+'</text>'+(order[key]===0?'<text class="lab" x="'+(M+c*S+19)+'" y="'+(M+f*S+11)+'">inicio</text>':'');
+    else texts+='<text class="dim" x="'+btCx(c)+'" y="'+btCy(f)+'">'+(J[f][c]?"·":"~")+'</text>';
+  }
+  if(st.path.length>1) o+='<polyline class="trail'+(ok?" best":"")+'" points="'+btPts(st.path)+'"/>';
+  if(st.path.length>1&&(ok||st.closing!==undefined)){
+    const a=st.path[st.path.length-1],b=st.path[0];
+    o+='<line class="trail close'+(ok||st.closing?"":" no")+'" x1="'+btCx(a[1]-1)+'" y1="'+btCy(a[0]-1)+'" x2="'+btCx(b[1]-1)+'" y2="'+btCy(b[0]-1)+'"/>';
+  }
+  return btFrame(n,"Jardín de "+n+" por "+n+"; filas y columnas desde 1",o+texts);
+}
+function btAtilaRender(st){
+  if(st.error) return btError(st);
+  return btGardenBoard(st)+'<div class="vlabel">«~» con pasto · gris: pisada sin ubicar · naranja: recorrido actual (número = orden) · línea punteada: la última casilla contra la primera · verde: recorrido encontrado.</div>'+
+    '<div class="setbox"><span class="k">S · '+st.path.length+' de '+st.k+' casillas</span>'+(st.path.length?st.path.map(p=>btPos(p[0],p[1])).join(" → "):"vacío")+'</div>'+btFoot(st);
+}
+/* ===== interfaz Guía · Backtracking ===== */
+function btInteger(id,label,min,max){
+  const value=document.getElementById(id).value.trim(),n=Number(value);
+  if(!/^[+-]?\d+$/.test(value)||!Number.isSafeInteger(n)||n<min||n>max) throw new Error(label+": ingresá un entero entre "+min+" y "+max+".");
+  return n;
+}
+function btVector(id){
+  const text=document.getElementById(id).value.trim(),parts=text.split(",");
+  if(!text||parts.length>6||parts.some(x=>!(/^\d+$/.test(x.trim())))) throw new Error("Ingresá entre 1 y 6 duraciones (enteros mayores o iguales a 0) separadas por comas, sin posiciones vacías.");
+  const A=parts.map(Number);
+  if(A.some(x=>!Number.isSafeInteger(x))||A.reduce((s,x)=>s+x,0)>Number.MAX_SAFE_INTEGER) throw new Error("Las duraciones y su suma deben ser enteros seguros de JavaScript.");
+  return A;
+}
+function btGuard(build){
+  try{return build();}catch(error){return [{error:error.message,msg:"Revisá la entrada y presioná Ejecutar."}];}
+}
+const btProcSim=Sim("sim-g15",()=>btGuard(()=>btProcesadores(btVector("g15-t"),btInteger("g15-m","Procesadores",1,3))),btProcRender);
+const btMazeSim=Sim("sim-g16",()=>btGuard(()=>{
+  const L=btParseLab(document.getElementById("g16-lab").value),n=L.length;
+  return btLaberinto(L,btParseCasilla(document.getElementById("g16-o").value,n,"Origen"),btParseCasilla(document.getElementById("g16-d").value,n,"Destino"));
+}),btMazeRender);
+const btAtilaSim=Sim("sim-g17",()=>btGuard(()=>btAtila(btParseJardin(document.getElementById("g17-jardin").value))),btAtilaRender);
+document.querySelectorAll("[data-bt-preset]").forEach(b=>b.addEventListener("click",()=>{
+  const values=JSON.parse(b.dataset.btPreset);
+  Object.keys(values).forEach(id=>{document.getElementById(id).value=values[id];});
+  ({proc:btProcSim,maze:btMazeSim,atila:btAtilaSim})[b.dataset.btSim].reload();
 }));
 
 /* ===== abrir / cerrar resoluciones ===== */

@@ -393,8 +393,8 @@ inválidas se informan en el simulador, sin reemplazarlas silenciosamente. Punto
 - Procesadores: pseudocódigo y ejemplo propios (tareas 2,3,4,5; m=2 → óptimo 7). Se minimiza la
   carga máxima, restaurando cargas al volver; se copia la primera solución óptima. La poda usa
   cargas no negativas y descarta ramas cuya carga máxima parcial no puede mejorar lo guardado.
-- CSS nuevo `.c10-*` copiado en ambos HTML. El bloque de ejercicios de Backtracking de la guía
-  sigue pendiente; la página de práctica enlaza a la clase 10 y ya no dice que el tema no se dio.
+- CSS nuevo `.c10-*` copiado en ambos HTML. Los ejercicios de Backtracking de la guía están en
+  `prog3-ejercicios.html` (bloque `bloque-bt`, ver más abajo).
 - Pruebas reproducibles: `node tests/clase10.test.cjs`, además de `validate.py` sobre ambos HTML.
   Las pruebas comparan los builders reales con enumeración exhaustiva, verifican modos literales,
   casos límite, validación de entradas, snapshots independientes y el HTML de cada paso.
@@ -422,11 +422,42 @@ apunte.
 
 ### `prog3-ejercicios.html`
 
-Página aparte con **20 ejercicios**: Guía de Ejercitación (Divide y Conquista 1–4, Greedy 1–4,
-Grafos 1–3, **Programación Dinámica 1–3**) y Ejercicios de Integración del primer parcial (1, 2, 5,
-6, 7, 8 — el PDF de la cátedra no trae el 3 ni el 4). Ya no es solo «primer parcial»: la PD entra en
-el integrador (11/11/2026). Backtracking (pág. 6 de la guía) está pendiente de incorporación;
-la teoría y el ejercicio de procesadores ya están en la clase 10 del apunte.
+Página aparte con **23 ejercicios**: Guía de Ejercitación (Divide y Conquista 1–4, Greedy 1–4,
+Grafos 1–3, **Programación Dinámica 1–3**, **Backtracking 1–3**) y Ejercicios de Integración del
+primer parcial (1, 2, 5, 6, 7, 8 — el PDF de la cátedra no trae el 3 ni el 4). Ya no es solo «primer
+parcial»: la PD entra en el integrador (11/11/2026). Con el bloque de Backtracking la guía queda
+completa; la teoría está en las clases 10 y 11 del apunte.
+
+**Bloque Backtracking** (`bloque-bt`, `ej-g15`…`ej-g17`, `sim-g15`…`sim-g17`; los enunciados son
+**imágenes** en la pág. 6 de la guía: leer las imágenes sueltas, `pdf_imagenes.py --paginas 6` sin
+`--componer`; la vista compuesta omite el ejercicio 1 — sin verificar, probablemente por la regla de
+`cm[5] < 40` de la clase 10). Procesadores (la mejor; mismo pseudocódigo que la clase 10,
+simulador propio; `O((m+n)·mⁿ)`), Laberinto (la mejor; `O(n²·3^(n²))`) y Caballo de Atila (una; se
+corta al cerrar; `O(3^(n²))`). Decisiones y observaciones:
+- El enunciado del laberinto sale **cortado a la derecha** en el PDF («ur…», «i…», «dadas,»): se
+  transcribió completando las palabras y una `.note` lo avisa. Laberinto y Atila **no traen números**:
+  pseudocódigo y ejemplos propios (lo dicen sus `.note`). El de Atila supone que la entrada es el
+  jardín con las casillas pisadas marcadas; con `k < 4` devuelve falso (con 2 casillas contiguas
+  `esVecina` daría verdadero, pero se pisaría dos veces cada una).
+- Laberinto: longitud = suma de los valores **incluidos origen y destino**; los booleanos no tienen por
+  qué ser simétricos (pasajes de un solo sentido, dibujados con ▶). Entrada de texto: filas separadas por
+  `/`, casillas por espacios, `valor` + letras N/E/S/O (`3ES`); filas y columnas desde 1; hasta 4×4. El
+  simulador acepta valor 0. Se aclara en una `.first` que el mismo problema es Dijkstra (polinomial).
+- Atila: `#` pisada / `.` pasto, cuadrado de 2×2 a 5×5. La paridad (k impar ⇒ sin recorrido) y el grado
+  < 2 se explican como poda extra pero **no** están en el pseudocódigo. El 4×4 completo tiene 6 ciclos.
+- Builders puros `btProcesadores`, `btLaberinto`, `btAtila` + parseo, renderers `btProcRender` /
+  `btMazeRender` / `btAtilaRender` (SVG compartido `btFrame`) y `btGuard`, entre los marcadores
+  `/* ===== Guía · Backtracking ===== */` y `const btProcSim=`. Laberinto y Atila **cortan en 400 pasos**
+  (`BT_MAX_STEPS`) con un error visible en vez de colgar; Procesadores no tiene tope (igual que la
+  clase 10: hasta ~635 pasos con 6 tareas y 3 procesadores). Pasos de los ejemplos: 28 / 52 / 84.
+- Ids: `g15-t`, `g15-m`, `g16-lab`, `g16-o`, `g16-d`, `g17-jardin`; presets con `data-bt-sim` +
+  `data-bt-preset` (JSON con ids → valores). CSS `.bt-*` solo en esta página.
+- Prueba: `node tests/guia-backtracking.test.cjs` (builders reales contra enumeración exhaustiva,
+  Bellman-Ford y DP de ciclo hamiltoniano; valida también los presets escritos en el HTML). En vm,
+  las comparaciones entre arrays/errores de dos realms fallan con `deepEqual`/`instanceof`: comparar
+  por JSON o por mensaje.
+- Falta una prueba de navegador como `clase10.browser.cjs`; la verificación visual se hizo con capturas
+  de Chrome headless (sin errores de consola). En headless el ancho mínimo de ventana es 500 px.
 
 **Bloque PD** (`bloque-pd`, `ej-g12`…`ej-g14`, `sim-g12`…`sim-g14`; los enunciados de la guía son
 **imágenes** en la pág. 5 del PDF, se leen con `pdf_imagenes.py --paginas 5`): PD 1 El regalo de Darío
