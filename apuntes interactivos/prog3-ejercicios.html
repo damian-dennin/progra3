@@ -4431,6 +4431,7 @@ function btPush(steps,st){
   steps.push(st);
 }
 const btPos=(f,c)=>"("+f+","+c+")";
+const btLista=a=>a.length>1?a.slice(0,-1).join(", ")+" y "+a[a.length-1]:a[0];
 
 /* ---------- Guía · Backtracking 1: tareas a procesadores (mismo árbol que la clase 10) ---------- */
 function btProcesadores(A,m){
@@ -4487,42 +4488,53 @@ function btParseCasilla(text,n,label){
 }
 function btLaberinto(L,origen,destino){
   const n=L.length,visitada=L.map(r=>r.map(()=>false)),camino=[],steps=[];
-  let mejor=Infinity,mejorCamino=null,llamadas=0,podas=0,pendiente=[];
-  const push=(line,msg,largo,extra)=>btPush(steps,Object.assign({kind:"maze",grid:L,n,origen,destino,path:camino.map(p=>p.slice()),
+  let mejor=Infinity,mejorCamino=null,llamadas=0,podas=0,pendiente=[],retrocediendo=false;
+  const foto=(line,msg,largo,extra)=>Object.assign({kind:"maze",grid:L,n,origen,destino,path:camino.map(p=>p.slice()),
     best:mejorCamino?mejorCamino.map(p=>p.slice()):null,largo,mejor,line,msg,
-    vars:["llamadas: "+llamadas,"ramas podadas: "+podas,"largo actual: "+largo,"mejor largo: "+(mejor===Infinity?"∞":mejor)]},extra));
+    vars:["llamadas: "+llamadas,"ramas podadas: "+podas,"largo actual: "+largo,"mejor largo: "+(mejor===Infinity?"∞":mejor)]},extra);
+  const push=(line,msg,largo,extra)=>{btPush(steps,foto(line,msg,largo,extra));retrocediendo=false;};
+  /* Los retrocesos seguidos (un nodo agotado detrás de otro) son un solo paso: el relato los resume y se
+     reemplaza la foto del paso anterior por el estado actual, sin cortar la búsqueda. */
+  let grupo=null;
+  const retroceso=(item,vuelve,largo)=>{
+    const previo=flush();
+    if(!retrocediendo) grupo={previo,items:[]};
+    grupo.items.push(item);
+    const it=grupo.items.map(x=>x.pos),k=it.length;
+    const quien=k===1?(item.destino?"Agoto "+it[0]+": el destino no se sigue explorando. La desmarco y la saco del camino":"Agoto "+it[0]+": ya no quedan direcciones. La desmarco y la saco del camino")
+      :"Agoto "+(k<=3?btLista(it):k+" casillas seguidas, de "+it[0]+" a "+it[k-1])+": ninguna tiene ya direcciones por probar. Las desmarco y las saco del camino, en ese orden";
+    const msg=grupo.previo+quien+(vuelve?"; vuelvo a "+vuelve+".":".");
+    if(retrocediendo) steps[steps.length-1]=foto(21,msg,largo);
+    else{btPush(steps,foto(21,msg,largo));retrocediendo=true;}
+  };
   const flush=()=>{const t=pendiente.length?pendiente.join(" ")+" ":"";pendiente=[];return t;};
-  function explorar(f,c,largo,desde){
+  const num=x=>x===Infinity?"∞":x;
+  function explorar(f,c,largo,desde,largoPadre){
     llamadas++;
     visitada[f-1][c-1]=true; camino.push([f,c]);
     const esDestino=f===destino[0]&&c===destino[1];
     const celda=L[f-1][c-1];
-    const estaticas=[];
-    if(!esDestino) BT_DIRS.forEach(d=>{
-      const nf=f+d.df,nc=c+d.dc;
-      if(!celda.abre[d.k]) estaticas.push(d.nombre+" (pared)");
-      else if(nf<1||nf>n||nc<1||nc>n) estaticas.push(d.nombre+" (fuera del tablero)");
-      else if(visitada[nf-1][nc-1]) estaticas.push(d.nombre+" (ya la visité en este camino)");
-    });
+    push(6,flush()+"Entro a "+btPos(f,c)+" (valor "+celda.valor+"): largo "+largo+". La marco como visitada y la agrego al camino."+(esDestino?"":" No es el destino: recorro las cuatro direcciones."),largo);
     if(esDestino){
       const mejora=largo<mejor,prev=mejor;
       if(mejora){mejor=largo;mejorCamino=camino.map(p=>p.slice());}
-      push(mejora?9:8,flush()+"Llegué al destino "+btPos(f,c)+" con largo "+largo+". "+(mejora?"Mejora el mejorLong anterior ("+(prev===Infinity?"∞":prev)+"): ahora vale "+largo+" y guardo una copia del camino.":"No mejora "+mejor+": no lo guardo."),largo);
-    }else{
-      push(6,flush()+"Entro a "+btPos(f,c)+" (valor "+celda.valor+"): largo "+largo+". La marco como visitada."+(estaticas.length?" No puedo ir al "+estaticas.join(", ")+".":""),largo);
-      BT_DIRS.forEach(d=>{
-        const nf=f+d.df,nc=c+d.dc;
-        if(!celda.abre[d.k]||nf<1||nf>n||nc<1||nc>n||visitada[nf-1][nc-1]) return;
-        const nuevo=largo+L[nf-1][nc-1].valor;
-        if(nuevo>=mejor){podas++;pendiente.push("Poda: ir al "+d.nombre+", a "+btPos(nf,nc)+", da "+largo+" + "+L[nf-1][nc-1].valor+" = "+nuevo+" ≥ mejor "+mejor+".");return;}
-        explorar(nf,nc,nuevo,[f,c]);
-      });
-    }
+      push(mejora?9:8,"Llegué al destino "+btPos(f,c)+" con largo "+largo+". "+(mejora?"Mejora el mejorLong anterior ("+num(prev)+"): ahora vale "+largo+" y guardo una copia del camino.":"No mejora "+mejor+": no lo guardo."),largo);
+    }else BT_DIRS.forEach(d=>{
+      const nf=f+d.df,nc=c+d.dc;
+      if(!celda.abre[d.k]){pendiente.push("Al "+d.nombre+": pared.");return;}
+      if(nf<1||nf>n||nc<1||nc>n){pendiente.push("Al "+d.nombre+": fuera del tablero.");return;}
+      if(visitada[nf-1][nc-1]){pendiente.push("Al "+d.nombre+": "+btPos(nf,nc)+" ya está en el camino.");return;}
+      const valor=L[nf-1][nc-1].valor,nuevo=largo+valor;
+      const cond="Al "+d.nombre+", "+btPos(nf,nc)+": se puede ir y está libre. ¿"+largo+" + "+valor+" = "+nuevo+" &lt; mejorLong "+num(mejor)+"? ";
+      if(nuevo>=mejor){podas++;push(15,flush()+cond+"<b>No</b> → poda: esa rama no puede mejorar lo guardado.",largo);return;}
+      push(16,flush()+cond+"<b>Sí</b> → Explorar("+nf+", "+nc+", "+nuevo+").",largo);
+      explorar(nf,nc,nuevo,[f,c],largo);
+    });
     visitada[f-1][c-1]=false; camino.pop();
-    pendiente.push("Agoto "+btPos(f,c)+" y la desmarco"+(desde?"; vuelvo a "+btPos(desde[0],desde[1])+".":"."));
+    retroceso({pos:btPos(f,c),destino:esDestino},desde?btPos(desde[0],desde[1]):null,largoPadre);
   }
   push(3,"Arranco en el origen "+btPos(origen[0],origen[1])+": la longitud ya incluye su valor, "+L[origen[0]-1][origen[1]-1].valor+". mejorLong = ∞. El destino es "+btPos(destino[0],destino[1])+".",0);
-  explorar(origen[0],origen[1],L[origen[0]-1][origen[1]-1].valor,null);
+  explorar(origen[0],origen[1],L[origen[0]-1][origen[1]-1].valor,null,0);
   push(4,flush()+"Se agotó el árbol de caminos. "+(mejorCamino?"Devuelvo el largo mínimo y la copia guardada.":"Nunca llegué al destino: no hay camino."),0,
     {result:mejorCamino?"Longitud mínima = "+mejor+" · "+mejorCamino.map(p=>btPos(p[0],p[1])).join(" → "):"No existe un camino de "+btPos(origen[0],origen[1])+" a "+btPos(destino[0],destino[1]),rcls:mejorCamino?"good":"bad"});
   return steps;
@@ -4540,26 +4552,41 @@ function btParseJardin(text){
 function btAtila(J){
   const n=J.length,steps=[],visitada=J.map(r=>r.map(()=>false)),S=[];
   let k=0,inicio=null; J.forEach((r,f)=>r.forEach((p,c)=>{if(p){k++;if(!inicio)inicio=[f+1,c+1];}}));
-  let llamadas=0,retrocesos=0,pendiente=[];
+  let llamadas=0,retrocesos=0,pendiente=[],retrocediendo=false;
   const flush=()=>{const t=pendiente.length?pendiente.join(" ")+" ":"";pendiente=[];return t;};
-  const push=(line,msg,extra)=>btPush(steps,Object.assign({kind:"atila",grid:J,n,k,path:S.map(p=>p.slice()),line,msg,
-    vars:["pisadas: "+k,"visitadas: "+S.length,"llamadas: "+llamadas,"retrocesos: "+retrocesos]},extra));
+  const foto=(line,msg,extra)=>Object.assign({kind:"atila",grid:J,n,k,path:S.map(p=>p.slice()),line,msg,
+    vars:["pisadas: "+k,"visitadas: "+S.length,"llamadas: "+llamadas,"retrocesos: "+retrocesos]},extra);
+  const push=(line,msg,extra)=>{btPush(steps,foto(line,msg,extra));retrocediendo=false;};
+  /* Igual que en el laberinto: los retrocesos seguidos son un solo paso (el relato los resume y se reemplaza la foto). */
+  let grupo=null;
+  const retroceso=(E,pos,vuelve)=>{
+    const previo=flush();
+    if(!retrocediendo) grupo={previo,items:[]};
+    grupo.items.push({E,pos});
+    const it=grupo.items,k=it.length,ps=it.map(x=>x.pos);
+    const quien=k===1?"Recorrer("+E+") devolvió falso: desmarco "+ps[0]+" y la saco de S"
+      :k<=3?btLista(it.map(x=>"Recorrer("+x.E+")"))+" devolvieron falso: desmarco "+btLista(ps)+" y las saco de S, en ese orden"
+      :"Recorrer("+it[0].E+") hasta Recorrer("+it[k-1].E+") devolvieron falso ("+k+" llamadas seguidas): desmarco "+k+" casillas, de "+ps[0]+" a "+ps[k-1]+", y las saco de S, en ese orden";
+    const msg=grupo.previo+quien+". Vuelvo a "+vuelve+".";
+    if(retrocediendo) steps[steps.length-1]=foto(18,msg);
+    else{btPush(steps,foto(18,msg));retrocediendo=true;}
+  };
   if(k<4){
     push(3,"Hay "+k+" casilla"+(k===1?"":"s")+" pisada"+(k===1?"":"s")+". Un recorrido cerrado sin repetir casillas necesita al menos 4: devuelvo falso sin buscar.",{found:false,result:"Sin recorrido cerrado",rcls:"bad"});
     return steps;
   }
   S.push(inicio); visitada[inicio[0]-1][inicio[1]-1]=true;
-  push(4,"Hay "+k+" casillas pisadas. Como el recorrido es cerrado, puedo empezar en cualquiera: tomo la primera por filas, "+btPos(inicio[0],inicio[1])+".");
+  push(4,"Hay "+k+" casillas pisadas. Como el recorrido es cerrado, puedo empezar en cualquiera: tomo la primera por filas, "+btPos(inicio[0],inicio[1])+", y llamo a Recorrer(1).");
   const veci=(a,b)=>Math.abs(a[0]-b[0])+Math.abs(a[1]-b[1])===1;
   function recorrer(E){
     llamadas++;
     if(E===k){
       const cierra=veci(S[E-1],S[0]);
       push(9,flush()+"Ya pisé las "+k+" casillas. ¿La última, "+btPos(S[E-1][0],S[E-1][1])+", es vecina de la primera, "+btPos(S[0][0],S[0][1])+"? → <b>"+(cierra?"sí: el recorrido cierra":"no: no cierra")+"</b>.",{closing:cierra});
-      if(!cierra) pendiente.push("El recorrido no cierra; deshago la última casilla.");
       return cierra;
     }
     const cur=S[E-1];
+    if(E>1) push(8,flush()+"Recorrer("+E+"): ¿E = k? "+E+" ≠ "+k+" → faltan "+(k-E)+" casilla"+(k-E===1?"":"s")+". Miro las direcciones desde "+btPos(cur[0],cur[1])+".");
     for(const d of BT_DIRS){
       const nf=cur[0]+d.df,nc=cur[1]+d.dc;
       let motivo=null;
@@ -4571,9 +4598,9 @@ function btAtila(J){
       push(14,flush()+"Desde "+btPos(cur[0],cur[1])+" avanzo al "+d.nombre+", a "+btPos(nf,nc)+": está pisada y libre. Es la casilla "+(E+1)+" de "+k+".");
       if(recorrer(E+1)) return true;
       visitada[nf-1][nc-1]=false; S.pop(); retrocesos++;
-      pendiente.push("Retiro "+btPos(nf,nc)+" y pruebo otra dirección desde "+btPos(cur[0],cur[1])+".");
+      retroceso(E+1,btPos(nf,nc),btPos(cur[0],cur[1]));
     }
-    pendiente.push("Desde "+btPos(cur[0],cur[1])+" no queda ninguna dirección: devuelvo falso.");
+    pendiente.push("Desde "+btPos(cur[0],cur[1])+" no queda ninguna dirección: Recorrer("+E+") devuelve falso.");
     return false;
   }
   const found=recorrer(1);

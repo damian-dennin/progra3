@@ -96,7 +96,7 @@ for(let i=0;i<700;i++){
 }
 assert(labOk>300&&labNo>20,'cobertura de casos con y sin camino: '+labOk+'/'+labNo);
 const mazeDefault='5E 7ESO 6S 9S / 2ES 7NESO 3NO 5NS / 2NES 7SO 3E 7NSO / 1NE 3NEO 7EO 1NO';
-const mazeCases=[[mazeDefault,'1,1','4,4',52,'good',35],['1ES 9SO / 1N 1NO','1,1','2,2',6,'good',11],['1ES 1ESO 1SO / 1N 1N 1N / 1 1 1','1,1','3,3',8,'bad',null],[mazeDefault,'1,1','1,1',3,'good',5],['4','1,1','1,1',3,'good',4]];
+const mazeCases=[[mazeDefault,'1,1','4,4',124,'good',35],['1ES 9SO / 1N 1NO','1,1','2,2',12,'good',11],['1ES 1ESO 1SO / 1N 1N 1N / 1 1 1','1,1','3,3',16,'bad',null],[mazeDefault,'1,1','1,1',5,'good',5],['4','1,1','1,1',5,'good',4]];
 for(const [text,o,d,count,rcls,len] of mazeCases){
   const L=B.btParseLab(text),n=L.length,steps=B.btLaberinto(L,B.btParseCasilla(o,n,'o'),B.btParseCasilla(d,n,'d'));
   assert.equal(steps.length,count,text+' '+o+'→'+d);assert.equal(last(steps).rcls,rcls);if(len!==null)assert.equal(last(steps).mejor,len);
@@ -133,7 +133,7 @@ for(let i=0;i<500;i++){
   if(i<80)verifySteps(steps,B.btAtilaRender);
 }
 assert(atYes>=30&&atNo>100,'cobertura: '+atYes+'/'+atNo);
-const gardens=[['.###./####./#.##./####./.##..',84,'good',16],['####/#..#/#..#/####',14,'good',12],['####/####/####/####',18,'good',16],['###/###/###',88,'bad',9],['###../#.#../###../.#.../.#...',20,'bad',10],['##/..',1,'bad',2],['##/##',6,'good',4]];
+const gardens=[['.###./####./#.##./####./.##..',169,'good',16],['####/#..#/#..#/####',24,'good',12],['####/####/####/####',32,'good',16],['###/###/###',178,'bad',9],['###../#.#../###../.#.../.#...',42,'bad',10],['##/..',1,'bad',2],['##/##',8,'good',4]];
 for(const [text,count,rcls,k] of gardens){
   const J=B.btParseJardin(text),steps=B.btAtila(J);
   assert.equal(steps.length,count,text);assert.equal(last(steps).rcls,rcls);assert.equal(last(steps).k,k);
@@ -171,8 +171,20 @@ for(const p of presets){
   const steps=run[p.sim]();assert(steps.length>=1&&steps.length<=B.BT_MAX_STEPS||p.sim==='proc');verifySteps(steps,renders[p.sim]);checks++;
 }
 Object.assign(inputs,defaults);
-for(const [sim,count] of [['proc',28],['maze',52],['atila',84]]){ // los ejemplos por defecto, dentro del presupuesto del apunte
+for(const [sim,count] of [['proc',28],['maze',124],['atila',169]]){ // los ejemplos por defecto, dentro del presupuesto del apunte
   assert.equal(run[sim]().length,count);checks++;
+}
+/* El resaltado recorre el pseudocódigo: cada `line` existe como data-l del simulador, ninguna línea concentra
+   más de la mitad de los pasos y aparecen las líneas que antes nunca se resaltaban. */
+for(const [sim,id,must] of [['maze','sim-g16',[6,9,15,16,21]],['atila','sim-g17',[8,9,14,18]]]){
+  const block=html.slice(html.indexOf('id="'+id+'"'));
+  const code=block.slice(0,block.indexOf('data-viz'));
+  const dataL=new Set([...code.matchAll(/data-l="(\d+)"/g)].map(m=>+m[1]));
+  const steps=run[sim](),count={};
+  steps.forEach(s=>{if(s.line!==undefined){assert(dataL.has(s.line),id+': la línea '+s.line+' no existe en el pseudocódigo');count[s.line]=(count[s.line]||0)+1;}});
+  for(const l of must)assert(count[l],id+': nunca se resalta la línea '+l);
+  for(const l of Object.keys(count))assert(count[l]<=steps.length/2,id+': la línea '+l+' concentra '+count[l]+' de '+steps.length+' pasos');
+  checks+=2+must.length+Object.keys(count).length;
 }
 // un error de entrada se muestra, no rompe el renderer
 for(const r of Object.values(renders))assert(/result bad/.test(r({error:'x < y'}))&&/x &lt; y/.test(r({error:'x < y'})));checks++;

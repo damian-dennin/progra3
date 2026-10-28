@@ -449,7 +449,10 @@ corta al cerrar; `O(3^(n²))`). Decisiones y observaciones:
   `btMazeRender` / `btAtilaRender` (SVG compartido `btFrame`) y `btGuard`, entre los marcadores
   `/* ===== Guía · Backtracking ===== */` y `const btProcSim=`. Laberinto y Atila **cortan en 400 pasos**
   (`BT_MAX_STEPS`) con un error visible en vez de colgar; Procesadores no tiene tope (igual que la
-  clase 10: hasta ~635 pasos con 6 tareas y 3 procesadores). Pasos de los ejemplos: 28 / 52 / 84.
+  clase 10: hasta ~635 pasos con 6 tareas y 3 procesadores). Pasos de los ejemplos: 28 / 124 / 169.
+  En Laberinto y Atila el resaltado recorre el pseudocódigo (entrada a la casilla, control de destino o de
+  cierre, poda, llamada, retroceso) y los retrocesos consecutivos se agrupan en un solo paso; el test
+  `guia-backtracking.test.cjs` exige que ninguna línea concentre más de la mitad de los pasos.
 - Ids: `g15-t`, `g15-m`, `g16-lab`, `g16-o`, `g16-d`, `g17-jardin`; presets con `data-bt-sim` +
   `data-bt-preset` (JSON con ids → valores). CSS `.bt-*` solo en esta página.
 - Prueba: `node tests/guia-backtracking.test.cjs` (builders reales contra enumeración exhaustiva,
