@@ -9,7 +9,7 @@ aprobar los parciales: primer parcial 16/09/2026, integrador 11/11/2026.
 | Archivo | Qué es |
 |---|---|
 | `apuntes interactivos/index.html` | El apunte de la teoría de la cursada. Una clase por bloque. (Antes se llamaba `prog3-apunte.html` y vivía en la raíz; en esta máquina la carpeta es `apuntes interactivos/`, con espacio, así que las rutas van entre comillas.) |
-| `apuntes interactivos/prog3-ejercicios.html` | Los ejercicios de la Guía y de Integración (Divide y Conquista, Greedy, Grafos, Programación Dinámica), con la resolución tapada tras un botón. Mismo motor y CSS que el apunte, archivo aparte. |
+| `apuntes interactivos/prog3-ejercicios.html` | Los ejercicios de la Guía, los problemas de las clases 7 a 11 y los de Integración de los dos parciales (Divide y Conquista, Greedy, Grafos, Programación Dinámica, Backtracking), con la resolución tapada tras un botón. Mismo motor y CSS que el apunte, archivo aparte. |
 | `validate.py` | Validación estructural. Correr sobre **los dos** HTML después de cada cambio. |
 | `pdf_imagenes.py` | Extractor de imágenes de los PDF de las clases (`Clase-NN_fecha.pdf`, en la raíz). Ver «Trampas conocidas». |
 | `CLAUDE.md` | Este archivo. |
@@ -260,6 +260,9 @@ variables CSS.**
   vacío): su contenido sale de `pdftotext -layout -f N -l N archivo.pdf -`. Ejemplo: en el Cambio
   de la clase 7 la base dice `d[j]` y `máx(longitud(d), v+1)`, los parches pasan a `d[i]` y
   `longitud(d), v+1` pero dejan dos `d[j]` sin corregir.
+- **Finales de línea**: `index.html` y `prog3-ejercicios.html` están en **CRLF** (CLAUDE.md, en LF). Un bloque
+  insertado por script con LF deja el archivo mezclado y el diff de git lo muestra entero; después de insertar,
+  normalizar con `h.replace(/\r?\n/g, "\r\n")`. Un `Edit` de una sola línea no tiene el problema.
 - **`:first-child` cuenta solo elementos**: el override `.note b:not(:first-child)` (para que los
   `<b>` del cuerpo de una nota vayan en línea y solo la etiqueta inicial vaya en bloque) trata como
   etiqueta a un `<b>` que sea el primer *elemento* de un `<li>`/párrafo aunque haya texto antes.
@@ -326,7 +329,7 @@ de consola.
 | 9 | 07/10/2026 | Repaso de la LCS, ejercicio «Preparación física de la selección» (PD), Algoritmo de Floyd, ejercicio «Centro logístico óptimo» | Preparación física (Mochila con hasta 2 sesiones, tabla n × (C+1), reconstrucción y comparación con «a lo sumo 1 sesión»), Floyd (matriz n × n con `colLabels`, pivote k en verde, 84 pasos con el grafo de la lámina), Centro logístico (R con una columna extra «máx», A como `extra` en el primer paso); sin selector literal/corregido: el pseudocódigo de Floyd no tiene errores que rompan |
 | 10 | 14/10/2026 | Repaso de Floyd, Backtracking, N reinas, suma de subconjuntos, partición en mitades, tareas a procesadores | Reinas (tablero SVG, modos corregido/literal), suma (decisiones 0/1, modos corregido/literal), partición (conjuntos etiquetados), procesadores (cargas y mejor asignación) |
 
-`index.html`: 37 simuladores, 83 secciones, 100 preguntas de autoevaluación. A partir de la clase 7
+`index.html`: 40 simuladores, 83 secciones, 110 preguntas de autoevaluación (conteo de `validate.py`). A partir de la clase 7
 el quiz reparte la respuesta correcta entre las cuatro posiciones (los de las clases 1–6 la tienen
 casi siempre en la segunda).
 
@@ -422,11 +425,22 @@ apunte.
 
 ### `prog3-ejercicios.html`
 
-Página aparte con **23 ejercicios**: Guía de Ejercitación (Divide y Conquista 1–4, Greedy 1–4,
+Página aparte con **41 ejercicios**: Guía de Ejercitación (Divide y Conquista 1–4, Greedy 1–4,
 Grafos 1–3, **Programación Dinámica 1–3**, **Backtracking 1–3**) y Ejercicios de Integración del
-primer parcial (1, 2, 5, 6, 7, 8 — el PDF de la cátedra no trae el 3 ni el 4). Ya no es solo «primer
-parcial»: la PD entra en el integrador (11/11/2026). Con el bloque de Backtracking la guía queda
-completa; la teoría está en las clases 10 y 11 del apunte.
+primer parcial (1, 2, 5, 6, 7, 8 — el PDF de la cátedra no trae el 3 ni el 4), más —en este orden,
+antes del mapa de reconocimiento— **12 problemas de clase** (`bloque-clase`) y los **6 ejercicios de
+integración del segundo parcial** (`bloque-integ2`). Ya no es solo «primer parcial»: PD, Backtracking
+y Floyd entran en el integrador (11/11/2026). Con el bloque de Backtracking la guía queda completa;
+la teoría está en las clases 10 y 11 del apunte. Hero: «41 ejercicios · 29 simuladores aquí + 12 en
+el apunte» (los 12 problemas de clase no tienen simulador propio: enlazan al del apunte).
+
+Fuentes de los bloques nuevos, en `ejercicios/` (sin trackear al escribir esto):
+`Progra3-Ejercicios-desde-PD.pdf` (la hoja de práctica «desde PD en adelante»: **Parte A** = 15
+problemas de clase numerados 1–15, **Parte B** = las 6 consignas de integración; hay una copia idéntica
+en `apuntes interactivos/`) y `Ejercicios de Integración práctica segundo parcial.pdf` (es **solo
+texto**: `pdf_imagenes.py --componer` da páginas en blanco, y los símbolos matemáticos del ejercicio 5
+salen como `�` con `pdftotext`; se reconstruyeron por contexto, y la hoja de práctica trae el texto
+limpio).
 
 **Bloque Backtracking** (`bloque-bt`, `ej-g15`…`ej-g17`, `sim-g15`…`sim-g17`; los enunciados son
 **imágenes** en la pág. 6 de la guía: leer las imágenes sueltas, `pdf_imagenes.py --paginas 6` sin
@@ -475,11 +489,74 @@ p ≥ 2 (con p = 1 la 3.ª unidad costaría −1 y los rangos se pisan: 44 de 49
 simuladores comparten `dpSteps` (esqueleto: inicializar, un paso por fila y por celda, y un `after`
 con el devolver + reconstrucción sin línea); `dpTable`/`dpRender` están copiados del apunte.
 
+**Bloque Problemas de clase** (`bloque-clase`, `ej-c1`…`ej-c15` **con la numeración de la hoja**, Parte A):
+existen `c1, c2, c3, c7, c8, c9, c10, c11, c12, c13, c14, c15`. Faltan c4–c6 porque son PD 1–3 de la guía
+(`ej-g12`…`ej-g14`), y la parte de la clase 10 del c14 es `ej-g15`; una `.note` al principio del bloque lo
+explica. Cada ítem: enunciado de la hoja → qué piden → razonamientos → «Ver la resolución» con estrategia
+(`.grid2`/`.def`; en Backtracking los seis elementos), pseudocódigo, complejidad y un link «Ejecutalo paso a
+paso» al simulador del apunte (atributo `data-apunte-sim`, que el test comprueba). **No hay simulador
+propio ni JS nuevo**: decisión de Damián, para no duplicar código en dos lugares. Los pseudocódigos son
+**copias literales** de los `<pre class="ps">` de `index.html` (con sus rarezas; las `.note` de cada
+ítem las resumen y enlazan a la sección del apunte que las explica). El bloque se generó con un script que
+extrae los `pre.ps` de `index.html` por id de sección y, en la clase 11 (donde el código vive dentro del
+simulador), las líneas `.tx` de `sim-c11-greedy` y `sim-c11-procesadores`: **si cambia un pseudocódigo del
+apunte hay que actualizar la copia de acá**. Resultados de los ejemplos, verificados en Node: Mochila
+(c3) 18 con los objetos 1 y 4; Suma (c12) cuatro soluciones, {6}, {5,1}, {3,2,1} y {2,4}, y el literal solo
+{2,4}; Partición (c13) una partición que sale dos veces por las etiquetas 1/2; Mochila con cota (c15) 62.
+
+**Bloque Integración · Segundo parcial** (`bloque-integ2`, `ej-s1`…`ej-s6`, `sim-s1`…`sim-s6`, numeración
+del PDF). **Ninguno trae pseudocódigo ni números**: todo es propio y cada `.note` lo dice. Los enunciados
+se transcriben tal cual, con sus erratas («lo cuales», «en tiempo directa», «que valor»). Técnica y
+decisiones:
+- **s1 Almacenamiento** (PD, `Θ(n·D)`): Mochila 0/1 con valor = peso; es la contracara de `ej-i7`
+  (allá, cantidad de archivos ⇒ Greedy; acá, espacio ocupado ⇒ PD), con links cruzados. Ejemplo propio
+  S = 6,5,5,3, D = 10: PD 10; Greedy grande→chico 9 y chico→grande 8.
+- **s2 Subasta** (Backtracking, la mejor, poda por cota superior, `O((m+n)·(m+1)ⁿ)`): «m personas que
+  oferten por cada producto» se lee como m personas en total, con ofertas para algunos productos; S[e] =
+  persona o «sin vender»; `cota[e]` suma la mayor oferta de cada producto que falta (sobreestima, por eso
+  vale). Poda con `>` estricto y `mejorGanancia ← −1`. Ejemplo del enunciado: 13 (Z→A, X→B) en solo 14
+  pasos, porque la cota poda casi todo; por eso el test pide ≥ 10 pasos para s2 y ≥ 30 para el resto.
+  Por qué no Greedy (contraejemplo X: 8,7 / Y: 7,1 ⇒ 9 contra 14) ni PD (el estado serían subconjuntos
+  de personas, 2ᵐ).
+- **s3 Catálogo** (PD con repetición ilimitada, `Θ(n·P)`): «lo uso» se queda en la **misma fila**
+  (`M[i, j − cᵢ] + cᵢ`), como el Cambio, pero maximizando lo gastado sin pasarse. Ejemplo c = 9,6,4 y
+  P = 17: 17 contra 15 de Greedy.
+- **s4 Estaciones** (Backtracking, la mejor, recorrido de exactamente K = m·n − X casillas,
+  `O(K·4ᴷ)`): el enunciado se contradice en las guardas de bajar (`i < M` contra `i + 1 < M`); se usa
+  `i < M`. La casilla de partida cuenta como visitada. Con estos 4 movimientos la columna nunca baja, así
+  que **ninguna casilla se repite** (el oráculo del test lo comprueba), los recorridos miden como mucho
+  `m + 2(n − 1)` casillas y un K mayor da «no existe»; también admite una PD `Θ(m·n·K)`, y una `.first` lo
+  dice sin cambiar la respuesta de a) (Backtracking). Ejemplo propio 3×3, partida (1,1), X = 4 ⇒ K = 5,
+  esfuerzo 15, 110 pasos. Tablero SVG rectangular `sFrame`.
+- **s5 Ciudad base** (Grafos: Floyd como caja negra + suma de cada fila, `Θ(N³)`): −1 ⇒ ∞ y diagonal 0;
+  costo ∞ ⇒ descartada; `<` estricto. Es el Centro logístico con **suma** en vez de máximo. Floyd no se
+  reescribe (`floydPuro`, copiado del apunte). Ejemplo propio de 5 ciudades: gana la 1 con 21; la 4 no
+  tiene salidas.
+- **s6 Festival** (PD, hasta 2 proyecciones, `Θ(n·P)`): la 2.ª proyección **vuelve a sumar** la calificación
+  (si no, nunca convendría) y el par cuesta c + c/2; costos **pares** o el simulador avisa en vez de
+  redondear. Ejemplo r = 6,4,10, c = 8,6,4, P = 12: 24 contra 16 con una sola proyección.
+- JS: entre `/* ===== Integración · Segundo parcial ===== */` y `const s1Sim=`; builders puros
+  `s1Almacenamiento`, `s3Catalogo`, `s6Festival` (sobre `dpSteps`), `s2Subasta`, `s4Estaciones` (con
+  `sPush`, que corta en 400 pasos con un error visible) y `s5CiudadBase`; parseo `sList`, `s2Parse`,
+  `s4ParseMatriz`, `s4ParseCasilla`, `s5Parse`; renderers `sDpRender`, `s2Render` (reusa `dpTable`),
+  `s4Render`, `s5Render`. Las entradas inválidas se informan (`btGuard` + `btError`), no se recortan. Presets
+  con `data-s-sim` + `data-s-preset`. Inputs: `s1-s`/`s1-d`, `s2-ofertas` (filas por `/`, ofertas por espacios,
+  `-` = no ofertó, hasta 4×4), `s3-c`/`s3-p`, `s4-m`/`s4-ini`/`s4-x` (hasta 4×4), `s5-a` (de 2×2 a 6×6),
+  `s6-r`/`s6-c`/`s6-p`. Pasos por defecto: 56 / 14 / 66 / 110 / 45 / 49.
+- Prueba: `node tests/integracion2.test.cjs` (8000+ comprobaciones): builders reales contra oráculos
+  independientes (subconjuntos, asignaciones inyectivas, sumas alcanzables, DFS y DP de recorridos,
+  Dijkstra desde cada nodo, 3ⁿ elecciones), reconstrucciones válidas, entradas inválidas, presets del HTML,
+  pasos por defecto, que cada `line` exista como `data-l`, **que cada link `index.html#…` y cada
+  `data-apunte-sim` de la página exista como id en el apunte** (`validate.py` no revisa links entre archivos)
+  y, solo para s2 y s4, que ninguna línea concentre más de la mitad de los pasos (en los simuladores de tabla
+  y en el posproceso de s5 el ciclo interno es el algoritmo). Chrome headless con un arnés que abre todas las
+  resoluciones, avanza cada simulador y aprieta los 24 presets: 29 `Sim`, cero errores de consola.
+
 Cada ejercicio tiene la misma secuencia: **enunciado textual** (`.enun`) → **«qué te están
 pidiendo»** en lenguaje natural → **razonamientos guiados** (`ol.razon`, preguntas con un empujón,
 sin spoilear) → botón **«Ver la resolución»** (`button.rev` togglea `.sol.show`) que revela
-estrategia con sus elementos, pseudocódigo y un **simulador propio** (`sim-g1`…`sim-i8`, 20 en
-total) con el ejemplo del enunciado, más la complejidad. Botón «Abrir todas las resoluciones» en
+estrategia con sus elementos, pseudocódigo y un **simulador propio** (`sim-g1`…`sim-s6`, 29 en
+total; los problemas de clase lo enlazan del apunte) con el ejemplo del enunciado, más la complejidad. Botón «Abrir todas las resoluciones» en
 el hero. Los subtítulos usan las letras que pide cada PDF (guía a/b/c, integración a/b/c/d).
 
 Reutiliza, copiados del apunte: `Sim`, `esc`, `parseArr`, `cells`, `arrRender`, los helpers de

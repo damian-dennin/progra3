@@ -351,6 +351,30 @@ table.dp td.cur{border-color:var(--acc);background:var(--acc-w);font-weight:700;
     <li><a href="#ej-i7">7 · Maximizar archivos</a></li>
     <li><a href="#ej-i8">8 · F1: vuelta a Mónaco</a></li>
   </ol>
+  <div class="navgroup">Problemas de clase · 7 a 11</div>
+  <ol>
+    <li><a href="#ej-c1">1 · Fibonacci</a></li>
+    <li><a href="#ej-c2">2 · Cambio</a></li>
+    <li><a href="#ej-c3">3 · Mochila 0-1</a></li>
+    <li><a href="#ej-c7">7 · Subsecuencia común más larga</a></li>
+    <li><a href="#ej-c8">8 · Preparación física</a></li>
+    <li><a href="#ej-c9">9 · Floyd</a></li>
+    <li><a href="#ej-c10">10 · Centro logístico</a></li>
+    <li><a href="#ej-c11">11 · Las 8 reinas</a></li>
+    <li><a href="#ej-c12">12 · Suma de subconjuntos</a></li>
+    <li><a href="#ej-c13">13 · Partición en mitades</a></li>
+    <li><a href="#ej-c14">14 · Procesadores con cota Greedy</a></li>
+    <li><a href="#ej-c15">15 · Mochila con cota</a></li>
+  </ol>
+  <div class="navgroup">Integración · Segundo parcial</div>
+  <ol>
+    <li><a href="#ej-s1">1 · Maximización de almacenamiento</a></li>
+    <li><a href="#ej-s2">2 · Sistema de subasta</a></li>
+    <li><a href="#ej-s3">3 · Catálogo de premios</a></li>
+    <li><a href="#ej-s4">4 · Estaciones de actividades</a></li>
+    <li><a href="#ej-s5">5 · Ciudad base de la Selección</a></li>
+    <li><a href="#ej-s6">6 · Festival de cine</a></li>
+  </ol>
   <div class="navgroup">Cierre</div>
   <ol>
     <li><a href="#mapa">Mapa de reconocimiento</a></li>
@@ -361,13 +385,13 @@ table.dp td.cur{border-color:var(--acc);background:var(--acc-w);font-weight:700;
 <header class="hero">
   <div class="kicker">UADE · Programación III — Diseño y Análisis de Algoritmos</div>
   <h1>Ejercicios resueltos para los parciales</h1>
-  <p>Los enunciados de la <b>Guía de Ejercitación</b> y de los <b>Ejercicios de Integración</b>,
-  trabajados con el formato que pide la cátedra en el parcial. Cada ejercicio arranca con la
-  consigna textual, sigue con qué te están pidiendo en criollo y una serie de razonamientos para
-  que lo intentes solo; recién ahí, apretando un botón, aparece la resolución completa: estrategia,
-  pseudocódigo y un simulador para ejecutarlo paso a paso con el ejemplo del enunciado.</p>
+  <p>Los enunciados de la <b>Guía de Ejercitación</b>, de los problemas de las clases 7 a 11 y de los
+  <b>Ejercicios de Integración</b> (primer y segundo parcial), trabajados con el formato que pide la cátedra en el parcial.
+  Cada ejercicio arranca con la consigna textual, sigue con qué te están pidiendo en criollo y una serie de razonamientos para
+  que lo intentes solo; recién ahí, apretando un botón, aparece la resolución completa: estrategia, pseudocódigo y
+  un simulador para ejecutarlo paso a paso (en los problemas de clase, el simulador está en el apunte y se enlaza).</p>
   <div class="hero-meta">
-    <b>23 ejercicios</b><b>23 simuladores</b><b>Divide y Conquista · Greedy · Grafos · Programación Dinámica · Backtracking</b><b>Primer parcial 16/09/2026 · Integrador 11/11/2026</b>
+    <b>41 ejercicios</b><b>29 simuladores aquí + 12 en el apunte</b><b>Divide y Conquista · Greedy · Grafos · Programación Dinámica · Backtracking</b><b>Primer parcial 16/09/2026 · Integrador 11/11/2026</b>
   </div>
   <p style="margin-top:18px"><button class="primary" id="abrir-todo">Abrir todas las resoluciones</button>
   <span class="srcnote" style="border:0;padding:0;margin-left:10px">o abrí cada una por separado, después de pensarla</span></p>
@@ -378,13 +402,15 @@ table.dp td.cur{border-color:var(--acc);background:var(--acc-w);font-weight:700;
     <a href="#ej-g12"><b>Guía · Programación Dinámica</b><span>3 ejercicios: cubrir un monto, mochila 0/1 y compras con hasta 3 unidades</span></a>
     <a href="#ej-g15"><b>Guía · Backtracking</b><span>3 ejercicios: tareas a procesadores, laberinto de longitud mínima y el caballo de Atila</span></a>
     <a href="#ej-i1"><b>Integración · Primer parcial</b><span>6 ejercicios de reconocimiento de técnica</span></a>
+    <a href="#ej-c1"><b>Problemas de clase · 7 a 11</b><span>12 problemas de la hoja de práctica: Fibonacci, Cambio, Mochila, LCS, Floyd, Reinas, Suma, Partición y más</span></a>
+    <a href="#ej-s1"><b>Integración · Segundo parcial</b><span>6 ejercicios: almacenamiento, subasta, premios por puntos, estaciones, ciudad base y festival de cine</span></a>
     <a href="#mapa"><b>Mapa de reconocimiento</b><span>Señales del enunciado → técnica → algoritmo → complejidad</span></a>
     <a href="index.html"><b>← Volver al apunte</b><span>La teoría de las 11 clases de la cursada</span></a>
   </div>
   <div class="note"><b>Alcance de esta página</b>
   Divide y Conquista, Greedy y Grafos (los temas del <b>primer parcial</b>, 16/09/2026) y, desde la
   clase 7, <b>Programación Dinámica</b> (que entra en el <b>integrador</b>, 11/11/2026) y, desde la
-  clase 10, <b>Backtracking</b>. La teoría de Backtracking está en la <a href="index.html#clase10">clase 10 del apunte</a>; la <a href="index.html#clase11">clase 11</a> desarrolla cotas, la mejora de procesadores con Greedy y Mochila con cota superior.</div>
+  clase 10, <b>Backtracking</b>. La teoría de Backtracking está en la <a href="index.html#clase10">clase 10 del apunte</a>; la <a href="index.html#clase11">clase 11</a> desarrolla cotas, la mejora de procesadores con Greedy y Mochila con cota superior. El bloque <b>Problemas de clase</b> trae, con la resolución tapada, los 12 problemas de la hoja de práctica (clases 7 a 11) que no son de la guía, con su simulador enlazado en el apunte; el bloque <b>Integración · Segundo parcial</b>, los seis ejercicios de integración del segundo parcial (sin técnica indicada: reconocerla es el punto a).</div>
 </header>
 
 <div class="exbar" id="bloque-dyc"><span>Guía</span><b>Divide y Conquista</b><em>Se pide: a) estrategia · b) pseudocódigo · c) complejidad temporal</em></div>
@@ -3084,6 +3110,1737 @@ filtrado Θ(a) + Dijkstra(G') O(n²) → <span class="tag t-cuad" style="font-si
 </section>
 
 
+<div class="exbar" id="bloque-clase"><span>Práctica</span><b>Problemas de clase · clases 7 a 11</b><em>Se pide: a) estrategia con sus elementos · b) pseudocódigo · c) complejidad temporal</em></div>
+
+<div class="note" style="max-width:76ch"><b>Qué hay en este bloque</b>
+Son los problemas de la hoja de práctica «desde Programación Dinámica en adelante» que no son de la guía. Los números 4, 5 y 6 de la hoja son los ejercicios <a href="#ej-g12">PD 1</a>, <a href="#ej-g13">PD 2</a> y <a href="#ej-g14">PD 3</a> de la guía, y la parte de la clase 10 del 14 es <a href="#ej-g15">Backtracking 1</a>: están más arriba, con su simulador. Acá van los otros <b>doce</b>, con la numeración de la hoja. Se trabajan como el resto de la página: enunciado, razonamientos y, tapada, la resolución. Los pseudocódigos son <b>los del apunte</b>, tal cual; el simulador paso a paso de cada uno vive ahí y se enlaza desde cada resolución, para no tener el mismo código en dos lugares.</div>
+
+<!-- Clase 7 · 1 -->
+<section id="ej-c1">
+<h2>Clase 7 · 1 — Fibonacci</h2>
+<p class="sub">Programación Dinámica · <span class="tag t-lin">O(n)</span></p>
+
+<div class="enun"><b>Enunciado</b>
+El problema de Fibonacci está dado por la definición misma de la función: F(n) = 1 si n &lt; 2; F(n) = F(n − 1) + F(n − 2) en otro caso. Calcular F(n).</div>
+
+<h3>Qué te están pidiendo</h3>
+<p>Calcular F(n) <b>sin repetir cálculos</b>. La definición recursiva se escribe sola, pero llama muchas veces a los mismos F(k): con n = 7 son 41 llamadas para solo 8 valores distintos (F(0) a F(7)). Es el ejemplo más chico de Programación Dinámica: guardar cada resultado en un vector la primera vez que se calcula.</p>
+
+<h3>Razonamientos antes de mirar la resolución</h3>
+<ol class="razon">
+  <li><b>¿Cuántos subproblemas distintos hay en realidad?</b> n + 1: F(0), F(1), …, F(n). ¿Cuántas llamadas hace la recursión? Muchas más: se vuelve exponencial.</li>
+  <li><b>¿Qué guarda cada posición del vector?</b> <code>M[i] = F(i)</code>.</li>
+  <li><b>¿Cuáles son los casos base y cuál es la recurrencia?</b> Salen de la definición: M[0] = M[1] = 1 y, para i ≥ 2, M[i] = M[i−1] + M[i−2].</li>
+  <li><b>¿En qué orden se llena?</b> De menor a mayor: así, cuando llegás a M[i], las dos posiciones que necesitás ya están llenas.</li>
+  <li><b>¿Hay que resolver una recurrencia para la complejidad?</b> Mirá el pseudocódigo: es un único ciclo. Se <b>cuenta</b>, no se resuelve nada.</li>
+</ol>
+
+<button class="primary rev" data-sol="sol-c1">Ver la resolución</button>
+<div class="sol" id="sol-c1">
+
+<h3>a) Estrategia de Programación Dinámica</h3>
+<div class="first"><b>Qué guarda cada posición</b>
+<code>M[i]</code> = F(i), el i-ésimo valor de la sucesión. Un vector de n + 1 posiciones, de M[0] a M[n].</div>
+
+<div class="grid2">
+  <div class="def"><h4>Casos base</h4>M[0] = 1 y M[1] = 1, por definición de la función.</div>
+  <div class="def"><h4>Decisión entre soluciones menores</h4>Para i ≥ 2: M[i] = M[i−1] + M[i−2]. Las dos celdas que hacen falta ya están llenas porque se recorre de menor a mayor.</div>
+  <div class="def"><h4>Tabla y respuesta</h4>Un vector de n + 1 posiciones, de M[0] a M[n]. La respuesta es M[n].</div>
+</div>
+
+<h3>b) Pseudocódigo</h3>
+<div class="card">
+<pre class="ps">ALGORITMO Fibbonaci
+Entrada: n: entero
+Salida: r: entero
+si n &lt; 2
+    devolver 1
+sino
+    Vector&lt;entero&gt; tabla ← inicializarVector(n)
+    tabla[0] ← 1
+    tabla[1] ← 1
+    para i ← 2 hasta n
+        tabla[i] ← tabla[i-1] + tabla[i-2]
+    fin para
+    devolver tabla[n]
+fin si</pre>
+</div>
+
+<h3>Ejecutalo paso a paso</h3>
+<p>El simulador paso a paso de este problema está en el apunte: <a href="index.html#fibonacci-pd" data-apunte-sim="sim-fibpd">Fibonacci con Programación Dinámica</a>. Ahí ves cada celda (o cada rama) con el resaltado del pseudocódigo; acá se trabaja el planteo, como en el parcial.</p>
+
+<h3>c) Complejidad temporal</h3>
+<p>Un único ciclo, así que no hay recurrencia que resolver: se cuenta. El <code>para i ← 2 hasta n</code> itera n − 1 veces y cada vuelta hace una suma y dos lecturas de la tabla, todo de costo constante. Lo de afuera del ciclo es constante.</p>
+<div class="card" style="font-family:var(--mono);text-align:center">
+(n − 1) iteraciones × Θ(1) → <span class="tag t-lin" style="font-size:15px">O(n)</span> &nbsp;·&nbsp; la versión recursiva de la clase 3: <span class="tag t-exp" style="font-size:15px">Θ(2ⁿ)</span>
+</div>
+</div>
+<hr class="rule">
+</section>
+
+<!-- Clase 7 · 2 -->
+<section id="ej-c2">
+<h2>Clase 7 · 2 — Problema del cambio</h2>
+<p class="sub">Programación Dinámica · cantidad infinita de cada moneda · <span class="tag t-cuad">Θ(n·v)</span></p>
+
+<div class="enun"><b>Enunciado</b>
+Se tiene un conjunto de n denominaciones de monedas, de las cuales hay cantidad infinita por cada una de esas denominaciones. Dado un valor v se debe devolver la menor cantidad de monedas que cubran ese valor.<br>Nota: el problema debe ser válido para cualquier conjunto de denominaciones y cualquier importe.<br>Ejemplo de instancia: denominaciones {$6, $4, $1}, valor a devolver $8.</div>
+
+<h3>Qué te están pidiendo</h3>
+<p>Devolver el importe v con la <b>menor cantidad de monedas</b>, para <b>cualquier</b> conjunto de denominaciones. La nota del enunciado es la pista: con el criterio Greedy («la moneda más grande que entre») el Cambio solo es correcto para ciertos conjuntos. Con {$6, $4, $1} y v = 8, Greedy entrega 6 + 1 + 1 = <b>3 monedas</b>; lo mejor son 4 + 4 = <b>2 monedas</b>.</p>
+
+<h3>Razonamientos antes de mirar la resolución</h3>
+<ol class="razon">
+  <li><b>¿Funciona Greedy?</b> Probalo con el ejemplo. Si falla (y falla), la frase «válido para cualquier conjunto de denominaciones» te obliga a otra técnica.</li>
+  <li><b>¿Qué guarda cada celda?</b> <code>C[i,j]</code> = la menor cantidad de monedas para devolver j usando las primeras i denominaciones.</li>
+  <li><b>¿A qué fila apunta «uso una moneda de la denominación i»?</b> Hay cantidad <b>infinita</b>: después de usarla puede volver a usarse. Entonces se queda en la <b>misma fila</b>: <code>C[i, j − dᵢ] + 1</code>. Es la diferencia con la Mochila 0/1.</li>
+  <li><b>¿Casos base?</b> Devolver 0 cuesta 0 monedas en cualquier fila. Con una sola denominación, si no entra el valor es ∞.</li>
+  <li><b>¿Dónde está la respuesta?</b> Última fila, última columna: C[n, v].</li>
+</ol>
+
+<button class="primary rev" data-sol="sol-c2">Ver la resolución</button>
+<div class="sol" id="sol-c2">
+
+<h3>a) Estrategia de Programación Dinámica</h3>
+<div class="first"><b>Qué guarda cada celda</b>
+<code>C[i,j]</code> = la <b>menor cantidad de monedas</b> que suman j usando solo las primeras i denominaciones (cada una, tantas veces como haga falta). ∞ si no se puede.</div>
+
+<div class="grid2">
+  <div class="def"><h4>Casos base</h4>Devolver j = 0 cuesta 0 monedas, en cualquier fila. En la primera fila solo hay una denominación: si no entra (d₁ &gt; j) el valor es +∞, y si entra es 1 + C[1, j − d₁].</div>
+  <div class="def"><h4>Decisión entre soluciones menores</h4>Si la moneda de la fila i no entra (dᵢ &gt; j), se copia C[i−1, j]. Si entra, se elige el <b>mínimo</b> entre no usarla (C[i−1, j]) y usarla (1 + C[i, j − dᵢ], <b>misma fila</b>).</div>
+  <div class="def"><h4>Tabla y respuesta</h4>n × (v + 1), llenada fila por fila y de izquierda a derecha. La respuesta está en la última fila, última columna: C[n, v].</div>
+</div>
+
+<h3>b) Pseudocódigo</h3>
+<div class="card">
+<pre class="ps">ALGORITMO Cambio
+Entrada: d: Vector&lt;entero&gt;, v: entero
+Salida: c: entero
+M ← inicializarMatriz(longitud(d), v+1)
+para i ← 0 hasta longitud(d) - 1
+    M[i,0] ← 0
+    para j ← 1 hasta v
+        si i = 0
+            si d[i] &gt; j
+                M[i,j] ← ∞
+            sino
+                M[i,j] ← M[i, j - d[j]] + 1
+            fin si
+        sino
+            si d[j] &gt; j
+                M[i,j] ← M[i-1, j]
+            sino
+                M[i,j] ← mín(M[i-1, j], M[i, j - d[i]] + 1))
+            fin si
+        fin si
+    fin para
+fin para
+devolver M[longitud(i) - 1, v]</pre>
+</div>
+<div class="note"><b>Transcripción literal de la lámina</b>
+Se copia con sus rarezas: los dos <code>d[j]</code> (en <code>M[i, j - d[j]] + 1</code> y en el segundo <code>si d[j] &gt; j</code>) indexan el vector de denominaciones con la <b>columna</b>; por el contexto corresponde <code>d[i]</code>. Al escribirlo en un parcial usá <code>d[i]</code>. El apunte explica cada detalle y su simulador corre las dos versiones (<a href="index.html#cambio-pd">Cambio con PD</a>).</div>
+
+<h3>Ejecutalo paso a paso</h3>
+<p>El simulador paso a paso de este problema está en el apunte: <a href="index.html#cambio-pd" data-apunte-sim="sim-cambiopd">Cambio con Programación Dinámica</a>. Ahí ves cada celda (o cada rama) con el resaltado del pseudocódigo; acá se trabaja el planteo, como en el parcial.</p>
+
+<h3>c) Complejidad temporal</h3>
+<p>Dos ciclos anidados: el de afuera itera una vez por denominación (n) y el de adentro una vez por cada valor de 1 a v. Cada celda se resuelve con comparaciones, una resta y un mínimo, todo de costo constante. Se calculan n·v celdas con costo Θ(1) cada una. Ojo: v es un <b>valor</b>, no un tamaño.</p>
+<div class="card" style="font-family:var(--mono);text-align:center">
+n·v celdas × Θ(1) por celda → <span class="tag t-cuad" style="font-size:15px">Θ(n·v)</span>
+</div>
+</div>
+<hr class="rule">
+</section>
+
+<!-- Clase 7 · 3 -->
+<section id="ej-c3">
+<h2>Clase 7 · 3 — Problema de la mochila (0-1)</h2>
+<p class="sub">Programación Dinámica · cada objeto una sola vez · <span class="tag t-cuad">Θ(n·P)</span></p>
+
+<div class="enun"><b>Enunciado</b>
+Se tienen n objetos y una mochila. Para i = 1, 2, ..., n, el objeto i tiene un peso positivo pᵢ y un valor positivo vᵢ. La mochila puede llevar un peso que no sobrepase P. Los objetos no pueden ser fraccionados. El objetivo es llenar la mochila de manera tal que se maximice el valor de los objetos transportados, respetando la limitación de capacidad impuesta.<br>Ejemplo de instancia: cuatro objetos con pesos (1, 4, 5 y 7) y valores (10, 3, 5 y 8) respectivamente, y una mochila con capacidad máxima de 8.</div>
+
+<h3>Qué te están pidiendo</h3>
+<p>Elegir qué objetos llevar para <b>maximizar el valor total</b> sin pasar el peso P, con la restricción de que cada objeto va entero o no va. Con el ejemplo, la mejor elección es el objeto 1 y el 4: pesan 1 + 7 = 8 y valen 10 + 8 = <b>18</b>. La versión fraccionaria se resolvía con Greedy por valor/peso; sin poder fraccionar, ese criterio deja de ser seguro.</p>
+
+<h3>Razonamientos antes de mirar la resolución</h3>
+<ol class="razon">
+  <li><b>¿Por qué no alcanza Greedy?</b> Sin fraccionar, llevar lo de mejor valor/peso puede dejar capacidad sin usar y perder una combinación mejor.</li>
+  <li><b>¿Qué guarda cada celda?</b> <code>V[i,j]</code> = el máximo valor con los primeros i objetos y capacidad j.</li>
+  <li><b>¿Opciones y a qué fila apuntan?</b> «No lo llevo» y «lo llevo», las dos a la fila <b>i − 1</b>: cada objeto se usa una sola vez.</li>
+  <li><b>¿Qué pasa si el objeto no entra?</b> Se copia lo que ya había: V[i−1, j].</li>
+  <li><b>¿Respuesta?</b> V[n, P].</li>
+</ol>
+
+<button class="primary rev" data-sol="sol-c3">Ver la resolución</button>
+<div class="sol" id="sol-c3">
+
+<h3>a) Estrategia de Programación Dinámica</h3>
+<div class="first"><b>Qué guarda cada celda</b>
+<code>V[i,j]</code> = el <b>máximo valor</b> que se puede cargar con algunos de los primeros i objetos en una mochila de capacidad j.</div>
+
+<div class="grid2">
+  <div class="def"><h4>Casos base</h4>Con un solo objeto (la primera fila): vale 0 si el objeto no entra (peso &gt; j) y vale su valor si entra.</div>
+  <div class="def"><h4>Decisión entre soluciones menores</h4>Si el objeto i no entra (pesoᵢ &gt; j), se copia V[i−1, j]. Si entra, se elige el <b>máximo</b> entre no llevarlo (V[i−1, j]) y llevarlo (V[i−1, j − pesoᵢ] + valorᵢ).</div>
+  <div class="def"><h4>Tabla y respuesta</h4>n × (P + 1), fila por fila y de izquierda a derecha. La respuesta es la última fila, última columna: V[n, P].</div>
+</div>
+
+<h3>b) Pseudocódigo</h3>
+<div class="card">
+<pre class="ps">ALGORITMO Mochila
+Entrada: O: Vector&lt;Objeto&gt;, P: entero
+Salida: v: entero
+M ← inicializarMatrix(longitud(O), P + 1)
+para i = 0 hasta longitud(O) - 1
+    para j = 0 hasta P
+        si i = 0 Y peso[i] &gt; j
+            M[i,j] ← 0
+        sino
+            si i = 0
+                M[i,j] ← valor[i]
+            sino
+                si peso[i] &gt; j
+                    M[i,j] ← M[i-1, j]
+                sino
+                    M[i,j] ← máx(M[i-1, j], M[i-1, j - peso[i]] + valor[i])
+                fin si
+            fin si
+        fin si
+    fin para
+fin para
+devolver M[longitud(O) - 1, P]</pre>
+</div>
+
+<h3>Ejecutalo paso a paso</h3>
+<p>El simulador paso a paso de este problema está en el apunte: <a href="index.html#mochila-pd" data-apunte-sim="sim-mochilapd">Mochila 0/1 con Programación Dinámica</a>. Ahí ves cada celda (o cada rama) con el resaltado del pseudocódigo; acá se trabaja el planteo, como en el parcial.</p>
+
+<h3>c) Complejidad temporal</h3>
+<p>Igual que en el Cambio: dos ciclos anidados, uno por objeto y otro por cada peso de 0 a P, con un cálculo de costo constante en cada celda (comparar, restar, un máximo).</p>
+<div class="card" style="font-family:var(--mono);text-align:center">
+n·(P + 1) celdas × Θ(1) por celda → <span class="tag t-cuad" style="font-size:15px">Θ(n·P)</span>
+</div>
+</div>
+<hr class="rule">
+</section>
+
+<!-- Clase 8 · 7 -->
+<section id="ej-c7">
+<h2>Clase 8 · 7 — Subsecuencia común más larga</h2>
+<p class="sub">Programación Dinámica · tabla (m+1) × (n+1) · <span class="tag t-cuad">Θ(m·n)</span></p>
+
+<div class="enun"><b>Enunciado</b>
+Dada una secuencia X = {x₁, x₂, ..., xₘ}, decimos que Z = {z₁, z₂, ..., z<sub>k</sub>} es una subsecuencia de X (siendo k ≤ m) si existe una secuencia creciente {i₁, i₂, ..., i<sub>k</sub>} de índices de X tales que para todo j = 1, 2, ..., k tenemos x<sub>i<sub>j</sub></sub> = z<sub>j</sub>. Por ejemplo, Z = {BCDB} es una subsecuencia de X = {ABCBDAB} con la correspondiente secuencia de índices {2, 3, 5, 7}.<br>Dadas dos secuencias X e Y, decimos que Z es una subsecuencia común de X e Y si es subsecuencia de X y subsecuencia de Y. Se desea encontrar la longitud de la subsecuencia de longitud máxima común a dos secuencias dadas.<br>Ejemplos de instancia: (a) X = abda, Y = abacdeb. (b) X = abdac, Y = abacdeb.</div>
+
+<h3>Qué te están pidiendo</h3>
+<p>Una subsecuencia se obtiene <b>borrando</b> caracteres sin cambiar el orden de los que quedan. Hay que hallar la <b>longitud</b> de la más larga que sea subsecuencia de X y de Y a la vez (no la subsecuencia en sí). En el ejemplo (a) la respuesta es 3 (<code>abd</code>) y en el (b) es 4 (<code>abac</code>).</p>
+
+<h3>Razonamientos antes de mirar la resolución</h3>
+<ol class="razon">
+  <li><b>¿Por qué no probar todas las subsecuencias de X?</b> Hay 2ᵐ, y para cada una habría que ver si está en Y.</li>
+  <li><b>¿Qué guarda cada celda?</b> <code>L[i,j]</code> = la longitud de la subsecuencia común más larga entre los primeros i caracteres de X y los primeros j de Y.</li>
+  <li><b>¿Qué pasa cuando Xᵢ = Yⱼ y qué cuando no?</b> Si son iguales, se emparejan: se suma 1 a lo que había sin esos dos. Si no, uno de los dos queda afuera: ¿cuál conviene?</li>
+  <li><b>¿Por qué la tabla tiene una fila y una columna de más?</b> Son los prefijos vacíos (i = 0 o j = 0): no tienen nada en común.</li>
+  <li><b>¿Dónde está la respuesta?</b> En la última celda, L[m, n].</li>
+</ol>
+
+<button class="primary rev" data-sol="sol-c7">Ver la resolución</button>
+<div class="sol" id="sol-c7">
+
+<h3>a) Estrategia de Programación Dinámica</h3>
+<div class="first"><b>Qué guarda cada celda</b>
+<code>L[i,j]</code> = la longitud de la subsecuencia común más larga entre X[1..i] e Y[1..j]. Índices de 0 a m y de 0 a n; los caracteres se numeran desde 1.</div>
+
+<div class="grid2">
+  <div class="def"><h4>Casos base</h4>Si i = 0 o j = 0, uno de los dos prefijos es vacío y no puede haber nada en común: vale 0.</div>
+  <div class="def"><h4>Decisión entre soluciones menores</h4>Si Xᵢ = Yⱼ, esos dos caracteres se emparejan: L[i−1, j−1] + 1. Si no, alguno de los dos queda afuera y se elige el mejor: máx(L[i−1, j], L[i, j−1]).</div>
+  <div class="def"><h4>Tabla y respuesta</h4>(longitud(X) + 1) × (longitud(Y) + 1), fila por fila y de izquierda a derecha. La respuesta es la última celda.</div>
+</div>
+
+<h3>b) Pseudocódigo</h3>
+<div class="card">
+<pre class="ps">ALGORITMO SubsecuenciaMaxima
+Entrada: X, Y: Vector&lt;Caracter&gt;
+Salida: v: entero
+M ← inicializarMatrix(longitud(X) + 1, longitud(Y) + 1)
+para i = 0 hasta longitud(X)
+    para j = 0 hasta longitud(Y)
+        si i = 0 O j = 0
+            M[i,j] ← 0
+        sino
+            si X[i] = Y[j]
+                M[i,j] ← M[i-1,j-1] + 1
+            sino
+                M[i,j] ← máx(M[i-1,j], M[i,j-1])
+            fin si
+        fin si
+    fin para
+fin para
+devolver M[longitud(X), longitud(Y)]</pre>
+</div>
+<div class="note"><b>Una rareza de la lámina</b>
+El pseudocódigo numera los caracteres desde 1 (<code>X[i]</code> con i hasta <code>longitud(X)</code>) pero la tabla arranca en 0. Se copia tal cual; el apunte lo explica en la sección de <a href="index.html#lcs">la LCS</a>.</div>
+
+<h3>Ejecutalo paso a paso</h3>
+<p>El simulador paso a paso de este problema está en el apunte: <a href="index.html#lcs" data-apunte-sim="sim-lcs">Subsecuencia común más larga</a>. Ahí ves cada celda (o cada rama) con el resaltado del pseudocódigo; acá se trabaja el planteo, como en el parcial.</p>
+
+<h3>c) Complejidad temporal</h3>
+<p>Dos ciclos anidados: el de afuera recorre i de 0 a longitud(X) (m + 1 valores) y el de adentro j de 0 a longitud(Y) (n + 1 valores). Cada celda cuesta Θ(1): una comparación de caracteres y, a lo sumo, una suma o un máximo. Probando todas las subsecuencias de X sería O(n·2ᵐ).</p>
+<div class="card" style="font-family:var(--mono);text-align:center">
+(m + 1)·(n + 1) celdas × Θ(1) por celda → <span class="tag t-cuad" style="font-size:15px">Θ(m·n)</span>
+</div>
+</div>
+<hr class="rule">
+</section>
+
+<!-- Clase 9 · 8 -->
+<section id="ej-c8">
+<h2>Clase 9 · 8 — Preparación física de la selección</h2>
+<p class="sub">Programación Dinámica · hasta 2 sesiones por entrenamiento · <span class="tag t-cuad">Θ(n·C)</span></p>
+
+<div class="enun"><b>Enunciado</b>
+Luego de la consagración en Qatar 2022, la Selección Argentina se prepara para afrontar un nuevo Mundial con el sueño de alcanzar la tan ansiada cuarta estrella. Durante la concentración previa al debut, Lionel Scaloni y su cuerpo técnico deben decidir qué actividades de entrenamiento realizar para llegar en las mejores condiciones posibles al inicio de la competencia.<br>Los preparadores físicos han diseñado una lista de actividades de entrenamiento. Para cada actividad se conoce: la mejora de rendimiento rᵢ que aporta al equipo; la carga física cᵢ que genera sobre los jugadores.<br>De cada entrenamiento podemos realizar como máximo 2 sesiones. Además, los preparadores físicos han observado que, al repetir un mismo entrenamiento, los jugadores se adaptan mejor a la exigencia física. Por este motivo, la segunda sesión de un entrenamiento genera un 20% menos de carga física que la original y aporta un 10% más de la mejora de rendimiento. Por otro lado, se tiene definido la carga máxima que se puede exigir y la misma no puede ser superada.<br>Diseñe un algoritmo que calcule la mejora total máxima del rendimiento del equipo sin superar la carga física máxima permitida.</div>
+
+<h3>Qué te están pidiendo</h3>
+<p>Cada actividad se puede hacer <b>0, 1 o 2 veces</b>. La segunda sesión carga 0,8·cᵢ y mejora 1,1·rᵢ, así que dos sesiones juntas cargan <b>1,8·cᵢ</b> y mejoran <b>2,1·rᵢ</b>. Hay que repartir la carga máxima C para que la mejora total sea la mayor posible. Es la Mochila 0/1 con una opción más por objeto, y el mismo esquema de la <a href="#ej-g14">PD 3 (compras en el shopping)</a>.</p>
+
+<h3>Razonamientos antes de mirar la resolución</h3>
+<ol class="razon">
+  <li><b>¿Cuánto cuestan y rinden 0, 1 y 2 sesiones?</b> Armá la mini-tabla: 0 → 0 → 0; 1 → cᵢ → rᵢ; 2 → 1,8·cᵢ → 2,1·rᵢ.</li>
+  <li><b>¿Qué guarda cada celda?</b> «La mayor mejora con las primeras i actividades sin pasar una carga de j».</li>
+  <li><b>¿A qué fila apunta cada opción?</b> Todas a la fila <b>i − 1</b>: las sesiones de la actividad i se deciden juntas.</li>
+  <li><b>¿Cuándo existe cada opción?</b> Solo si su carga entra en j: de ahí salen los rangos de j.</li>
+  <li><b>¿La lámina da números?</b> No: los del ejemplo del apunte son propios, y para que 1,8·cᵢ sea entero se toman cargas múltiplos de 5.</li>
+</ol>
+
+<button class="primary rev" data-sol="sol-c8">Ver la resolución</button>
+<div class="sol" id="sol-c8">
+
+<h3>a) Estrategia de Programación Dinámica</h3>
+<div class="first"><b>Qué guarda cada celda</b>
+<code>M[i,j]</code> = la <b>mayor mejora</b> que se logra con las primeras i actividades sin pasar una carga de j, haciendo hasta 2 sesiones de cada una.</div>
+
+<div class="grid2">
+  <div class="def"><h4>Casos base</h4>Primera fila (i = 1): según cuánta carga entre en j se hacen 0, 1 o 2 sesiones de la única actividad: 0, r₁ o 2,1·r₁.</div>
+  <div class="def"><h4>Decisión entre soluciones menores</h4>Para i &gt; 1, el <b>máximo</b> de las opciones que entran: no la hago, 1 sesión o 2 sesiones. Cada una descuenta su carga de j, suma su mejora y mira la fila i − 1.</div>
+  <div class="def"><h4>Tabla y respuesta</h4>n filas (una por actividad) y C + 1 columnas, fila por fila y de izquierda a derecha. La respuesta es M[n, C]. Los índices son base 1.</div>
+</div>
+
+<h3>b) Pseudocódigo</h3>
+<div class="card">
+<pre class="ps">ALGORITMO PreparacionFisica(r, c, C)
+Entrada: r, c: Vector&lt;entero&gt; de n posiciones (1-based), C: carga máxima
+Salida: la mejora total máxima
+M ← inicializarMatriz(n, C + 1)
+para i ← 1 hasta n
+    para j ← 0 hasta C
+        si i = 1
+            si c[i] &gt; j
+                M[i,j] ← 0
+            sino si j &lt; 1.8*c[i]
+                M[i,j] ← r[i]
+            sino
+                M[i,j] ← 2.1*r[i]
+            fin si
+        sino
+            si c[i] &gt; j
+                M[i,j] ← M[i-1,j]
+            sino si j &lt; 1.8*c[i]
+                M[i,j] ← máx(M[i-1,j], M[i-1, j - c[i]] + r[i])
+            sino
+                M[i,j] ← máx(M[i-1,j], M[i-1, j - c[i]] + r[i], M[i-1, j - 1.8*c[i]] + 2.1*r[i])
+            fin si
+        fin si
+    fin para
+fin para
+devolver M[n, C]</pre>
+</div>
+<div class="note"><b>Pseudocódigo propio</b>
+La cátedra no publica pseudocódigo de este ejercicio: este está escrito caso por caso, igual que la recurrencia (como los de PD 1 a PD 3). Los decimales se escriben con punto, como en un lenguaje de programación.</div>
+
+<h3>Ejecutalo paso a paso</h3>
+<p>El simulador paso a paso de este problema está en el apunte: <a href="index.html#fisica" data-apunte-sim="sim-fisica">Preparación física de la selección</a>. Ahí ves cada celda (o cada rama) con el resaltado del pseudocódigo; acá se trabaja el planteo, como en el parcial.</p>
+
+<h3>c) Complejidad temporal</h3>
+<p>La tabla tiene n filas y C + 1 columnas, y cada celda se resuelve con un máximo de a lo sumo tres términos que se leen en una posición fija: costo constante. Cada celda se calcula una sola vez.</p>
+<div class="card" style="font-family:var(--mono);text-align:center">
+n·(C + 1) celdas × Θ(1) por celda → <span class="tag t-cuad" style="font-size:15px">Θ(n·C)</span>
+</div>
+</div>
+<hr class="rule">
+</section>
+
+<!-- Clase 9 · 9 -->
+<section id="ej-c9">
+<h2>Clase 9 · 9 — Caminos mínimos entre todos los pares (Floyd)</h2>
+<p class="sub">Programación Dinámica sobre grafos · <span class="tag t-cuad">Θ(n³)</span></p>
+
+<div class="enun"><b>Enunciado</b>
+Dado un grafo dirigido con todas sus aristas de peso positivo, encontrar el costo de los caminos mínimos entre cualquier par de nodos, siempre que existan. A diferencia de Dijkstra, no se parte de un vértice particular.<br>Ejemplo de instancia: grafo de 5 nodos con la siguiente matriz inicial de costos directos (∞ = no existe arista):<table style="width:auto;margin:8px 0"><tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr><tr><th>1</th><td class="num">0</td><td class="num">2</td><td class="num">∞</td><td class="num">15</td><td class="num">4</td></tr><tr><th>2</th><td class="num">∞</td><td class="num">0</td><td class="num">3</td><td class="num">∞</td><td class="num">2</td></tr><tr><th>3</th><td class="num">2</td><td class="num">∞</td><td class="num">0</td><td class="num">6</td><td class="num">∞</td></tr><tr><th>4</th><td class="num">∞</td><td class="num">∞</td><td class="num">∞</td><td class="num">0</td><td class="num">3</td></tr><tr><th>5</th><td class="num">∞</td><td class="num">∞</td><td class="num">∞</td><td class="num">1</td><td class="num">0</td></tr></table></div>
+
+<h3>Qué te están pidiendo</h3>
+<p>Calcular, para <b>cada par</b> de nodos (i, j), el costo del camino más barato de i a j, si existe. Dijkstra lo resuelve desde un origen; acá no hay origen, así que habría que correrlo n veces. Floyd lo hace de una vez, por Programación Dinámica: va habilitando los nodos, de a uno, como intermedios.</p>
+
+<h3>Razonamientos antes de mirar la resolución</h3>
+<ol class="razon">
+  <li><b>¿Cuál es el subproblema?</b> «El mejor costo de ir de i a j pudiendo pasar solo por los nodos 1, …, k». Con k = 0 no se pasa por ninguno: es la matriz inicial.</li>
+  <li><b>¿Qué cambia al habilitar el nodo k?</b> Para cada par (i, j) hay dos caminos candidatos: el que ya tenías, o ir de i a k y de k a j.</li>
+  <li><b>¿Qué pasa si no hay arista?</b> El costo es ∞, y una suma con ∞ no existe: no mejora nada. Es el guardia del pseudocódigo.</li>
+  <li><b>¿Por qué los tres ciclos en ese orden?</b> k, el nodo intermedio, tiene que ir <b>afuera</b>: cada vuelta de k transforma la matriz Mₖ₋₁ en Mₖ completa.</li>
+  <li><b>¿Complejidad?</b> Tres ciclos de n vueltas: se cuenta.</li>
+</ol>
+
+<button class="primary rev" data-sol="sol-c9">Ver la resolución</button>
+<div class="sol" id="sol-c9">
+
+<h3>a) Estrategia de Programación Dinámica (Floyd)</h3>
+<div class="grid2">
+  <div class="def"><h4>Caso base</h4>La matriz M₀: la mejor forma de ir de cada vértice a cada otro sin pasar por ningún vértice intermedio. Tiene 0 en la diagonal, el peso de la arista cuando existe e ∞ cuando no existe.</div>
+  <div class="def"><h4>Subproblemas</h4>Mₖ[i,j] es el menor costo de ir de i a j pudiendo usar como nodos intermedios solo 1, 2, …, k. Se pasa de Mₖ₋₁ a Mₖ habilitando el nodo k. Con k = n están permitidos todos: Mₙ es el resultado.</div>
+  <div class="def"><h4>Combinación</h4>Para cada par (i, j), lo mejor entre no usar el nodo k (queda Mₖ₋₁[i,j]) y usarlo: ir de i hasta k y de k hasta j con los costos que ya se tenían.</div>
+</div>
+
+<h3>b) Pseudocódigo</h3>
+<div class="card">
+<pre class="ps">ALGORITMO Floyd
+Entrada: G grafo de entrada
+Salida: R: grafo con una arista con la distancia mínima entre cada par de vértices
+inicializarGrafo(R)
+copiarGrafo(G, R)
+VerticesK = Vertices(G)
+para cada k ∈ VerticesK
+    VerticesI = Vertices(G)
+    para cada i ∈ VerticesI
+        VerticesJ = Vertices(G)
+        para cada j ∈ VerticesJ
+            si i ≠ j Y existeArista(R,i,k) Y existeArista(R,k,j)
+                si existeArista(R,i,j)
+                    si pesoArista(R,i,k) + pesoArista(R,k,j) &lt; pesoArista(R,i,j)
+                        agregarArista(R,i,j, pesoArista(R,i,k) + pesoArista(R,k,j))
+                    fin si
+                sino
+                    agregarArista(R,i,j, pesoArista(R,i,k) + pesoArista(R,k,j))
+                fin si
+            fin si
+        fin para
+    fin para
+fin para
+devolver R</pre>
+</div>
+
+<h3>Ejecutalo paso a paso</h3>
+<p>El simulador paso a paso de este problema está en el apunte: <a href="index.html#floyd" data-apunte-sim="sim-floyd">Algoritmo de Floyd</a>. Ahí ves cada celda (o cada rama) con el resaltado del pseudocódigo; acá se trabaja el planteo, como en el parcial.</p>
+
+<h3>c) Complejidad temporal</h3>
+<p>Tres ciclos anidados, y cada uno recorre los n vértices del grafo: el guardia se evalúa n·n·n veces. Adentro, <code>existeArista</code>, <code>pesoArista</code> y <code>agregarArista</code> se consideran de costo constante (matriz de adyacencia de acceso directo). No hay nada que dependa de los datos: aunque casi ninguna evaluación escriba en R, igual se hacen todas.</p>
+<div class="card" style="font-family:var(--mono);text-align:center">
+n·n·n evaluaciones × Θ(1) por evaluación → <span class="tag t-cuad" style="font-size:15px">Θ(n³)</span>
+</div>
+<p>La lámina lo escribe O(n³); como los tres ciclos siempre hacen todas sus vueltas, la cuenta es exacta y vale Θ(n³).</p>
+</div>
+<hr class="rule">
+</section>
+
+<!-- Clase 9 · 10 -->
+<section id="ej-c10">
+<h2>Clase 9 · 10 — Centro logístico óptimo</h2>
+<p class="sub">Grafos · Floyd como caja negra + el máximo de cada fila · <span class="tag t-cuad">Θ(n³)</span></p>
+
+<div class="enun"><b>Enunciado</b>
+Una empresa cuenta con N centros logísticos conectados por rutas. Se dispone de un grafo A que indica el costo directo de transporte entre cada par de centros. Diseñar un algoritmo que determine qué centro logístico debería elegirse centro principal, de modo que el costo máximo hacia cualquier otro centro sea el mínimo.<br>A modo de ejemplo se tiene el siguiente caso: supongamos que tenemos el siguiente escenario en forma de grafo representado por matriz (A):<table style="width:auto;margin:8px 0"><tr><th></th><th>1</th><th>2</th><th>3</th></tr><tr><th>1</th><td class="num">0</td><td class="num">4</td><td class="num">10</td></tr><tr><th>2</th><td class="num">∞</td><td class="num">0</td><td class="num">1</td></tr><tr><th>3</th><td class="num">8</td><td class="num">∞</td><td class="num">0</td></tr></table>Para este ejemplo, el resultado esperado es el centro 1. (El grafo de costo mínimo entre los centros, directo o indirecto, debe calcularlo el algoritmo; no es dato.)</div>
+
+<h3>Qué te están pidiendo</h3>
+<p>«Minimizar el máximo»: para cada centro hay que saber lo más caro que le cuesta llegar a otro centro (con escalas, si conviene) y elegir el centro para el que ese peor caso sea el menor. El enunciado avisa que los costos mínimos entre centros <b>no son dato</b>: los calcula el algoritmo, y para eso está Floyd. En el ejemplo, el máximo de la fila de cada centro es 5, 9 y 12, así que gana el centro 1.</p>
+
+<h3>Razonamientos antes de mirar la resolución</h3>
+<ol class="razon">
+  <li><b>¿Qué necesitás de cada par de centros?</b> El costo <b>mínimo</b>, directo o con escalas. ¿Quién lo da para todos los pares? Floyd.</li>
+  <li><b>¿Cómo se calcula el «peor destino» de un centro?</b> Máximo de su fila de R. (Por filas: de <b>i hacia</b> los demás, como dice el enunciado.)</li>
+  <li><b>¿Qué hacés con un centro desde el que no se llega a alguno?</b> Su máximo es ∞: queda descartado.</li>
+  <li><b>¿Hay que escribir Floyd adentro?</b> No: es una caja negra, se invoca.</li>
+</ol>
+
+<button class="primary rev" data-sol="sol-c10">Ver la resolución</button>
+<div class="sol" id="sol-c10">
+
+<h3>a) Estrategia de la resolución (algoritmo sobre grafos)</h3>
+<div class="grid2">
+  <div class="def"><h4>Paso 1 · costos mínimos</h4>R ← Floyd(A): la matriz con el costo mínimo de ir de cualquier centro a cualquier otro, directo o con escalas.</div>
+  <div class="def"><h4>Paso 2 · el peor destino de cada centro</h4>Para cada centro i, el máximo de su fila: máx<sub>i</sub> = máx<sub>j</sub> R[i,j]. Es lo más caro que le cuesta llegar a algún centro.</div>
+  <div class="def"><h4>Paso 3 · el menor de los peores</h4>Se elige el centro con el menor máx<sub>i</sub>. Es un problema de «minimizar el máximo».</div>
+</div>
+
+<h3>b) Pseudocódigo</h3>
+<div class="card">
+<pre class="ps">ALGORITMO CentroLogistico(A)
+Entrada: A: Grafo de costos directos entre los N centros
+Salida: el centro principal, o ninguno si ningún centro llega a todos los demás
+R ← Floyd(A)
+mejor ← ninguno
+menorMaximo ← ∞
+para cada i ∈ Vertices(A)
+    maximo ← 0
+    para cada j ∈ Vertices(A)
+        maximo ← máx(maximo, pesoArista(R,i,j))
+    fin para
+    si maximo &lt; menorMaximo
+        menorMaximo ← maximo
+        mejor ← i
+    fin si
+fin para
+devolver mejor</pre>
+</div>
+<div class="note"><b>Pseudocódigo propio</b>
+La cátedra no publica pseudocódigo de este ejercicio: este está escrito sobre el Floyd de la lámina, que se invoca sin reescribirlo.</div>
+
+<h3>Ejecutalo paso a paso</h3>
+<p>El simulador paso a paso de este problema está en el apunte: <a href="index.html#centro-logistico" data-apunte-sim="sim-centro">Centro logístico óptimo</a>. Ahí ves cada celda (o cada rama) con el resaltado del pseudocódigo; acá se trabaja el planteo, como en el parcial.</p>
+
+<h3>c) Complejidad temporal</h3>
+<p>El primer paso es Floyd, Θ(n³). Los dos ciclos que siguen recorren la matriz R una vez, con operaciones de costo constante: Θ(n²). El término de menor orden queda absorbido: el costo del ejercicio lo pone Floyd.</p>
+<div class="card" style="font-family:var(--mono);text-align:center">
+Floyd Θ(n³) + recorrer R Θ(n²) → <span class="tag t-cuad" style="font-size:15px">Θ(n³)</span>
+</div>
+<p>Es el mismo esquema que <a href="#ej-s5">la ciudad base de la Selección</a>, que suma cada fila en vez de tomar su máximo.</p>
+</div>
+<hr class="rule">
+</section>
+
+<!-- Clase 10 · 11 -->
+<section id="ej-c11">
+<h2>Clase 10 · 11 — Problema de las 8 reinas</h2>
+<p class="sub">Backtracking · buscar una solución · <span class="tag t-exp">O(nⁿ)</span></p>
+
+<div class="enun"><b>Enunciado</b>
+Dado un tablero de NxN ubicar N reinas de modo tal que no se coman entre sí. Una reina come a otra si está en la misma fila, columna o diagonal. Encontrar una solución para el problema. Para nuestro caso el N considerado será 8.</div>
+
+<h3>Qué te están pidiendo</h3>
+<p>Ubicar 8 reinas en un tablero de 8 × 8 sin que ninguna ataque a otra, y devolver <b>una</b> disposición. Como cada fila tiene que tener exactamente una reina, alcanza con decidir <b>en qué columna</b> va la reina de cada fila.</p>
+
+<h3>Razonamientos antes de mirar la resolución</h3>
+<ol class="razon">
+  <li><b>¿Qué es S y qué es una etapa?</b> S[E] = la columna de la reina de la fila E. La etapa es la fila que se está resolviendo.</li>
+  <li><b>¿Cuáles son las alternativas de cada etapa y cuándo es factible una?</b> Las n columnas. Una columna no sirve si ya hay otra reina en esa columna o en una diagonal de una fila anterior.</li>
+  <li><b>¿Cuál es el caso base?</b> Se ubicó una reina válida en la última fila.</li>
+  <li><b>¿Buscás una solución, todas o la mejor?</b> Una: ¿qué hacés cuando la encontrás?</li>
+  <li><b>¿Cuántas alternativas por etapa y cuántas etapas?</b> Es la cuenta de la complejidad.</li>
+</ol>
+
+<button class="primary rev" data-sol="sol-c11">Ver la resolución</button>
+<div class="sol" id="sol-c11">
+
+<h3>a) Estrategia de Backtracking</h3>
+<div class="grid2">
+  <div class="def"><h4>Solución parcial S</h4>Vector de n posiciones: <code>S[E]</code> es la columna de la reina de la fila E. Las filas son las etapas, de 0 a n − 1.</div>
+  <div class="def"><h4>Etapa y alternativas</h4>La etapa E es «¿en qué columna va la reina de la fila E?». Las alternativas son las n columnas.</div>
+  <div class="def"><h4>Factibilidad</h4>Una columna es válida si ninguna reina de las filas 0…E−1 está en la misma columna ni en la misma diagonal (<code>|S[i] − S[E]| = |i − E|</code>): es <code>ReinaValida</code>.</div>
+  <div class="def"><h4>Caso base</h4>E = n − 1 y la reina es válida: se encontró una solución, se devuelve verdadero.</div>
+  <div class="def"><h4>Retroceso</h4>Con las filas 0…E−1 resueltas, probar una columna válida en E y resolver E+1. Si falla, probar otra columna; si fallan todas, devolver falso al nivel anterior.</div>
+  <div class="def"><h4>Objetivo</h4><b>Una</b> solución: si tiene éxito se conserva S y se propaga verdadero sin buscar más.</div>
+</div>
+
+<h3>b) Pseudocódigo</h3>
+<div class="card">
+<pre class="ps">Algoritmo Reinas
+Entrada: S: Vector&lt;entero&gt;, E: entero, n:entero
+Salida: verdadero-falso
+booleano solucion ← falso
+S[E] ← 0
+mientras S[E] &lt; n − 1 Y NO solucion
+    S[E] ← S[E] + 1
+    si ReinaValida(S, E)
+        si E = n − 1
+            solucion ← verdadero
+        sino
+            solucion ← Reinas(S, E + 1, n)
+        fin si
+    fin si
+fin mientras
+devolver solucion
+
+Algoritmo ReinaValida
+Entrada: S: Vector&lt;entero&gt;, E: entero
+Salida: verdadero-falso
+para i = 0 hasta E − 1
+    si S[i] = S[E] O |S[i] − S[E]| = |i − E|
+        devolver falso
+    fin si
+fin para
+devolver verdadero</pre>
+</div>
+<div class="note"><b>Una rareza de la lámina</b>
+El literal empieza <code>S[E]</code> en 0 y recién después suma 1, por lo que nunca prueba la columna 0. El apunte explica esa observación y su simulador tiene dos modos, literal y corregido (<a href="index.html#reinas-c10">Reinas</a>).</div>
+
+<h3>Ejecutalo paso a paso</h3>
+<p>El simulador paso a paso de este problema está en el apunte: <a href="index.html#reinas-c10" data-apunte-sim="sim-c10-reinas">Las 8 reinas</a>. Ahí ves cada celda (o cada rama) con el resaltado del pseudocódigo; acá se trabaja el planteo, como en el parcial.</p>
+
+<h3>c) Complejidad temporal</h3>
+<p>La lámina anota <code>a = n; b = 1; k = 1</code>: O(nⁿ) para Reinas y O(n) para ReinaValida. La interpretación es un árbol de hasta n alternativas por nivel y profundidad n; las restricciones recortan muchas ramas y encontrar una solución permite terminar antes.</p>
+<div class="card" style="font-family:var(--mono);text-align:center">
+<span class="tag t-exp" style="font-size:15px">O(nⁿ)</span> nodos, cada uno con un chequeo O(n)
+</div>
+<p>Es una cota, no una cuenta exacta: en el teorema de recurrencias <code>a</code> es una constante, y acá n es el tamaño del tablero, así que no se puede sustituir a = n mecánicamente. Contando el árbol sin podas da O(nⁿ) nodos.</p>
+</div>
+<hr class="rule">
+</section>
+
+<!-- Clase 10 · 12 -->
+<section id="ej-c12">
+<h2>Clase 10 · 12 — Suma de subconjuntos</h2>
+<p class="sub">Backtracking · buscar todas las soluciones · <span class="tag t-exp">O(2ⁿ)</span></p>
+
+<div class="enun"><b>Enunciado</b>
+Dado un conjunto de números C y un valor v, mostrar todos los subconjuntos de C en los cuales la suma de sus elementos sea v.<br>Ejemplo de instancia: C = {5, 3, 2, 6, 1, 4} y v = 6.</div>
+
+<h3>Qué te están pidiendo</h3>
+<p>Listar <b>todos</b> los subconjuntos de C cuyos elementos suman v. Cada elemento está o no está en el subconjunto, así que hay 2ⁿ candidatos. Con el ejemplo hay cuatro soluciones: {6}, {5, 1}, {3, 2, 1} y {2, 4}.</p>
+
+<h3>Razonamientos antes de mirar la resolución</h3>
+<ol class="razon">
+  <li><b>¿Qué es S y qué es una etapa?</b> Un vector de 0 y 1: S[etapa] vale 1 si el elemento de esa posición entra al subconjunto. La etapa es el elemento sobre el que se decide.</li>
+  <li><b>¿Cuántas alternativas por etapa?</b> Dos: excluir o incluir.</li>
+  <li><b>¿Cuándo tiene sentido seguir?</b> Si todos los números son positivos, ¿qué hacés cuando la suma ya se pasó de v?</li>
+  <li><b>¿Buscás una, todas o la mejor?</b> Todas: ¿cortás al encontrar una?</li>
+  <li><b>¿Qué pasa en la última etapa?</b> Si la suma coincide con v, se muestra el subconjunto.</li>
+</ol>
+
+<button class="primary rev" data-sol="sol-c12">Ver la resolución</button>
+<div class="sol" id="sol-c12">
+
+<h3>a) Estrategia de Backtracking</h3>
+<div class="grid2">
+  <div class="def"><h4>Solución parcial S</h4>Vector de n posiciones con 0 o 1: <code>S[e]</code> = 1 si el elemento e está en el subconjunto. Va con la suma acumulada <code>ActSuma</code>.</div>
+  <div class="def"><h4>Etapa y alternativas</h4>La etapa es la posición del elemento. Las alternativas son 2: excluirlo (0) o incluirlo (1), sumando su valor.</div>
+  <div class="def"><h4>Factibilidad y poda</h4>Con números positivos, si la suma actual ya supera v ninguna continuación sirve: se poda.</div>
+  <div class="def"><h4>Caso base</h4>Se decidió sobre el último elemento: si la suma coincide con v, se muestra una copia de S.</div>
+  <div class="def"><h4>Retroceso</h4>Al volver, se prueba la otra alternativa; la suma acumulada se pasa por valor.</div>
+  <div class="def"><h4>Objetivo</h4><b>Todas</b> las soluciones: no se corta al encontrar una; se sigue por las demás ramas. Cada posición de la entrada se usa a lo sumo una vez.</div>
+</div>
+
+<h3>b) Pseudocódigo</h3>
+<div class="card">
+<pre class="ps">Algoritmo sumaM
+Entrada: v: Vector&lt;entero&gt;, m: entero, ActSolucion: Vector&lt;entero&gt;,
+         ActSuma: entero, etapa: entero
+para i = 0 hasta 1
+    ActSolucion[etapa] ← i
+    ActSuma ← ActSuma + v[etapa] * i
+    si etapa = tamaño(v)
+        si ActSuma = m
+            mostrar(ActSolucion)
+        fin si
+    sino
+        si ActSuma &lt; m
+            sumaM(v, m, ActSolucion, ActSuma, etapa + 1)
+        fin si
+fin para</pre>
+</div>
+<div class="note"><b>Rarezas de la lámina</b>
+El literal poda con <code>ActSuma &lt; m</code> (descarta las ramas donde la suma ya llegó a v antes del último elemento) y le falta un cierre de <code>si</code>. Con el ejemplo, el literal muestra solo {2, 4}; la versión corregida, las cuatro. El apunte tiene el simulador con los dos modos (<a href="index.html#suma-c10">Suma de subconjuntos</a>).</div>
+
+<h3>Ejecutalo paso a paso</h3>
+<p>El simulador paso a paso de este problema está en el apunte: <a href="index.html#suma-c10" data-apunte-sim="sim-c10-suma">Suma de subconjuntos</a>. Ahí ves cada celda (o cada rama) con el resaltado del pseudocódigo; acá se trabaja el planteo, como en el parcial.</p>
+
+<h3>c) Complejidad temporal</h3>
+<p>Dos alternativas por etapa y n etapas: como máximo 2ⁿ hojas y 2ⁿ⁺¹ − 1 nodos. Para el recorrido sin podas, <code>T(n) = 2·T(n−1) + Θ(1)</code>: caso resta, a = 2, b = 1, k = 0 → Θ(2ⁿ). La lámina escribe O(2ⁿ).</p>
+<div class="card" style="font-family:var(--mono);text-align:center">
+2 alternativas × n etapas → <span class="tag t-exp" style="font-size:15px">O(2ⁿ)</span>
+</div>
+<p>Mostrar los resultados también cuesta: si hay s soluciones y mostrar cada vector cuesta Θ(n), el total incluye O(n·s), hasta O(n·2ⁿ).</p>
+</div>
+<hr class="rule">
+</section>
+
+<!-- Clase 10 · 13 -->
+<section id="ej-c13">
+<h2>Clase 10 · 13 — Partición en mitades</h2>
+<p class="sub">Backtracking · buscar todas las soluciones · <span class="tag t-exp">O(2ⁿ) en la lámina, Θ(n·2ⁿ) en el código</span></p>
+
+<div class="enun"><b>Enunciado</b>
+Dado un conjunto de n enteros se desea encontrar, si existe, una partición en dos subconjuntos disjuntos, tal que la suma de sus elementos sea la misma. Si existe más de una, mostrar todas las posibles.<br>Ejemplo de instancia: C = {2, 4, 5, 6, 1}.</div>
+
+<h3>Qué te están pidiendo</h3>
+<p>Repartir los n números en dos grupos que sumen lo mismo, y mostrar <b>todas</b> las repartijas posibles. Cada número va al grupo 1 o al grupo 2: dos alternativas por etapa. Con el ejemplo la suma total es 18, así que cada grupo tiene que sumar 9: {4, 5} contra {2, 6, 1}. Como los grupos se etiquetan 1 y 2, esa partición sale dos veces (cada grupo en cada etiqueta).</p>
+
+<h3>Razonamientos antes de mirar la resolución</h3>
+<ol class="razon">
+  <li><b>¿Qué es S?</b> Un vector donde S[e] es el grupo (1 o 2) del elemento e. La etapa es el elemento.</li>
+  <li><b>¿Cuándo se puede comprobar si una asignación sirve?</b> Solo cuando están todos asignados: ¿qué calculás ahí?</li>
+  <li><b>¿Buscás una, todas o la mejor?</b> «Mostrar todas»: no se corta al encontrar una.</li>
+  <li><b>¿Hay algo que se pueda podar de antemano?</b> Con enteros y total impar, ¿puede haber solución? El código de la lámina igual recorre el árbol.</li>
+  <li><b>¿Cómo se justifica la complejidad?</b> ¿Cuántas hojas hay y cuánto cuesta cada hoja?</li>
+</ol>
+
+<button class="primary rev" data-sol="sol-c13">Ver la resolución</button>
+<div class="sol" id="sol-c13">
+
+<h3>a) Estrategia de Backtracking</h3>
+<div class="grid2">
+  <div class="def"><h4>Solución parcial S</h4>Vector de n posiciones: <code>S[e]</code> = 1 o 2, el conjunto al que va el elemento e.</div>
+  <div class="def"><h4>Etapa y alternativas</h4>La etapa es el elemento. Las alternativas son 2: ponerlo en el conjunto 1 o en el 2.</div>
+  <div class="def"><h4>Factibilidad y poda</h4>En la versión de la lámina no se poda: se recorren las 2ⁿ asignaciones.</div>
+  <div class="def"><h4>Caso base</h4>E = longitud(v) − 1: todas las posiciones tienen destino. Se calculan las dos sumas y se comparan.</div>
+  <div class="def"><h4>Retroceso</h4>El valor de S[E] se reemplaza al probar la otra alternativa.</div>
+  <div class="def"><h4>Objetivo</h4><b>Todas</b> las soluciones: se muestra cada asignación válida y se continúa.</div>
+</div>
+
+<h3>b) Pseudocódigo</h3>
+<div class="card">
+<pre class="ps">Algoritmo ParticionMitad
+Entrada: S: Vector&lt;entero&gt;, E: entero, v: Vector&lt;entero&gt;
+para i = 1 hasta 2
+    S[E] ← i
+    si E = longitud(v) − 1
+        suma1 ← 0; suma2 ← 0
+        para j = 0 hasta longitud(v) − 1
+            si S[j] = 1
+                suma1 ← suma1 + v[j]
+            sino
+                suma2 ← suma2 + v[j]
+            fin si
+        fin para
+        si suma1 = suma2
+            Mostrar(S)
+        fin si
+    sino
+        particionMitad(S, E + 1, v)
+    fin si
+fin para</pre>
+</div>
+<div class="note"><b>Qué completa el apunte</b>
+El PDF trae un parche de texto en el último llamado (<code>S, E+1, v</code>) y la lámina de complejidad publica O(2ⁿ). El apunte conserva las dos etiquetas (cada partición sale dos veces) y explica el costo real (<a href="index.html#particion-c10">Partición en mitades</a>).</div>
+
+<h3>Ejecutalo paso a paso</h3>
+<p>El simulador paso a paso de este problema está en el apunte: <a href="index.html#particion-c10" data-apunte-sim="sim-c10-particion">Partición en mitades</a>. Ahí ves cada celda (o cada rama) con el resaltado del pseudocódigo; acá se trabaja el planteo, como en el parcial.</p>
+
+<h3>c) Complejidad temporal</h3>
+<p>La lámina anota <code>a = 2, b = 1, k = 1</code> y concluye O(2ⁿ). Pero el código recorre n posiciones en cada una de sus 2ⁿ hojas (para sumar), por lo que el costo real de esta versión es <b>Θ(n·2ⁿ)</b>. No es <code>T(n) = 2·T(n−1) + Θ(n)</code> con n decreciendo: <code>longitud(v)</code> conserva el tamaño original en todas las hojas.</p>
+<div class="card" style="font-family:var(--mono);text-align:center">
+2ⁿ hojas × Θ(n) por hoja → <span class="tag t-exp" style="font-size:15px">Θ(n·2ⁿ)</span>
+</div>
+<p>La mejora que sugiere la estrategia es llevar acumuladas las dos sumas durante la recursión: se comparan en Θ(1) al llegar a cada hoja y el recorrido cuesta Θ(2ⁿ).</p>
+</div>
+<hr class="rule">
+</section>
+
+<!-- Clase 11 · 14 -->
+<section id="ej-c14">
+<h2>Clase 11 · 14 — Asignación de tareas a procesadores, con cota inicial Greedy</h2>
+<p class="sub">Backtracking con poda + Greedy · <span class="tag t-exp">O((m+t)·mᵗ)</span></p>
+
+<div class="enun"><b>Enunciado</b>
+Se tienen m procesadores idénticos y n tareas con un tiempo de ejecución dado. Se requiere encontrar una asignación de tareas a procesadores de manera de minimizar el tiempo de ejecución del total de tareas.<br>Clase 11: Plantear la estrategia por backtracking · Desarrollar pseudocódigo · Calcular complejidad temporal teórica · Diseñar a través de un problema Greedy la obtención de una cota inicial para obtener como poda.</div>
+
+<h3>Qué te están pidiendo</h3>
+<p>Es el mismo problema de la <a href="#ej-g15">Backtracking 1 de la guía</a> (la parte de la clase 10), con una vuelta más: conseguir <b>primero una asignación completa con Greedy</b> y usar su tiempo como cota inicial, para podar desde el principio. El criterio Greedy: tomar la tarea de mayor duración y asignarla al procesador con menor carga. Con las tareas {8, 7, 6, 5, 4} y 2 procesadores, Greedy da 17 y el óptimo es 15. En este enunciado las tareas son n; el apunte las llama t.</p>
+
+<h3>Razonamientos antes de mirar la resolución</h3>
+<ol class="razon">
+  <li><b>¿Qué se minimiza?</b> El momento en que termina el último procesador: el máximo de las cargas. (La suma de las cargas es constante y no sirve.)</li>
+  <li><b>¿Qué cota inicial da Greedy y por qué es válida?</b> Una asignación completa tiene un tiempo B: el óptimo es ≤ B. Sirve como mejor solución de arranque, con su asignación guardada.</li>
+  <li><b>¿Qué poda se usa?</b> La mayor carga parcial no puede bajar al seguir asignando: si ya es ≥ B, esa rama no mejora nada.</li>
+  <li><b>¿Cómo se diseña el Greedy?</b> Selección: la tarea pendiente de mayor duración. Asignación: el procesador con menor carga actual.</li>
+  <li><b>¿La poda cambia la complejidad?</b> Pensá en el peor caso.</li>
+</ol>
+
+<button class="primary rev" data-sol="sol-c14">Ver la resolución</button>
+<div class="sol" id="sol-c14">
+
+<h3>a) Estrategia de Backtracking</h3>
+<div class="grid2">
+  <div class="def"><h4>Solución parcial S</h4>Vector de t posiciones: <code>S[tarea]</code> = procesador. Va con las cargas de cada procesador y con <code>mejorTiempo</code> y <code>mejorS</code>, que arrancan con la solución Greedy.</div>
+  <div class="def"><h4>Etapa y alternativas</h4>La etapa es la tarea (en orden decreciente de duración). Las alternativas son los m procesadores. Se suma la duración antes de bajar y se resta al volver.</div>
+  <div class="def"><h4>Factibilidad y poda</h4>Toda asignación es factible. Se poda por cota inferior: si <code>máximo(cargas) ≥ mejorTiempo</code> no puede mejorar.</div>
+  <div class="def"><h4>Caso base</h4>Todas las tareas asignadas: si la carga máxima mejora la guardada, se copia S y se actualiza el mejor tiempo.</div>
+  <div class="def"><h4>Retroceso</h4>Se restauran la carga y S[tarea]. <code>mejorTiempo</code> y <code>mejorS</code> se conservan (por eso mejorS es una copia).</div>
+  <div class="def"><h4>Objetivo</h4>La <b>mejor</b> solución: la de menor tiempo total.</div>
+</div>
+
+<h3>b) Pseudocódigo</h3>
+<div class="card">
+<pre class="ps">Algoritmo AsignarTareasGreedy
+Entradas: Vector&lt;entero&gt; tareas, Entero m
+Salida: Vector&lt;entero&gt; asignación
+Vector&lt;real&gt; carga ← InicializarVector()
+Vector&lt;entero&gt; asignación ← InicializarVector()
+Entero i, j, p
+Entero mejorProcesador
+MergeSort(tareas) // ordenar tareas en forma decreciente por tiempo de ejecución
+Para j ← 1 hasta m
+    carga[j] ← 0
+Fin Para
+Para i ← 1 hasta longitud(tareas)
+    mejorProcesador ← 1
+    Para p ← 2 hasta m
+        Si carga[p] &lt; carga[mejorProcesador]
+            mejorProcesador ← p
+        Fin Si
+    Fin Para
+    asignacion[i] ← mejorProcesador
+    carga[mejorProcesador] ← carga[mejorProcesador] + tareas[i]
+Fin Para
+devolver asignacion
+fin AsignarTareasGreedy</pre>
+</div>
+<div class="note"><b>Cota inicial: Greedy (lámina 18)</b>
+Transcripción de la lámina: ordena las tareas de mayor a menor y asigna cada una al procesador de menor carga.</div>
+<div class="card">
+<pre class="ps">mejorTiempo, mejorS ← Greedy o (∞, sin asignación)
+tareas ← ordenar decreciente, conservando su identidad; cargas ← 0; S ← pendiente
+procedimiento Buscar(E)
+    inferior ← máximo(cargas)
+    si inferior ≥ mejorTiempo: volver
+    si E = longitud(tareas)
+        mejorTiempo ← inferior; mejorS ← copia(S); volver
+    t ← tareas[E]
+    para p ← 1 hasta m
+        S[t.id] ← p; cargas[p] ← cargas[p] + t.tiempo
+        Buscar(E + 1)
+        cargas[p] ← cargas[p] − t.tiempo; S[t.id] ← pendiente
+Buscar(0)
+devolver mejorTiempo, mejorS</pre>
+</div>
+<div class="note"><b>Backtracking con la cota (propio)</b>
+El PDF publica el árbol, sin pseudocódigo de esta búsqueda: este está escrito sobre la estrategia de la lámina 20. «Sin cota inicial» es el mismo código empezando con (∞, sin asignación).</div>
+
+<h3>Ejecutalo paso a paso</h3>
+<p>El simulador paso a paso de este problema está en el apunte: <a href="index.html#procesadores-c11" data-apunte-sim="sim-c11-procesadores">Backtracking con la cota inicial Greedy</a>. Ahí ves cada celda (o cada rama) con el resaltado del pseudocódigo; acá se trabaja el planteo, como en el parcial.</p>
+
+<h3>c) Complejidad temporal</h3>
+<p>Con t tareas y m procesadores. <b>Greedy:</b> ordenar cuesta O(t log t), inicializar cargas O(m) y buscar la menor carga para cada tarea O(t·m): O(t log t + t·m). <b>Backtracking:</b> sin una poda útil hay m alternativas por tarea y profundidad t: hasta mᵗ asignaciones. Cada nodo calcula un máximo O(m), y copiar una mejora cuesta O(t).</p>
+<div class="card" style="font-family:var(--mono);text-align:center">
+Greedy <span class="tag t-nlogn" style="font-size:15px">O(t log t + t·m)</span> &nbsp;·&nbsp; Backtracking <span class="tag t-exp" style="font-size:15px">O((m + t)·mᵗ)</span>
+</div>
+<p>Una buena cota inicial puede ahorrar muchas ramas, pero el peor caso sigue siendo exponencial: no alcanza con escribir «tiene poda» para justificar tiempo polinomial.</p>
+</div>
+<hr class="rule">
+</section>
+
+<!-- Clase 11 · 15 -->
+<section id="ej-c15">
+<h2>Clase 11 · 15 — Problema de la mochila con poda por cota</h2>
+<p class="sub">Backtracking con cota superior · <span class="tag t-exp">O(n·2ⁿ + n log n)</span></p>
+
+<div class="enun"><b>Enunciado</b>
+Se tienen n objetos y una mochila. Para i = 1, 2, ..., n, el objeto i tiene un peso positivo Pᵢ y un valor positivo Vᵢ. La mochila puede llevar un peso que no sobrepase P. El objetivo es llenar la mochila de tal manera que se maximice el valor de los objetos transportados, respetando la limitación de capacidad impuesta. Los objetos no se pueden fraccionar (mochila 0-1).<br>Ejemplo de instancia: capacidad de la mochila = 7.<table style="width:auto;margin:8px 0"><tr><th>Objeto</th><th>Valor</th><th>Peso</th></tr><tr><td>O1</td><td class="num">35</td><td class="num">5</td></tr><tr><td>O2</td><td class="num">30</td><td class="num">3</td></tr><tr><td>O3</td><td class="num">20</td><td class="num">2</td></tr><tr><td>O4</td><td class="num">12</td><td class="num">1</td></tr></table></div>
+
+<h3>Qué te están pidiendo</h3>
+<p>La misma Mochila 0/1 de la clase 7, pero resuelta por <b>Backtracking</b>: cada objeto se incluye o se excluye, y el objetivo es podar el árbol con una <b>cota superior</b>. Con P = 7, incluir O1 y O2 pesa 8 y se poda por exceso; O1 + O3 vale 55 y es factible, pero no óptimo; la mejor es <b>O2 + O3 + O4: valor 62, peso 6</b>. La mochila puede quedar con capacidad sin usar.</p>
+
+<h3>Razonamientos antes de mirar la resolución</h3>
+<ol class="razon">
+  <li><b>¿Qué es S y cuántas alternativas hay?</b> S[E] = 0 excluye el objeto E y S[E] = 1 lo incluye: dos alternativas por etapa.</li>
+  <li><b>¿Cuándo una rama no tiene salida?</b> Cuando el peso acumulado supera la capacidad: poda por <b>factibilidad</b>.</li>
+  <li><b>¿Qué poda por optimalidad se puede hacer?</b> Estimá lo máximo que podría sumar lo que falta <b>permitiendo fracciones</b>: ¿por qué esa estimación nunca queda por debajo del óptimo entero?</li>
+  <li><b>¿Qué se hace al llegar al último objeto o al llenar la mochila?</b> Comparar contra el mejor valor y guardar una copia.</li>
+  <li><b>¿Cuánto cuesta calcular la cota?</b> ¿Se suma o no al costo de cada nodo?</li>
+</ol>
+
+<button class="primary rev" data-sol="sol-c15">Ver la resolución</button>
+<div class="sol" id="sol-c15">
+
+<h3>a) Estrategia de Backtracking</h3>
+<div class="grid2">
+  <div class="def"><h4>Solución parcial S</h4>Vector de n posiciones con 0 o 1: <code>S[E]</code> decide si el objeto E se lleva. Va con el peso y el valor acumulados.</div>
+  <div class="def"><h4>Etapa y alternativas</h4>La etapa es el objeto. Las alternativas son 2: excluirlo (0) o incluirlo (1).</div>
+  <div class="def"><h4>Factibilidad y poda</h4>Se descarta el peso excesivo (factibilidad) y las ramas cuya mejor estimación fraccionaria no supere el mejor valor guardado: <code>cota ≤ mejorValor</code> (optimalidad).</div>
+  <div class="def"><h4>Caso base</h4>No quedan objetos, o se alcanza la capacidad: se compara el valor con el mejor y se copia la selección si mejora.</div>
+  <div class="def"><h4>Retroceso</h4>Se restauran S y los acumulados (se pasan por valor). <code>mejorValor</code> y <code>mejorS</code> se conservan.</div>
+  <div class="def"><h4>Objetivo</h4>La <b>mejor</b> solución: la de mayor valor.</div>
+</div>
+<div class="first"><b>Cómo se arma la cota superior</b>
+<code>U = valorActual + mejor valor fraccionario de lo pendiente con capacidad P − pesoActual</code>. Entre los objetos pendientes se toman primero los de mayor valor/peso, enteros mientras entren y una fracción del siguiente si hace falta. En la raíz: O4 + O2 + O3 pesan 6 y valen 62, y queda 1 de capacidad para 1/5 de O1: U = 62 + 35/5 = 69. Es optimista: toda continuación 0/1 también es una selección fraccionaria válida.</div>
+
+<h3>b) Pseudocódigo</h3>
+<div class="card">
+<pre class="ps">Algoritmo Mochila
+Entrada: Objetos: Vector&lt;Objeto&gt;, capacidad: entero, mejorSolucion: Vector&lt;entero&gt;, valorMejorSolucion: entero,
+solucionActual: Vector&lt;entero&gt;, valorSolucionActual: entero, pesoSolucionActual: entero,etapa:entero
+Salida: entero
+
+para i = 0 hasta 1:
+    solucionActual[etapa] &lt;- i
+    pesoSolucionActual &lt;- pesoSolucionActual + i * Objetos[etapa].peso
+    valorSolucionActual &lt;- valorSolucionActual + i * Objetos[etapa].valor
+    si pesoSolucionActual == capacidad:
+        si valorMejorSolucion = -1 O valorMejorSolucion &lt; valorSolucionActual
+            mejorSolucion &lt;- solucionActual
+            valorMejorSolucion &lt;- valorSolucionActual
+        fin si
+    fin si
+    si pesoSolucionActual &lt; capacidad:
+        cotaSuperior = calcularCotaSuperior(Objetos, solucionActual, etapa)
+        si cotaSuperior &gt; valorMejorSolucion:
+            si etapa = longitud(Objetos) - 1
+                si valorMejorSolucion = -1 O valorMejorSolucion &lt; valorSolucionActual
+                    mejorSolucion &lt;- solucionActual
+                    valorMejorSolucion &lt;- valorSolucionActual
+                fin si
+            fin si
+            sino:
+                valorMejorSolucion &lt;- Mochila(Objetos, capacidad, mejorSolucion, valorMejorSolucion,
+                                             solucionActual, valorSolucionActual, etapa + 1)
+            fin sino
+        fin si
+    fin si
+fin para
+devolver valorMejorSolucion</pre>
+</div>
+<div class="note"><b>Pseudocódigo con cota (lámina 30)</b>
+Se copia el original, con sus rarezas: la llamada recursiva omite <code>pesoSolucionActual</code> y el <code>sino</code> aparece después del cierre del <code>si</code> de la última etapa. <code>calcularCotaSuperior</code> no se desarrolla en la lámina. El apunte lista lo que se completa para poder ejecutarlo (<a href="index.html#mochila-c11">Mochila con cota superior</a>).</div>
+<div class="card">
+<pre class="ps">CotaFraccionaria(E, restante, valorActual)
+    total ← valorActual
+    recorrer objetos pendientes (índice ≥ E) por valor/peso decreciente
+        si restante = 0: terminar recorrido
+        si pesoObjeto ≤ restante
+            total ← total + valorObjeto
+            restante ← restante − pesoObjeto
+        sino
+            devolver (total × pesoObjeto + restante × valorObjeto, pesoObjeto)
+    devolver (total, 1)  // par (numerador, denominador)</pre>
+</div>
+<div class="note"><b>Auxiliar propio para la cota</b>
+Se compara con enteros exactos: <code>numerador ≤ mejorValor × denominador</code>.</div>
+
+<h3>Ejecutalo paso a paso</h3>
+<p>El simulador paso a paso de este problema está en el apunte: <a href="index.html#mochila-c11" data-apunte-sim="sim-c11-mochila">Mochila 0/1 con cota superior fraccionaria</a>. Ahí ves cada celda (o cada rama) con el resaltado del pseudocódigo; acá se trabaja el planteo, como en el parcial.</p>
+
+<h3>c) Complejidad temporal</h3>
+<p>Sin cota superior, el recorrido binario cumple <code>T(n) = 2·T(n−1) + O(1)</code>: caso resta, a = 2, b = 1, k = 0 → O(2ⁿ). La lámina 26 da esos parámetros. Copiar cada mejora agrega O(n): una cota superior que incluye esas copias es O(n·2ⁿ).</p>
+<p>Con cota fraccionaria, ordenar cuesta O(n log n) una vez y cada evaluación recorre hasta n objetos: O(n) por nodo. La poda puede ahorrar nodos, pero calcular la cota también cuesta trabajo.</p>
+<div class="card" style="font-family:var(--mono);text-align:center">
+sin cota <span class="tag t-exp" style="font-size:15px">O(2ⁿ)</span> &nbsp;·&nbsp; con cota, peor caso <span class="tag t-exp" style="font-size:15px">O(n·2ⁿ + n log n)</span>
+</div>
+</div>
+<hr class="rule">
+</section>
+
+<div class="exbar" id="bloque-integ2"><span>Integración</span><b>Segundo parcial</b><em>Se pide, por ejercicio: a) técnica · b) estrategia · c) pseudocódigo · d) complejidad temporal</em></div>
+
+<div class="note" style="max-width:76ch"><b>De dónde salen estos ejercicios</b>
+Son los seis de «Ejercicios de Integración segundo Parcial» de la cátedra, con la numeración del PDF (1 a 6). A diferencia de la guía, el enunciado <b>no dice qué técnica usar</b>: el punto a) es reconocerla. La cátedra no publica pseudocódigo ni ejemplos numéricos para ninguno de los seis: los de acá son propios, derivados de la estrategia, y cada ejercicio lo avisa. Entran Programación Dinámica, Backtracking y Grafos (Floyd), los temas del <b>integrador</b> (11/11/2026).</div>
+
+<!-- Integración 2.º parcial · 1 -->
+<section id="ej-s1">
+<h2>Integración 2.º parcial · 1 — Maximización de almacenamiento</h2>
+<p class="sub">Programación Dinámica · <span class="tag t-cuad">Θ(n·D)</span></p>
+
+<div class="enun"><b>Enunciado</b>
+Maximización de almacenamiento: Sean n programas P₁, …, Pₙ que hay que almacenar en un disco. El programa Pᵢ requiere Sᵢ GB de espacio y la capacidad del disco es D GB. Realizar un algoritmo que utilice la mayor cantidad de espacio en el disco.</div>
+
+<h3>Qué te están pidiendo</h3>
+<p>Elegir qué programas guardar para que el disco quede <b>lo más lleno posible sin pasarse de D</b>. Cada programa entra entero o no entra. La respuesta es un número: los GB ocupados (y, de paso, cuáles programas). Ojo con la palabra: se pide la mayor cantidad de <b>espacio utilizado</b>, no la mayor cantidad de <b>programas</b>.</p>
+
+<div class="note"><b>Es la contracara de Integración 1.er parcial · 7</b>
+Allá se pedía maximizar la <b>cantidad de archivos</b> y alcanzaba con Greedy (<a href="#ej-i7">los más chicos primero</a>). Acá se maximiza el <b>espacio ocupado</b>: cambia una palabra y cambia la técnica. Se asume que los Sᵢ y D son enteros (GB).</div>
+
+<h3>Razonamientos antes de mirar la resolución</h3>
+<ol class="razon">
+  <li><b>¿Qué se maximiza: programas o GB?</b> Releé el enunciado. Si fueran programas, ordenarías por tamaño. ¿Sirve ese criterio (o el de «el más grande primero») para llenar el disco? Probá con S = (6, 5, 5, 3) y D = 10: el más grande primero guarda 6 + 3 = 9; el más chico primero guarda 3 + 5 = 8; y 5 + 5 llena el disco justo, 10.</li>
+  <li><b>Si ningún criterio local alcanza y cada programa se guarda entero o no, ¿a qué problema conocido se parece?</b> El tamaño hace de peso, la capacidad D hace de capacidad… y de valor, ¿qué? Es la <a href="index.html#mochila-pd">Mochila 0/1</a> donde el valor de cada objeto es su propio peso.</li>
+  <li><b>¿Qué guarda cada celda?</b> «La mayor cantidad de GB que se puede ocupar con algunos de los primeros i programas en un disco de j GB».</li>
+  <li><b>¿Opciones y a qué fila apuntan?</b> «No lo guardo» o «lo guardo». Las dos a la fila <b>i − 1</b>: cada programa se guarda una sola vez.</li>
+  <li><b>¿Respuesta?</b> M[n, D]: última fila, última columna.</li>
+</ol>
+
+<button class="primary rev" data-sol="sol-s1">Ver la resolución</button>
+<div class="sol" id="sol-s1">
+
+<h3>a) Técnica</h3>
+<p><b>Programación Dinámica.</b> Hay que optimizar (maximizar) con un límite (D), cada elemento se usa una sola vez y un criterio local falla (el contraejemplo del razonamiento 1). Además el problema cumple el <b>principio de optimalidad</b>: una solución óptima para los primeros i programas y j GB contiene una solución óptima de los primeros i − 1 programas con j GB (si el programa i no se guarda) o con j − Sᵢ GB (si se guarda). Y esos subproblemas se repiten, que es lo que la tabla aprovecha.</p>
+
+<h3>b) Estrategia de Programación Dinámica</h3>
+<div class="first"><b>Qué guarda cada celda</b>
+<code>M[i,j]</code> = la <b>mayor cantidad de GB ocupados</b> que se logra guardando algunos de los primeros i programas en un disco de j GB, sin pasarse.</div>
+
+<div class="grid2">
+  <div class="def"><h4>Casos base</h4>Con un solo programa (i = 1): si su tamaño supera j no entra y vale 0; si no, vale su tamaño.</div>
+  <div class="def"><h4>Decisión entre soluciones menores</h4>Para i &gt; 1: si el programa no entra, se copia M[i−1, j]. Si entra, se elige el <b>máximo</b> entre <b>no lo guardo</b> (M[i−1, j]) y <b>lo guardo</b> (M[i−1, j − Sᵢ] + Sᵢ).</div>
+  <div class="def"><h4>Tabla y respuesta</h4>n filas y D + 1 columnas, fila por fila y de izquierda a derecha. La respuesta es <b>M[n, D]</b>.</div>
+</div>
+
+<h3>La recurrencia, caso por caso</h3>
+<table>
+<tr><th>M[i,j] =</th><th>cuando</th><th>en criollo</th></tr>
+<tr><td class="num">0</td><td class="num">i = 1 y S₁ &gt; j</td><td>El único programa no entra en el disco de j GB.</td></tr>
+<tr><td class="num">S₁</td><td class="num">i = 1 y S₁ ≤ j</td><td>El único programa entra: se guarda.</td></tr>
+<tr><td class="num">M[i−1, j]</td><td class="num">i &gt; 1 y Sᵢ &gt; j</td><td>El programa i no entra: me quedo con lo que ya había.</td></tr>
+<tr><td class="num">máx( M[i−1, j] , M[i−1, j − Sᵢ] + Sᵢ )</td><td class="num">i &gt; 1 y Sᵢ ≤ j</td><td>«No lo guardo» o «lo guardo».</td></tr>
+</table>
+
+<h3>Leela término por término</h3>
+<ol class="razon">
+  <li><b><code>M[i−1, j]</code> — «no lo guardo».</b> Los j GB quedan enteros para los programas anteriores.</li>
+  <li><b><code>M[i−1, j − Sᵢ] + Sᵢ</code> — «lo guardo».</b> Ocupo Sᵢ GB, me quedan j − Sᵢ para los anteriores (de la mejor manera, ya calculada) y sumo Sᵢ a lo ocupado. Como el valor de cada programa es su propio tamaño, lo que se suma es Sᵢ.</li>
+  <li><b>¿Por qué la fila i − 1 también en «lo guardo»?</b> Porque el programa i ya se usó y no puede volver a guardarse. Si mirara la fila i, lo podrías guardar varias veces: eso es lo que pasa en <a href="#ej-s3">el catálogo de premios</a>, donde sí hay stock ilimitado.</li>
+  <li><b>¿Por qué <code>máx</code>?</b> Se maximiza el espacio ocupado.</li>
+</ol>
+
+<h3>c) Pseudocódigo</h3>
+<div class="card">
+<pre class="ps">ALGORITMO Almacenamiento(S, D)
+Entrada: S: Vector&lt;entero&gt; de n posiciones (1-based), tamaños en GB; D: capacidad del disco
+Salida: la mayor cantidad de GB que se puede ocupar
+M ← inicializarMatriz(n, D + 1)
+para i ← 1 hasta n
+    para j ← 0 hasta D
+        si i = 1
+            si S[1] &gt; j
+                M[i,j] ← 0
+            sino
+                M[i,j] ← S[1]
+            fin si
+        sino
+            si S[i] &gt; j
+                M[i,j] ← M[i-1,j]
+            sino
+                M[i,j] ← máx(M[i-1,j], M[i-1, j - S[i]] + S[i])
+            fin si
+        fin si
+    fin para
+fin para
+devolver M[n, D]</pre>
+</div>
+<div class="note"><b>Pseudocódigo y ejemplo propios</b>
+No hay pseudocódigo de la cátedra para este ejercicio: este es el de la <a href="index.html#mochila-pd">Mochila 0/1</a> con los nombres del enunciado, el valor de cada programa igual a su tamaño y los índices en base 1. El ejemplo (S = 6, 5, 5, 3 y D = 10) es propio.</div>
+
+<h3>Ejecutalo paso a paso</h3>
+<div class="sim" id="sim-s1">
+  <div class="sim-head">
+    <div class="title">Almacenamiento(S, D)<small>Naranja: celda que se calcula · celeste: celdas que compara · verde: camino de la reconstrucción</small></div>
+    <div class="inputs">
+      <label for="s1-s">tamaños Sᵢ (GB)</label><input type="text" id="s1-s" value="6,5,5,3">
+      <label for="s1-d">D</label><input type="number" id="s1-d" value="10" min="1" max="20">
+      <button class="ghost" data-reload>Calcular</button>
+    </div>
+  </div>
+  <div class="bt-presets">
+    <button class="ghost" data-s-sim="s1" data-s-preset="{&quot;s1-s&quot;: &quot;6,5,5,3&quot;, &quot;s1-d&quot;: &quot;10&quot;}">Ejemplo: 5 + 5 llena el disco</button>
+    <button class="ghost" data-s-sim="s1" data-s-preset="{&quot;s1-s&quot;: &quot;2,3,4&quot;, &quot;s1-d&quot;: &quot;5&quot;}">Acá el más chico primero acierta</button>
+    <button class="ghost" data-s-sim="s1" data-s-preset="{&quot;s1-s&quot;: &quot;7,9,8&quot;, &quot;s1-d&quot;: &quot;5&quot;}">Ninguno entra</button>
+    <button class="ghost" data-s-sim="s1" data-s-preset="{&quot;s1-s&quot;: &quot;3,3,3&quot;, &quot;s1-d&quot;: &quot;9&quot;}">Entran todos</button>
+  </div>
+  <div class="sim-body">
+    <div class="code" data-code>
+<div class="cl" data-l="1"><span class="ln">1</span><span class="tx">M ← inicializarMatriz(n, D + 1)</span></div>
+<div class="cl" data-l="2"><span class="ln">2</span><span class="tx">para i ← 1 hasta n</span></div>
+<div class="cl" data-l="3"><span class="ln">3</span><span class="tx">    para j ← 0 hasta D</span></div>
+<div class="cl" data-l="4"><span class="ln">4</span><span class="tx">        si i = 1</span></div>
+<div class="cl" data-l="5"><span class="ln">5</span><span class="tx">            si S[1] &gt; j</span></div>
+<div class="cl" data-l="6"><span class="ln">6</span><span class="tx">                M[i,j] ← 0</span></div>
+<div class="cl" data-l="7"><span class="ln">7</span><span class="tx">            sino</span></div>
+<div class="cl" data-l="8"><span class="ln">8</span><span class="tx">                M[i,j] ← S[1]</span></div>
+<div class="cl" data-l="9"><span class="ln">9</span><span class="tx">            fin si</span></div>
+<div class="cl" data-l="10"><span class="ln">10</span><span class="tx">        sino</span></div>
+<div class="cl" data-l="11"><span class="ln">11</span><span class="tx">            si S[i] &gt; j</span></div>
+<div class="cl" data-l="12"><span class="ln">12</span><span class="tx">                M[i,j] ← M[i-1,j]</span></div>
+<div class="cl" data-l="13"><span class="ln">13</span><span class="tx">            sino</span></div>
+<div class="cl" data-l="14"><span class="ln">14</span><span class="tx">                M[i,j] ← máx(M[i-1,j], M[i-1, j - S[i]] + S[i])</span></div>
+<div class="cl" data-l="15"><span class="ln">15</span><span class="tx">            fin si</span></div>
+<div class="cl" data-l="16"><span class="ln">16</span><span class="tx">        fin si</span></div>
+<div class="cl" data-l="17"><span class="ln">17</span><span class="tx">    fin para</span></div>
+<div class="cl" data-l="18"><span class="ln">18</span><span class="tx">fin para</span></div>
+<div class="cl" data-l="19"><span class="ln">19</span><span class="tx">devolver M[n, D]</span></div>
+    </div>
+    <div class="viz" data-viz></div>
+  </div>
+  <div class="explain" data-explain></div>
+  <div class="controls" data-controls></div>
+</div>
+<p class="srcnote" style="max-width:76ch">Los tamaños se escriben separados por comas (hasta 6 programas, enteros positivos) y D entre 1 y 20. Al final, el simulador reconstruye qué programas se guardaron y los compara con los dos Greedy que uno probaría primero.</p>
+
+<h3>d) Complejidad temporal</h3>
+<p>Dos ciclos anidados: uno por programa (n) y otro por cada capacidad de 0 a D. Cada celda cuesta Θ(1) (una comparación, una resta, una suma y un máximo). Son n·(D + 1) celdas.</p>
+<div class="card" style="font-family:var(--mono);text-align:center">
+n·(D + 1) celdas × Θ(1) por celda → <span class="tag t-cuad" style="font-size:15px">Θ(n·D)</span>
+</div>
+</div>
+<hr class="rule">
+</section>
+
+<!-- Integración 2.º parcial · 2 -->
+<section id="ej-s2">
+<h2>Integración 2.º parcial · 2 — Sistema de subasta</h2>
+<p class="sub">Backtracking · buscar la mejor solución, con poda por cota superior · <span class="tag t-exp">O((m+n)·(m+1)ⁿ)</span></p>
+
+<div class="enun"><b>Enunciado</b>
+Se ha diseñado un sistema de subasta en donde se encuentran n productos a subastar, y se permiten m personas que oferten por cada producto (alguna persona podría no ofertar para un producto). La oferta consiste en indicar que valor pagaría por el producto A, qué valor por el producto B, y así por cada producto que oferte. La restricción del modelo es que a una persona solo se le adjudica un producto, y cada producto puede ser adjudicado a una sola persona. Se solicita un algoritmo que determine la adjudicación de la subasta con el objetivo que se maximice la ganancia de los productos vendidos.<br>
+Por ejemplo, se tiene el producto A y B, y tres ofertantes. X, Y y Z. X oferta $3 por A, $5 por B; Y oferta solo $5 por A, y Z oferta $ 8 por A, $7 por B. En este caso el resultado sería adjudicar a Z el producto A y a X el producto B, obteniendo una ganancia de $ 13.</div>
+
+<h3>Qué te están pidiendo</h3>
+<p>Hay n productos y m personas. Cada persona ofertó un valor por <b>algunos</b> productos (no por todos): es una tabla de m filas y n columnas con huecos. Hay que decidir quién se lleva qué, con dos restricciones: a cada persona se le adjudica <b>a lo sumo un</b> producto y cada producto va a <b>una sola</b> persona. Se busca la adjudicación que <b>maximice la suma</b> de lo que se paga. Un producto puede quedar sin vender y una persona puede quedarse sin producto. En el ejemplo del enunciado, Z se lleva A (8) y X se lleva B (5): 13.</p>
+
+<div class="note"><b>Cómo se leyó el enunciado</b>
+«Se permiten m personas que oferten por cada producto» se leyó como <b>m personas en total</b>, cada una con ofertas para algunos productos (el ejemplo tiene dos productos y tres ofertantes). El texto se transcribe tal cual, con su «que valor». Se asume que las ofertas son enteros no negativos. El simulador nombra a las personas X, Y, Z, W y a los productos A, B, C, D, como el ejemplo, y admite hasta 4 de cada uno.</div>
+
+<h3>Razonamientos antes de mirar la resolución</h3>
+<ol class="razon">
+  <li><b>¿Hay un criterio local seguro?</b> Probá el más natural: adjudicar siempre la mayor oferta que quede. Con X (A: 8, B: 7) e Y (A: 7, B: 1) toma el 8 (A para X) y después solo queda B para Y, por 1: total 9. Pero A para Y y B para X dan 7 + 7 = <b>14</b>. Un criterio local falla, así que no es Greedy.</li>
+  <li><b>¿Y Programación Dinámica?</b> Para armar una tabla tendrías que saber, en cada celda, <b>qué personas ya se llevaron un producto</b>: el estado no es un número chico sino un subconjunto de personas (2ᵐ posibilidades). No hay una tabla polinomial natural. Queda explorar las adjudicaciones: <b>Backtracking</b>.</li>
+  <li><b>¿Qué es S y qué es una etapa?</b> S[e] = a qué persona se le adjudica el producto e (o ninguna). La etapa es el producto que se está decidiendo.</li>
+  <li><b>¿Qué alternativas tiene cada etapa y cuándo es factible una?</b> Dárselo a alguna persona… ¿a cuáles? ¿Y si ninguna oferta conviene?</li>
+  <li><b>¿Qué poda se puede hacer?</b> Si ya tenés una adjudicación guardada, ¿cuánto más podrían aportar los productos que faltan, <b>en el mejor de los casos</b>? Si ni así superás lo guardado, no vale la pena seguir (cota superior, clase 11).</li>
+  <li><b>¿Buscás una, todas o la mejor?</b> La mejor: se guarda como <b>copia</b> y se sigue explorando.</li>
+</ol>
+
+<button class="primary rev" data-sol="sol-s2">Ver la resolución</button>
+<div class="sol" id="sol-s2">
+
+<h3>a) Técnica</h3>
+<p><b>Backtracking</b>, buscando la <b>mejor</b> solución. No hay criterio local seguro (Greedy) ni subproblemas que se repitan con un estado chico (Programación Dinámica): hay que recorrer el árbol de adjudicaciones posibles, descartando las ramas que no pueden mejorar.</p>
+
+<h3>b) Estrategia de Backtracking</h3>
+<div class="grid2">
+  <div class="def"><h4>Solución parcial S</h4>Vector de n posiciones (una por producto): <code>S[e]</code> es la persona que se lleva el producto e, o 0 si no se vende. Va con <code>usada</code> (m posiciones), que marca qué personas ya se llevaron un producto, y con el acumulador <code>ganancia</code>.</div>
+  <div class="def"><h4>Etapa y alternativas</h4>La etapa e es «¿qué se hace con el producto e?». Las alternativas son <b>m + 1</b>: adjudicárselo a cada una de las m personas, o dejarlo sin vender.</div>
+  <div class="def"><h4>Factibilidad y poda</h4>Adjudicárselo a la persona p es <b>factible</b> si p ofertó por e y todavía no se llevó otro producto. Además se <b>poda por cota superior</b>: se corta la rama si <code>ganancia + cota[e+1]</code> no supera <code>mejorGanancia</code>. La <code>cota</code> suma, por cada producto que falta, su mayor oferta, sin fijarse si esa persona ya está usada: sobreestima, y por eso es una cota válida.</div>
+  <div class="def"><h4>Caso base</h4>e = n + 1: todos los productos están decididos. Si <code>ganancia &gt; mejorGanancia</code>, se guarda una <b>copia</b> de S.</div>
+  <div class="def"><h4>Retroceso</h4>Al volver se desmarca <code>usada[p]</code> y se deja <code>S[e]</code> en 0. <code>mejorGanancia</code> y <code>mejorS</code> se conservan (por eso <code>mejorS</code> es una copia: S sigue cambiando).</div>
+  <div class="def"><h4>Objetivo</h4>La <b>mejor</b> solución: la de mayor ganancia. Se exploran todas las ramas que no se puedan podar, sin cortar en la primera adjudicación completa.</div>
+</div>
+
+<h3>c) Pseudocódigo</h3>
+<div class="card">
+<pre class="ps">Algoritmo Subasta
+Entrada: O: Matriz m × n (O[p,e] = lo que ofertó la persona p por el producto e, o «sin oferta»)
+Salida: la ganancia máxima y una adjudicación que la logra (S[e] = persona que se lleva el producto e, 0 si no se vende)
+S ← vector de n posiciones en 0; usada ← vector de m posiciones en falso
+cota[e] ← suma de las mayores ofertas de los productos e, …, n; cota[n+1] ← 0
+mejorGanancia ← -1; mejorS ← sin adjudicación
+Adjudicar(1, 0)
+devolver mejorGanancia, mejorS
+
+Procedimiento Adjudicar(e, ganancia)
+    si e = n + 1
+        si ganancia &gt; mejorGanancia
+            mejorGanancia ← ganancia; mejorS ← copia(S)
+        fin si
+    sino
+        para cada persona p ∈ {1, …, m}
+            si O[p,e] existe Y NO usada[p]
+                S[e] ← p; usada[p] ← verdadero
+                si ganancia + O[p,e] + cota[e+1] &gt; mejorGanancia
+                    Adjudicar(e+1, ganancia + O[p,e])
+                fin si
+                usada[p] ← falso
+            fin si
+        fin para
+        S[e] ← 0
+        si ganancia + cota[e+1] &gt; mejorGanancia
+            Adjudicar(e+1, ganancia)
+        fin si
+    fin si</pre>
+</div>
+<div class="note"><b>Pseudocódigo y ejemplo propios</b>
+La cátedra no publica pseudocódigo de este ejercicio: este está derivado de la estrategia. El ejemplo por defecto es el del enunciado (X: 3, 5; Y: 5, —; Z: 8, 7). <code>mejorGanancia</code> arranca en −1 y no en 0 para que la primera adjudicación completa se guarde siempre, aunque valga 0. La poda usa <code>&gt;</code> estricto: una rama que, en el mejor de los casos, solo empata con lo guardado no se explora, así que ante dos adjudicaciones de igual ganancia queda la primera que se encontró. La cota se calcula una vez, antes de empezar.</div>
+
+<h3>Ejecutalo paso a paso</h3>
+<div class="sim bt-sim" id="sim-s2">
+  <div class="sim-head">
+    <div class="title">Subasta<small>Fila = persona, columna = producto · naranja: la oferta que se prueba · celeste: adjudicaciones de S · verde: mejor guardada</small></div>
+    <div class="inputs">
+      <label for="s2-ofertas">ofertas</label><input type="text" class="bt-wide" id="s2-ofertas" value="3 5 / 5 - / 8 7">
+      <button class="ghost" data-reload>Ejecutar</button>
+    </div>
+  </div>
+  <div class="bt-presets">
+    <button class="ghost" data-s-sim="s2" data-s-preset="{&quot;s2-ofertas&quot;: &quot;3 5 / 5 - / 8 7&quot;}">Ejemplo del enunciado</button>
+    <button class="ghost" data-s-sim="s2" data-s-preset="{&quot;s2-ofertas&quot;: &quot;8 7 / 7 1&quot;}">El criterio «mayor oferta primero» falla</button>
+    <button class="ghost" data-s-sim="s2" data-s-preset="{&quot;s2-ofertas&quot;: &quot;4 9 2 / 6 3 8&quot;}">Más productos que personas</button>
+    <button class="ghost" data-s-sim="s2" data-s-preset="{&quot;s2-ofertas&quot;: &quot;9 4 7 3 / 6 8 2 5 / 3 7 9 6 / 5 2 4 8&quot;}">4 personas × 4 productos</button>
+    <button class="ghost" data-s-sim="s2" data-s-preset="{&quot;s2-ofertas&quot;: &quot;- - / - -&quot;}">Nadie ofertó</button>
+  </div>
+  <div class="sim-body">
+    <div class="code" data-code>
+<div class="cl" data-l="1"><span class="ln">1</span><span class="tx">S ← vector de n posiciones en 0; usada ← vector de m posiciones en falso</span></div>
+<div class="cl" data-l="2"><span class="ln">2</span><span class="tx">cota[e] ← suma de las mayores ofertas de los productos e, …, n; cota[n+1] ← 0</span></div>
+<div class="cl" data-l="3"><span class="ln">3</span><span class="tx">mejorGanancia ← -1; mejorS ← sin adjudicación</span></div>
+<div class="cl" data-l="4"><span class="ln">4</span><span class="tx">Adjudicar(1, 0)</span></div>
+<div class="cl" data-l="5"><span class="ln">5</span><span class="tx">devolver mejorGanancia, mejorS</span></div>
+<div class="cl hdr" data-l="6"><span class="ln">6</span><span class="tx">Procedimiento Adjudicar(e, ganancia)</span></div>
+<div class="cl" data-l="7"><span class="ln">7</span><span class="tx">    si e = n + 1</span></div>
+<div class="cl" data-l="8"><span class="ln">8</span><span class="tx">        si ganancia &gt; mejorGanancia</span></div>
+<div class="cl" data-l="9"><span class="ln">9</span><span class="tx">            mejorGanancia ← ganancia; mejorS ← copia(S)</span></div>
+<div class="cl" data-l="10"><span class="ln">10</span><span class="tx">        fin si</span></div>
+<div class="cl" data-l="11"><span class="ln">11</span><span class="tx">    sino</span></div>
+<div class="cl" data-l="12"><span class="ln">12</span><span class="tx">        para cada persona p ∈ {1, …, m}</span></div>
+<div class="cl" data-l="13"><span class="ln">13</span><span class="tx">            si O[p,e] existe Y NO usada[p]</span></div>
+<div class="cl" data-l="14"><span class="ln">14</span><span class="tx">                S[e] ← p; usada[p] ← verdadero</span></div>
+<div class="cl" data-l="15"><span class="ln">15</span><span class="tx">                si ganancia + O[p,e] + cota[e+1] &gt; mejorGanancia</span></div>
+<div class="cl" data-l="16"><span class="ln">16</span><span class="tx">                    Adjudicar(e+1, ganancia + O[p,e])</span></div>
+<div class="cl" data-l="17"><span class="ln">17</span><span class="tx">                fin si</span></div>
+<div class="cl" data-l="18"><span class="ln">18</span><span class="tx">                usada[p] ← falso</span></div>
+<div class="cl" data-l="19"><span class="ln">19</span><span class="tx">            fin si</span></div>
+<div class="cl" data-l="20"><span class="ln">20</span><span class="tx">        fin para</span></div>
+<div class="cl" data-l="21"><span class="ln">21</span><span class="tx">        S[e] ← 0</span></div>
+<div class="cl" data-l="22"><span class="ln">22</span><span class="tx">        si ganancia + cota[e+1] &gt; mejorGanancia</span></div>
+<div class="cl" data-l="23"><span class="ln">23</span><span class="tx">            Adjudicar(e+1, ganancia)</span></div>
+<div class="cl" data-l="24"><span class="ln">24</span><span class="tx">        fin si</span></div>
+<div class="cl" data-l="25"><span class="ln">25</span><span class="tx">    fin si</span></div>
+    </div>
+    <div class="viz" data-viz></div>
+  </div>
+  <div class="explain" data-explain></div>
+  <div class="controls" data-controls></div>
+</div>
+<p class="srcnote" style="max-width:76ch">Cómo se escriben las ofertas: una fila por persona, separadas por <code>/</code>; dentro de cada fila, una oferta por producto separadas por espacios, con <code>-</code> si esa persona no ofertó por ese producto. Hasta 4 personas y 4 productos. Cuando se adjudica el último producto, el paso muestra la adjudicación completa y la guarda si mejora.</p>
+
+<h3>d) Complejidad temporal</h3>
+<p>Se cuenta el árbol. Tiene profundidad n (un nivel por producto) y, en cada nivel, a lo sumo <b>m + 1</b> alternativas (las m personas y «sin vender»). Entonces hay a lo sumo <code>1 + (m+1) + (m+1)² + … + (m+1)ⁿ = O((m+1)ⁿ)</code> nodos. En cada nodo se recorren las m personas: O(m). Cada vez que se mejora la solución se copia S, en O(n). Es el peor caso: la poda ahorra ramas pero no lo cambia.</p>
+<div class="card" style="font-family:var(--mono);text-align:center">
+O((m+1)ⁿ) nodos × O(m) por nodo, y copias de O(n) → <span class="tag t-exp" style="font-size:15px">O((m+n)·(m+1)ⁿ)</span>
+</div>
+<p>Se justifica contando el árbol, no con el teorema de recurrencias: la ramificación (m + 1) y la profundidad (n) no salen de dividir ni de restar una constante al tamaño de un parámetro.</p>
+<div class="first"><b>El mismo problema, más barato</b>
+Esta es una versión del <b>problema de asignación</b> (emparejar personas con productos para maximizar el total), que tiene algoritmos polinomiales fuera de lo que se ve en la materia. El ejercicio pide técnica, estrategia y pseudocódigo de lo que se dio, y lo que se dio para «elegir la mejor entre muchas combinaciones» es Backtracking con poda.</div>
+</div>
+<hr class="rule">
+</section>
+
+<!-- Integración 2.º parcial · 3 -->
+<section id="ej-s3">
+<h2>Integración 2.º parcial · 3 — Catálogo de premios por puntos</h2>
+<p class="sub">Programación Dinámica · cantidad ilimitada de cada premio · <span class="tag t-cuad">Θ(n·P)</span></p>
+
+<div class="enun"><b>Enunciado</b>
+Una empresa de ventas online tiene un catálogo de productos de premios, lo cuales pueden ser retirados por un cliente a partir de los puntos acumulados por ese cliente por las compras realizadas a través de la App. El catálogo contiene el producto y la cantidad de puntos que cuesta el mismo. Diseñar un algoritmo que, a partir de los puntos acumulados de un cliente, determine cuántos son los puntos máximos que podrá utilizar, para comprar una combinación de productos del catálogo. El cliente podrá retirar productos repetidos sin limitación alguna en cuanto a cantidad y suponiendo que existe stock ilimitado.</div>
+
+<h3>Qué te están pidiendo</h3>
+<p>Un cliente tiene P puntos y un catálogo de n premios, cada uno con su costo en puntos. Puede retirar <b>cada premio todas las veces que quiera</b> (stock ilimitado). La pregunta es cuántos puntos puede <b>gastar como máximo sin pasarse de P</b>: aprovechar los puntos lo mejor posible. La respuesta es un número. Se parece al <a href="index.html#cambio-pd">Cambio</a> por la cantidad ilimitada, pero no es lo mismo: el Cambio busca la <b>menor cantidad de monedas</b> que dan un valor <b>exacto</b>; acá se busca el <b>mayor gasto</b> que no supere P, y el gasto puede quedar por debajo de P.</p>
+
+<div class="note"><b>Cómo se leyó el enunciado</b>
+La errata «lo cuales» se transcribe tal cual. Se asume que los costos y los puntos acumulados son enteros positivos. No se pide qué premios retirar sino cuántos puntos se pueden usar; el simulador además reconstruye la combinación, porque es el paso 4 del método y ayuda a entender la tabla.</div>
+
+<h3>Razonamientos antes de mirar la resolución</h3>
+<ol class="razon">
+  <li><b>¿Qué se maximiza y con qué límite?</b> Los puntos gastados, sin pasar de P. ¿Cómo se llamaría eso en la Mochila? El valor de cada premio es lo que cuesta.</li>
+  <li><b>¿Sirve Greedy?</b> Probá «el premio más caro, repetido mientras entre» con costos (9, 6, 4) y P = 17: toma 9, después 6 (15), y el 4 ya no entra: gasta <b>15</b>. Pero 9 + 4 + 4 = <b>17</b>. Falla.</li>
+  <li><b>¿Qué guarda cada celda?</b> «La mayor cantidad de puntos que se pueden gastar sin pasar de j, con premios de los primeros i tipos».</li>
+  <li><b>¿A qué fila apunta «lo uso»?</b> Acá hay stock ilimitado: después de retirar un premio i, <b>puede volver a elegirse</b>. Entonces «lo uso» se queda en la <b>misma fila i</b>. «No lo uso», en cambio, mira la fila i − 1. Es la diferencia con la Mochila 0/1.</li>
+  <li><b>¿Hace falta que M[n, P] sea justo P?</b> No: puede sobrar un resto que ningún premio alcanza a cubrir.</li>
+</ol>
+
+<button class="primary rev" data-sol="sol-s3">Ver la resolución</button>
+<div class="sol" id="sol-s3">
+
+<h3>a) Técnica</h3>
+<p><b>Programación Dinámica</b>, la variante con <b>repetición ilimitada</b>: la del Cambio, con los dos cambios de que ahora se maximiza y de que el valor de cada premio es su costo. Un criterio local falla (el contraejemplo del razonamiento 2) y el problema tiene principio de optimalidad: lo mejor que se puede gastar con j puntos se arma a partir de lo mejor que se puede gastar con menos.</p>
+
+<h3>b) Estrategia de Programación Dinámica</h3>
+<div class="first"><b>Qué guarda cada celda</b>
+<code>M[i,j]</code> = la <b>mayor cantidad de puntos</b> que se pueden gastar sin pasar de j, usando premios de los primeros i tipos y <b>cualquier cantidad de cada uno</b>.</div>
+
+<div class="grid2">
+  <div class="def"><h4>Casos base</h4>Con un solo tipo de premio (i = 1): si cuesta más que j vale 0; si no, se retira una unidad y se sigue con j − c₁ <b>en la misma fila</b>.</div>
+  <div class="def"><h4>Decisión entre soluciones menores</h4>Para i &gt; 1: si el premio no entra, se copia M[i−1, j]. Si entra, <b>máximo</b> entre <b>no lo uso</b> (M[i−1, j]) y <b>uso una unidad más</b> (M[i, j − cᵢ] + cᵢ, fila i).</div>
+  <div class="def"><h4>Tabla y respuesta</h4>n filas y P + 1 columnas, fila por fila y de izquierda a derecha (así M[i, j − cᵢ] ya está calculada). La respuesta es <b>M[n, P]</b>.</div>
+</div>
+
+<h3>La recurrencia, caso por caso</h3>
+<table>
+<tr><th>M[i,j] =</th><th>cuando</th><th>en criollo</th></tr>
+<tr><td class="num">0</td><td class="num">i = 1 y c₁ &gt; j</td><td>El único premio no entra.</td></tr>
+<tr><td class="num">M[1, j − c₁] + c₁</td><td class="num">i = 1 y c₁ ≤ j</td><td>Retiro una unidad y sigo en la <b>misma fila</b>: puedo repetirlo.</td></tr>
+<tr><td class="num">M[i−1, j]</td><td class="num">i &gt; 1 y cᵢ &gt; j</td><td>El premio i no entra: me quedo con lo que ya había.</td></tr>
+<tr><td class="num">máx( M[i−1, j] , M[i, j − cᵢ] + cᵢ )</td><td class="num">i &gt; 1 y cᵢ ≤ j</td><td>«No lo uso» o «uso una unidad más».</td></tr>
+</table>
+
+<h3>Leela término por término</h3>
+<ol class="razon">
+  <li><b><code>M[i−1, j]</code> — «no uso el premio i».</b> Los j puntos quedan enteros para los tipos anteriores.</li>
+  <li><b><code>M[i, j − cᵢ] + cᵢ</code> — «uso una unidad del premio i».</b> Gasto cᵢ, me quedan j − cᵢ puntos y puedo seguir usando <b>todos los tipos hasta el i</b>, incluso el mismo: por eso la fila es i y no i − 1.</li>
+  <li><b>¿Por qué alcanza con «una unidad más»?</b> Porque la celda M[i, j − cᵢ] ya contempla retirar más unidades del mismo premio; la repetición sale de que la fórmula se vuelve a aplicar en esa celda.</li>
+  <li><b>¿Por qué <code>máx</code>?</b> Se maximizan los puntos gastados.</li>
+</ol>
+
+<div class="first"><b>Una sola tabla, dos problemas</b>
+Si en «lo uso» se mira la fila de arriba (<code>M[i−1, j − cᵢ]</code>), cada premio se retira a lo sumo una vez: es el <a href="#ej-s1">ejercicio 1</a>, con stock de uno. Si se mira la misma fila (<code>M[i, j − cᵢ]</code>), cada premio se puede retirar las veces que sea: es este. Es el cambio de fila lo que codifica «stock ilimitado» en la recurrencia.</div>
+
+<h3>c) Pseudocódigo</h3>
+<div class="card">
+<pre class="ps">ALGORITMO Catalogo(c, P)
+Entrada: c: Vector&lt;entero&gt; de n posiciones (1-based), puntos que cuesta cada premio; P: puntos acumulados
+Salida: la mayor cantidad de puntos que se pueden usar
+M ← inicializarMatriz(n, P + 1)
+para i ← 1 hasta n
+    para j ← 0 hasta P
+        si i = 1
+            si c[1] &gt; j
+                M[i,j] ← 0
+            sino
+                M[i,j] ← M[i, j - c[1]] + c[1]
+            fin si
+        sino
+            si c[i] &gt; j
+                M[i,j] ← M[i-1,j]
+            sino
+                M[i,j] ← máx(M[i-1,j], M[i, j - c[i]] + c[i])
+            fin si
+        fin si
+    fin para
+fin para
+devolver M[n, P]</pre>
+</div>
+<div class="note"><b>Pseudocódigo y ejemplo propios</b>
+No hay pseudocódigo de la cátedra para este ejercicio: este está derivado de la estrategia, con los índices en base 1. Los costos del ejemplo (9, 6 y 4, con P = 17) son propios y están elegidos para que Greedy falle.</div>
+
+<h3>Ejecutalo paso a paso</h3>
+<div class="sim" id="sim-s3">
+  <div class="sim-head">
+    <div class="title">Catalogo(c, P)<small>Naranja: celda que se calcula · celeste: celdas que compara (una puede estar en la misma fila) · verde: camino de la reconstrucción</small></div>
+    <div class="inputs">
+      <label for="s3-c">puntos de cada premio</label><input type="text" id="s3-c" value="9,6,4">
+      <label for="s3-p">P</label><input type="number" id="s3-p" value="17" min="1" max="25">
+      <button class="ghost" data-reload>Calcular</button>
+    </div>
+  </div>
+  <div class="bt-presets">
+    <button class="ghost" data-s-sim="s3" data-s-preset="{&quot;s3-c&quot;: &quot;9,6,4&quot;, &quot;s3-p&quot;: &quot;17&quot;}">Ejemplo: 9 + 4 + 4 = 17</button>
+    <button class="ghost" data-s-sim="s3" data-s-preset="{&quot;s3-c&quot;: &quot;5,10&quot;, &quot;s3-p&quot;: &quot;7&quot;}">No se llega justo (sobran 2)</button>
+    <button class="ghost" data-s-sim="s3" data-s-preset="{&quot;s3-c&quot;: &quot;7,11&quot;, &quot;s3-p&quot;: &quot;20&quot;}">7 + 11 = 18 de 20</button>
+    <button class="ghost" data-s-sim="s3" data-s-preset="{&quot;s3-c&quot;: &quot;3&quot;, &quot;s3-p&quot;: &quot;10&quot;}">Un solo premio, repetido</button>
+  </div>
+  <div class="sim-body">
+    <div class="code" data-code>
+<div class="cl" data-l="1"><span class="ln">1</span><span class="tx">M ← inicializarMatriz(n, P + 1)</span></div>
+<div class="cl" data-l="2"><span class="ln">2</span><span class="tx">para i ← 1 hasta n</span></div>
+<div class="cl" data-l="3"><span class="ln">3</span><span class="tx">    para j ← 0 hasta P</span></div>
+<div class="cl" data-l="4"><span class="ln">4</span><span class="tx">        si i = 1</span></div>
+<div class="cl" data-l="5"><span class="ln">5</span><span class="tx">            si c[1] &gt; j</span></div>
+<div class="cl" data-l="6"><span class="ln">6</span><span class="tx">                M[i,j] ← 0</span></div>
+<div class="cl" data-l="7"><span class="ln">7</span><span class="tx">            sino</span></div>
+<div class="cl" data-l="8"><span class="ln">8</span><span class="tx">                M[i,j] ← M[i, j - c[1]] + c[1]</span></div>
+<div class="cl" data-l="9"><span class="ln">9</span><span class="tx">            fin si</span></div>
+<div class="cl" data-l="10"><span class="ln">10</span><span class="tx">        sino</span></div>
+<div class="cl" data-l="11"><span class="ln">11</span><span class="tx">            si c[i] &gt; j</span></div>
+<div class="cl" data-l="12"><span class="ln">12</span><span class="tx">                M[i,j] ← M[i-1,j]</span></div>
+<div class="cl" data-l="13"><span class="ln">13</span><span class="tx">            sino</span></div>
+<div class="cl" data-l="14"><span class="ln">14</span><span class="tx">                M[i,j] ← máx(M[i-1,j], M[i, j - c[i]] + c[i])</span></div>
+<div class="cl" data-l="15"><span class="ln">15</span><span class="tx">            fin si</span></div>
+<div class="cl" data-l="16"><span class="ln">16</span><span class="tx">        fin si</span></div>
+<div class="cl" data-l="17"><span class="ln">17</span><span class="tx">    fin para</span></div>
+<div class="cl" data-l="18"><span class="ln">18</span><span class="tx">fin para</span></div>
+<div class="cl" data-l="19"><span class="ln">19</span><span class="tx">devolver M[n, P]</span></div>
+    </div>
+    <div class="viz" data-viz></div>
+  </div>
+  <div class="explain" data-explain></div>
+  <div class="controls" data-controls></div>
+</div>
+<p class="srcnote" style="max-width:76ch">Los costos se escriben separados por comas (hasta 5 premios, enteros positivos) y P entre 1 y 25. Al final, el simulador reconstruye cuántas unidades de cada premio se retiran y las compara con Greedy.</p>
+
+<h3>d) Complejidad temporal</h3>
+<p>Dos ciclos anidados: uno por tipo de premio (n) y otro por cada cantidad de puntos de 0 a P. Cada celda cuesta Θ(1): una comparación, una resta, una suma y un máximo. Son n·(P + 1) celdas.</p>
+<div class="card" style="font-family:var(--mono);text-align:center">
+n·(P + 1) celdas × Θ(1) por celda → <span class="tag t-cuad" style="font-size:15px">Θ(n·P)</span>
+</div>
+</div>
+<hr class="rule">
+</section>
+
+<!-- Integración 2.º parcial · 4 -->
+<section id="ej-s4">
+<h2>Integración 2.º parcial · 4 — Estaciones de actividades</h2>
+<p class="sub">Backtracking · buscar la mejor solución · <span class="tag t-exp">O(K·4<sup>K</sup>) ⊆ O(m·n·4<sup>m·n</sup>)</span></p>
+
+<div class="enun"><b>Enunciado</b>
+Problema de estaciones de actividades. Se tiene una zona en la ciudad destinada a diferentes actividades físicas al aire libre representada por una matriz M de m filas y n columnas. El número M[i, j] es el esfuerzo que lleva una actividad en la posición de la fila i y la columna j. Una persona puede ir realizando diferentes actividades a través de visitar cada casilla, partiendo de una posición x e y dada de la matriz, y moviéndose con los siguientes cuatro desplazamientos permitidos (suponiendo que se está en la posición M[i, j]):<br>
+a) Hacia arriba a la derecha: M[i, j] → M[i − 1, j + 1] (si i &gt; 1 y j &lt; N.)<br>
+b) Hacia la derecha: M[i, j] → M[i, j + 1] (si j &lt; N.)<br>
+c) Hacia abajo a la derecha: M[i, j] → M[i + 1, j + 1] (si i &lt; M y j &lt; N.)<br>
+d) Hacia abajo: M[i, j] → M[i + 1, j] (si i + 1 &lt; M.)<br>
+Se debe diseñar un algoritmo que determine el recorrido que le conviene realizar a la persona partiendo de la posición dada, para minimizar su esfuerzo en las actividades que realiza durante su trayecto y visitando la cantidad de casillas dadas por (M×N − X), siendo X un valor dado y menor a M×N. Cada casilla puede ser visitada una sola vez en el mismo recorrido.</div>
+
+<h3>Qué te están pidiendo</h3>
+<p>Una matriz de esfuerzos y una casilla de partida (fila x, columna y). Desde cada casilla hay <b>cuatro movimientos</b>, todos hacia la derecha o hacia abajo: arriba a la derecha, derecha, abajo a la derecha y abajo. El recorrido tiene que visitar <b>exactamente K = M×N − X casillas</b> (contando la de partida), sin repetir ninguna, y hay que elegir el de <b>menor suma de esfuerzos</b>. Se devuelve el recorrido (y su esfuerzo). Si ningún recorrido llega a K casillas, hay que avisarlo.</p>
+
+<div class="note"><b>Cómo se leyó el enunciado</b>
+(1) Las guardas c) y d) se contradicen: c) dice <code>i &lt; M</code> y d) dice <code>i + 1 &lt; M</code>, y con esta última nunca se podría bajar a la última fila. Se usó <code>i &lt; M</code> para los dos movimientos que bajan, es decir, bajar a la última fila está permitido; así lo hace el simulador. (2) El enunciado llama m y n a las dimensiones, pero las guardas hablan de M y N: son las mismas. La partida «x e y» se escribe (f₀, c₀) en el pseudocódigo y la cantidad de casillas, K = m·n − X. (3) La casilla de partida <b>cuenta</b> como visitada y su esfuerzo se suma. (4) Los esfuerzos son enteros no negativos (se usan para podar). (5) «Visitando la cantidad de casillas dadas por (M×N − X)» se leyó como <b>exactamente</b> K casillas. Si en el parcial hay duda con alguno de estos puntos, se aclara antes del pseudocódigo.</div>
+
+<h3>Razonamientos antes de mirar la resolución</h3>
+<ol class="razon">
+  <li><b>¿Sirve «ir siempre a la casilla vecina de menor esfuerzo»?</b> No: un paso barato puede llevarte a un lugar desde el que solo quedan pasos caros, o a un callejón sin salida donde ya no podés llegar a K casillas. Hay que probar caminos y volver atrás.</li>
+  <li><b>¿Qué es S y qué es una etapa?</b> S es el recorrido hasta ahora (la secuencia de casillas). La etapa es la casilla número k del recorrido, con k entre 1 y K.</li>
+  <li><b>¿Qué alternativas tiene cada etapa y cuándo es factible una?</b> Los cuatro movimientos. ¿Qué los descarta? El borde de la matriz y las casillas ya visitadas. Con estos cuatro movimientos, ¿puede una casilla repetirse alguna vez? Mirá cómo se mueve la columna.</li>
+  <li><b>¿Cuál es el caso base?</b> Cuando el recorrido ya tiene K casillas: se compara su esfuerzo contra el mejor guardado y se guarda una <b>copia</b> si mejora.</li>
+  <li><b>¿Qué poda se puede hacer?</b> Los esfuerzos no son negativos: si lo acumulado ya es mayor o igual que el mejor esfuerzo guardado, seguir no puede mejorarlo.</li>
+  <li><b>¿Qué pasa si K es muy grande?</b> ¿Cuántas casillas puede tener, como máximo, un recorrido que solo va a la derecha o hacia abajo? Si K es mayor, el árbol se agota sin solución y la respuesta es «no existe».</li>
+</ol>
+
+<button class="primary rev" data-sol="sol-s4">Ver la resolución</button>
+<div class="sol" id="sol-s4">
+
+<h3>a) Técnica</h3>
+<p><b>Backtracking</b>, buscando la <b>mejor</b> solución (menor esfuerzo) entre todos los recorridos de exactamente K casillas. El criterio local no alcanza y el recorrido se va armando casilla por casilla con alternativas que se pueden deshacer.</p>
+
+<h3>b) Estrategia de Backtracking</h3>
+<div class="grid2">
+  <div class="def"><h4>Solución parcial S</h4>El <code>recorrido</code> actual: la secuencia de casillas desde la de partida hasta donde está la persona. Va con una matriz <code>visitada</code> (m × n) y con los acumuladores <code>k</code> (casillas visitadas) y <code>esfuerzo</code> (suma de sus M[i,j]). Filas y columnas desde 1.</div>
+  <div class="def"><h4>Etapa y alternativas</h4>La etapa es la casilla número k del recorrido. Las alternativas son los <b>cuatro movimientos</b>: (−1,+1), (0,+1), (+1,+1) y (+1,0) en (fila, columna).</div>
+  <div class="def"><h4>Factibilidad y poda</h4>Un movimiento es <b>factible</b> si la casilla de destino está dentro de la matriz y no fue visitada. Se <b>poda</b> por optimalidad: si <code>esfuerzo + M[nf,nc] ≥ mejorEsfuerzo</code>, esa rama no puede mejorar (los esfuerzos no son negativos).</div>
+  <div class="def"><h4>Caso base</h4>k = K: ya se visitaron las casillas pedidas. Si <code>esfuerzo &lt; mejorEsfuerzo</code>, se guarda una <b>copia</b> del recorrido. No se sigue: el recorrido tiene exactamente K casillas.</div>
+  <div class="def"><h4>Retroceso</h4>Al volver se desmarca <code>visitada[f,c]</code> y se saca la casilla del recorrido. El esfuerzo y k no hay que restaurarlos porque van como parámetros. <code>mejorEsfuerzo</code> y <code>mejorRecorrido</code> se conservan.</div>
+  <div class="def"><h4>Objetivo</h4>La <b>mejor</b> solución: la de menor esfuerzo. Se exploran todas las ramas que no se puedan podar. Si el árbol se agota sin llegar a K casillas, no hay recorrido.</div>
+</div>
+
+<h3>c) Pseudocódigo</h3>
+<div class="card">
+<pre class="ps">Algoritmo Estaciones
+Entrada: M: Matriz m × n de esfuerzos · (f0, c0): casilla de partida · X: valor dado, con K = m*n - X
+Salida: el esfuerzo mínimo y un recorrido de K casillas que lo logra
+visitada ← matriz m × n de falso; recorrido ← vector vacío
+mejorEsfuerzo ← ∞; mejorRecorrido ← sin recorrido
+Recorrer(f0, c0, 1, M[f0,c0])
+devolver mejorEsfuerzo, mejorRecorrido
+
+Procedimiento Recorrer(f, c, k, esfuerzo)
+    visitada[f,c] ← verdadero; agregar(recorrido, (f,c))
+    si k = K
+        si esfuerzo &lt; mejorEsfuerzo
+            mejorEsfuerzo ← esfuerzo; mejorRecorrido ← copia(recorrido)
+        fin si
+    sino
+        para cada movimiento (df,dc) ∈ {(-1,+1), (0,+1), (+1,+1), (+1,0)}
+            (nf,nc) ← (f + df, c + dc)
+            si dentro(nf,nc) Y NO visitada[nf,nc]
+                si esfuerzo + M[nf,nc] &lt; mejorEsfuerzo
+                    Recorrer(nf, nc, k + 1, esfuerzo + M[nf,nc])
+                fin si
+            fin si
+        fin para
+    fin si
+    visitada[f,c] ← falso; eliminar(recorrido)</pre>
+</div>
+<div class="note"><b>Pseudocódigo y ejemplo propios</b>
+La cátedra no publica pseudocódigo de este ejercicio: este está derivado de la estrategia, con la misma forma que el del <a href="#ej-g16">laberinto</a>. <code>dentro(nf,nc)</code> es <code>1 ≤ nf ≤ m Y 1 ≤ nc ≤ n</code>. La matriz del ejemplo (esfuerzos 4 2 7 / 1 6 3 / 5 2 8, partida (1,1), X = 4, o sea K = 5) es propia.</div>
+
+<h3>Ejecutalo paso a paso</h3>
+<div class="sim bt-sim" id="sim-s4">
+  <div class="sim-head">
+    <div class="title">Estaciones<small>Naranja: recorrido actual · verde: mejor recorrido guardado · el número chico es el orden en el recorrido</small></div>
+    <div class="inputs">
+      <label for="s4-m">esfuerzos M</label><input type="text" class="bt-wide" id="s4-m" value="4 2 7 / 1 6 3 / 5 2 8">
+      <label for="s4-ini">partida (fila,col)</label><input type="text" class="bt-short" id="s4-ini" value="1,1">
+      <label for="s4-x">X</label><input type="number" id="s4-x" value="4" min="0" max="15" style="width:70px">
+      <button class="ghost" data-reload>Ejecutar</button>
+    </div>
+  </div>
+  <div class="bt-presets">
+    <button class="ghost" data-s-sim="s4" data-s-preset="{&quot;s4-m&quot;: &quot;4 2 7 / 1 6 3 / 5 2 8&quot;, &quot;s4-ini&quot;: &quot;1,1&quot;, &quot;s4-x&quot;: &quot;4&quot;}">Ejemplo: 3×3, K = 5</button>
+    <button class="ghost" data-s-sim="s4" data-s-preset="{&quot;s4-m&quot;: &quot;4 2 7 / 1 6 3 / 5 2 8&quot;, &quot;s4-ini&quot;: &quot;2,1&quot;, &quot;s4-x&quot;: &quot;4&quot;}">Partir de la fila 2</button>
+    <button class="ghost" data-s-sim="s4" data-s-preset="{&quot;s4-m&quot;: &quot;4 2 7 1 / 1 6 3 5 / 5 2 8 2&quot;, &quot;s4-ini&quot;: &quot;2,1&quot;, &quot;s4-x&quot;: &quot;6&quot;}">Matriz de 3×4</button>
+    <button class="ghost" data-s-sim="s4" data-s-preset="{&quot;s4-m&quot;: &quot;4 2 7 / 1 6 3 / 5 2 8&quot;, &quot;s4-ini&quot;: &quot;1,1&quot;, &quot;s4-x&quot;: &quot;1&quot;}">Sin recorrido: K = 8</button>
+    <button class="ghost" data-s-sim="s4" data-s-preset="{&quot;s4-m&quot;: &quot;4 2 7 / 1 6 3 / 5 2 8&quot;, &quot;s4-ini&quot;: &quot;1,1&quot;, &quot;s4-x&quot;: &quot;8&quot;}">K = 1: solo la partida</button>
+  </div>
+  <div class="sim-body">
+    <div class="code" data-code>
+<div class="cl" data-l="1"><span class="ln">1</span><span class="tx">visitada ← matriz m × n de falso; recorrido ← vacío</span></div>
+<div class="cl" data-l="2"><span class="ln">2</span><span class="tx">mejorEsfuerzo ← ∞; mejorRecorrido ← sin recorrido</span></div>
+<div class="cl" data-l="3"><span class="ln">3</span><span class="tx">Recorrer(f0, c0, 1, M[f0,c0])</span></div>
+<div class="cl" data-l="4"><span class="ln">4</span><span class="tx">devolver mejorEsfuerzo, mejorRecorrido</span></div>
+<div class="cl hdr" data-l="5"><span class="ln">5</span><span class="tx">Procedimiento Recorrer(f, c, k, esfuerzo)</span></div>
+<div class="cl" data-l="6"><span class="ln">6</span><span class="tx">    visitada[f,c] ← verdadero; agregar(recorrido, (f,c))</span></div>
+<div class="cl" data-l="7"><span class="ln">7</span><span class="tx">    si k = K</span></div>
+<div class="cl" data-l="8"><span class="ln">8</span><span class="tx">        si esfuerzo &lt; mejorEsfuerzo</span></div>
+<div class="cl" data-l="9"><span class="ln">9</span><span class="tx">            mejorEsfuerzo ← esfuerzo; mejorRecorrido ← copia(recorrido)</span></div>
+<div class="cl" data-l="10"><span class="ln">10</span><span class="tx">        fin si</span></div>
+<div class="cl" data-l="11"><span class="ln">11</span><span class="tx">    sino</span></div>
+<div class="cl" data-l="12"><span class="ln">12</span><span class="tx">        para cada movimiento (df,dc) ∈ {(-1,+1), (0,+1), (+1,+1), (+1,0)}</span></div>
+<div class="cl" data-l="13"><span class="ln">13</span><span class="tx">            (nf,nc) ← (f + df, c + dc)</span></div>
+<div class="cl" data-l="14"><span class="ln">14</span><span class="tx">            si dentro(nf,nc) Y NO visitada[nf,nc]</span></div>
+<div class="cl" data-l="15"><span class="ln">15</span><span class="tx">                si esfuerzo + M[nf,nc] &lt; mejorEsfuerzo</span></div>
+<div class="cl" data-l="16"><span class="ln">16</span><span class="tx">                    Recorrer(nf, nc, k + 1, esfuerzo + M[nf,nc])</span></div>
+<div class="cl" data-l="17"><span class="ln">17</span><span class="tx">                fin si</span></div>
+<div class="cl" data-l="18"><span class="ln">18</span><span class="tx">            fin si</span></div>
+<div class="cl" data-l="19"><span class="ln">19</span><span class="tx">        fin para</span></div>
+<div class="cl" data-l="20"><span class="ln">20</span><span class="tx">    fin si</span></div>
+<div class="cl" data-l="21"><span class="ln">21</span><span class="tx">    visitada[f,c] ← falso; eliminar(recorrido)</span></div>
+    </div>
+    <div class="viz" data-viz></div>
+  </div>
+  <div class="explain" data-explain></div>
+  <div class="controls" data-controls></div>
+</div>
+<p class="srcnote" style="max-width:76ch">Cómo se escribe la matriz: filas separadas por <code>/</code> y casillas por espacios, con esfuerzos enteros de 0 a 99 (hasta 4 × 4). La partida se escribe <code>fila,columna</code> desde 1, y X es un entero de 0 a m·n − 1 (K = m·n − X). Si la búsqueda necesitara más de 400 pasos para mostrarse, el simulador lo avisa.</p>
+
+<h3>d) Complejidad temporal</h3>
+<p>Sea K la cantidad de casillas del recorrido, con K ≤ m·n. Como no se repiten casillas, la profundidad del árbol es a lo sumo K. Desde cada casilla hay hasta <b>4</b> alternativas, así que hay a lo sumo <code>1 + 4 + 4² + … + 4<sup>K−1</sup> = O(4<sup>K</sup>)</code> nodos, cada uno con trabajo constante (se miran 4 movimientos). Cada vez que se mejora la solución se copia el recorrido, en O(K).</p>
+<div class="card" style="font-family:var(--mono);text-align:center">
+O(4<sup>K</sup>) nodos × O(1) por nodo, y copias de O(K) → <span class="tag t-exp" style="font-size:15px">O(K·4<sup>K</sup>) ⊆ O(m·n·4<sup>m·n</sup>)</span>
+</div>
+<p>Se justifica contando el árbol, no con el teorema de recurrencias. La poda <code>esfuerzo + M[nf,nc] ≥ mejorEsfuerzo</code> ahorra ramas pero no cambia el peor caso.</p>
+<div class="first"><b>Lo que esconden estos cuatro movimientos</b>
+Los cuatro movimientos van todos hacia la derecha o hacia abajo: la columna <b>nunca baja</b>, y mientras la columna no cambia solo se puede bajar de fila. Por eso una casilla <b>nunca se repite</b>: la marca <code>visitada</code> no poda nada acá, pero el enunciado la pide y es la que haría falta si los movimientos fueran otros. También por eso los recorridos son cortos: tienen como mucho <code>m + 2(n − 1)</code> casillas, y cualquier K mayor termina en «no existe» (con la matriz de 3 × 3 del ejemplo, 7 casillas desde la esquina; probá X = 1). Y como el estado es (casilla, cantidad de casillas visitadas), el problema también se podría resolver con Programación Dinámica en Θ(m·n·K). Eso no cambia la respuesta del punto a): el enunciado habla de armar un recorrido de largo fijo en el que cada casilla se visita una sola vez, que es la señal de Backtracking, y es la técnica que corresponde a este bloque de la materia. Saber que la PD existe sirve para entender por qué, en la práctica, este árbol es chico.</div>
+</div>
+<hr class="rule">
+</section>
+
+<!-- Integración 2.º parcial · 5 -->
+<section id="ej-s5">
+<h2>Integración 2.º parcial · 5 — Ciudad base de la Selección</h2>
+<p class="sub">Grafos · Floyd como caja negra + la suma de cada fila · <span class="tag t-cuad">Θ(N³)</span></p>
+
+<div class="enun"><b>Enunciado</b>
+Durante el Mundial, la Selección Argentina debe establecer una ciudad base desde la cual organizará sus entrenamientos, concentraciones y desplazamientos hacia las distintas sedes de los partidos. Se dispone de N ciudades candidatas conectadas por rutas terrestres y aéreas. La AFA cuenta con una matriz de tamaño N × N, donde A[i][j] representa el tiempo de viaje directo desde la ciudad i hasta la ciudad j. No todas las ciudades pueden alcanzarse en tiempo directa, en cuyo caso la matriz si dos ciudades no se conectan tienen valor -1. La AFA desea seleccionar una ciudad base que permita minimizar los tiempos de traslado del plantel. Para ello, se define el costo total de una ciudad como la suma de los tiempos mínimos necesarios para llegar desde dicha ciudad a todas las demás.<br>
+Diseñar un algoritmo que determine qué ciudad debe elegirse ciudad base, de manera que su costo total sea el menor posible.</div>
+
+<h3>Qué te están pidiendo</h3>
+<p>Es un grafo dirigido con tiempos de viaje positivos, dado como matriz, con <b>−1 donde no hay ruta directa</b>. Para cada ciudad hay que calcular su <b>costo total</b>: la suma de los tiempos <b>mínimos</b> (directos o con escalas) para llegar a todas las demás. Se elige la ciudad de menor costo total. Es el mismo esquema que el <a href="index.html#centro-logistico">Centro logístico óptimo</a>, con un criterio distinto: allá se minimizaba el <b>máximo</b> de cada fila; acá se minimiza la <b>suma</b>.</p>
+
+<div class="note"><b>Cómo se leyó el enunciado</b>
+Las erratas «en tiempo directa» y «la matriz si dos ciudades no se conectan» se transcriben tal cual. Los símbolos del texto original (N, i, j) no se extraen del PDF; se reconstruyeron por el contexto. El tiempo de i a j no tiene por qué ser igual al de j a i (el grafo es dirigido). Se asume que los tiempos son enteros positivos y que la diagonal es 0 (o −1: ir de una ciudad a sí misma no cuesta nada). Si desde una ciudad no se llega a alguna otra, su costo total es ∞ y no puede ser la base; si ninguna llega a todas, no hay ciudad base.</div>
+
+<h3>Razonamientos antes de mirar la resolución</h3>
+<ol class="razon">
+  <li><b>¿Qué necesitás saber de cada par de ciudades?</b> El tiempo <b>mínimo</b>, con escalas, no el directo. ¿Qué algoritmo da los caminos mínimos entre <b>todos</b> los pares de nodos de un grafo dirigido con pesos positivos? (<a href="index.html#floyd">Floyd</a>, clase 9.)</li>
+  <li><b>¿Y por qué no Dijkstra?</b> Dijkstra necesita un origen: habría que correrlo N veces. Floyd resuelve todos los pares de una vez, con la misma complejidad total (Θ(N³) con matriz).</li>
+  <li><b>¿Qué hacés con los −1 antes de correr Floyd?</b> Floyd espera ∞ donde no hay arista. Un −1 se leería como un viaje de −1 horas y arruinaría los mínimos. Y la diagonal tiene que quedar en 0.</li>
+  <li><b>¿Cómo se calcula el costo total de la ciudad i?</b> Sumando la fila i de la matriz que devuelve Floyd. ¿Qué pasa si algún valor es ∞?</li>
+  <li><b>¿Cómo elegís?</b> El de menor costo, con <code>&lt;</code> estricto. ¿Qué devolvés si todos los costos son ∞?</li>
+  <li><b>¿Hay que reescribir Floyd en la resolución?</b> No: es una <b>caja negra</b>. Se invoca y se resuelve el problema alrededor (ver «Grafos, el más caro» en el mapa de reconocimiento).</li>
+</ol>
+
+<button class="primary rev" data-sol="sol-s5">Ver la resolución</button>
+<div class="sol" id="sol-s5">
+
+<h3>a) Algoritmo sobre grafos</h3>
+<p><b>Floyd</b> (caminos mínimos entre todos los pares, grafo dirigido con pesos positivos), usado como <b>caja negra</b>, más un posproceso: sumar cada fila de la matriz de caminos mínimos y quedarse con la menor suma. Floyd es Programación Dinámica, pero acá se lo usa tal cual está.</p>
+
+<h3>b) Estrategia</h3>
+<div class="grid2">
+  <div class="def"><h4>Preparación</h4>Armar G a partir de A: donde A vale −1 no hay arista, así que G vale <b>∞</b>; la diagonal vale 0; el resto copia el tiempo directo. Es la matriz de costos de partida que espera Floyd.</div>
+  <div class="def"><h4>Caja negra</h4><code>R ← Floyd(G)</code>: R[i][j] es el tiempo mínimo de la ciudad i a la j, con escalas. Si no se puede llegar, queda ∞.</div>
+  <div class="def"><h4>Posproceso</h4>Para cada ciudad i, <b>costo(i) = Σⱼ R[i][j]</b> (la suma de la fila i). Un ∞ en la fila hace que el costo sea ∞: la ciudad no llega a todas y queda descartada. Se elige la de menor costo, con <code>&lt;</code> estricto.</div>
+</div>
+
+<h3>c) Pseudocódigo</h3>
+<div class="card">
+<pre class="ps">ALGORITMO CiudadBase(A)
+Entrada: A: Matriz N × N de tiempos de viaje directo (-1 si no hay ruta directa)
+Salida: la ciudad base, o «ninguna» si desde ninguna se llega a todas las demás
+G ← copia de A con ∞ donde A vale -1 y 0 en la diagonal
+R ← Floyd(G)
+mejor ← ninguna; menorCosto ← ∞
+para i ← 1 hasta N
+    costo ← 0
+    para j ← 1 hasta N
+        costo ← costo + R[i,j]
+    fin para
+    si costo &lt; menorCosto
+        menorCosto ← costo; mejor ← i
+    fin si
+fin para
+devolver mejor</pre>
+</div>
+<div class="note"><b>Pseudocódigo y ejemplo propios</b>
+La cátedra no publica pseudocódigo de este ejercicio: este está escrito sobre el Floyd de la <a href="index.html#floyd">clase 9</a>, que se invoca sin reescribirlo, igual que en el <a href="index.html#centro-logistico">Centro logístico</a>. El ejemplo (5 ciudades) es propio: la ciudad 4 no tiene salidas y queda descartada, y el viaje directo de 1 a 3 (9) mejora a 6 pasando por la ciudad 2.</div>
+
+<h3>Ejecutalo paso a paso</h3>
+<div class="sim bt-sim" id="sim-s5">
+  <div class="sim-head">
+    <div class="title">CiudadBase(A)<small>Naranja: celda que se mira · verde: la mejor ciudad hasta ahora · Σ: costo total de la fila</small></div>
+    <div class="inputs">
+      <label for="s5-a">tiempos A</label><input type="text" class="bt-wide" id="s5-a" value="0 1 9 7 -1 / -1 0 5 -1 6 / 6 -1 0 9 -1 / -1 -1 -1 0 -1 / -1 5 -1 -1 0">
+      <button class="ghost" data-reload>Ejecutar</button>
+    </div>
+  </div>
+  <div class="bt-presets">
+    <button class="ghost" data-s-sim="s5" data-s-preset="{&quot;s5-a&quot;: &quot;0 1 9 7 -1 / -1 0 5 -1 6 / 6 -1 0 9 -1 / -1 -1 -1 0 -1 / -1 5 -1 -1 0&quot;}">Ejemplo: 5 ciudades</button>
+    <button class="ghost" data-s-sim="s5" data-s-preset="{&quot;s5-a&quot;: &quot;0 2 -1 5 / 2 0 3 -1 / -1 3 0 1 / 5 -1 1 0&quot;}">Rutas de ida y vuelta (4 ciudades)</button>
+    <button class="ghost" data-s-sim="s5" data-s-preset="{&quot;s5-a&quot;: &quot;0 1 -1 / 1 0 -1 / -1 -1 0&quot;}">Ninguna llega a todas</button>
+    <button class="ghost" data-s-sim="s5" data-s-preset="{&quot;s5-a&quot;: &quot;0 3 3 / 3 0 3 / 3 3 0&quot;}">Empate: gana la primera</button>
+  </div>
+  <div class="sim-body">
+    <div class="code" data-code>
+<div class="cl" data-l="1"><span class="ln">1</span><span class="tx">G ← copia de A con ∞ donde A vale -1 y 0 en la diagonal</span></div>
+<div class="cl" data-l="2"><span class="ln">2</span><span class="tx">R ← Floyd(G)</span></div>
+<div class="cl" data-l="3"><span class="ln">3</span><span class="tx">mejor ← ninguna; menorCosto ← ∞</span></div>
+<div class="cl" data-l="4"><span class="ln">4</span><span class="tx">para i ← 1 hasta N</span></div>
+<div class="cl" data-l="5"><span class="ln">5</span><span class="tx">    costo ← 0</span></div>
+<div class="cl" data-l="6"><span class="ln">6</span><span class="tx">    para j ← 1 hasta N</span></div>
+<div class="cl" data-l="7"><span class="ln">7</span><span class="tx">        costo ← costo + R[i,j]</span></div>
+<div class="cl" data-l="8"><span class="ln">8</span><span class="tx">    fin para</span></div>
+<div class="cl" data-l="9"><span class="ln">9</span><span class="tx">    si costo &lt; menorCosto</span></div>
+<div class="cl" data-l="10"><span class="ln">10</span><span class="tx">        menorCosto ← costo; mejor ← i</span></div>
+<div class="cl" data-l="11"><span class="ln">11</span><span class="tx">    fin si</span></div>
+<div class="cl" data-l="12"><span class="ln">12</span><span class="tx">fin para</span></div>
+<div class="cl" data-l="13"><span class="ln">13</span><span class="tx">devolver mejor</span></div>
+    </div>
+    <div class="viz" data-viz></div>
+  </div>
+  <div class="explain" data-explain></div>
+  <div class="controls" data-controls></div>
+</div>
+<p class="srcnote" style="max-width:76ch">Cómo se escribe la matriz: filas separadas por <code>/</code> y valores por espacios, de 2 × 2 a 6 × 6. Cada valor es un tiempo entero positivo, o <code>-1</code> si no hay ruta directa; la diagonal es <code>0</code> (o <code>-1</code>). Floyd se ejecuta como caja negra: el simulador muestra directamente la matriz R que devuelve, y los pasos son los del posproceso.</p>
+
+<h3>d) Complejidad temporal</h3>
+<p>Preparar G recorre la matriz: Θ(N²). Floyd tiene tres ciclos anidados de N vueltas, con trabajo constante en el más interno: Θ(N³). El posproceso suma cada fila (N × N) y compara una vez por ciudad: Θ(N²). Domina Floyd.</p>
+<div class="card" style="font-family:var(--mono);text-align:center">
+Θ(N²) + Θ(N³) + Θ(N²) → <span class="tag t-cuad" style="font-size:15px">Θ(N³)</span>
+</div>
+</div>
+<hr class="rule">
+</section>
+
+<!-- Integración 2.º parcial · 6 -->
+<section id="ej-s6">
+<h2>Integración 2.º parcial · 6 — Festival de cine</h2>
+<p class="sub">Programación Dinámica · hasta 2 proyecciones por película · <span class="tag t-cuad">Θ(n·P)</span></p>
+
+<div class="enun"><b>Enunciado</b>
+Un festival de cine está seleccionando qué películas proyectar en su próxima edición. La producción le ha hecho llegar a los decisores un listado filmográfico con la calificación obtenida de cada película en base a una votación de expertos y el costo de los derechos de reproducción. La organización del festival ha podido conseguir un presupuesto determinado para invertir en derechos de películas y lo que quiere es seleccionar cuáles proyectar con el objetivo de maximizar las calificaciones obtenidas entre las películas. Originalmente cada película se iba a proyectar una única vez, aunque luego pudieron negociar con las productoras que si la misma película la reproducían dos veces el costo de la segunda se reduciría en un 50 %. Como resultado es suficiente devolver la calificación máxima acumulada.</div>
+
+<h3>Qué te están pidiendo</h3>
+<p>n películas, cada una con una <b>calificación</b> rᵢ y un <b>costo</b> cᵢ de derechos, y un presupuesto P. Cada película se puede proyectar <b>0, 1 o 2 veces</b>. La segunda proyección cuesta la mitad: dos proyecciones juntas cuestan cᵢ + cᵢ/2 = <b>3cᵢ/2</b> y aportan <b>2rᵢ</b>. Hay que elegir cuántas veces proyectar cada una para <b>maximizar la calificación acumulada</b> sin pasar el presupuesto. Alcanza con devolver el número. Es la <a href="index.html#mochila-pd">Mochila 0/1</a> con una opción más por objeto: el mismo esquema que la <a href="#ej-g14">PD 3 (compras en el shopping)</a>, con 2 unidades en vez de 3, y que la <a href="index.html#fisica">preparación física</a> de la clase 9.</p>
+
+<div class="note"><b>Supuestos</b>
+Se asume que la segunda proyección <b>vuelve a sumar</b> la calificación de la película (si no sumara, nunca convendría proyectar dos veces). El costo de dos proyecciones es 3c/2: para que sea un número entero, el simulador pide costos <b>pares</b> y avisa si ponés uno impar en vez de redondear en silencio. Calificaciones y presupuesto son enteros positivos.</div>
+
+<h3>Razonamientos antes de mirar la resolución</h3>
+<ol class="razon">
+  <li><b>¿Cuántas opciones hay por película, y cuánto cuesta y rinde cada una?</b> Armá la mini-tabla «proyecciones → costo → calificación»: 0 → 0 → 0; 1 → c → r; 2 → c + c/2 → 2r.</li>
+  <li><b>¿Sirve Greedy por calificación sobre costo?</b> Es la mochila 0/1: no se puede fraccionar una película y el criterio local deja presupuesto sin usar. La PD no necesita ningún orden.</li>
+  <li><b>¿Qué guarda cada celda?</b> «La mayor calificación acumulada con las primeras i películas y un presupuesto de j».</li>
+  <li><b>¿A qué fila apunta cada opción?</b> Todas a <b>i − 1</b>: una vez que decidiste cuántas veces proyectar la película i, el resto del presupuesto va a las anteriores. Las dos proyecciones se deciden <b>juntas</b>; no hay una fila intermedia.</li>
+  <li><b>¿Cuándo existe cada opción?</b> Solo si su costo entra en j. De ahí salen los rangos de j: primero hay que ver si entra <b>una</b> proyección y después si entran las <b>dos</b>.</li>
+  <li><b>¿Qué cambia si una película solo se pudiera proyectar una vez?</b> Desaparece la tercera opción: es la Mochila 0/1 de siempre.</li>
+</ol>
+
+<button class="primary rev" data-sol="sol-s6">Ver la resolución</button>
+<div class="sol" id="sol-s6">
+
+<h3>a) Técnica</h3>
+<p><b>Programación Dinámica</b>: se maximiza con un límite (el presupuesto), cada película tiene a lo sumo dos «unidades» y el criterio local falla, como en la mochila. Hay principio de optimalidad (la mejor selección con las primeras i películas se arma sobre la mejor con las primeras i − 1) y subproblemas que se repiten.</p>
+
+<h3>b) Estrategia de Programación Dinámica</h3>
+<div class="first"><b>Qué guarda cada celda</b>
+<code>M[i,j]</code> = la <b>máxima calificación acumulada</b> que se logra con las primeras i películas y un presupuesto de j, proyectando cada una hasta 2 veces.</div>
+
+<table style="width:auto">
+<tr><th>proyecciones k</th><th>costo acumulado w<sub>k</sub></th><th>calificación</th></tr>
+<tr><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td class="num">1</td><td class="num">cᵢ</td><td class="num">rᵢ</td></tr>
+<tr><td class="num">2</td><td class="num">cᵢ + cᵢ/2 = 3cᵢ/2</td><td class="num">2rᵢ</td></tr>
+</table>
+
+<div class="grid2">
+  <div class="def"><h4>Casos base</h4>Primera fila (i = 1): según cuánto entre en j, se proyectan 0, 1 o 2 veces la única película: 0, r₁ o 2r₁.</div>
+  <div class="def"><h4>Decisión entre soluciones menores</h4>Para i &gt; 1: <b>máximo</b> entre las opciones que entran: no la proyecto, 1 proyección o 2 proyecciones. Cada una descuenta su costo wₖ de j, suma k·rᵢ y <b>mira la fila i − 1</b>.</div>
+  <div class="def"><h4>Tabla y respuesta</h4>n filas (una por película) y P + 1 columnas. La respuesta es <b>M[n, P]</b>.</div>
+</div>
+
+<h3>La recurrencia, caso por caso</h3>
+<table>
+<tr><th>M[i,j] =</th><th>cuando</th><th>en criollo</th></tr>
+<tr><td class="num">0</td><td class="num">i = 1 y c₁ &gt; j</td><td>Ni una proyección entra.</td></tr>
+<tr><td class="num">r₁</td><td class="num">i = 1 y c₁ ≤ j &lt; 3c₁/2</td><td>Entra 1 proyección y la segunda todavía no.</td></tr>
+<tr><td class="num">2r₁</td><td class="num">i = 1 y j ≥ 3c₁/2</td><td>Entran las 2 proyecciones.</td></tr>
+<tr><td class="num">M[i−1, j]</td><td class="num">i &gt; 1 y cᵢ &gt; j</td><td>Ni una proyección entra: me quedo con lo que ya había.</td></tr>
+<tr><td class="num">máx( M[i−1, j] , M[i−1, j − cᵢ] + rᵢ )</td><td class="num">i &gt; 1 y cᵢ ≤ j &lt; 3cᵢ/2</td><td>«No la proyecto» o «1 proyección».</td></tr>
+<tr><td class="num">máx( M[i−1, j] , M[i−1, j − cᵢ] + rᵢ , M[i−1, j − 3cᵢ/2] + 2rᵢ )</td><td class="num">i &gt; 1 y j ≥ 3cᵢ/2</td><td>«No la proyecto», «1 proyección» o «2 proyecciones».</td></tr>
+</table>
+
+<h3>Leela término por término</h3>
+<ol class="razon">
+  <li><b><code>M[i−1, j]</code> — «no la proyecto».</b> El presupuesto j queda entero para las películas anteriores.</li>
+  <li><b><code>M[i−1, j − cᵢ] + rᵢ</code> — «1 proyección».</b> Pago cᵢ, me quedan j − cᵢ para las anteriores y sumo rᵢ.</li>
+  <li><b><code>M[i−1, j − 3cᵢ/2] + 2rᵢ</code> — «2 proyecciones».</b> Las dos juntas cuestan 3cᵢ/2 (la segunda con 50 % de descuento) y aportan 2rᵢ.</li>
+  <li><b>¿Por qué los rangos?</b> Cada opción solo existe si su costo entra en j. Sin separar los casos, <code>j − 3cᵢ/2</code> daría una columna negativa.</li>
+  <li><b>¿Por qué la fila i − 1 en las tres?</b> Porque las proyecciones de la película i se deciden todas juntas, de una vez; después el presupuesto que queda va a las películas anteriores.</li>
+</ol>
+
+<h3>c) Pseudocódigo</h3>
+<div class="card">
+<pre class="ps">ALGORITMO Festival(r, c, P)
+Entrada: r, c: Vector&lt;entero&gt; de n posiciones (1-based), calificación y costo de los derechos de cada película (c[i] par); P: presupuesto
+Salida: la calificación máxima acumulada
+M ← inicializarMatriz(n, P + 1)
+para i ← 1 hasta n
+    para j ← 0 hasta P
+        si i = 1
+            si c[1] &gt; j
+                M[i,j] ← 0
+            sino si j &lt; 3*c[1]/2
+                M[i,j] ← r[1]
+            sino
+                M[i,j] ← 2*r[1]
+            fin si
+        sino
+            si c[i] &gt; j
+                M[i,j] ← M[i-1,j]
+            sino si j &lt; 3*c[i]/2
+                M[i,j] ← máx(M[i-1,j], M[i-1, j - c[i]] + r[i])
+            sino
+                M[i,j] ← máx(M[i-1,j], M[i-1, j - c[i]] + r[i], M[i-1, j - 3*c[i]/2] + 2*r[i])
+            fin si
+        fin si
+    fin para
+fin para
+devolver M[n, P]</pre>
+</div>
+<div class="note"><b>Pseudocódigo y ejemplo propios</b>
+La cátedra no publica pseudocódigo de este ejercicio: este está escrito <b>caso por caso, igual que la recurrencia</b> (como el de la <a href="#ej-g14">PD 3</a>). Dentro de cada <code>sino si</code> ya se sabe el rango de j, por eso no se repite la cota inferior. El ejemplo (r = 6, 4, 10; c = 8, 6, 4; P = 12) es propio y está elegido para que la rebaja de la segunda proyección cambie la respuesta.</div>
+
+<h3>Ejecutalo paso a paso</h3>
+<div class="sim" id="sim-s6">
+  <div class="sim-head">
+    <div class="title">Festival(r, c, P)<small>Naranja: celda que se calcula · celeste: celdas de cada opción · verde: camino de la reconstrucción</small></div>
+    <div class="inputs">
+      <label for="s6-r">calificaciones r</label><input type="text" id="s6-r" value="6,4,10">
+      <label for="s6-c">costos c (pares)</label><input type="text" id="s6-c" value="8,6,4">
+      <label for="s6-p">P</label><input type="number" id="s6-p" value="12" min="1" max="20">
+      <button class="ghost" data-reload>Calcular</button>
+    </div>
+  </div>
+  <div class="bt-presets">
+    <button class="ghost" data-s-sim="s6" data-s-preset="{&quot;s6-r&quot;: &quot;6,4,10&quot;, &quot;s6-c&quot;: &quot;8,6,4&quot;, &quot;s6-p&quot;: &quot;12&quot;}">Ejemplo: 24 contra 16 con una sola proyección</button>
+    <button class="ghost" data-s-sim="s6" data-s-preset="{&quot;s6-r&quot;: &quot;5,5&quot;, &quot;s6-c&quot;: &quot;10,10&quot;, &quot;s6-p&quot;: &quot;10&quot;}">Acá la rebaja no ayuda</button>
+    <button class="ghost" data-s-sim="s6" data-s-preset="{&quot;s6-r&quot;: &quot;5,9&quot;, &quot;s6-c&quot;: &quot;4,6&quot;, &quot;s6-p&quot;: &quot;3&quot;}">No alcanza para ninguna</button>
+    <button class="ghost" data-s-sim="s6" data-s-preset="{&quot;s6-r&quot;: &quot;7&quot;, &quot;s6-c&quot;: &quot;4&quot;, &quot;s6-p&quot;: &quot;12&quot;}">Una película con presupuesto de sobra</button>
+  </div>
+  <div class="sim-body">
+    <div class="code" data-code>
+<div class="cl" data-l="1"><span class="ln">1</span><span class="tx">M ← inicializarMatriz(n, P + 1)</span></div>
+<div class="cl" data-l="2"><span class="ln">2</span><span class="tx">para i ← 1 hasta n</span></div>
+<div class="cl" data-l="3"><span class="ln">3</span><span class="tx">    para j ← 0 hasta P</span></div>
+<div class="cl" data-l="4"><span class="ln">4</span><span class="tx">        si i = 1</span></div>
+<div class="cl" data-l="5"><span class="ln">5</span><span class="tx">            si c[1] &gt; j</span></div>
+<div class="cl" data-l="6"><span class="ln">6</span><span class="tx">                M[i,j] ← 0</span></div>
+<div class="cl" data-l="7"><span class="ln">7</span><span class="tx">            sino si j &lt; 3*c[1]/2</span></div>
+<div class="cl" data-l="8"><span class="ln">8</span><span class="tx">                M[i,j] ← r[1]</span></div>
+<div class="cl" data-l="9"><span class="ln">9</span><span class="tx">            sino</span></div>
+<div class="cl" data-l="10"><span class="ln">10</span><span class="tx">                M[i,j] ← 2*r[1]</span></div>
+<div class="cl" data-l="11"><span class="ln">11</span><span class="tx">            fin si</span></div>
+<div class="cl" data-l="12"><span class="ln">12</span><span class="tx">        sino</span></div>
+<div class="cl" data-l="13"><span class="ln">13</span><span class="tx">            si c[i] &gt; j</span></div>
+<div class="cl" data-l="14"><span class="ln">14</span><span class="tx">                M[i,j] ← M[i-1,j]</span></div>
+<div class="cl" data-l="15"><span class="ln">15</span><span class="tx">            sino si j &lt; 3*c[i]/2</span></div>
+<div class="cl" data-l="16"><span class="ln">16</span><span class="tx">                M[i,j] ← máx(M[i-1,j], M[i-1, j - c[i]] + r[i])</span></div>
+<div class="cl" data-l="17"><span class="ln">17</span><span class="tx">            sino</span></div>
+<div class="cl" data-l="18"><span class="ln">18</span><span class="tx">                M[i,j] ← máx(M[i-1,j], M[i-1, j - c[i]] + r[i], M[i-1, j - 3*c[i]/2] + 2*r[i])</span></div>
+<div class="cl" data-l="19"><span class="ln">19</span><span class="tx">            fin si</span></div>
+<div class="cl" data-l="20"><span class="ln">20</span><span class="tx">        fin si</span></div>
+<div class="cl" data-l="21"><span class="ln">21</span><span class="tx">    fin para</span></div>
+<div class="cl" data-l="22"><span class="ln">22</span><span class="tx">fin para</span></div>
+<div class="cl" data-l="23"><span class="ln">23</span><span class="tx">devolver M[n, P]</span></div>
+    </div>
+    <div class="viz" data-viz></div>
+  </div>
+  <div class="explain" data-explain></div>
+  <div class="controls" data-controls></div>
+</div>
+<p class="srcnote" style="max-width:76ch">Las calificaciones y los costos se escriben separados por comas (hasta 5 películas, la misma cantidad de cada uno); los costos tienen que ser enteros pares. P va de 1 a 20. Al final, el simulador reconstruye cuántas veces se proyecta cada película y compara con el máximo que daría una sola proyección por película.</p>
+
+<h3>d) Complejidad temporal</h3>
+<p>Dos ciclos anidados: uno por película (n) y otro por cada presupuesto de 0 a P. En cada celda se calculan <b>a lo sumo tres</b> opciones, cada una con una resta, una suma y una multiplicación por 1 o 2: un número constante de operaciones. Son n·(P + 1) celdas con costo Θ(1) cada una; el 3 es una constante y no cambia el orden.</p>
+<div class="card" style="font-family:var(--mono);text-align:center">
+n·(P + 1) celdas × Θ(1) por celda (≤ 3 opciones) → <span class="tag t-cuad" style="font-size:15px">Θ(n·P)</span>
+</div>
+</div>
+<hr class="rule">
+</section>
+
+
 <div class="exbar" id="bloque-cierre"><span>Cierre</span><b>Mapa de reconocimiento</b><em>Del enunciado a la técnica, el algoritmo y la complejidad</em></div>
 
 <section id="mapa">
@@ -3102,13 +4859,17 @@ filtrado Θ(a) + Dijkstra(G') O(n²) → <span class="tag t-cuad" style="font-si
 <tr><td>Pide <b>conectar todos</b> los puntos al menor costo total, sin ciclos</td><td>Grafos</td><td>Kruskal como caja negra (grafo no dirigido, ralo)</td><td><span class="tag t-nlogn">Θ(a log a)</span></td></tr>
 <tr><td>Pide <b>conectar todos</b> los puntos al menor costo total, y el grafo es denso (casi todos los pares medidos)</td><td>Grafos</td><td>Prim como caja negra (grafo no dirigido, denso)</td><td><span class="tag t-cuad">O(n²)</span></td></tr>
 <tr><td>Pide conectar todos al <b>mayor</b> costo total</td><td>Grafos</td><td>reducción peso' = M − peso, después Kruskal o Prim tal cual</td><td>la de la caja elegida</td></tr>
+<tr><td>Pide algo sobre los caminos mínimos entre <b>todos los pares</b> de nodos (elegir el nodo «central», el que minimiza el máximo o la suma de sus distancias)</td><td>Grafos</td><td>Floyd como caja negra (con ∞ donde no hay arista y 0 en la diagonal) + el máximo o la suma de cada fila</td><td><span class="tag t-cuad">Θ(n³)</span></td></tr>
 <tr><td>Pide <b>maximizar</b> con un <b>límite</b> (de peso, de presupuesto), cada elemento una sola vez o hasta una cantidad, y un criterio local <b>falla</b> (hay contraejemplo)</td><td>Programación Dinámica</td><td>tabla n × (límite + 1): cada término del <code>máx</code> rotulado («no lo uso» / «lo uso» / «k unidades») y apuntando a la fila anterior</td><td><span class="tag t-cuad">Θ(n·P)</span></td></tr>
 <tr><td>Pide <b>cubrir al menos</b> un monto con el <b>menor</b> gasto posible (o llegar justo)</td><td>Programación Dinámica</td><td>tabla del menor gasto que cubre al menos j: «no lo compro» / «lo compro y cubro el resto»</td><td><span class="tag t-cuad">Θ(n·X)</span></td></tr>
+<tr><td>Pide <b>maximizar</b> con un <b>límite</b> y cada elemento se puede usar <b>todas las veces que se quiera</b> (stock ilimitado, monedas infinitas)</td><td>Programación Dinámica</td><td>la misma tabla, pero «lo uso» se queda en la <b>misma fila</b>: <code>M[i, j − cᵢ] + cᵢ</code> (Cambio, catálogo de premios)</td><td><span class="tag t-cuad">Θ(n·P)</span></td></tr>
 <tr><td>Pide <b>la mejor</b> solución (o todas) entre muchas combinaciones de decisiones, y no hay un criterio local seguro ni subproblemas que se repitan</td><td>Backtracking</td><td>árbol de decisiones: S, etapa, alternativas, factibilidad y poda, retroceso; la mejor se guarda como copia y se explora todo lo que no se pueda podar</td><td><span class="tag t-exp">exponencial</span></td></tr>
 <tr><td>Pide <b>un</b> recorrido o disposición que cumpla restricciones (no repetir casillas, cerrar el ciclo, no atacarse), o avisar que no existe</td><td>Backtracking</td><td>el mismo árbol, pero al encontrar una solución se devuelve verdadero y se corta (como Reinas)</td><td><span class="tag t-exp">exponencial</span></td></tr>
+<tr><td>Pide el <b>mejor</b> recorrido de largo fijo en una matriz (visitar exactamente K casillas, sin repetir, con un esfuerzo o costo por casilla)</td><td>Backtracking</td><td>S = recorrido, etapa = n.º de casilla, alternativas = los movimientos permitidos; se guarda el mejor y se poda si lo acumulado ya no lo mejora</td><td><span class="tag t-exp">exponencial</span></td></tr>
+<tr><td>Pide la <b>mejor</b> asignación entre personas y productos (cada uno a lo sumo una vez) y un criterio local falla</td><td>Backtracking</td><td>S[producto] = persona o «sin vender»; poda por <b>cota superior</b> (lo que falta, a su mejor oferta); la mejor se guarda como copia</td><td><span class="tag t-exp">exponencial</span></td></tr>
 </table>
 
-<h3>Los 23 ejercicios, en una línea cada uno</h3>
+<h3>Los 41 ejercicios, en una línea cada uno</h3>
 <table>
 <tr><th>Ejercicio</th><th>Técnica</th><th>Criterio / clave</th><th>Complejidad</th></tr>
 <tr><td><a href="#ej-g1">G · DyC 1</a> ¿ordenada?</td><td>DyC división</td><td>2 mitades + costura S[medio] ≤ S[medio+1]</td><td><span class="tag t-lin">O(n)</span></td></tr>
@@ -3134,6 +4895,24 @@ filtrado Θ(a) + Dijkstra(G') O(n²) → <span class="tag t-cuad" style="font-si
 <tr><td><a href="#ej-i6">I · 6</a> inmediato inferior a X</td><td>DyC división</td><td>binaria con mejor candidato &lt; X</td><td><span class="tag t-log">O(log n)</span></td></tr>
 <tr><td><a href="#ej-i7">I · 7</a> maximizar archivos</td><td>Greedy</td><td>por tamaño ↑, agregar mientras entre</td><td><span class="tag t-nlogn">O(n log n)</span></td></tr>
 <tr><td><a href="#ej-i8">I · 8</a> vuelta a Mónaco</td><td>Grafos</td><td>sacar aristas críticas + Dijkstra (peso = tiempo)</td><td><span class="tag t-cuad">O(n²)</span></td></tr>
+<tr><td><a href="#ej-c1">C · 1</a> Fibonacci</td><td>Programación Dinámica</td><td>vector: M[i] = M[i−1] + M[i−2]</td><td><span class="tag t-lin">O(n)</span></td></tr>
+<tr><td><a href="#ej-c2">C · 2</a> Cambio</td><td>Programación Dinámica</td><td>«usarla» en la misma fila: 1 + C[i, j − dᵢ]</td><td><span class="tag t-cuad">Θ(n·v)</span></td></tr>
+<tr><td><a href="#ej-c3">C · 3</a> Mochila 0-1</td><td>Programación Dinámica</td><td>no lo llevo / lo llevo (fila i−1)</td><td><span class="tag t-cuad">Θ(n·P)</span></td></tr>
+<tr><td><a href="#ej-c7">C · 7</a> subsecuencia común más larga</td><td>Programación Dinámica</td><td>si Xᵢ = Yⱼ: L[i−1,j−1] + 1; si no, máx de arriba e izquierda</td><td><span class="tag t-cuad">Θ(m·n)</span></td></tr>
+<tr><td><a href="#ej-c8">C · 8</a> preparación física</td><td>Programación Dinámica</td><td>hasta 2 sesiones: cargas c / 1,8c, mejoras r / 2,1r</td><td><span class="tag t-cuad">Θ(n·C)</span></td></tr>
+<tr><td><a href="#ej-c9">C · 9</a> Floyd</td><td>Programación Dinámica sobre grafos</td><td>Mₖ: habilitar el nodo k como intermedio</td><td><span class="tag t-cuad">Θ(n³)</span></td></tr>
+<tr><td><a href="#ej-c10">C · 10</a> centro logístico</td><td>Grafos</td><td>Floyd + el máximo de cada fila, el menor de los máximos</td><td><span class="tag t-cuad">Θ(n³)</span></td></tr>
+<tr><td><a href="#ej-c11">C · 11</a> 8 reinas</td><td>Backtracking (una)</td><td>S[fila] = columna; ReinaValida; se corta al encontrar una</td><td><span class="tag t-exp">O(nⁿ)</span></td></tr>
+<tr><td><a href="#ej-c12">C · 12</a> suma de subconjuntos</td><td>Backtracking (todas)</td><td>S[e] ∈ {0,1}; podar si la suma se pasa; no cortar</td><td><span class="tag t-exp">O(2ⁿ)</span></td></tr>
+<tr><td><a href="#ej-c13">C · 13</a> partición en mitades</td><td>Backtracking (todas)</td><td>S[e] ∈ {1,2}; comparar las sumas en cada hoja</td><td><span class="tag t-exp">Θ(n·2ⁿ)</span></td></tr>
+<tr><td><a href="#ej-c14">C · 14</a> procesadores con cota Greedy</td><td>Backtracking + Greedy</td><td>cota inicial LPT; podar si máx(cargas) ≥ mejorTiempo</td><td><span class="tag t-exp">O((m+t)·mᵗ)</span></td></tr>
+<tr><td><a href="#ej-c15">C · 15</a> mochila con cota</td><td>Backtracking (la mejor)</td><td>S[e] ∈ {0,1}; podar por exceso y por cota fraccionaria</td><td><span class="tag t-exp">O(n·2ⁿ + n log n)</span></td></tr>
+<tr><td><a href="#ej-s1">S · 1</a> almacenamiento</td><td>Programación Dinámica</td><td>Mochila 0/1 con valor = peso: M[i−1, j − Sᵢ] + Sᵢ</td><td><span class="tag t-cuad">Θ(n·D)</span></td></tr>
+<tr><td><a href="#ej-s2">S · 2</a> subasta</td><td>Backtracking (la mejor)</td><td>S[producto] = persona o «sin vender»; poda por cota superior</td><td><span class="tag t-exp">O((m+n)·(m+1)ⁿ)</span></td></tr>
+<tr><td><a href="#ej-s3">S · 3</a> catálogo de premios</td><td>Programación Dinámica</td><td>stock ilimitado: «lo uso» en la misma fila</td><td><span class="tag t-cuad">Θ(n·P)</span></td></tr>
+<tr><td><a href="#ej-s4">S · 4</a> estaciones de actividades</td><td>Backtracking (la mejor)</td><td>recorrido de exactamente K casillas; 4 movimientos; podar por esfuerzo</td><td><span class="tag t-exp">O(K·4<sup>K</sup>)</span></td></tr>
+<tr><td><a href="#ej-s5">S · 5</a> ciudad base</td><td>Grafos</td><td>Floyd (−1 → ∞) + la suma de cada fila</td><td><span class="tag t-cuad">Θ(N³)</span></td></tr>
+<tr><td><a href="#ej-s6">S · 6</a> festival de cine</td><td>Programación Dinámica</td><td>hasta 2 proyecciones: costos c / 3c/2, calificaciones r / 2r</td><td><span class="tag t-cuad">Θ(n·P)</span></td></tr>
 </table>
 
 <h3>Pares de enunciados con la misma resolución</h3>
@@ -3142,6 +4921,11 @@ filtrado Θ(a) + Dijkstra(G') O(n²) → <span class="tag t-cuad" style="font-si
   <li><a href="#ej-i1">Integración 1 · Actividades compatibles</a> y <a href="#ej-i5">Integración 5 · Salón de convenciones</a>: como el salón cobra un pago único por evento, maximizar la ganancia es maximizar la cantidad. Greedy por fin más temprano.</li>
   <li><a href="index.html#huffman">Huffman</a> y <a href="#ej-g7">Mezclado de cintas</a>: fusionar siempre los dos elementos de menor valor, con una cola de prioridad de mínimos.</li>
   <li><a href="#ej-g13">PD 2 · Las revistas de Howard</a> y <a href="#ej-g14">PD 3 · Compras en el shopping</a>: la PD 3 es la PD 2 generalizada. En vez de dos opciones por producto (llevarlo o no) hay hasta cuatro (0, 1, 2 o 3 unidades), y todas siguen apuntando a la fila anterior.</li>
+  <li><a href="#ej-i7">Integración 1.er parcial · 7</a> y <a href="#ej-s1">Integración 2.º parcial · 1</a>: el mismo disco y los mismos programas. Si se pide la mayor <b>cantidad</b> de archivos, Greedy por tamaño; si se pide el mayor <b>espacio ocupado</b>, Mochila 0/1 con Programación Dinámica.</li>
+  <li><a href="#ej-c2">Cambio</a> y <a href="#ej-s3">Catálogo de premios</a>: cantidad ilimitada de cada elemento, así que «lo uso» se queda en la <b>misma fila</b>. El Cambio minimiza monedas para un valor exacto; el catálogo maximiza lo gastado sin pasarse.</li>
+  <li><a href="#ej-g14">PD 3</a>, <a href="#ej-c8">Preparación física</a> y <a href="#ej-s6">Festival de cine</a>: la Mochila 0/1 con más de una opción por objeto (hasta 3 unidades, hasta 2 sesiones, hasta 2 proyecciones). Todas apuntan a la fila anterior y los rangos de j separan las opciones que entran.</li>
+  <li><a href="#ej-c10">Centro logístico</a> y <a href="#ej-s5">Ciudad base de la Selección</a>: Floyd y después una cuenta por fila. En uno se minimiza el <b>máximo</b> de la fila; en el otro, la <b>suma</b>.</li>
+  <li><a href="#ej-g16">Laberinto</a> y <a href="#ej-s4">Estaciones de actividades</a>: Backtracking para el mejor camino en una matriz, con la marca «visitada», el acumulador y la poda por «lo acumulado ya no mejora lo guardado».</li>
 </ul>
 
 <h3>Errores que cuestan puntos</h3>
@@ -3162,6 +4946,12 @@ filtrado Θ(a) + Dijkstra(G') O(n²) → <span class="tag t-cuad" style="font-si
   <li><b>Backtracking 2:</b> no marcar las casillas visitadas (la búsqueda puede no terminar), contar la longitud como cantidad de pasos en vez de suma de valores, o suponer que los booleanos son simétricos.</li>
   <li><b>Backtracking 3:</b> dar por buena una S con todas las casillas sin comprobar que la última es vecina de la primera (el recorrido tiene que <b>cerrar</b>), o no devolver verdadero hacia arriba y seguir buscando después de encontrarlo.</li>
   <li><b>Backtracking, la complejidad:</b> decir que es polinomial «porque hay poda». Se cuenta el árbol: alternativas por etapa ^ profundidad, por el costo de cada nodo, y se aclara que es el peor caso.</li>
+  <li><b>Integración 2.º parcial · 1:</b> resolverlo con Greedy («los más chicos primero», como en <a href="#ej-i7">Integración 7</a>): eso maximiza la cantidad de programas, no el espacio ocupado.</li>
+  <li><b>Integración 2.º parcial · 2:</b> adjudicar siempre la mayor oferta que queda (Greedy), que falla; y, en el Backtracking, olvidar la alternativa «el producto no se vende» o no marcar a la persona que ya se llevó un producto.</li>
+  <li><b>Integración 2.º parcial · 3:</b> mirar la fila de arriba en «lo uso» (<code>M[i−1, j − cᵢ]</code>): cada premio se retiraría una sola vez, y el enunciado dice stock ilimitado. Va a la misma fila.</li>
+  <li><b>Integración 2.º parcial · 4:</b> no aclarar que la casilla de partida cuenta como visitada, o devolver un recorrido más corto que K casillas. Si K es mayor que el recorrido más largo posible, la respuesta es «no existe».</li>
+  <li><b>Integración 2.º parcial · 5:</b> correr Floyd sin cambiar el −1 por ∞ (se leería como un tiempo negativo), sumar la columna en vez de la fila, o reescribir Floyd en lugar de invocarlo.</li>
+  <li><b>Integración 2.º parcial · 6:</b> costear la segunda proyección como 2c en vez de c + c/2, o mirar la misma fila en lugar de la i − 1 (se podría proyectar más de dos veces).</li>
   <li><b>Grafos:</b> aplicar Dijkstra (camino mínimo, dirigido) a un problema de conectar todos los nodos (recubrimiento, no dirigido), o al revés.</li>
   <li><b>Grafos, el más caro:</b> reescribir el <code>mientras</code> de Dijkstra o el <code>para cada arista</code> de Kruskal en el punto e) en vez de invocar la caja y resolver el problema alrededor. El punto e) pide el pseudocódigo <em>de la resolución</em>, no el del algoritmo.</li>
 </ul>
@@ -4726,6 +6516,443 @@ document.querySelectorAll("[data-bt-preset]").forEach(b=>b.addEventListener("cli
   const values=JSON.parse(b.dataset.btPreset);
   Object.keys(values).forEach(id=>{document.getElementById(id).value=values[id];});
   ({proc:btProcSim,maze:btMazeSim,atila:btAtilaSim})[b.dataset.btSim].reload();
+}));
+
+/* ===== Integración · Segundo parcial ===== */
+/* Builders puros (sin DOM): la interfaz y las pruebas ejecutan exactamente el mismo algoritmo. Las entradas
+   inválidas se informan en el simulador (btGuard), sin reemplazarlas en silencio. Reutiliza dpSteps/dpTable (PD)
+   y los helpers del tablero de Backtracking. */
+const S2_MAX_STEPS=400;
+const S2_PERSONAS="XYZW", S2_PRODUCTOS="ABCD";
+const S4_MOVES=[{df:-1,dc:1,nombre:"Hacia arriba a la derecha"},{df:0,dc:1,nombre:"Hacia la derecha"},{df:1,dc:1,nombre:"Hacia abajo a la derecha"},{df:1,dc:0,nombre:"Hacia abajo"}];
+function sPush(steps,st,tip){
+  if(steps.length>=S2_MAX_STEPS) throw new Error("La búsqueda necesita más de "+S2_MAX_STEPS+" pasos para mostrarse. Probá con "+tip+".");
+  steps.push(st);
+}
+const sDpRender=st=>st.error?btError(st):dpRender(st);
+const sNum=x=>x===Infinity?"∞":String(x);
+/* Floyd sin pasos, copiado del apunte (clase 9): 0 en la diagonal, el peso donde hay arista e ∞ donde no. */
+function floydPuro(n, W){
+  const R=W.map(r=>r.slice());
+  for(let k=0;k<n;k++) for(let i=0;i<n;i++) for(let j=0;j<n;j++)
+    if(i!==j && R[i][k]!==Infinity && R[k][j]!==Infinity && R[i][k]+R[k][j]<R[i][j]) R[i][j]=R[i][k]+R[k][j];
+  return R;
+}
+
+/* ---------- s1 · Maximización de almacenamiento: PD, Mochila 0/1 con valor = peso ---------- */
+function s1Almacenamiento(S,D){
+  const n=S.length, fmt=dpFmt;
+  return dpSteps({
+    rows:S.map((x,i)=>"prog "+(i+1)+" · "+x+" GB"), cols:D+1, vars:["S = {"+S.join(", ")+"}","D = "+D], L:{init:1,fila:2},
+    msgInit:"inicializarMatriz(n, D + 1): una tabla de <b>"+n+" fila"+(n>1?"s":"")+"</b> (una por programa) y <b>"+(D+1)+" columnas</b> (capacidades de 0 a "+D+"). La celda (i, j) guarda la <b>mayor cantidad de GB ocupados</b> con algunos de los primeros i programas en un disco de j GB, sin pasarse.",
+    msgFila:i=>"para i ← "+(i+1)+": se incorpora el <b>programa "+(i+1)+"</b> ("+S[i]+" GB)"+(i===0?", el primero.":", que se suma a "+(i===1?"el anterior":"los "+i+" anteriores")+"."),
+    cell:(i,j,M)=>{
+      const I=i+1, si=S[i];
+      if(i===0){
+        if(si>j) return {v:0,line:6,msg:"i = 1: ¿S[1] = "+si+" &gt; j = "+j+"? → <b>true</b>: el único programa no entra. <b>M[1,"+j+"] ← 0</b>."};
+        return {v:si,line:8,msg:"i = 1: ¿S[1] = "+si+" &gt; j = "+j+"? → <b>false</b>: entra. <b>M[1,"+j+"] ← S[1] = "+si+"</b>."};
+      }
+      if(si>j) return {v:M[i-1][j],line:12,deps:[[i-1,j]],msg:"¿S["+I+"] = "+si+" &gt; j = "+j+"? → <b>true</b>: el programa "+I+" no entra. Me quedo con lo que ya había: <b>M["+I+","+j+"] ← M["+i+","+j+"] = "+M[i-1][j]+"</b>."};
+      const sin=M[i-1][j], k=j-si, con=M[i-1][k]+si, v=Math.max(sin,con);
+      return {v,line:14,deps:[[i-1,j],[i-1,k]],msg:"¿S["+I+"] = "+si+" &gt; j = "+j+"? → <b>false</b>: entra. <b>No lo guardo</b> → M["+i+","+j+"] = "+sin+"; <b>lo guardo</b> → M["+i+","+k+"] + S["+I+"] = "+M[i-1][k]+" + "+si+" = "+con+". máx("+sin+", "+con+") = <b>"+v+"</b>"+(con>sin?": conviene guardarlo.":(con===sin?": empatan.":": conviene dejarlo."))};
+    },
+    after:(M,push)=>{
+      const total=M[n-1][D];
+      push(19,"Terminaron los dos ciclos. devolver M["+n+","+D+"] = <b>"+total+"</b>: la mayor cantidad de GB que se puede ocupar en "+D+" GB.",{cur:[n-1,D]});
+      let i=n-1, j=D; const path=[[i,j]], guarda=[];
+      push(undefined,dpIntro("("+n+", "+D+")"),{cur:[i,j],path:path.slice()});
+      while(i>=0){
+        if(i===0){
+          if(M[0][j]>0){ guarda.push(1); push(undefined,"i = 1: M[1,"+j+"] = "+M[0][j]+" &gt; 0: el programa 1 entra y se guarda.",{cur:[0,j],path:path.slice()}); }
+          else push(undefined,"i = 1: M[1,"+j+"] = 0: el programa 1 no entra en lo que queda, no se guarda.",{cur:[0,j],path:path.slice()});
+          break;
+        }
+        if(M[i][j]===M[i-1][j]){
+          push(undefined,"M["+(i+1)+","+j+"] = "+fmt(M[i][j])+" es igual a M["+i+","+j+"] = "+fmt(M[i-1][j])+": el programa "+(i+1)+" <b>no hizo falta</b>. Subo a la fila "+i+".",{cur:[i,j],deps:[[i-1,j]],path:path.slice()});
+        } else {
+          guarda.push(i+1);
+          push(undefined,"M["+(i+1)+","+j+"] = "+fmt(M[i][j])+" ≠ M["+i+","+j+"] = "+fmt(M[i-1][j])+": se <b>guardó</b> el programa "+(i+1)+" ("+S[i]+" GB). Quedan "+j+" − "+S[i]+" = <b>"+(j-S[i])+"</b> GB para los anteriores; como cada programa se guarda una sola vez, subo a la fila "+i+".",{cur:[i,j],deps:[[i-1,j]],path:path.slice()});
+          j-=S[i];
+        }
+        i--; path.push([i,j]);
+      }
+      guarda.sort((a,b)=>a-b);
+      /* Los dos criterios Greedy que uno probaría primero, para comparar */
+      const golosa=orden=>{ let u=0; const t=[]; orden.forEach(o=>{ if(u+o.x<=D){ u+=o.x; t.push(o.i); } }); return {u,t:t.sort((a,b)=>a-b)}; };
+      const it=S.map((x,q)=>({x,i:q+1}));
+      const gMax=golosa(it.slice().sort((a,b)=>b.x-a.x||a.i-b.i)), gMin=golosa(it.slice().sort((a,b)=>a.x-b.x||a.i-b.i));
+      const txt=g=>g.u+" GB"+(g.t.length?" (programas "+g.t.join(", ")+")":"");
+      push(undefined,guarda.length
+          ? "Reconstrucción lista: se guardan los programas <b>"+guarda.join(", ")+"</b>, de "+guarda.map(o=>S[o-1]).join(" + ")+" = "+total+" GB."+(total===D?" El disco queda <b>lleno</b>.":" Sobran "+(D-total)+" GB.")+
+            (Math.max(gMax.u,gMin.u)<total?" Ningún Greedy llega a "+total+": «el más grande primero» ocupa "+gMax.u+" GB y «el más chico primero» "+gMin.u+" GB.":" Acá algún Greedy también llega a "+total+", pero no siempre pasa.")
+          : "Ningún programa entra en "+D+" GB: se ocupan 0.",
+        {path:path.slice(),result:"máximo = "+total+" GB de "+D+(guarda.length?" · programas "+guarda.join(", "):" · no entra ninguno"),rcls:"good",
+         extra:dpBox("Comparación con los dos Greedy habituales","Greedy grande→chico: "+txt(gMax)+" · chico→grande: "+txt(gMin),"PD: "+total+" GB"+(guarda.length?" (programas "+guarda.join(", ")+")":""))});
+    }
+  });
+}
+
+/* ---------- s3 · Catálogo de premios por puntos: PD con repetición ilimitada (como el Cambio) ---------- */
+function s3Catalogo(c,P){
+  const n=c.length, fmt=dpFmt;
+  return dpSteps({
+    rows:c.map((x,i)=>"premio "+(i+1)+" · "+x+" pts"), cols:P+1, vars:["costos = {"+c.join(", ")+"}","P = "+P], L:{init:1,fila:2},
+    msgInit:"inicializarMatriz(n, P + 1): una tabla de <b>"+n+" fila"+(n>1?"s":"")+"</b> (una por premio del catálogo) y <b>"+(P+1)+" columnas</b> (puntos de 0 a "+P+"). La celda (i, j) guarda la <b>mayor cantidad de puntos que se pueden gastar</b> sin pasar de j, con premios de los primeros i tipos y <b>cualquier cantidad de cada uno</b> (stock ilimitado).",
+    msgFila:i=>"para i ← "+(i+1)+": se incorpora el <b>premio "+(i+1)+"</b> ("+c[i]+" puntos)"+(i===0?", el primero.":", que se suma a "+(i===1?"el anterior":"los "+i+" anteriores")+"."),
+    cell:(i,j,M)=>{
+      const I=i+1, ci=c[i];
+      if(i===0){
+        if(ci>j) return {v:0,line:6,msg:"i = 1: ¿c[1] = "+ci+" &gt; j = "+j+"? → <b>true</b>: el único premio no entra. <b>M[1,"+j+"] ← 0</b>."};
+        const k=j-ci, v=M[0][k]+ci;
+        return {v,line:8,deps:[[0,k]],msg:"i = 1: ¿c[1] = "+ci+" &gt; j = "+j+"? → <b>false</b>: entra. Y puede repetirse, así que se mira la <b>misma fila</b>: <b>M[1,"+j+"] ← M[1,"+k+"] + c[1] = "+M[0][k]+" + "+ci+" = "+v+"</b>."};
+      }
+      if(ci>j) return {v:M[i-1][j],line:12,deps:[[i-1,j]],msg:"¿c["+I+"] = "+ci+" &gt; j = "+j+"? → <b>true</b>: el premio "+I+" no entra. Me quedo con lo que ya había: <b>M["+I+","+j+"] ← M["+i+","+j+"] = "+M[i-1][j]+"</b>."};
+      const sin=M[i-1][j], k=j-ci, con=M[i][k]+ci, v=Math.max(sin,con);
+      return {v,line:14,deps:[[i-1,j],[i,k]],msg:"¿c["+I+"] = "+ci+" &gt; j = "+j+"? → <b>false</b>: entra. <b>No lo uso</b> → M["+i+","+j+"] = "+sin+" (fila de arriba); <b>lo uso</b> → M["+I+","+k+"] + c["+I+"] = "+M[i][k]+" + "+ci+" = "+con+" (<b>misma fila</b>: puede volver a usarse). máx("+sin+", "+con+") = <b>"+v+"</b>"+(con>sin?": conviene usarlo.":(con===sin?": empatan.":": conviene no usarlo."))};
+    },
+    after:(M,push)=>{
+      const total=M[n-1][P];
+      push(19,"Terminaron los dos ciclos. devolver M["+n+","+P+"] = <b>"+total+"</b>: la mayor cantidad de puntos que se pueden usar con "+P+" acumulados.",{cur:[n-1,P]});
+      let i=n-1, j=P; const path=[[i,j]], usa=new Array(n).fill(0);
+      push(undefined,dpIntro("("+n+", "+P+")")+" Acá «lo uso» se queda en la misma fila: un premio se puede retirar varias veces.",{cur:[i,j],path:path.slice()});
+      while(j>0 && M[i][j]>0){
+        if(i>0 && M[i][j]===M[i-1][j]){
+          push(undefined,"M["+(i+1)+","+j+"] = "+fmt(M[i][j])+" es igual a M["+i+","+j+"] = "+fmt(M[i-1][j])+": el premio "+(i+1)+" <b>no hizo falta</b>. Subo a la fila "+i+".",{cur:[i,j],deps:[[i-1,j]],path:path.slice()});
+          i--; path.push([i,j]);
+        } else {
+          usa[i]++;
+          push(undefined,"M["+(i+1)+","+j+"] = "+fmt(M[i][j])+(i>0?" ≠ M["+i+","+j+"] = "+fmt(M[i-1][j]):"")+": se retira <b>una unidad</b> del premio "+(i+1)+" ("+c[i]+" puntos). Quedan "+j+" − "+c[i]+" = <b>"+(j-c[i])+"</b> y me quedo en la <b>misma fila</b>, porque puede repetirse.",{cur:[i,j],deps:[[i,j-c[i]]],path:path.slice()});
+          j-=c[i]; path.push([i,j]);
+        }
+      }
+      const retira=usa.map((k,q)=>k?k+" × premio "+(q+1)+" ("+c[q]+")":null).filter(Boolean);
+      /* Greedy «el más caro primero, repetido», para comparar */
+      let u=0; const gu=new Array(n).fill(0);
+      c.map((x,q)=>q).sort((a,b)=>c[b]-c[a]||a-b).forEach(q=>{ while(u+c[q]<=P){ u+=c[q]; gu[q]++; } });
+      const gtxt=gu.map((k,q)=>k?k+" × premio "+(q+1):null).filter(Boolean);
+      push(undefined,total
+          ? "Reconstrucción lista: "+retira.join(" + ")+" = "+total+" puntos de "+P+"."+(total===P?" No sobra ningún punto.":" Sobran "+(P-total)+".")+
+            (u<total?" Greedy «el premio más caro, repetido» gastaría solo <b>"+u+"</b>.":" Acá Greedy también llega a "+total+", pero no siempre pasa.")
+          : "Ningún premio entra en "+P+" puntos: se usan 0.",
+        {path:path.slice(),result:"máximo = "+total+" puntos de "+P+(total?" · "+retira.join(" + "):" · no se retira nada"),rcls:"good",
+         extra:dpBox("Comparación con Greedy «el más caro primero, repetido»","Greedy: "+u+" puntos"+(gtxt.length?" ("+gtxt.join(" + ")+")":""),"PD: "+total+" puntos"+(retira.length?" ("+retira.join(" + ")+")":""))});
+    }
+  });
+}
+
+/* ---------- s6 · Festival de cine: PD, hasta 2 proyecciones por película (la 2.ª a mitad de costo) ---------- */
+function s6Festival(r,c,P){
+  const n=r.length, fmt=dpFmt;
+  c.forEach((x,i)=>{ if(x%2!==0) throw new Error("El costo de la película "+(i+1)+" es "+x+", impar: la segunda proyección costaría "+x+" + "+x+"/2, un número no entero. Usá costos pares."); });
+  const w2=c.map(x=>x+x/2);                                  // costo de las 2 proyecciones juntas: c + c/2 = 3c/2
+  const nombre=k=>["no la proyecto","1 proyección","2 proyecciones"][k];
+  const sin1=(()=>{ const T=new Array(P+1).fill(0); for(let i=0;i<n;i++) for(let j=P;j>=c[i];j--) T[j]=Math.max(T[j],T[j-c[i]]+r[i]); return T[P]; })();
+  return dpSteps({
+    rows:r.map((x,i)=>"peli "+(i+1)+" · c = "+c[i]+" · r = "+x), cols:P+1, vars:["calificaciones r = {"+r.join(", ")+"}","costos c = {"+c.join(", ")+"}","P = "+P], L:{init:1,fila:2},
+    msgInit:"inicializarMatriz(n, P + 1): una tabla de <b>"+n+" fila"+(n>1?"s":"")+"</b> (una por película) y <b>"+(P+1)+" columnas</b> (presupuestos de 0 a "+P+"). La celda (i, j) guarda la <b>mayor calificación acumulada</b> con las primeras i películas y un presupuesto de j, proyectando cada una hasta 2 veces.",
+    msgFila:i=>"para i ← "+(i+1)+": se incorpora la <b>película "+(i+1)+"</b> (c = "+c[i]+", r = "+r[i]+"). 1 proyección: costo "+c[i]+", calificación "+r[i]+". 2 proyecciones: costo "+c[i]+" + "+c[i]+"/2 = <b>"+w2[i]+"</b>, calificación 2·"+r[i]+" = <b>"+(2*r[i])+"</b>.",
+    cell:(i,j,M)=>{
+      const I=i+1, ci=c[i], ri=r[i], w=[0,ci,w2[i]], g=[0,ri,2*ri];
+      if(i===0){
+        if(ci>j) return {v:0,line:6,msg:"i = 1: ¿c[1] = "+ci+" &gt; j = "+j+"? → <b>true</b>: ni una proyección entra. <b>M[1,"+j+"] ← 0</b>."};
+        if(j<w2[i]) return {v:ri,line:8,msg:"i = 1: ¿c[1] = "+ci+" &gt; j = "+j+"? → false. ¿j = "+j+" &lt; 3·c[1]/2 = "+w2[i]+"? → <b>true</b>: entra 1 proyección y la segunda todavía no. <b>M[1,"+j+"] ← r[1] = "+ri+"</b>."};
+        return {v:2*ri,line:10,msg:"i = 1: ¿j = "+j+" &lt; 3·c[1]/2 = "+w2[i]+"? → <b>false</b>: entran las 2 proyecciones. <b>M[1,"+j+"] ← 2·r[1] = "+(2*ri)+"</b>."};
+      }
+      if(ci>j) return {v:M[i-1][j],line:14,deps:[[i-1,j]],msg:"¿c["+I+"] = "+ci+" &gt; j = "+j+"? → <b>true</b>: ni una proyección entra. <b>M["+I+","+j+"] ← M["+i+","+j+"] = "+M[i-1][j]+"</b>."};
+      const kmax=j<w2[i]?1:2, opts=[], deps=[];
+      for(let k=0;k<=kmax;k++){ const src=M[i-1][j-w[k]]; opts.push({k,src,val:src+g[k]}); deps.push([i-1,j-w[k]]); }
+      const v=Math.max(...opts.map(o=>o.val)), ganador=opts.find(o=>o.val===v);
+      const rango=kmax===1?"c["+I+"] = "+ci+" ≤ j = "+j+" &lt; 3·c["+I+"]/2 = "+w2[i]:"j = "+j+" ≥ 3·c["+I+"]/2 = "+w2[i];
+      const txt=opts.map(o=>"<b>"+nombre(o.k)+"</b> → M["+i+","+(j-w[o.k])+"]"+(o.k?" + "+g[o.k]+" = "+fmt(o.src)+" + "+g[o.k]+" = "+fmt(o.val):" = "+fmt(o.src))).join("; ");
+      return {v,line:kmax===1?16:18,deps,msg:"i = "+I+": "+rango+" → entran hasta "+kmax+" proyección"+(kmax>1?"es":"")+". Opciones: "+txt+". máx("+opts.map(o=>fmt(o.val)).join(", ")+") = <b>"+fmt(v)+"</b>: conviene «"+nombre(ganador.k)+"»."};
+    },
+    after:(M,push)=>{
+      const total=M[n-1][P];
+      push(23,"Terminaron los dos ciclos. devolver M["+n+","+P+"] = <b>"+total+"</b>: la calificación máxima acumulada con el presupuesto "+P+".",{cur:[n-1,P]});
+      let i=n-1, j=P; const path=[[i,j]], pro=new Array(n).fill(0);
+      push(undefined,dpIntro("("+n+", "+P+")")+" En cada fila se busca <b>qué opción</b> dio ese valor.",{cur:[i,j],path:path.slice()});
+      while(i>=0){
+        const w=[0,c[i],w2[i]], g=[0,r[i],2*r[i]]; let el=0;
+        for(let k=0;k<=2;k++){ if(w[k]>j) continue; const base=i===0?0:M[i-1][j-w[k]]; if(base+g[k]===M[i][j]){ el=k; break; } }
+        pro[i]=el;
+        push(undefined,"M["+(i+1)+","+j+"] = "+fmt(M[i][j])+": la opción que lo explica es <b>«"+nombre(el)+"»</b>"+
+          (i>0?" → M["+i+","+(j-w[el])+"]"+(el?" + "+g[el]:"")+" = "+fmt(M[i-1][j-w[el]])+(el?" + "+g[el]:"")+" = "+fmt(M[i-1][j-w[el]]+g[el]):" (en la primera fila no hay nada arriba)")+". "+
+          (el?"Se proyecta <b>"+el+" vez"+(el>1?" (dos veces)":"")+"</b> la película "+(i+1)+" (cuesta "+w[el]+").":"No se proyecta la película "+(i+1)+".")+(i>0?" Quedan "+(j-w[el])+" de presupuesto para las anteriores; subo a la fila "+i+".":""),
+          {cur:[i,j],deps:i>0?[[i-1,j-w[el]]]:[],path:path.slice()});
+        j-=w[el]; i--; if(i>=0) path.push([i,j]);
+      }
+      const gasto=pro.reduce((a,k,q)=>a+[0,c[q],w2[q]][k],0);
+      const detalle=pro.map((k,q)=>k?k+(k>1?" proyecciones":" proyección")+" de la película "+(q+1):null).filter(Boolean);
+      push(undefined,total
+          ? "Reconstrucción lista: "+detalle.join(", ")+". Gasto "+pro.map((k,q)=>k?[0,c[q],w2[q]][k]:null).filter(x=>x!==null).join(" + ")+" = "+gasto+" de "+P+"; calificación "+total+"."+
+            (sin1<total?" Con una sola proyección por película el máximo sería <b>"+sin1+"</b>: la rebaja de la segunda cambia la respuesta.":" Acá la rebaja de la segunda proyección no mejora el resultado: con el mismo presupuesto no se logra más que con una sola proyección por película.")
+          : "Ninguna película entra en el presupuesto "+P+": la calificación máxima es 0.",
+        {path:path.slice(),result:total?"calificación máxima = "+total+" · "+detalle.join(", ")+" (gasto "+gasto+" de "+P+")":"no se proyecta ninguna película (calificación 0)",rcls:"good"});
+    }
+  });
+}
+
+/* ---------- s2 · Sistema de subasta: Backtracking (la mejor), con poda por cota superior ---------- */
+function s2Subasta(O){
+  const m=O.length, n=O[0].length, steps=[], L=S2_PERSONAS, P=S2_PRODUCTOS;
+  const S=new Array(n).fill(null), usada=new Array(m).fill(false);       // S[e]: null = pendiente, -1 = sin vender, p = persona
+  const cota=new Array(n+1).fill(0);                                      // cota[e] = suma de las mayores ofertas de los productos e…n-1
+  for(let e=n-1;e>=0;e--) cota[e]=cota[e+1]+Math.max(0,...O.map(r=>r[e]===null?0:r[e]));
+  let mejor=-1, mejorS=null, ganancia=0, llamadas=0, podas=0, pendiente=[];
+  const tip="menos productos o menos personas";
+  const flush=()=>{ const t=pendiente.length?pendiente.join(" ")+" ":""; pendiente=[]; return t; };
+  const foto=(line,msg,cur,extra)=>Object.assign({kind:"auction",O,m,n,S:S.slice(),ganancia,mejor,mejorS:mejorS?mejorS.slice():null,cur:cur||null,line,msg,
+    vars:["ganancia de S: "+ganancia,"mejor ganancia: "+(mejor<0?"—":mejor),"llamadas: "+llamadas,"ramas podadas: "+podas]},extra);
+  const push=(line,msg,cur,extra)=>sPush(steps,foto(line,msg,cur,extra),tip);
+  const detalle=s=>s.map((p,e)=>p===-1?P[e]+" sin vender":P[e]+" → "+L[p]+" ("+O[p][e]+")").join(", ");
+  function avanzar(e,nuevo,que,lineaPoda,lineaLlamada,cur){
+    ganancia=nuevo;
+    const techo=nuevo+cota[e+1], ultimo=e===n-1, m0=mejor<0?"ninguna":mejor;
+    const cuenta="Lo máximo que se puede lograr por este camino: "+nuevo+(ultimo?" (no queda ningún producto)":" + cota["+P[e+1]+"] = "+nuevo+" + "+cota[e+1]+" = "+techo)+".";
+    if(techo<=mejor){
+      podas++;
+      push(lineaPoda,flush()+que+" "+cuenta+" ¿"+techo+" &gt; mejor ("+m0+")? → <b>No</b>: "+(ultimo?"no mejora lo guardado":"poda, esta rama no puede mejorar lo guardado")+".",cur);
+      return;
+    }
+    if(ultimo){
+      const prev=m0;
+      mejor=nuevo; mejorS=S.slice();
+      push(9,flush()+que+" Era el último producto: adjudicación completa, ganancia "+nuevo+" &gt; mejor ("+prev+"): ahora vale "+nuevo+" y guardo una copia de S.",cur);
+      return;
+    }
+    push(lineaLlamada,flush()+que+" "+cuenta+" ¿"+techo+" &gt; mejor ("+m0+")? → <b>Sí</b>: sigo con el producto "+P[e+1]+".",cur);
+    adjudicar(e+1,nuevo);
+  }
+  function adjudicar(e,g){
+    llamadas++; ganancia=g;
+    for(let p=0;p<m;p++){
+      const oferta=O[p][e];
+      if(oferta===null){ pendiente.push(L[p]+" no ofertó por "+P[e]+"."); continue; }
+      if(usada[p]){ pendiente.push(L[p]+" ya se llevó otro producto."); continue; }
+      S[e]=p; usada[p]=true;
+      avanzar(e,g+oferta,"Adjudico "+P[e]+" a <b>"+L[p]+"</b> (oferta "+oferta+"): "+g+" + "+oferta+" = "+(g+oferta)+".",15,16,[p,e]);
+      usada[p]=false; S[e]=null; ganancia=g;
+      pendiente.push("Desmarco a "+L[p]+": vuelve a estar libre.");
+    }
+    S[e]=-1;
+    avanzar(e,g,"El producto "+P[e]+" <b>no se vende</b>: la ganancia sigue en "+g+".",22,23,null);
+    S[e]=null; ganancia=g;
+  }
+  push(2,"Se calcula <b>cota[e]</b>: lo máximo que podrían aportar los productos e, e+1, … si cada uno se vendiera a su mejor oferta, sin importar si esa persona ya tiene otro producto. "+
+    cota.slice(0,n).map((x,e)=>"cota["+P[e]+"] = "+x).join(", ")+"; después del último producto la cota es 0. S y usada empiezan vacíos y mejorGanancia = −1.");
+  push(4,"Adjudicar(1, 0): se decide el producto "+P[0]+" con ganancia 0. Para cada producto se prueba cada persona que ofertó y esté libre, y por último dejarlo sin vender.");
+  adjudicar(0,0);
+  ganancia=mejor;
+  push(5,flush()+"Se agotó el árbol de adjudicaciones. Devuelvo la mejor guardada.",null,{S:mejorS.slice(),result:"Ganancia máxima = "+mejor+" · "+detalle(mejorS),rcls:"good"});
+  return steps;
+}
+
+/* ---------- s4 · Estaciones de actividades: Backtracking (la mejor), recorrido de exactamente K casillas ---------- */
+function s4Estaciones(M,ini,X){
+  const m=M.length, n=M[0].length, K=m*n-X, steps=[];
+  const visitada=M.map(r=>r.map(()=>false)), rec=[];
+  let mejor=Infinity, mejorR=null, llamadas=0, podas=0, maxK=0, pendiente=[], retrocediendo=false, grupo=null;
+  const tip="una matriz más chica o con un X mayor (menos casillas por visitar)";
+  const foto=(line,msg,k,esf,extra)=>Object.assign({kind:"stations",M,m,n,K,ini,path:rec.map(p=>p.slice()),best:mejorR?mejorR.map(p=>p.slice()):null,k,esfuerzo:esf,mejor,line,msg,
+    vars:["llamadas: "+llamadas,"ramas podadas: "+podas,"esfuerzo actual: "+esf,"mejor esfuerzo: "+sNum(mejor)]},extra);
+  const push=(line,msg,k,esf,extra)=>{ sPush(steps,foto(line,msg,k,esf,extra),tip); retrocediendo=false; };
+  const flush=()=>{ const t=pendiente.length?pendiente.join(" ")+" ":""; pendiente=[]; return t; };
+  /* Los retrocesos seguidos son un solo paso (igual que en el laberinto): el relato los resume y se reemplaza la foto. */
+  const retroceso=(pos,hoja,vuelve,k,esf)=>{
+    const previo=flush();
+    if(!retrocediendo) grupo={previo,items:[]};
+    grupo.items.push({pos,hoja});
+    const it=grupo.items.map(x=>x.pos), q=it.length;
+    const quien=q===1?(hoja?"Agoto "+it[0]+": el recorrido ya tiene sus "+K+" casillas y no se sigue. La desmarco y la saco del recorrido":"Agoto "+it[0]+": ya no quedan movimientos. La desmarco y la saco del recorrido")
+      :"Agoto "+(q<=3?btLista(it):q+" casillas seguidas, de "+it[0]+" a "+it[q-1])+": ninguna tiene ya movimientos por probar. Las desmarco y las saco del recorrido, en ese orden";
+    const msg=grupo.previo+quien+(vuelve?"; vuelvo a "+vuelve+".":".");
+    if(retrocediendo) steps[steps.length-1]=foto(21,msg,k,esf);
+    else{ sPush(steps,foto(21,msg,k,esf),tip); retrocediendo=true; }
+  };
+  function recorrer(f,c,k,esf,desde,kPadre,esfPadre){
+    llamadas++; maxK=Math.max(maxK,k);
+    visitada[f-1][c-1]=true; rec.push([f,c]);
+    const hoja=k===K;
+    push(6,flush()+"Entro a "+btPos(f,c)+" (esfuerzo "+M[f-1][c-1]+"): es la casilla "+k+" de "+K+", con esfuerzo acumulado "+esf+". La marco como visitada y la agrego al recorrido."+(hoja?"":" Pruebo los cuatro movimientos."),k,esf);
+    if(hoja){
+      const mejora=esf<mejor, prev=mejor;
+      if(mejora){ mejor=esf; mejorR=rec.map(p=>p.slice()); }
+      push(mejora?9:8,"Ya visité las "+K+" casillas pedidas, con esfuerzo "+esf+". "+(mejora?"Mejora el mejorEsfuerzo anterior ("+sNum(prev)+"): ahora vale "+esf+" y guardo una copia del recorrido.":"No mejora "+mejor+": no lo guardo."),k,esf);
+    } else S4_MOVES.forEach(d=>{
+      const nf=f+d.df, nc=c+d.dc;
+      if(nf<1||nf>m||nc<1||nc>n){ pendiente.push(d.nombre+": fuera de la matriz."); return; }
+      if(visitada[nf-1][nc-1]){ pendiente.push(d.nombre+": "+btPos(nf,nc)+" ya está en el recorrido."); return; }
+      const val=M[nf-1][nc-1], nuevo=esf+val;
+      const cond=d.nombre+", "+btPos(nf,nc)+": está dentro y libre. ¿"+esf+" + "+val+" = "+nuevo+" &lt; mejorEsfuerzo "+sNum(mejor)+"? ";
+      if(nuevo>=mejor){ podas++; push(15,flush()+cond+"<b>No</b> → poda: esa rama no puede mejorar lo guardado.",k,esf); return; }
+      push(16,flush()+cond+"<b>Sí</b> → Recorrer("+nf+", "+nc+", "+(k+1)+", "+nuevo+").",k,esf);
+      recorrer(nf,nc,k+1,nuevo,[f,c],k,esf);
+    });
+    visitada[f-1][c-1]=false; rec.pop();
+    retroceso(btPos(f,c),hoja,desde?btPos(desde[0],desde[1]):null,kPadre,esfPadre);
+  }
+  push(3,"Arranco en la casilla de partida "+btPos(ini[0],ini[1])+": cuenta como la casilla 1 y su esfuerzo, "+M[ini[0]-1][ini[1]-1]+", ya está sumado. Hay que visitar K = "+m+"·"+n+" − "+X+" = <b>"+K+"</b> casillas. mejorEsfuerzo = ∞.",0,0);
+  recorrer(ini[0],ini[1],1,M[ini[0]-1][ini[1]-1],null,0,0);
+  push(4,flush()+"Se agotó el árbol de recorridos. "+(mejorR?"Devuelvo el esfuerzo mínimo y la copia guardada.":"Ningún recorrido llegó a visitar "+K+" casillas: el más largo que existe desde "+btPos(ini[0],ini[1])+" tiene "+maxK+"."),0,0,
+    {result:mejorR?"Esfuerzo mínimo = "+mejor+" · "+mejorR.map(p=>btPos(p[0],p[1])).join(" → "):"No existe un recorrido de "+K+" casillas desde "+btPos(ini[0],ini[1])+" · el más largo tiene "+maxK,rcls:mejorR?"good":"bad"});
+  return steps;
+}
+
+/* ---------- s5 · Ciudad base: Floyd como caja negra + la suma de cada fila ---------- */
+function s5CiudadBase(A){
+  const n=A.length, INF=Infinity, N=A.map((_,i)=>String(i+1)), steps=[];
+  const G=A.map((r,i)=>r.map((v,j)=>i===j?0:(v===-1?INF:v)));
+  const R=floydPuro(n,G);
+  const sigma=new Array(n).fill(undefined);
+  let mejor=-1, menor=INF;
+  const path=()=>mejor<0?[]:[[mejor,n]];
+  const push=(line,msg,base,extra)=>steps.push(Object.assign({line,msg,rows:N,colLabels:N.concat(["Σ"]),cols:n+1,corner:"i \\ j",M:base.map((r,i)=>r.concat([sigma[i]])),
+    vlabel:"Naranja: celda que se mira · verde: la mejor ciudad hasta ahora · Σ: costo total de la fila",
+    vars:["menorCosto = "+sNum(menor),"mejor = "+(mejor<0?"ninguna":N[mejor])]},extra));
+  let distintos=0, nuevos=0; for(let i=0;i<n;i++) for(let j=0;j<n;j++) if(i!==j&&R[i][j]!==G[i][j]){ if(G[i][j]===INF) nuevos++; else distintos++; }
+  const tablaA='<div style="margin-top:10px"><div class="vlabel">A: tiempos directos, como los da el enunciado (−1 = sin conexión directa)</div>'+dpTable({rows:N,cols:n,colLabels:N,corner:"A",M:A})+'</div>';
+  push(1,"G ← copia de A: donde A vale −1 no hay arista, así que pasa a <b>∞</b>, y la diagonal pasa a 0. Abajo, A (el dato) y arriba G. Un −1 dejado tal cual se leería como «viaje de −1 horas» y arruinaría los mínimos.",G,{extra:tablaA});
+  push(2,"R ← Floyd(G): se usa el algoritmo como <b>caja negra</b> (Θ(N³)). R[i,j] es el <b>tiempo mínimo</b> de i a j, directo o con escalas. De los "+(n*(n-1))+" pares, "+distintos+" mejoran la arista directa por un camino indirecto y "+nuevos+" no tenían conexión directa pero sí un camino. Los que siguen en ∞ no se pueden alcanzar de ninguna manera.",R);
+  push(3,"mejor ← ninguna; menorCosto ← ∞. Cualquier costo finito va a ser menor. Una ciudad desde la que no se llega a alguna otra tiene costo ∞ y nunca se elige.",R);
+  for(let i=0;i<n;i++){
+    push(4,"para i ← "+N[i]+": se va a sumar la fila "+N[i]+" de R, o sea los tiempos mínimos de la ciudad "+N[i]+" a todas las demás.",R,{cur:[i,n],path:path()});
+    sigma[i]=0;
+    push(5,"costo ← 0.",R,{cur:[i,n],path:path()});
+    let costo=0;
+    for(let j=0;j<n;j++){
+      const prev=costo; costo+=R[i][j]; sigma[i]=costo;
+      push(7,"j = "+N[j]+": costo ← costo + R["+N[i]+","+N[j]+"] = "+sNum(prev)+" + "+sNum(R[i][j])+" = <b>"+sNum(costo)+"</b>."+
+        (i===j?" (La diagonal vale 0 y no cambia la suma.)":(R[i][j]===INF?" No hay camino de "+N[i]+" a "+N[j]+": el costo pasa a ∞ y ya no puede bajar.":"")),R,{cur:[i,j],path:path()});
+    }
+    const gana=costo<menor;
+    push(9,"¿costo &lt; menorCosto? ¿"+sNum(costo)+" &lt; "+sNum(menor)+"? → <b>"+gana+"</b>"+
+      (gana?": la ciudad "+N[i]+" es mejor que la mejor hasta ahora.":(costo===INF?": la ciudad "+N[i]+" no llega a todas las demás, queda descartada.":(costo===menor?": empatan, queda la anterior (el &lt; es estricto).":": ya había una mejor."))),R,{cur:[i,n],path:path()});
+    if(gana){
+      menor=costo; mejor=i;
+      push(10,"menorCosto ← "+sNum(menor)+"; mejor ← <b>"+N[i]+"</b>.",R,{cur:[i,n],path:path()});
+    }
+  }
+  push(13,mejor<0
+      ? "devolver mejor = ninguna: no hay ninguna ciudad desde la que se llegue a todas las demás, todos los costos son ∞."
+      : "devolver mejor = <b>"+N[mejor]+"</b>: los costos totales por fila son "+sigma.map(sNum).join(", ")+" y el menor es "+sNum(menor)+", el de la ciudad "+N[mejor]+".",R,
+    {path:path(),result:mejor<0?"no hay ciudad base: ninguna llega a todas las demás":"ciudad base = "+N[mejor]+" · costo total "+sNum(menor),rcls:mejor<0?"bad":"good"});
+  return steps;
+}
+
+/* ---------- parseo de entradas ---------- */
+function sList(id,label,min,maxLen){
+  const text=document.getElementById(id).value.trim(), parts=text.split(",");
+  if(!text||parts.length>maxLen||parts.some(x=>!/^\d+$/.test(x.trim()))) throw new Error(label+": escribí entre 1 y "+maxLen+" enteros separados por comas, sin posiciones vacías.");
+  const A=parts.map(Number);
+  if(A.some(x=>!Number.isSafeInteger(x)||x<min)) throw new Error(label+": todos los valores tienen que ser enteros mayores o iguales a "+min+".");
+  return A;
+}
+function sSameLength(a,b,la,lb){
+  if(a.length!==b.length) throw new Error(la+" y "+lb+" tienen que tener la misma cantidad de valores (hay "+a.length+" y "+b.length+").");
+}
+function s2Parse(text){
+  const t=String(text).trim(), rows=t?t.split("/").map(r=>r.trim().split(/\s+/)):[];
+  const m=rows.length, n=m?rows[0].length:0;
+  if(!m||m>4||n<1||n>4||rows.some(r=>r.length!==n)) throw new Error("Escribí una fila por persona (de 1 a 4), separadas por «/», con una oferta por producto (de 1 a 4) separadas por espacios: un entero o «-» si esa persona no ofertó.");
+  return rows.map((r,p)=>r.map((tok,e)=>{
+    if(tok==="-") return null;
+    if(!/^\d{1,3}$/.test(tok)) throw new Error("Oferta de "+S2_PERSONAS[p]+" por "+S2_PRODUCTOS[e]+" inválida: «"+tok+"». Escribí un entero entre 0 y 999, o «-» si no ofertó.");
+    return +tok;
+  }));
+}
+function s4ParseMatriz(text){
+  const t=String(text).trim(), rows=t?t.split("/").map(r=>r.trim().split(/\s+/)):[];
+  const m=rows.length, n=m?rows[0].length:0;
+  if(!m||m>4||n<1||n>4||rows.some(r=>r.length!==n)) throw new Error("La matriz de esfuerzos tiene de 1×1 a 4×4: filas separadas por «/» y casillas por espacios.");
+  return rows.map((r,f)=>r.map((tok,c)=>{
+    if(!/^\d{1,2}$/.test(tok)) throw new Error("Esfuerzo de la casilla "+btPos(f+1,c+1)+" inválido: «"+tok+"». Escribí un entero entre 0 y 99.");
+    return +tok;
+  }));
+}
+function s4ParseCasilla(text,m,n){
+  const q=/^\s*(\d+)\s*,\s*(\d+)\s*$/.exec(String(text));
+  if(!q||+q[1]<1||+q[1]>m||+q[2]<1||+q[2]>n) throw new Error("Casilla de partida: escribí fila,columna con la fila entre 1 y "+m+" y la columna entre 1 y "+n+" (por ejemplo 1,1).");
+  return [+q[1],+q[2]];
+}
+function s5Parse(text){
+  const t=String(text).trim(), rows=t?t.split("/").map(r=>r.trim().split(/\s+/)):[];
+  const n=rows.length;
+  if(n<2||n>6||rows.some(r=>r.length!==n)) throw new Error("La matriz de tiempos es cuadrada, de 2×2 a 6×6: filas separadas por «/» y valores por espacios, con -1 donde no hay conexión directa.");
+  return rows.map((r,i)=>r.map((tok,j)=>{
+    if(!/^-?\d{1,3}$/.test(tok)) throw new Error("A["+(i+1)+"]["+(j+1)+"] inválido: «"+tok+"». Escribí un entero positivo o -1 si no hay conexión directa.");
+    const v=+tok;
+    if(i===j&&v!==0&&v!==-1) throw new Error("La diagonal A["+(i+1)+"]["+(i+1)+"] tiene que ser 0 (o -1): ir de una ciudad a sí misma no cuesta tiempo.");
+    if(i!==j&&v!==-1&&v<=0) throw new Error("A["+(i+1)+"]["+(j+1)+"] = "+v+": los tiempos de viaje son positivos; usá -1 si no hay conexión directa.");
+    return v;
+  }));
+}
+
+/* ---------- renderers ---------- */
+function s2Render(st){
+  if(st.error) return btError(st);
+  const L=S2_PERSONAS, P=S2_PRODUCTOS;
+  const rows=st.O.map((_,p)=>L[p]), cols=st.O[0].map((_,e)=>P[e]);
+  const M=st.O.map(r=>r.map(v=>v===null?undefined:v));
+  const sCells=[], bestCells=[];
+  st.S.forEach((p,e)=>{ if(p!==null&&p>=0) sCells.push([p,e]); });
+  if(st.mejorS) st.mejorS.forEach((p,e)=>{ if(p>=0) bestCells.push([p,e]); });
+  const fmtS=s=>s.map((p,e)=>P[e]+" → "+(p===null?"·":(p<0?"sin vender":L[p]+" ("+st.O[p][e]+")"))).join(" · ");
+  return '<div>'+dpTable({rows,cols:st.n,colLabels:cols,corner:"p \\ e",M,cur:st.cur||undefined,deps:sCells,path:bestCells})+'</div>'+
+    '<div class="vlabel">Fila = persona, columna = producto, «·» = no ofertó · naranja: la oferta que se prueba · celeste: adjudicaciones de S · verde: mejor adjudicación guardada.</div>'+
+    '<div class="setbox"><span class="k">S · ganancia '+st.ganancia+'</span>'+esc(fmtS(st.S))+'</div>'+
+    '<div class="setbox"><span class="k">Mejor adjudicación guardada · ganancia '+(st.mejor<0?"—":st.mejor)+'</span>'+(st.mejorS?esc(fmtS(st.mejorS)):"todavía ninguna")+'</div>'+btFoot(st);
+}
+/* Marco SVG rectangular (m filas × n columnas): la misma idea que btFrame, que es cuadrado. */
+function sFrame(m,n,label,inner){
+  const w=BT_MARGIN+n*BT_CELL+6, h=BT_MARGIN+m*BT_CELL+6; let ax="";
+  for(let c=0;c<n;c++) ax+='<text class="axis" x="'+(BT_MARGIN+c*BT_CELL+BT_CELL/2)+'" y="11">'+(c+1)+'</text>';
+  for(let f=0;f<m;f++) ax+='<text class="axis" x="11" y="'+(BT_MARGIN+f*BT_CELL+BT_CELL/2)+'">'+(f+1)+'</text>';
+  return '<svg class="bt-grid" viewBox="0 0 '+w+' '+h+'" role="img" aria-label="'+esc(label)+'">'+ax+inner+'</svg>';
+}
+function s4Board(st){
+  const m=st.m,n=st.n,S=BT_CELL,Mg=BT_MARGIN,order={},inBest={};
+  st.path.forEach((p,i)=>{ order[p[0]+","+p[1]]=i+1; }); (st.best||[]).forEach(p=>{ inBest[p[0]+","+p[1]]=true; });
+  const now=st.path.length?st.path[st.path.length-1].join(","):"";
+  let o="",texts="";
+  for(let f=0;f<m;f++)for(let c=0;c<n;c++){
+    const key=(f+1)+","+(c+1),cls="sq"+(order[key]?" path":inBest[key]?" best":"")+(key===now?" now":"");
+    o+='<g><title>Casilla '+btPos(f+1,c+1)+', esfuerzo '+st.M[f][c]+'</title><rect class="'+cls+'" x="'+(Mg+c*S)+'" y="'+(Mg+f*S)+'" width="'+S+'" height="'+S+'"/></g>';
+    texts+='<text class="val" x="'+btCx(c)+'" y="'+btCy(f)+'">'+st.M[f][c]+'</text>';
+    if(order[key]) texts+='<text class="lab" x="'+(Mg+c*S+10)+'" y="'+(Mg+f*S+11)+'">'+order[key]+'</text>';
+    if(f+1===st.ini[0]&&c+1===st.ini[1]) texts+='<text class="lab" x="'+(Mg+c*S+S/2)+'" y="'+(Mg+(f+1)*S-11)+'">inicio</text>';
+  }
+  if(st.best&&st.best.length>1) o+='<polyline class="trail best" points="'+btPts(st.best)+'"/>';
+  if(st.path.length>1) o+='<polyline class="trail" points="'+btPts(st.path)+'"/>';
+  return sFrame(m,n,"Matriz de esfuerzos de "+m+" por "+n+"; filas y columnas desde 1",o+texts);
+}
+function s4Render(st){
+  if(st.error) return btError(st);
+  const seq=P=>P.map(p=>btPos(p[0],p[1])).join(" → ");
+  return s4Board(st)+'<div class="vlabel">Número chico: orden en el recorrido · naranja: recorrido actual · verde: mejor recorrido guardado · el número grande es el esfuerzo de la casilla.</div>'+
+    '<div class="setbox"><span class="k">Recorrido actual · '+st.path.length+' de '+st.K+' casillas · esfuerzo '+st.esfuerzo+'</span>'+(st.path.length?seq(st.path):"vacío")+'</div>'+
+    '<div class="setbox"><span class="k">Mejor recorrido guardado · esfuerzo '+sNum(st.mejor)+'</span>'+(st.best?seq(st.best):"todavía ninguno")+'</div>'+btFoot(st);
+}
+const s5Render=sDpRender;
+
+/* ===== interfaz Integración · Segundo parcial ===== */
+const s1Sim=Sim("sim-s1",()=>btGuard(()=>s1Almacenamiento(sList("s1-s","Tamaños",1,6),btInteger("s1-d","D",1,20))),sDpRender);
+const s2Sim=Sim("sim-s2",()=>btGuard(()=>s2Subasta(s2Parse(document.getElementById("s2-ofertas").value))),s2Render);
+const s3Sim=Sim("sim-s3",()=>btGuard(()=>s3Catalogo(sList("s3-c","Puntos de cada premio",1,5),btInteger("s3-p","Puntos acumulados",1,25))),sDpRender);
+const s4Sim=Sim("sim-s4",()=>btGuard(()=>{
+  const M=s4ParseMatriz(document.getElementById("s4-m").value), m=M.length, n=M[0].length;
+  return s4Estaciones(M,s4ParseCasilla(document.getElementById("s4-ini").value,m,n),btInteger("s4-x","X",0,m*n-1));
+}),s4Render);
+const s5Sim=Sim("sim-s5",()=>btGuard(()=>s5CiudadBase(s5Parse(document.getElementById("s5-a").value))),s5Render);
+const s6Sim=Sim("sim-s6",()=>btGuard(()=>{
+  const r=sList("s6-r","Calificaciones",1,5), c=sList("s6-c","Costos",2,5);
+  sSameLength(r,c,"Calificaciones","costos");
+  return s6Festival(r,c,btInteger("s6-p","Presupuesto",1,20));
+}),sDpRender);
+const sSims={s1:s1Sim,s2:s2Sim,s3:s3Sim,s4:s4Sim,s5:s5Sim,s6:s6Sim};
+document.querySelectorAll("[data-s-preset]").forEach(b=>b.addEventListener("click",()=>{
+  const values=JSON.parse(b.dataset.sPreset);
+  Object.keys(values).forEach(id=>{document.getElementById(id).value=values[id];});
+  sSims[b.dataset.sSim].reload();
 }));
 
 /* ===== abrir / cerrar resoluciones ===== */
