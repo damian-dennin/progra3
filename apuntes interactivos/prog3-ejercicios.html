@@ -287,6 +287,7 @@ table.dp td.cur{border-color:var(--acc);background:var(--acc-w);font-weight:700;
 .bt-grid .sq.path{fill:var(--acc-w);stroke:var(--acc);stroke-width:2}
 .bt-grid .sq.best{fill:#e8f5ed;stroke:var(--ok);stroke-width:2}
 .bt-grid .sq.now{stroke-width:3.5}
+.bt-grid .sq.look{stroke:var(--c-log);stroke-width:4;stroke-dasharray:6 4}
 .bt-grid .wall{stroke:var(--ink);stroke-width:5;stroke-linecap:round}
 .bt-grid .one{fill:var(--ink-soft)}
 .bt-grid .trail{fill:none;stroke:var(--acc);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;opacity:.75}
@@ -301,6 +302,23 @@ table.dp td.cur{border-color:var(--acc);background:var(--acc-w);font-weight:700;
 .bt-grid .dim{fill:var(--mut)}
 @media(max-width:1100px){.bt-sim .sim-body{grid-template-columns:1fr}}
 @media(max-width:600px){.bt-sim .code{max-height:300px}.bt-sim .inputs{width:100%}.bt-sim .inputs label{flex-basis:100%}.bt-sim .inputs input.bt-wide{width:100%}}
+
+/* --- traza de ejecución: pila de marcos, variables y botones de salto (compartido por ambos apuntes) --- */
+.controls [hidden]{display:none!important}
+.controls select{font-family:var(--sans);font-size:13px;border:1px solid var(--line);border-radius:6px;padding:5px 6px;background:#fff;color:var(--ink)}
+.bar{cursor:pointer}
+.traza{min-width:0}
+.traza .frame{flex-wrap:wrap;justify-content:flex-start;align-items:baseline;gap:4px 10px;overflow-wrap:anywhere}
+.traza .frame>b{color:var(--ink)}
+.tvs{display:flex;flex-wrap:wrap;gap:4px}
+.tv{background:#fff;border:1px solid var(--line);border-radius:4px;padding:0 6px;font-size:12px}
+.tv.chg{border-color:var(--acc);background:var(--acc-w);color:#a24b12;font-weight:700}
+.cell.chg .v{box-shadow:0 0 0 2px var(--acc)}
+.setbox.hl{border-color:var(--acc);background:var(--acc-w)}
+.c10-board .cmp{stroke:var(--c-log);stroke-width:3}
+.c10-board .cand{fill:var(--acc-w);stroke:var(--acc);stroke-width:2;stroke-dasharray:4 3}
+.c10-board .cmpline{stroke:var(--c-log);stroke-width:2.5;stroke-dasharray:5 3;pointer-events:none}
+.c10-board .cmpline.bad{stroke:var(--bad)}
 </style>
 </head>
 <body>
@@ -2204,6 +2222,12 @@ La cátedra plantea el ejercicio pero no publica el pseudocódigo; este es el de
 <div class="cl" data-l="13"><span class="ln">14</span><span class="tx">    cargas[p] ← cargas[p] − tiempos[E]</span></div>
 <div class="cl" data-l="14"><span class="ln">15</span><span class="tx">    S[E] ← sin asignar</span></div>
 <div class="cl" data-l="15"><span class="ln">16</span><span class="tx">fin para</span></div>
+<div class="cl hdr" data-l="40"><span class="ln">17</span><span class="tx">Máximo(cargas)  // auxiliar propio</span></div>
+<div class="cl" data-l="41"><span class="ln">18</span><span class="tx">    m ← cargas[0]</span></div>
+<div class="cl" data-l="42"><span class="ln">19</span><span class="tx">    para q = 1 hasta longitud(cargas) − 1</span></div>
+<div class="cl" data-l="43"><span class="ln">20</span><span class="tx">        si cargas[q] &gt; m</span></div>
+<div class="cl" data-l="44"><span class="ln">21</span><span class="tx">            m ← cargas[q]</span></div>
+<div class="cl" data-l="45"><span class="ln">22</span><span class="tx">    devolver m</span></div>
     </div>
     <div class="viz" data-viz></div>
   </div>
@@ -2332,13 +2356,15 @@ Si no se marcan las casillas del camino, se puede ir y volver entre dos casillas
 <div class="cl" data-l="19"><span class="ln">19</span><span class="tx">        fin para</span></div>
 <div class="cl" data-l="20"><span class="ln">20</span><span class="tx">    fin si</span></div>
 <div class="cl" data-l="21"><span class="ln">21</span><span class="tx">    visitada[f,c] ← falso; eliminar(camino)</span></div>
+<div class="cl hdr" data-l="40"><span class="ln">22</span><span class="tx">dentro(nf, nc)  // auxiliar propio</span></div>
+<div class="cl" data-l="41"><span class="ln">23</span><span class="tx">    devolver 1 ≤ nf ≤ n Y 1 ≤ nc ≤ n</span></div>
     </div>
     <div class="viz" data-viz></div>
   </div>
   <div class="explain" data-explain></div>
   <div class="controls" data-controls></div>
 </div>
-<p class="srcnote" style="max-width:76ch">Cómo se escribe el laberinto: filas separadas por <code>/</code> y casillas por espacios. Cada casilla es su valor seguido de las letras de las direcciones abiertas (N, E, S, O); por ejemplo <code>3ES</code> es una casilla de valor 3 desde la que se puede ir al este y al sur. Filas y columnas desde 1; el origen y el destino se escriben <code>fila,columna</code>. Hasta 4 × 4. Si la búsqueda necesitara más de 400 pasos para mostrarse, el simulador lo avisa.</p>
+<p class="srcnote" style="max-width:76ch">Cómo se escribe el laberinto: filas separadas por <code>/</code> y casillas por espacios. Cada casilla es su valor seguido de las letras de las direcciones abiertas (N, E, S, O); por ejemplo <code>3ES</code> es una casilla de valor 3 desde la que se puede ir al este y al sur. Filas y columnas desde 1; el origen y el destino se escriben <code>fila,columna</code>. Hasta 4 × 4. Cada línea es un paso, también las de <code>dentro</code>: el panel de arriba muestra la pila de llamadas con <code>f</code>, <code>c</code>, <code>long</code>, <code>d</code>, <code>nf</code>, <code>nc</code>, y la vecina que se está mirando se dibuja con borde celeste punteado. Con <b>Saltar llamada</b> pasás de golpe por encima de una llamada (a <code>dentro</code> o a un <code>Explorar</code> entero) y con <b>Salir de la función</b> terminás la actual. Si la búsqueda necesitara más de 60000 pasos, el simulador lo avisa.</p>
 
 <h3>c) Complejidad temporal</h3>
 <p>Sea N = n² la cantidad de casillas. Como no se repiten casillas en un camino, la profundidad del árbol es a lo sumo N. Desde el origen hay hasta 4 alternativas; desde cada casilla siguiente, a lo sumo 3 (una de las cuatro direcciones lleva a la casilla de la que se vino, que ya está visitada). Entonces hay a lo sumo <code>1 + 4 + 4·3 + 4·3² + … + 4·3<sup>N−1</sup> = O(3<sup>N</sup>)</code> nodos, cada uno con trabajo constante (se miran 4 direcciones). Cada vez que se mejora la solución se copia el camino, en O(N).</p>
@@ -2462,13 +2488,17 @@ Los movimientos cambian el color de la casilla en un tablero de ajedrez, así qu
 <div class="cl" data-l="19"><span class="ln">18</span><span class="tx">        fin si</span></div>
 <div class="cl" data-l="20"><span class="ln">19</span><span class="tx">    fin para</span></div>
 <div class="cl" data-l="21"><span class="ln">20</span><span class="tx">    devolver falso</span></div>
+<div class="cl hdr" data-l="40"><span class="ln">21</span><span class="tx">dentro(nf, nc)  // auxiliar propio</span></div>
+<div class="cl" data-l="41"><span class="ln">22</span><span class="tx">    devolver 1 ≤ nf ≤ n Y 1 ≤ nc ≤ n</span></div>
+<div class="cl hdr" data-l="50"><span class="ln">23</span><span class="tx">esVecina(a, b)  // auxiliar propio</span></div>
+<div class="cl" data-l="51"><span class="ln">24</span><span class="tx">    devolver |a.fila − b.fila| + |a.col − b.col| = 1</span></div>
     </div>
     <div class="viz" data-viz></div>
   </div>
   <div class="explain" data-explain></div>
   <div class="controls" data-controls></div>
 </div>
-<p class="srcnote" style="max-width:76ch">Cómo se escribe el jardín: filas separadas por <code>/</code>; <code>#</code> es una casilla pisada (sin pasto) y <code>.</code> una que todavía tiene pasto. El jardín es cuadrado, de 2 × 2 a 5 × 5. Filas y columnas desde 1. Si la búsqueda necesitara más de 400 pasos para mostrarse (jardines de 5 × 5 casi sin pasto), el simulador lo avisa.</p>
+<p class="srcnote" style="max-width:76ch">Cómo se escribe el jardín: filas separadas por <code>/</code>; <code>#</code> es una casilla pisada (sin pasto) y <code>.</code> una que todavía tiene pasto. El jardín es cuadrado, de 2 × 2 a 5 × 5. Filas y columnas desde 1. Cada línea es un paso, también las de <code>dentro</code> y <code>esVecina</code>; usá <b>Saltar llamada</b> y <b>Salir de la función</b> para no recorrer cada chequeo. Si la búsqueda necesitara más de 60000 pasos para mostrarse (jardines de 5 × 5 casi sin pasto), el simulador lo avisa.</p>
 
 <h3>c) Complejidad temporal</h3>
 <p>Sea k la cantidad de casillas pisadas, con k ≤ n². La profundidad del árbol es k. Desde <code>S[0]</code> hay hasta 4 alternativas; desde cada casilla siguiente, a lo sumo 3, porque una de las cuatro vecinas es de la que se viene y ya está visitada. Hay entonces a lo sumo <code>1 + 4 + 4·3 + … + 4·3<sup>k−1</sup> = O(3<sup>k</sup>)</code> nodos. En cada uno el trabajo es constante: se miran 4 direcciones y, en las hojas, <code>esVecina</code> compara dos casillas.</p>
@@ -4283,7 +4313,7 @@ La cátedra no publica pseudocódigo de este ejercicio: este está derivado de l
   <div class="explain" data-explain></div>
   <div class="controls" data-controls></div>
 </div>
-<p class="srcnote" style="max-width:76ch">Cómo se escriben las ofertas: una fila por persona, separadas por <code>/</code>; dentro de cada fila, una oferta por producto separadas por espacios, con <code>-</code> si esa persona no ofertó por ese producto. Hasta 4 personas y 4 productos. Cuando se adjudica el último producto, el paso muestra la adjudicación completa y la guarda si mejora.</p>
+<p class="srcnote" style="max-width:76ch">Cómo se escriben las ofertas: una fila por persona, separadas por <code>/</code>; dentro de cada fila, una oferta por producto separadas por espacios, con <code>-</code> si esa persona no ofertó por ese producto. Hasta 4 personas y 4 productos. Cada línea es un paso: el panel muestra la pila de llamadas con <code>e</code> y <code>ganancia</code>, y los vectores <code>S</code>, <code>usada</code> y <code>cota</code> se ven cambiar (borde naranja). Con <b>Saltar llamada</b> recorrés de una vez toda la rama de un producto.</p>
 
 <h3>d) Complejidad temporal</h3>
 <p>Se cuenta el árbol. Tiene profundidad n (un nivel por producto) y, en cada nivel, a lo sumo <b>m + 1</b> alternativas (las m personas y «sin vender»). Entonces hay a lo sumo <code>1 + (m+1) + (m+1)² + … + (m+1)ⁿ = O((m+1)ⁿ)</code> nodos. En cada nodo se recorren las m personas: O(m). Cada vez que se mejora la solución se copia S, en O(n). Es el peor caso: la poda ahorra ramas pero no lo cambia.</p>
@@ -4555,13 +4585,15 @@ La cátedra no publica pseudocódigo de este ejercicio: este está derivado de l
 <div class="cl" data-l="19"><span class="ln">19</span><span class="tx">        fin para</span></div>
 <div class="cl" data-l="20"><span class="ln">20</span><span class="tx">    fin si</span></div>
 <div class="cl" data-l="21"><span class="ln">21</span><span class="tx">    visitada[f,c] ← falso; eliminar(recorrido)</span></div>
+<div class="cl hdr" data-l="40"><span class="ln">22</span><span class="tx">dentro(nf, nc)  // auxiliar propio</span></div>
+<div class="cl" data-l="41"><span class="ln">23</span><span class="tx">    devolver 1 ≤ nf ≤ m Y 1 ≤ nc ≤ n</span></div>
     </div>
     <div class="viz" data-viz></div>
   </div>
   <div class="explain" data-explain></div>
   <div class="controls" data-controls></div>
 </div>
-<p class="srcnote" style="max-width:76ch">Cómo se escribe la matriz: filas separadas por <code>/</code> y casillas por espacios, con esfuerzos enteros de 0 a 99 (hasta 4 × 4). La partida se escribe <code>fila,columna</code> desde 1, y X es un entero de 0 a m·n − 1 (K = m·n − X). Si la búsqueda necesitara más de 400 pasos para mostrarse, el simulador lo avisa.</p>
+<p class="srcnote" style="max-width:76ch">Cómo se escribe la matriz: filas separadas por <code>/</code> y casillas por espacios, con esfuerzos enteros de 0 a 99 (hasta 4 × 4). La partida se escribe <code>fila,columna</code> desde 1, y X es un entero de 0 a m·n − 1 (K = m·n − X). Cada línea es un paso, también las de <code>dentro</code>. Si la búsqueda necesitara más de 60000 pasos para mostrarse, el simulador lo avisa.</p>
 
 <h3>d) Complejidad temporal</h3>
 <p>Sea K la cantidad de casillas del recorrido, con K ≤ m·n. Como no se repiten casillas, la profundidad del árbol es a lo sumo K. Desde cada casilla hay hasta <b>4</b> alternativas, así que hay a lo sumo <code>1 + 4 + 4² + … + 4<sup>K−1</sup> = O(4<sup>K</sup>)</code> nodos, cada uno con trabajo constante (se miran 4 movimientos). Cada vez que se mejora la solución se copia el recorrido, en O(K).</p>
@@ -4992,10 +5024,17 @@ function Sim(rootId, build, render){
   const codeEl=root.querySelector("[data-code]"), vizEl=root.querySelector("[data-viz]");
   const expEl=root.querySelector("[data-explain]"), ctlEl=root.querySelector("[data-controls]");
   const lines=Array.from(codeEl.querySelectorAll(".cl"));
+  /* Los botones «Saltar llamada», «Salir de la función», «Ir al final» y el selector de velocidad
+     solo aparecen si los steps traen `cd` (profundidad de llamada) y hay llamadas anidadas. */
   ctlEl.innerHTML='<button data-a="first">|◀</button><button data-a="prev">Anterior</button>'+
-    '<button class="primary" data-a="next">Siguiente paso</button><button data-a="play">Reproducir</button>'+
-    '<div class="bar"><i></i></div><span class="count"></span>';
-  const bar=ctlEl.querySelector(".bar i"), cnt=ctlEl.querySelector(".count");
+    '<button class="primary" data-a="next">Siguiente paso</button>'+
+    '<button data-a="over" hidden title="Ejecuta de una vez toda la llamada de esta línea y se detiene al volver (Mayús + →)">Saltar llamada</button>'+
+    '<button data-a="out" hidden title="Ejecuta lo que falta de la función actual y se detiene al volver a quien la llamó">Salir de la función</button>'+
+    '<button data-a="play">Reproducir</button>'+
+    '<select data-speed hidden aria-label="Velocidad de reproducción"><option value="800">1×</option><option value="200">4×</option><option value="50">16×</option><option value="12">64×</option></select>'+
+    '<button data-a="last" hidden>Ir al final</button>'+
+    '<div class="bar" title="Clic para saltar a esa parte de la ejecución"><i></i></div><span class="count"></span>';
+  const bar=ctlEl.querySelector(".bar i"), cnt=ctlEl.querySelector(".count"), speed=ctlEl.querySelector("[data-speed]");
   const btn=a=>ctlEl.querySelector('[data-a="'+a+'"]');
   const S={steps:[],i:0,timer:null};
   function paint(){
@@ -5006,7 +5045,7 @@ function Sim(rootId, build, render){
       l.classList.toggle("dim", st.line!==undefined && n!==st.line);
     });
     expEl.innerHTML='<span class="step-n">Paso '+(S.i+1)+' de '+S.steps.length+'</span>'+(st.msg||"");
-    vizEl.innerHTML=render(st,S.steps);
+    vizEl.innerHTML=render(st,S.steps,S.i);
     const on=codeEl.querySelector(".cl.on");
     if(on && on.offsetTop < codeEl.scrollTop || (on && on.offsetTop > codeEl.scrollTop+codeEl.clientHeight-30))
       codeEl.scrollTop = Math.max(0, on.offsetTop - codeEl.clientHeight/2);
@@ -5014,29 +5053,50 @@ function Sim(rootId, build, render){
     cnt.textContent=(S.i+1)+"/"+S.steps.length;
     btn("prev").disabled=S.i===0; btn("first").disabled=S.i===0;
     btn("next").disabled=S.i>=S.steps.length-1;
+    btn("over").disabled=btn("out").disabled=btn("last").disabled=S.i>=S.steps.length-1;
     btn("play").textContent=S.timer?"Pausar":"Reproducir";
   }
   function stop(){ if(S.timer){clearInterval(S.timer);S.timer=null;} }
   function go(i){ S.i=Math.max(0,Math.min(S.steps.length-1,i)); if(S.i===S.steps.length-1) stop(); paint(); }
+  /* over: primer paso posterior con profundidad ≤ la actual · out: primero con profundidad < la actual */
+  function jump(kind){
+    stop();
+    const d=S.steps[S.i].cd||0; let j=S.i+1;
+    while(j<S.steps.length-1){ const c=S.steps[j].cd||0; if(kind==="over"?c<=d:c<d) break; j++; }
+    go(j);
+  }
+  function tick(){ if(S.i>=S.steps.length-1){stop();paint();} else go(S.i+1); }
   ctlEl.addEventListener("click",e=>{
     const b=e.target.closest("button"); if(!b) return;
     const k=b.dataset.a;
     if(k==="next") go(S.i+1);
     if(k==="prev") go(S.i-1);
     if(k==="first"){stop();go(0);}
+    if(k==="last"){stop();go(S.steps.length-1);}
+    if(k==="over"||k==="out") jump(k);
     if(k==="play"){
       if(S.timer){stop();paint();}
       else{ if(S.i>=S.steps.length-1) S.i=0;
-        S.timer=setInterval(()=>{ if(S.i>=S.steps.length-1){stop();paint();} else go(S.i+1); },800); paint(); }
+        S.timer=setInterval(tick,+speed.value||800); paint(); }
     }
+  });
+  speed.addEventListener("change",()=>{ if(S.timer){clearInterval(S.timer);S.timer=setInterval(tick,+speed.value||800);} });
+  ctlEl.querySelector(".bar").addEventListener("click",e=>{
+    const r=e.currentTarget.getBoundingClientRect(); if(!r.width) return;
+    stop(); go(Math.round(((e.clientX-r.left)/r.width)*(S.steps.length-1)));
   });
   root.tabIndex=0;
   root.addEventListener("keydown",e=>{
-    if(e.key==="ArrowRight"){stop();go(S.i+1);e.preventDefault();}
+    if(e.target.closest("input,select,textarea")) return;
+    if(e.key==="ArrowRight"){ if(e.shiftKey&&!btn("over").hidden) jump("over"); else {stop();go(S.i+1);} e.preventDefault(); }
     if(e.key==="ArrowLeft"){stop();go(S.i-1);e.preventDefault();}
   });
   root.querySelectorAll("[data-reload]").forEach(b=>b.addEventListener("click",()=>api.reload()));
-  const api={ reload(){ stop(); S.steps=build()||[{msg:"Sin pasos."}]; S.i=0; paint(); }, root };
+  const api={ reload(){
+    stop(); S.steps=build()||[{msg:"Sin pasos."}]; S.i=0;
+    const traced=S.steps.some(s=>(s.cd||0)>=2);
+    ["over","out","last"].forEach(a=>btn(a).hidden=!traced); speed.hidden=!traced;
+    paint(); }, root };
   api.reload(); return api;
 }
 const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
@@ -6212,46 +6272,155 @@ document.querySelectorAll("#sim-g14 [data-g14-p]").forEach(b=>b.addEventListener
 }));
 
 /* ===== Guía · Backtracking ===== */
+/* ===== Traza de ejecución: una pila de marcos con las variables locales ===== */
+/* Un step por cada línea ejecutada del pseudocódigo, incluidas las funciones auxiliares. `cd` es la
+   profundidad de llamada (cantidad de marcos activos) y `frames` la pila con las variables locales de cada
+   marco; Sim usa `cd` para «Saltar llamada» y «Salir de la función». El tope evita colgar el navegador con
+   entradas gigantes: se informa con un error visible, no se recorta en silencio. */
+const TRAZA_MAX=60000;
+function Traza(snap,tip){
+  const steps=[],stack=[];
+  const copy=v=>Array.isArray(v)?v.slice():v;
+  const clone=o=>{const r={};Object.keys(o).forEach(k=>{r[k]=copy(o[k]);});return r;};
+  return {
+    steps,stack,
+    enter(fn,vars){stack.push({fn,vars:clone(vars||{})});},
+    leave(){stack.pop();},
+    set(k,v){stack[stack.length-1].vars[k]=copy(v);},
+    vars(o){stack[stack.length-1].vars=clone(o);},
+    push(line,msg,extra){
+      if(steps.length>=TRAZA_MAX)throw new Error('La búsqueda necesita más de '+TRAZA_MAX+' pasos para mostrarse.'+(tip?' '+tip:''));
+      steps.push(Object.assign({line,msg,cd:stack.length,frames:stack.map(f=>({fn:f.fn,vars:clone(f.vars)}))},snap(),extra));
+    }
+  };
+}
+const trazaFmt=v=>Array.isArray(v)?'['+v.join(', ')+']':String(v);
+const trazaTF=b=>b?'<b>verdadero</b>':'<b>falso</b>';
+function trazaPanel(st,prev){
+  if(!st.frames||!st.frames.length)return '';
+  const old=(prev&&prev.frames)||[];
+  return '<div class="traza"><div class="vlabel">Pila de llamadas y variables locales · borde naranja = cambió en este paso</div><div class="stack">'+
+    st.frames.map((f,i,a)=>{
+      const o=old[i]&&old[i].fn===f.fn?old[i].vars:null;
+      const chips=Object.keys(f.vars).map(k=>{
+        const v=trazaFmt(f.vars[k]),changed=!o||!(k in o)||trazaFmt(o[k])!==v;
+        return '<span class="tv'+(changed?' chg':'')+'">'+esc(k)+' = '+esc(v)+'</span>';
+      }).join('');
+      return '<div class="frame'+(i===a.length-1?' top':'')+'"><b>'+esc(f.fn)+'</b><span class="tvs">'+(chips||'<span class="tv">sin variables todavía</span>')+'</span></div>';
+    }).join('')+'</div></div>';
+}
+/* Como cells(), pero las celdas que cambiaron respecto del paso anterior llevan un borde naranja. */
+function cellsChg(arr,prev,marks,base){
+  const m={};
+  arr.forEach((v,i)=>{
+    const o=Object.assign({},marks&&marks[i]);
+    if(prev&&String(prev[i])!==String(v))o.cls=(o.cls?o.cls+' ':'')+'chg';
+    m[i]=o;
+  });
+  return cells(arr,m,base);
+}
+
 /* Builders puros (sin DOM): la interfaz y las pruebas ejecutan exactamente la misma búsqueda.
    Cada paso guarda sus propias copias de los vectores; la búsqueda nunca se corta para acortar la animación. */
-const BT_MAX_STEPS=400;
 const BT_DIRS=[{k:"N",df:-1,dc:0,nombre:"norte"},{k:"E",df:0,dc:1,nombre:"este"},{k:"S",df:1,dc:0,nombre:"sur"},{k:"O",df:0,dc:-1,nombre:"oeste"}];
-function btPush(steps,st){
-  if(steps.length>=BT_MAX_STEPS) throw new Error("La búsqueda necesita más de "+BT_MAX_STEPS+" pasos para mostrarse. Probá con un tablero más chico o con más paredes (o más pasto).");
-  steps.push(st);
+const btInf=x=>x===Infinity?"∞":String(x);
+/* Máximo(cargas): auxiliar propio, paso a paso (el mismo de las clases 10 y 11). `mark(q)` resalta la carga que se mira. */
+function btMaxTrace(T,loads,mark){
+  const m=loads.length;
+  T.enter("Máximo",{cargas:loads});
+  let mx=loads[0];
+  T.set("m",mx);
+  T.push(41,"m ← cargas[0] = "+mx+": arranco suponiendo que la primera carga es la mayor.");
+  for(let q=1;q<m;q++){
+    mark(q);T.set("q",q);
+    T.push(42,"para q = 1 hasta longitud(cargas) − 1 = "+(m-1)+": q = "+q+". Miro cargas["+q+"] = "+loads[q]+".");
+    const gt=loads[q]>mx;
+    T.push(43,"¿cargas[q] &gt; m? ¿"+loads[q]+" &gt; "+mx+"? → "+trazaTF(gt)+(gt?".":": m no cambia."));
+    if(gt){mx=loads[q];T.set("m",mx);T.push(44,"m ← cargas[q] = "+mx+".");}
+  }
+  mark(null);
+  if(m>1)T.set("q",m);
+  T.push(42,m>1?"q = "+m+" supera "+(m-1)+": el para termina.":"para q = 1 hasta longitud(cargas) − 1 = 0: no da ninguna vuelta, hay un solo procesador.");
+  T.push(45,"devolver m = "+mx+": es la mayor carga.");
+  T.leave();
+  return mx;
+}
+/* dentro(nf,nc): auxiliar propio de los ejercicios de tablero. `dim` son los rótulos de los límites: ["n","n"] o ["m","n"]. */
+function btDentro(T,nf,nc,filas,cols,dim){
+  T.enter("dentro",{nf,nc});
+  const ok=nf>=1&&nf<=filas&&nc>=1&&nc<=cols;
+  T.push(41,"devolver 1 ≤ nf ≤ "+dim[0]+" Y 1 ≤ nc ≤ "+dim[1]+": ¿1 ≤ "+nf+" ≤ "+filas+" Y 1 ≤ "+nc+" ≤ "+cols+"? → "+trazaTF(ok)+(ok?".":": la casilla queda fuera del tablero."));
+  T.leave();
+  return ok;
+}
+/* esVecina(a, b): auxiliar propio del caballo de Atila. */
+function btEsVecina(T,a,b){
+  T.enter("esVecina",{a:btPos(a[0],a[1]),b:btPos(b[0],b[1])});
+  const df=Math.abs(a[0]-b[0]),dc=Math.abs(a[1]-b[1]),ok=df+dc===1;
+  T.push(51,"devolver |a.fila − b.fila| + |a.col − b.col| = 1: |"+a[0]+" − "+b[0]+"| + |"+a[1]+" − "+b[1]+"| = "+df+" + "+dc+" = "+(df+dc)+" → "+trazaTF(ok)+(ok?": son vecinas (difieren en una sola coordenada).":": no son vecinas."));
+  T.leave();
+  return ok;
 }
 const btPos=(f,c)=>"("+f+","+c+")";
 const btLista=a=>a.length>1?a.slice(0,-1).join(", ")+" y "+a[a.length-1]:a[0];
 
 /* ---------- Guía · Backtracking 1: tareas a procesadores (mismo árbol que la clase 10) ---------- */
 function btProcesadores(A,m){
-  const S=new Array(A.length).fill(null),loads=new Array(m).fill(0),steps=[];
-  let best=Infinity,bestAssignment=null,decisions=0,pruned=0;
-  const push=(line,msg,stage)=>steps.push({kind:"processors",input:A.slice(),arr:S.slice(),loads:loads.slice(),stage,line,msg,best,
-    bestAssignment:bestAssignment?bestAssignment.slice():null,vars:["decisiones: "+decisions,"ramas podadas: "+pruned]});
-  push(1,"Todas las cargas empiezan en 0 y mejorTiempo = ∞. Cada tarea se ejecuta completa en un único procesador. Se busca minimizar el momento en que termina el último.",0);
+  const n=A.length,S=new Array(n).fill(null),loads=new Array(m).fill(0);
+  let best=Infinity,bestAssignment=null,decisions=0,pruned=0,curE=0,cmpLoad=null;
+  const T=Traza(()=>({kind:"processors",input:A.slice(),arr:S.slice(),loads:loads.slice(),stage:curE,cmpLoad,best,
+    bestAssignment:bestAssignment?bestAssignment.slice():null,vars:["decisiones: "+decisions,"ramas podadas: "+pruned]}),"Probá con menos tareas o menos procesadores.");
+  T.push(undefined,"Inicio: S sin asignar, cargas = ["+loads.join(", ")+"] y mejorTiempo = ∞. Cada tarea se ejecuta completa en un único procesador. Se busca minimizar el momento en que termina el último. Llamo a Asignar(0).");
   function visit(E){
+    curE=E;
+    T.enter("Asignar",{E});
     for(let p=0;p<m;p++){
-      S[E]=p; loads[p]+=A[E]; decisions++;
-      const maximum=Math.max(...loads),leaf=E===A.length-1;
+      curE=E;
+      T.set("p",p);
+      T.push(1,"para p = 0 hasta m − 1: p = "+p+". Pruebo la tarea "+(E+1)+" ("+A[E]+") en el procesador P"+(p+1)+".");
+      S[E]=p;decisions++;
+      T.push(2,"S[E] ← p: S["+E+"] ← "+p+". La tarea "+(E+1)+" va a P"+(p+1)+".");
+      loads[p]+=A[E];
+      T.push(3,"cargas[p] ← cargas[p] + tiempos[E] = "+(loads[p]-A[E])+" + "+A[E]+" = "+loads[p]+".");
+      T.push(4,"actual ← máximo(cargas): llamo a Máximo con cargas = ["+loads.join(", ")+"].");
+      const actual=btMaxTrace(T,loads,q=>{cmpLoad=q;});
+      T.set("actual",actual);
+      T.push(4,"máximo(cargas) devolvió "+actual+": actual ← "+actual+".");
+      const leaf=E===n-1;
+      T.push(5,"¿E = n − 1? ¿"+E+" = "+(n-1)+"? → "+trazaTF(leaf)+(leaf?": la asignación está completa.":": faltan tareas."));
       if(leaf){
-        const improves=maximum<best,previous=best;
-        if(improves){best=maximum;bestAssignment=S.slice();}
-        push(improves?7:6,"Tarea "+(E+1)+" ("+A[E]+") → P"+(p+1)+". Asignación completa: máx("+loads.join(", ")+") = "+maximum+". "+(improves?"Mejora el mejorTiempo anterior ("+(previous===Infinity?"∞":previous)+"): ahora vale "+maximum+" y guardo una copia de S.":"No mejora "+best+": conservo la primera mejor asignación."),E);
-      }else if(maximum>=best){
-        pruned++;
-        push(9,"Tarea "+(E+1)+" → P"+(p+1)+". La carga máxima parcial "+maximum+" ≥ mejorTiempo "+best+". Las duraciones no son negativas: esta rama no puede mejorar, así que la podo.",E);
+        const improves=actual<best;
+        T.push(6,"¿actual &lt; mejorTiempo? ¿"+actual+" &lt; "+btInf(best)+"? → "+trazaTF(improves)+(improves?".":": no mejora, conservo la primera mejor asignación."));
+        if(improves){
+          const previous=best;best=actual;bestAssignment=S.slice();
+          T.push(7,"mejorTiempo ← actual; mejorS ← copia(S): mejora "+btInf(previous)+" y ahora vale "+actual+". La copia queda aparte porque S se va a seguir modificando.");
+        }
       }else{
-        push(10,"Tarea "+(E+1)+" ("+A[E]+") → P"+(p+1)+"; cargas ["+loads.join(", ")+"]. Sigo con la próxima tarea. Al volver resto esta duración antes de probar otro procesador.",E);
-        visit(E+1);
+        const go=actual<best;
+        if(!go)pruned++;
+        T.push(9,"¿actual &lt; mejorTiempo? ¿"+actual+" &lt; "+btInf(best)+"? → "+trazaTF(go)+(go?". Sigo con la tarea "+(E+2)+".":": la carga máxima parcial ya no puede mejorar lo guardado (las duraciones no son negativas): podo."));
+        if(go){
+          T.push(10,"Asignar(E + 1): llamo para asignar la tarea "+(E+2)+".");
+          visit(E+1);
+          curE=E;
+          T.push(10,"Asignar volvió. Antes de probar otro procesador deshago esta decisión.");
+        }
       }
-      loads[p]-=A[E]; S[E]=null;
+      loads[p]-=A[E];
+      T.push(13,"cargas[p] ← cargas[p] − tiempos[E] = "+(loads[p]+A[E])+" − "+A[E]+" = "+loads[p]+": restauro la carga.");
+      S[E]=null;
+      T.push(14,"S[E] ← sin asignar: libero la posición "+E+".");
     }
+    curE=E;
+    T.set("p",m);
+    T.push(1,"p = "+m+" supera m − 1 = "+(m-1)+": el para termina y Asignar vuelve a quien la llamó.");
+    T.leave();
   }
   visit(0);
-  push(undefined,"Terminé de explorar todas las ramas que podían mejorar. Las cargas de trabajo volvieron a 0; la mejor asignación quedó guardada aparte.",undefined);
-  Object.assign(steps[steps.length-1],{result:"Tiempo mínimo = "+best,rcls:"good"});
-  return steps;
+  curE=-1;
+  T.push(undefined,"Terminé de explorar todas las ramas que podían mejorar. Las cargas de trabajo volvieron a 0; la mejor asignación quedó guardada aparte.");
+  Object.assign(T.steps[T.steps.length-1],{result:"Tiempo mínimo = "+best,rcls:"good"});
+  return T.steps;
 }
 
 /* ---------- Guía · Backtracking 2: laberinto ---------- */
@@ -6277,57 +6446,68 @@ function btParseCasilla(text,n,label){
   return [+m[1],+m[2]];
 }
 function btLaberinto(L,origen,destino){
-  const n=L.length,visitada=L.map(r=>r.map(()=>false)),camino=[],steps=[];
-  let mejor=Infinity,mejorCamino=null,llamadas=0,podas=0,pendiente=[],retrocediendo=false;
-  const foto=(line,msg,largo,extra)=>Object.assign({kind:"maze",grid:L,n,origen,destino,path:camino.map(p=>p.slice()),
-    best:mejorCamino?mejorCamino.map(p=>p.slice()):null,largo,mejor,line,msg,
-    vars:["llamadas: "+llamadas,"ramas podadas: "+podas,"largo actual: "+largo,"mejor largo: "+(mejor===Infinity?"∞":mejor)]},extra);
-  const push=(line,msg,largo,extra)=>{btPush(steps,foto(line,msg,largo,extra));retrocediendo=false;};
-  /* Los retrocesos seguidos (un nodo agotado detrás de otro) son un solo paso: el relato los resume y se
-     reemplaza la foto del paso anterior por el estado actual, sin cortar la búsqueda. */
-  let grupo=null;
-  const retroceso=(item,vuelve,largo)=>{
-    const previo=flush();
-    if(!retrocediendo) grupo={previo,items:[]};
-    grupo.items.push(item);
-    const it=grupo.items.map(x=>x.pos),k=it.length;
-    const quien=k===1?(item.destino?"Agoto "+it[0]+": el destino no se sigue explorando. La desmarco y la saco del camino":"Agoto "+it[0]+": ya no quedan direcciones. La desmarco y la saco del camino")
-      :"Agoto "+(k<=3?btLista(it):k+" casillas seguidas, de "+it[0]+" a "+it[k-1])+": ninguna tiene ya direcciones por probar. Las desmarco y las saco del camino, en ese orden";
-    const msg=grupo.previo+quien+(vuelve?"; vuelvo a "+vuelve+".":".");
-    if(retrocediendo) steps[steps.length-1]=foto(21,msg,largo);
-    else{btPush(steps,foto(21,msg,largo));retrocediendo=true;}
-  };
-  const flush=()=>{const t=pendiente.length?pendiente.join(" ")+" ":"";pendiente=[];return t;};
+  const n=L.length,visitada=L.map(r=>r.map(()=>false)),camino=[];
+  let mejor=Infinity,mejorCamino=null,llamadas=0,podas=0,largoCur=0,look=null;
   const num=x=>x===Infinity?"∞":x;
-  function explorar(f,c,largo,desde,largoPadre){
+  const T=Traza(()=>({kind:"maze",grid:L,n,origen,destino,path:camino.map(p=>p.slice()),best:mejorCamino?mejorCamino.map(p=>p.slice()):null,
+    largo:largoCur,mejor,look:look?look.slice():null,
+    vars:["llamadas: "+llamadas,"ramas podadas: "+podas,"largo actual: "+largoCur,"mejor largo: "+num(mejor)]}),"Probá con un tablero más chico o con más paredes.");
+  const inicial=L[origen[0]-1][origen[1]-1];
+  T.push(1,"visitada ← matriz n × n de falso; camino ← vacío. Todavía no pisé ninguna casilla.");
+  T.push(2,"mejorLong ← ∞; mejorCamino ← sin camino. Cualquier camino que llegue al destino va a ser mejor.");
+  T.push(3,"Explorar(fO, cO, L[fO,cO].valor): arranco en el origen "+btPos(origen[0],origen[1])+". La longitud ya incluye su valor, "+inicial.valor+". El destino es "+btPos(destino[0],destino[1])+".");
+  function explorar(f,c,largo){
     llamadas++;
-    visitada[f-1][c-1]=true; camino.push([f,c]);
-    const esDestino=f===destino[0]&&c===destino[1];
-    const celda=L[f-1][c-1];
-    push(6,flush()+"Entro a "+btPos(f,c)+" (valor "+celda.valor+"): largo "+largo+". La marco como visitada y la agrego al camino."+(esDestino?"":" No es el destino: recorro las cuatro direcciones."),largo);
+    T.enter("Explorar",{f,c,long:largo});
+    visitada[f-1][c-1]=true;camino.push([f,c]);largoCur=largo;
+    const celda=L[f-1][c-1],esDestino=f===destino[0]&&c===destino[1];
+    T.push(6,"Entro a "+btPos(f,c)+" (valor "+celda.valor+"), long = "+largo+". visitada"+btPos(f,c)+" ← verdadero y la agrego al camino.");
+    T.push(7,"¿(f,c) = (fD,cD)? ¿"+btPos(f,c)+" = "+btPos(destino[0],destino[1])+"? → "+trazaTF(esDestino)+(esDestino?": llegué al destino.":": no es el destino, recorro las cuatro direcciones."));
     if(esDestino){
-      const mejora=largo<mejor,prev=mejor;
-      if(mejora){mejor=largo;mejorCamino=camino.map(p=>p.slice());}
-      push(mejora?9:8,"Llegué al destino "+btPos(f,c)+" con largo "+largo+". "+(mejora?"Mejora el mejorLong anterior ("+num(prev)+"): ahora vale "+largo+" y guardo una copia del camino.":"No mejora "+mejor+": no lo guardo."),largo);
-    }else BT_DIRS.forEach(d=>{
-      const nf=f+d.df,nc=c+d.dc;
-      if(!celda.abre[d.k]){pendiente.push("Al "+d.nombre+": pared.");return;}
-      if(nf<1||nf>n||nc<1||nc>n){pendiente.push("Al "+d.nombre+": fuera del tablero.");return;}
-      if(visitada[nf-1][nc-1]){pendiente.push("Al "+d.nombre+": "+btPos(nf,nc)+" ya está en el camino.");return;}
-      const valor=L[nf-1][nc-1].valor,nuevo=largo+valor;
-      const cond="Al "+d.nombre+", "+btPos(nf,nc)+": se puede ir y está libre. ¿"+largo+" + "+valor+" = "+nuevo+" &lt; mejorLong "+num(mejor)+"? ";
-      if(nuevo>=mejor){podas++;push(15,flush()+cond+"<b>No</b> → poda: esa rama no puede mejorar lo guardado.",largo);return;}
-      push(16,flush()+cond+"<b>Sí</b> → Explorar("+nf+", "+nc+", "+nuevo+").",largo);
-      explorar(nf,nc,nuevo,[f,c],largo);
-    });
-    visitada[f-1][c-1]=false; camino.pop();
-    retroceso({pos:btPos(f,c),destino:esDestino},desde?btPos(desde[0],desde[1]):null,largoPadre);
+      const mejora=largo<mejor;
+      T.push(8,"¿long &lt; mejorLong? ¿"+largo+" &lt; "+num(mejor)+"? → "+trazaTF(mejora)+(mejora?".":": no mejora lo guardado, no lo guardo."));
+      if(mejora){
+        const prev=mejor;mejor=largo;mejorCamino=camino.map(p=>p.slice());
+        T.push(9,"mejorLong ← long; mejorCamino ← copia(camino): mejora "+num(prev)+" y ahora vale "+largo+". Guardo una copia porque camino se va a seguir modificando.");
+      }
+    }else{
+      for(const d of BT_DIRS){
+        T.vars({f,c,long:largo,d:d.k});look=null;
+        T.push(12,"para cada dirección d ∈ {N, E, S, O}: d = "+d.k+" ("+d.nombre+").");
+        const nf=f+d.df,nc=c+d.dc;
+        T.vars({f,c,long:largo,d:d.k,nf,nc});look=[nf,nc];
+        T.push(13,"(nf,nc) ← casilla vecina de "+btPos(f,c)+" hacia el "+d.nombre+" = "+btPos(nf,nc)+".");
+        const abre=celda.abre[d.k];
+        T.push(14,"¿L[f,c].abre[d]? ¿Desde "+btPos(f,c)+" se puede ir al "+d.nombre+"? → "+trazaTF(abre)+(abre?". Sigo con el resto del Y.":": hay pared (o un pasaje que solo va en el otro sentido). Con Y, si el primero es falso la condición entera lo es y no evalúo el resto."));
+        if(!abre)continue;
+        T.push(14,"dentro(nf,nc): llamo a dentro("+nf+", "+nc+").");
+        const dentro=btDentro(T,nf,nc,n,n,["n","n"]);
+        T.push(14,"dentro devolvió "+trazaTF(dentro)+(dentro?". Sigo con NO visitada.":": la casilla está fuera del tablero y la condición entera es falsa."));
+        if(!dentro)continue;
+        const vis=visitada[nf-1][nc-1];
+        T.push(14,"¿NO visitada[nf,nc]? visitada"+btPos(nf,nc)+" es "+(vis?"verdadero":"falso")+" → NO da "+trazaTF(!vis)+(vis?": la casilla ya está en el camino, no la repito.":": la condición completa es verdadera."));
+        if(vis)continue;
+        const valor=L[nf-1][nc-1].valor,nuevo=largo+valor,go=nuevo<mejor;
+        if(!go)podas++;
+        T.push(15,"¿long + L[nf,nc].valor &lt; mejorLong? ¿"+largo+" + "+valor+" = "+nuevo+" &lt; "+num(mejor)+"? → "+trazaTF(go)+(go?".":": poda, esa rama no puede mejorar lo guardado."));
+        if(!go)continue;
+        T.push(16,"Explorar(nf, nc, long + L[nf,nc].valor): llamo a Explorar("+nf+", "+nc+", "+nuevo+").");
+        explorar(nf,nc,nuevo);
+        largoCur=largo;look=[nf,nc];
+        T.push(16,"Explorar volvió a "+btPos(f,c)+" (long = "+largo+"). Sigo con la dirección siguiente.");
+      }
+      look=null;T.vars({f,c,long:largo});
+      T.push(12,"No quedan direcciones por probar: el para termina.");
+    }
+    visitada[f-1][c-1]=false;camino.pop();
+    T.push(21,"visitada"+btPos(f,c)+" ← falso; eliminar(camino): saco "+btPos(f,c)+" del camino para que otro camino pueda pasar por acá. Explorar vuelve a quien la llamó.");
+    T.leave();
   }
-  push(3,"Arranco en el origen "+btPos(origen[0],origen[1])+": la longitud ya incluye su valor, "+L[origen[0]-1][origen[1]-1].valor+". mejorLong = ∞. El destino es "+btPos(destino[0],destino[1])+".",0);
-  explorar(origen[0],origen[1],L[origen[0]-1][origen[1]-1].valor,null,0);
-  push(4,flush()+"Se agotó el árbol de caminos. "+(mejorCamino?"Devuelvo el largo mínimo y la copia guardada.":"Nunca llegué al destino: no hay camino."),0,
+  explorar(origen[0],origen[1],inicial.valor);
+  largoCur=0;
+  T.push(4,"devolver mejorLong, mejorCamino. Se agotó el árbol de caminos. "+(mejorCamino?"Devuelvo el largo mínimo y la copia guardada.":"Nunca llegué al destino: no hay camino."),
     {result:mejorCamino?"Longitud mínima = "+mejor+" · "+mejorCamino.map(p=>btPos(p[0],p[1])).join(" → "):"No existe un camino de "+btPos(origen[0],origen[1])+" a "+btPos(destino[0],destino[1]),rcls:mejorCamino?"good":"bad"});
-  return steps;
+  return T.steps;
 }
 
 /* ---------- Guía · Backtracking 3: el caballo de Atila ---------- */
@@ -6340,63 +6520,84 @@ function btParseJardin(text){
   return rows.map(r=>r.split("").map(ch=>ch==="#"));
 }
 function btAtila(J){
-  const n=J.length,steps=[],visitada=J.map(r=>r.map(()=>false)),S=[];
-  let k=0,inicio=null; J.forEach((r,f)=>r.forEach((p,c)=>{if(p){k++;if(!inicio)inicio=[f+1,c+1];}}));
-  let llamadas=0,retrocesos=0,pendiente=[],retrocediendo=false;
-  const flush=()=>{const t=pendiente.length?pendiente.join(" ")+" ":"";pendiente=[];return t;};
-  const foto=(line,msg,extra)=>Object.assign({kind:"atila",grid:J,n,k,path:S.map(p=>p.slice()),line,msg,
-    vars:["pisadas: "+k,"visitadas: "+S.length,"llamadas: "+llamadas,"retrocesos: "+retrocesos]},extra);
-  const push=(line,msg,extra)=>{btPush(steps,foto(line,msg,extra));retrocediendo=false;};
-  /* Igual que en el laberinto: los retrocesos seguidos son un solo paso (el relato los resume y se reemplaza la foto). */
-  let grupo=null;
-  const retroceso=(E,pos,vuelve)=>{
-    const previo=flush();
-    if(!retrocediendo) grupo={previo,items:[]};
-    grupo.items.push({E,pos});
-    const it=grupo.items,k=it.length,ps=it.map(x=>x.pos);
-    const quien=k===1?"Recorrer("+E+") devolvió falso: desmarco "+ps[0]+" y la saco de S"
-      :k<=3?btLista(it.map(x=>"Recorrer("+x.E+")"))+" devolvieron falso: desmarco "+btLista(ps)+" y las saco de S, en ese orden"
-      :"Recorrer("+it[0].E+") hasta Recorrer("+it[k-1].E+") devolvieron falso ("+k+" llamadas seguidas): desmarco "+k+" casillas, de "+ps[0]+" a "+ps[k-1]+", y las saco de S, en ese orden";
-    const msg=grupo.previo+quien+". Vuelvo a "+vuelve+".";
-    if(retrocediendo) steps[steps.length-1]=foto(18,msg);
-    else{btPush(steps,foto(18,msg));retrocediendo=true;}
-  };
+  const n=J.length,visitada=J.map(r=>r.map(()=>false)),S=[];
+  let k=0,inicio=null;J.forEach((r,f)=>r.forEach((p,c)=>{if(p){k++;if(!inicio)inicio=[f+1,c+1];}}));
+  let llamadas=0,retrocesos=0,look=null,closing=undefined;
+  const T=Traza(()=>({kind:"atila",grid:J,n,k,path:S.map(p=>p.slice()),look:look?look.slice():null,closing,
+    vars:["pisadas: "+k,"visitadas: "+S.length,"llamadas: "+llamadas,"retrocesos: "+retrocesos]}),"Probá con un jardín más chico o con más pasto.");
+  T.enter("Atila",{n});
+  T.push(1,"Entro a Atila(J, n) con un jardín de "+n+" × "+n+".");
+  T.set("k",k);
+  T.push(2,"k ← cantidad de casillas pisadas de J = "+k+".");
   if(k<4){
-    push(3,"Hay "+k+" casilla"+(k===1?"":"s")+" pisada"+(k===1?"":"s")+". Un recorrido cerrado sin repetir casillas necesita al menos 4: devuelvo falso sin buscar.",{found:false,result:"Sin recorrido cerrado",rcls:"bad"});
-    return steps;
+    T.push(3,"¿k &lt; 4? ¿"+k+" &lt; 4? → <b>verdadero</b>: hay "+k+" casilla"+(k===1?"":"s")+" pisada"+(k===1?"":"s")+" y un recorrido cerrado sin repetir casillas necesita al menos 4. Devuelvo falso sin buscar.");
+    T.leave();
+    T.push(undefined,"Atila devolvió falso: no hace falta buscar.",{found:false,result:"Sin recorrido cerrado",rcls:"bad"});
+    return T.steps;
   }
-  S.push(inicio); visitada[inicio[0]-1][inicio[1]-1]=true;
-  push(4,"Hay "+k+" casillas pisadas. Como el recorrido es cerrado, puedo empezar en cualquiera: tomo la primera por filas, "+btPos(inicio[0],inicio[1])+", y llamo a Recorrer(1).");
-  const veci=(a,b)=>Math.abs(a[0]-b[0])+Math.abs(a[1]-b[1])===1;
+  T.push(3,"¿k &lt; 4? ¿"+k+" &lt; 4? → <b>falso</b>: hay casillas suficientes para un ciclo. Sigo.");
+  S.push(inicio);visitada[inicio[0]-1][inicio[1]-1]=true;T.set("S[0]",btPos(inicio[0],inicio[1]));
+  T.push(4,"S[0] ← primera casilla pisada por filas = "+btPos(inicio[0],inicio[1])+"; visitada[S[0]] ← verdadero. Como el recorrido es cerrado, puedo empezar en cualquiera.");
+  T.push(5,"devolver Recorrer(1): llamo a Recorrer(1) para ubicar la casilla 2 de "+k+".");
   function recorrer(E){
     llamadas++;
+    T.enter("Recorrer",{E});
+    const cur=S[E-1];
+    T.push(8,"¿E = k? ¿"+E+" = "+k+"? → "+trazaTF(E===k)+(E===k?": ya pisé las "+k+" casillas.":": faltan "+(k-E)+" casilla"+(k-E===1?"":"s")+". Miro las direcciones desde "+btPos(cur[0],cur[1])+"."));
     if(E===k){
-      const cierra=veci(S[E-1],S[0]);
-      push(9,flush()+"Ya pisé las "+k+" casillas. ¿La última, "+btPos(S[E-1][0],S[E-1][1])+", es vecina de la primera, "+btPos(S[0][0],S[0][1])+"? → <b>"+(cierra?"sí: el recorrido cierra":"no: no cierra")+"</b>.",{closing:cierra});
+      closing=undefined;
+      T.push(9,"devolver esVecina(S[E−1], S[0]): llamo a esVecina("+btPos(S[E-1][0],S[E-1][1])+", "+btPos(S[0][0],S[0][1])+") para ver si la última casilla cierra con la primera.");
+      closing=true;
+      const cierra=btEsVecina(T,S[E-1],S[0]);
+      closing=cierra;
+      T.push(9,"esVecina devolvió "+trazaTF(cierra)+": "+(cierra?"el recorrido cierra":"no cierra")+". Recorrer("+E+") devuelve "+(cierra?"verdadero":"falso")+".");
+      closing=undefined;
+      T.leave();
       return cierra;
     }
-    const cur=S[E-1];
-    if(E>1) push(8,flush()+"Recorrer("+E+"): ¿E = k? "+E+" ≠ "+k+" → faltan "+(k-E)+" casilla"+(k-E===1?"":"s")+". Miro las direcciones desde "+btPos(cur[0],cur[1])+".");
     for(const d of BT_DIRS){
+      look=null;T.vars({E,d:d.k});
+      T.push(11,"para cada dirección d ∈ {N, E, S, O}: d = "+d.k+" ("+d.nombre+").");
       const nf=cur[0]+d.df,nc=cur[1]+d.dc;
-      let motivo=null;
-      if(nf<1||nf>n||nc<1||nc>n) motivo="fuera del jardín";
-      else if(!J[nf-1][nc-1]) motivo="tiene pasto";
-      else if(visitada[nf-1][nc-1]) motivo="ya la pisó en este recorrido";
-      if(motivo){pendiente.push("Desde "+btPos(cur[0],cur[1])+" al "+d.nombre+": "+motivo+".");continue;}
-      S.push([nf,nc]); visitada[nf-1][nc-1]=true;
-      push(14,flush()+"Desde "+btPos(cur[0],cur[1])+" avanzo al "+d.nombre+", a "+btPos(nf,nc)+": está pisada y libre. Es la casilla "+(E+1)+" de "+k+".");
-      if(recorrer(E+1)) return true;
-      visitada[nf-1][nc-1]=false; S.pop(); retrocesos++;
-      retroceso(E+1,btPos(nf,nc),btPos(cur[0],cur[1]));
+      T.vars({E,d:d.k,nf,nc});look=[nf,nc];
+      T.push(12,"(nf,nc) ← casilla vecina de S[E−1] = "+btPos(cur[0],cur[1])+" hacia el "+d.nombre+" = "+btPos(nf,nc)+".");
+      T.push(13,"dentro(nf,nc): llamo a dentro("+nf+", "+nc+").");
+      const dentro=btDentro(T,nf,nc,n,n,["n","n"]);
+      T.push(13,"dentro devolvió "+trazaTF(dentro)+(dentro?". Sigo con J[nf,nc].":": la casilla está fuera del jardín y la condición entera es falsa."));
+      if(!dentro)continue;
+      const pisada=J[nf-1][nc-1];
+      T.push(13,"¿J[nf,nc]? "+btPos(nf,nc)+(pisada?" está pisada (sin pasto)":" tiene pasto")+" → "+trazaTF(pisada)+(pisada?". Sigo con NO visitada.":": el caballo nunca pasó por ahí y la condición entera es falsa."));
+      if(!pisada)continue;
+      const vis=visitada[nf-1][nc-1];
+      T.push(13,"¿NO visitada[nf,nc]? visitada"+btPos(nf,nc)+" es "+(vis?"verdadero":"falso")+" → NO da "+trazaTF(!vis)+(vis?": ya la pisó en este recorrido.":": la condición completa es verdadera."));
+      if(vis)continue;
+      S.push([nf,nc]);visitada[nf-1][nc-1]=true;
+      T.push(14,"S[E] ← (nf,nc); visitada[nf,nc] ← verdadero: avanzo al "+d.nombre+", a "+btPos(nf,nc)+". Es la casilla "+(E+1)+" de "+k+".");
+      T.push(15,"si Recorrer(E + 1): llamo a Recorrer("+(E+1)+").");
+      const r=recorrer(E+1);
+      look=[nf,nc];
+      T.push(15,"Recorrer("+(E+1)+") devolvió "+trazaTF(r)+(r?": el recorrido cerró.":": ese camino no cierra."));
+      if(r){
+        T.push(16,"devolver verdadero: no pruebo más direcciones y S queda con el recorrido.");
+        T.leave();
+        return true;
+      }
+      visitada[nf-1][nc-1]=false;S.pop();retrocesos++;
+      T.push(18,"visitada[nf,nc] ← falso: desmarco "+btPos(nf,nc)+" y la saco del recorrido actual. Vuelvo a "+btPos(cur[0],cur[1])+" a probar otra dirección.");
     }
-    pendiente.push("Desde "+btPos(cur[0],cur[1])+" no queda ninguna dirección: Recorrer("+E+") devuelve falso.");
+    look=null;T.vars({E});
+    T.push(11,"No quedan direcciones por probar: el para termina.");
+    T.push(21,"devolver falso: desde "+btPos(cur[0],cur[1])+" no hay forma de completar el recorrido. Recorrer("+E+") vuelve a quien la llamó.");
+    T.leave();
     return false;
   }
   const found=recorrer(1);
-  if(found) push(16,flush()+"El recorrido cerró: devuelvo verdadero sin probar más y S queda con el recorrido completo.",{found:true,result:"Recorrido: "+S.map(p=>btPos(p[0],p[1])).join(" → ")+" → "+btPos(S[0][0],S[0][1]),rcls:"good"});
-  else push(21,flush()+"Se agotaron todas las alternativas desde "+btPos(inicio[0],inicio[1])+": no existe un recorrido cerrado que pise exactamente estas casillas.",{found:false,result:"Sin recorrido cerrado",rcls:"bad"});
-  return steps;
+  look=null;
+  T.push(5,"Recorrer(1) devolvió "+trazaTF(found)+": devolver "+(found?"verdadero":"falso")+".");
+  T.leave();
+  T.push(undefined,found?"El recorrido cerró: Atila devolvió verdadero sin probar más y S quedó con el recorrido completo.":"Se agotaron todas las alternativas desde "+btPos(inicio[0],inicio[1])+": no existe un recorrido cerrado que pise exactamente estas casillas.",
+    found?{found:true,result:"Recorrido: "+S.map(p=>btPos(p[0],p[1])).join(" → ")+" → "+btPos(S[0][0],S[0][1]),rcls:"good"}:{found:false,result:"Sin recorrido cerrado",rcls:"bad"});
+  return T.steps;
 }
 
 /* ---------- renderers ---------- */
@@ -6407,12 +6608,15 @@ function btItems(A,S,value){
   const sel=A.map((x,i)=>S[i]===value?esc(x)+" <small>(tarea "+(i+1)+")</small>":null).filter(x=>x!==null);
   return sel.length?"{ "+sel.join("; ")+" }":"∅";
 }
-function btProcRender(st){
+const btPrev=(steps,i)=>steps&&i>0?steps[i-1]:null;
+function btProcRender(st,steps,idx){
   if(st.error) return btError(st);
-  const marks={}; if(st.stage!==undefined) marks[st.stage]={cls:"act",p:"E"};
+  const prev=btPrev(steps,idx),proc=x=>x===null?null:x+1;
+  const marks={}; if(st.stage!==undefined&&st.stage>=0&&st.stage<st.arr.length) marks[st.stage]={cls:"act",p:"E"};
   let out='<div><div class="vlabel">Duraciones (tareas desde 1)</div>'+cells(st.input,{},1)+'</div>';
-  out+='<div><div class="vlabel">S[tarea]: número de procesador (desde 1) · «·» = pendiente</div>'+cells(st.arr.map(x=>x===null?null:x+1),marks,1)+'</div>';
-  out+='<div class="c10-loads">'+st.loads.map((load,p)=>'<div class="setbox"><span class="k">P'+(p+1)+' · carga actual '+load+'</span><div class="c10-load"><i style="width:'+(100*load/Math.max(1,...st.loads))+'%"></i></div>'+btItems(st.input,st.arr,p)+'</div>').join("")+'</div>';
+  out+='<div><div class="vlabel">S[tarea]: número de procesador (desde 1) · «·» = pendiente · borde naranja = cambió en este paso</div>'+cellsChg(st.arr.map(proc),prev&&prev.kind===st.kind?prev.arr.map(proc):null,marks,1)+'</div>';
+  out+=trazaPanel(st,prev);
+  out+='<div class="c10-loads">'+st.loads.map((load,p)=>'<div class="setbox'+(st.cmpLoad===p?' hl':'')+'"><span class="k">P'+(p+1)+' · carga actual '+load+'</span><div class="c10-load"><i style="width:'+(100*load/Math.max(1,...st.loads))+'%"></i></div>'+btItems(st.input,st.arr,p)+'</div>').join("")+'</div>';
   out+='<div class="setbox"><span class="k">Mejor tiempo: '+(st.best===Infinity?"∞":st.best)+'</span>';
   if(st.bestAssignment) for(let p=0;p<st.loads.length;p++) out+='<div>P'+(p+1)+': '+btItems(st.input,st.bestAssignment,p)+' · carga '+st.input.reduce((a,x,i)=>a+(st.bestAssignment[i]===p?x:0),0)+'</div>';
   else out+='Todavía no hay asignación completa.';
@@ -6427,13 +6631,14 @@ function btFrame(n,label,inner){
 }
 const btCx=c=>BT_MARGIN+c*BT_CELL+BT_CELL/2, btCy=f=>BT_MARGIN+f*BT_CELL+BT_CELL/2;
 const btPts=P=>P.map(p=>btCx(p[1]-1)+","+btCy(p[0]-1)).join(" ");
+const btLook=st=>st.look?st.look[0]+","+st.look[1]:"";   // casilla vecina que se está mirando (puede estar fuera del tablero)
 function btMazeBoard(st){
-  const n=st.n,L=st.grid,inPath={},inBest={},S=BT_CELL,M=BT_MARGIN;
+  const n=st.n,L=st.grid,inPath={},inBest={},S=BT_CELL,M=BT_MARGIN,look=btLook(st);
   st.path.forEach(p=>{inPath[p[0]+","+p[1]]=true;}); (st.best||[]).forEach(p=>{inBest[p[0]+","+p[1]]=true;});
   const now=st.path.length?st.path[st.path.length-1].join(","):"";
   let o="",texts=""; // los textos van en una capa aparte, encima de los trazos y de las paredes
   for(let f=0;f<n;f++)for(let c=0;c<n;c++){
-    const key=(f+1)+","+(c+1),cls="sq"+(inPath[key]?" path":inBest[key]?" best":"")+(key===now?" now":"");
+    const key=(f+1)+","+(c+1),cls="sq"+(inPath[key]?" path":inBest[key]?" best":"")+(key===now?" now":"")+(key===look?" look":"");
     o+='<g><title>Casilla '+btPos(f+1,c+1)+', valor '+L[f][c].valor+'</title><rect class="'+cls+'" x="'+(M+c*S)+'" y="'+(M+f*S)+'" width="'+S+'" height="'+S+'"/></g>';
     texts+='<text class="val" x="'+btCx(c)+'" y="'+btCy(f)+'">'+L[f][c].valor+'</text>';
     if(f+1===st.origen[0]&&c+1===st.origen[1]) texts+='<text class="lab" x="'+(M+c*S+10)+'" y="'+(M+f*S+11)+'">O</text>';
@@ -6459,21 +6664,22 @@ function btMazeBoard(st){
   o+='<rect class="wall" fill="none" x="'+M+'" y="'+M+'" width="'+(n*S)+'" height="'+(n*S)+'"/>';
   return btFrame(n,"Laberinto de "+n+" por "+n+"; filas y columnas desde 1",o+texts);
 }
-function btMazeRender(st){
+function btMazeRender(st,steps,idx){
   if(st.error) return btError(st);
-  const seq=P=>P.map(p=>btPos(p[0],p[1])).join(" → ");
-  return btMazeBoard(st)+'<div class="vlabel">Pared gruesa: no se puede pasar · ▶ pasaje de un solo sentido · O origen · D destino · naranja: camino actual · verde: mejor camino guardado.</div>'+
+  const seq=P=>P.map(p=>btPos(p[0],p[1])).join(" → "),prev=btPrev(steps,idx);
+  return btMazeBoard(st)+'<div class="vlabel">Pared gruesa: no se puede pasar · ▶ pasaje de un solo sentido · O origen · D destino · naranja: camino actual · verde: mejor camino guardado · celeste punteado: la vecina que se está mirando.</div>'+
+    trazaPanel(st,prev)+
     '<div class="setbox"><span class="k">Camino actual · largo '+st.largo+'</span>'+(st.path.length?seq(st.path):"vacío")+'</div>'+
     '<div class="setbox"><span class="k">Mejor camino guardado · largo '+(st.mejor===Infinity?"∞":st.mejor)+'</span>'+(st.best?seq(st.best):"todavía ninguno")+'</div>'+btFoot(st);
 }
 function btGardenBoard(st){
-  const n=st.n,J=st.grid,S=BT_CELL,M=BT_MARGIN,order={},ok=st.found===true;
+  const n=st.n,J=st.grid,S=BT_CELL,M=BT_MARGIN,order={},ok=st.found===true,look=btLook(st);
   st.path.forEach((p,i)=>{order[p[0]+","+p[1]]=i;});
   const now=st.path.length?st.path[st.path.length-1].join(","):"";
   let o="",texts="";
   for(let f=0;f<n;f++)for(let c=0;c<n;c++){
     const key=(f+1)+","+(c+1),visited=order[key]!==undefined;
-    const cls="sq"+(!J[f][c]?" grass":visited?(ok?" best":" path"):" step")+(key===now&&!ok?" now":"");
+    const cls="sq"+(!J[f][c]?" grass":visited?(ok?" best":" path"):" step")+(key===now&&!ok?" now":"")+(key===look?" look":"");
     o+='<g><title>Casilla '+btPos(f+1,c+1)+': '+(J[f][c]?(visited?'pisada, es la '+(order[key]+1)+' del recorrido':'pisada, todavía sin ubicar en el recorrido'):'con pasto')+'</title><rect class="'+cls+'" x="'+(M+c*S)+'" y="'+(M+f*S)+'" width="'+S+'" height="'+S+'"/></g>';
     if(visited) texts+='<text class="val" x="'+btCx(c)+'" y="'+btCy(f)+'">'+(order[key]+1)+'</text>'+(order[key]===0?'<text class="lab" x="'+(M+c*S+19)+'" y="'+(M+f*S+11)+'">inicio</text>':'');
     else texts+='<text class="dim" x="'+btCx(c)+'" y="'+btCy(f)+'">'+(J[f][c]?"·":"~")+'</text>';
@@ -6485,9 +6691,10 @@ function btGardenBoard(st){
   }
   return btFrame(n,"Jardín de "+n+" por "+n+"; filas y columnas desde 1",o+texts);
 }
-function btAtilaRender(st){
+function btAtilaRender(st,steps,idx){
   if(st.error) return btError(st);
-  return btGardenBoard(st)+'<div class="vlabel">«~» con pasto · gris: pisada sin ubicar · naranja: recorrido actual (número = orden) · línea punteada: la última casilla contra la primera · verde: recorrido encontrado.</div>'+
+  return btGardenBoard(st)+'<div class="vlabel">«~» con pasto · gris: pisada sin ubicar · naranja: recorrido actual (número = orden) · celeste punteado: la vecina que se está mirando · línea punteada: la última casilla contra la primera · verde: recorrido encontrado.</div>'+
+    trazaPanel(st,btPrev(steps,idx))+
     '<div class="setbox"><span class="k">S · '+st.path.length+' de '+st.k+' casillas</span>'+(st.path.length?st.path.map(p=>btPos(p[0],p[1])).join(" → "):"vacío")+'</div>'+btFoot(st);
 }
 /* ===== interfaz Guía · Backtracking ===== */
@@ -6525,10 +6732,6 @@ document.querySelectorAll("[data-bt-preset]").forEach(b=>b.addEventListener("cli
 const S2_MAX_STEPS=400;
 const S2_PERSONAS="XYZW", S2_PRODUCTOS="ABCD";
 const S4_MOVES=[{df:-1,dc:1,nombre:"Hacia arriba a la derecha"},{df:0,dc:1,nombre:"Hacia la derecha"},{df:1,dc:1,nombre:"Hacia abajo a la derecha"},{df:1,dc:0,nombre:"Hacia abajo"}];
-function sPush(steps,st,tip){
-  if(steps.length>=S2_MAX_STEPS) throw new Error("La búsqueda necesita más de "+S2_MAX_STEPS+" pasos para mostrarse. Probá con "+tip+".");
-  steps.push(st);
-}
 const sDpRender=st=>st.error?btError(st):dpRender(st);
 const sNum=x=>x===Infinity?"∞":String(x);
 /* Floyd sin pasos, copiado del apunte (clase 9): 0 en la diagonal, el peso donde hay arista e ∞ donde no. */
@@ -6694,108 +6897,143 @@ function s6Festival(r,c,P){
 
 /* ---------- s2 · Sistema de subasta: Backtracking (la mejor), con poda por cota superior ---------- */
 function s2Subasta(O){
-  const m=O.length, n=O[0].length, steps=[], L=S2_PERSONAS, P=S2_PRODUCTOS;
-  const S=new Array(n).fill(null), usada=new Array(m).fill(false);       // S[e]: null = pendiente, -1 = sin vender, p = persona
-  const cota=new Array(n+1).fill(0);                                      // cota[e] = suma de las mayores ofertas de los productos e…n-1
-  for(let e=n-1;e>=0;e--) cota[e]=cota[e+1]+Math.max(0,...O.map(r=>r[e]===null?0:r[e]));
-  let mejor=-1, mejorS=null, ganancia=0, llamadas=0, podas=0, pendiente=[];
-  const tip="menos productos o menos personas";
-  const flush=()=>{ const t=pendiente.length?pendiente.join(" ")+" ":""; pendiente=[]; return t; };
-  const foto=(line,msg,cur,extra)=>Object.assign({kind:"auction",O,m,n,S:S.slice(),ganancia,mejor,mejorS:mejorS?mejorS.slice():null,cur:cur||null,line,msg,
-    vars:["ganancia de S: "+ganancia,"mejor ganancia: "+(mejor<0?"—":mejor),"llamadas: "+llamadas,"ramas podadas: "+podas]},extra);
-  const push=(line,msg,cur,extra)=>sPush(steps,foto(line,msg,cur,extra),tip);
+  const m=O.length, n=O[0].length, L=S2_PERSONAS, P=S2_PRODUCTOS;
+  const S=new Array(n).fill(null), usada=new Array(m).fill(false);      // S[e]: null = sin decidir, -1 = sin vender (0 en el pseudocódigo), p = persona
+  const cota=new Array(n+1).fill(null);                                   // cota[e] = suma de las mayores ofertas de los productos e…n-1
+  let mejor=-1, mejorS=null, ganancia=0, llamadas=0, podas=0, cur=null, curE=null;
+  const m0=()=>mejor<0?"ninguna":mejor;
+  const T=Traza(()=>({kind:"auction",O,m,n,S:S.slice(),usada:usada.slice(),cota:cota.slice(),ganancia,mejor,mejorS:mejorS?mejorS.slice():null,cur:cur?cur.slice():null,stage:curE,
+    vars:["ganancia de S: "+ganancia,"mejor ganancia: "+(mejor<0?"—":mejor),"llamadas: "+llamadas,"ramas podadas: "+podas]}),"Probá con menos productos o menos personas.");
   const detalle=s=>s.map((p,e)=>p===-1?P[e]+" sin vender":P[e]+" → "+L[p]+" ("+O[p][e]+")").join(", ");
-  function avanzar(e,nuevo,que,lineaPoda,lineaLlamada,cur){
-    ganancia=nuevo;
-    const techo=nuevo+cota[e+1], ultimo=e===n-1, m0=mejor<0?"ninguna":mejor;
-    const cuenta="Lo máximo que se puede lograr por este camino: "+nuevo+(ultimo?" (no queda ningún producto)":" + cota["+P[e+1]+"] = "+nuevo+" + "+cota[e+1]+" = "+techo)+".";
-    if(techo<=mejor){
-      podas++;
-      push(lineaPoda,flush()+que+" "+cuenta+" ¿"+techo+" &gt; mejor ("+m0+")? → <b>No</b>: "+(ultimo?"no mejora lo guardado":"poda, esta rama no puede mejorar lo guardado")+".",cur);
-      return;
-    }
-    if(ultimo){
-      const prev=m0;
-      mejor=nuevo; mejorS=S.slice();
-      push(9,flush()+que+" Era el último producto: adjudicación completa, ganancia "+nuevo+" &gt; mejor ("+prev+"): ahora vale "+nuevo+" y guardo una copia de S.",cur);
-      return;
-    }
-    push(lineaLlamada,flush()+que+" "+cuenta+" ¿"+techo+" &gt; mejor ("+m0+")? → <b>Sí</b>: sigo con el producto "+P[e+1]+".",cur);
-    adjudicar(e+1,nuevo);
+  T.push(1,"S ← vector de n posiciones en 0 («·» hasta que se decide); usada ← vector de m posiciones en falso. Nadie se llevó nada todavía.");
+  cota[n]=0;
+  T.push(2,"cota[n+1] ← 0: después del último producto no queda nada por vender.");
+  for(let e=n-1;e>=0;e--){
+    const mayor=Math.max(0,...O.map(r=>r[e]===null?0:r[e]));
+    cota[e]=cota[e+1]+mayor;
+    T.push(2,"cota["+P[e]+"] ← suma de las mayores ofertas de "+P[e]+(e<n-1?" en adelante":"")+": la mayor oferta por "+P[e]+" es "+mayor+", más cota["+(e+1<n?P[e+1]:"n+1")+"] = "+cota[e+1]+" → <b>"+cota[e]+"</b>. Supone que cada producto se vende a su mejor oferta, sin importar si esa persona ya tiene otro: sobreestima, por eso vale como cota.");
   }
+  T.push(3,"mejorGanancia ← −1; mejorS ← sin adjudicación. El −1 asegura que la primera adjudicación completa se guarde siempre, aunque valga 0.");
+  T.push(4,"Adjudicar(1, 0): se decide el producto "+P[0]+" con ganancia 0. Para cada producto se prueba cada persona que ofertó y esté libre, y por último dejarlo sin vender.");
   function adjudicar(e,g){
-    llamadas++; ganancia=g;
-    for(let p=0;p<m;p++){
-      const oferta=O[p][e];
-      if(oferta===null){ pendiente.push(L[p]+" no ofertó por "+P[e]+"."); continue; }
-      if(usada[p]){ pendiente.push(L[p]+" ya se llevó otro producto."); continue; }
-      S[e]=p; usada[p]=true;
-      avanzar(e,g+oferta,"Adjudico "+P[e]+" a <b>"+L[p]+"</b> (oferta "+oferta+"): "+g+" + "+oferta+" = "+(g+oferta)+".",15,16,[p,e]);
-      usada[p]=false; S[e]=null; ganancia=g;
-      pendiente.push("Desmarco a "+L[p]+": vuelve a estar libre.");
+    llamadas++;ganancia=g;curE=e<n?e:null;
+    T.enter("Adjudicar",{e:e+1,ganancia:g});
+    const hoja=e===n;
+    T.push(7,"¿e = n + 1? ¿"+(e+1)+" = "+(n+1)+"? → "+trazaTF(hoja)+(hoja?": ya se decidieron los "+n+" productos.":": falta decidir el producto "+P[e]+"."));
+    if(hoja){
+      const mejora=g>mejor;
+      T.push(8,"¿ganancia &gt; mejorGanancia? ¿"+g+" &gt; "+(mejor<0?"−1":mejor)+"? → "+trazaTF(mejora)+(mejora?".":": no mejora lo guardado."));
+      if(mejora){
+        const prev=m0();
+        mejor=g;mejorS=S.slice();
+        T.push(9,"mejorGanancia ← ganancia; mejorS ← copia(S): adjudicación completa, mejora ("+prev+") y ahora vale "+g+". Guardo una copia de S porque S se va a seguir modificando.");
+      }
+      T.leave();return;
     }
+    for(let p=0;p<m;p++){
+      cur=null;curE=e;ganancia=g;T.set("p",L[p]);
+      T.push(12,"para cada persona p ∈ {1, …, m}: p = "+(p+1)+" ("+L[p]+"), para el producto "+P[e]+".");
+      const oferta=O[p][e];cur=[p,e];
+      T.push(13,"¿O[p,e] existe Y NO usada[p]? "+(oferta===null
+        ?L[p]+" no ofertó por "+P[e]+" → falso; con Y no evalúo el resto."
+        :L[p]+" ofertó "+oferta+" por "+P[e]+" → verdadero. ¿NO usada[p]? usada["+(p+1)+"] es "+(usada[p]?"verdadero":"falso")+" → NO da "+trazaTF(!usada[p])+(usada[p]?": "+L[p]+" ya se llevó otro producto.":".")));
+      if(oferta===null||usada[p])continue;
+      S[e]=p;usada[p]=true;
+      T.push(14,"S[e] ← p; usada[p] ← verdadero: adjudico "+P[e]+" a <b>"+L[p]+"</b> (oferta "+oferta+") y marco a "+L[p]+" como ocupada.");
+      const nuevo=g+oferta,techo=nuevo+cota[e+1],go=techo>mejor;
+      if(!go)podas++;
+      T.push(15,"¿ganancia + O[p,e] + cota[e+1] &gt; mejorGanancia? ¿"+g+" + "+oferta+" + "+cota[e+1]+" = "+techo+" &gt; "+m0()+"? → "+trazaTF(go)+(go?". Lo máximo que se puede lograr por este camino todavía supera lo guardado.":": poda, esta rama no puede mejorar lo guardado."));
+      if(go){
+        T.push(16,"Adjudicar(e+1, ganancia + O[p,e]): llamo a Adjudicar("+(e+2)+", "+nuevo+").");
+        adjudicar(e+1,nuevo);
+        curE=e;ganancia=g;cur=[p,e];
+        T.push(16,"Adjudicar volvió al producto "+P[e]+" con ganancia "+g+".");
+      }
+      usada[p]=false;
+      T.push(18,"usada[p] ← falso: "+L[p]+" vuelve a estar libre para otros productos.");
+    }
+    cur=null;curE=e;ganancia=g;T.set("p","—");
+    T.push(12,"No quedan personas por probar para "+P[e]+": el para termina.");
     S[e]=-1;
-    avanzar(e,g,"El producto "+P[e]+" <b>no se vende</b>: la ganancia sigue en "+g+".",22,23,null);
-    S[e]=null; ganancia=g;
+    T.push(21,"S[e] ← 0: el producto "+P[e]+" <b>no se vende</b> en esta rama (queda 0 en S).");
+    const techo=g+cota[e+1],go=techo>mejor;
+    if(!go)podas++;
+    T.push(22,"¿ganancia + cota[e+1] &gt; mejorGanancia? ¿"+g+" + "+cota[e+1]+" = "+techo+" &gt; "+m0()+"? → "+trazaTF(go)+(go?". Sigo con el producto "+(e+1<n?P[e+1]:"siguiente (ninguno: voy al caso base)")+".":": poda, esta rama no puede mejorar lo guardado."));
+    if(go){
+      T.push(23,"Adjudicar(e+1, ganancia): llamo a Adjudicar("+(e+2)+", "+g+") con la ganancia sin cambios.");
+      adjudicar(e+1,g);
+      curE=e;ganancia=g;
+      T.push(23,"Adjudicar volvió al producto "+P[e]+" con ganancia "+g+".");
+    }
+    T.leave();
   }
-  push(2,"Se calcula <b>cota[e]</b>: lo máximo que podrían aportar los productos e, e+1, … si cada uno se vendiera a su mejor oferta, sin importar si esa persona ya tiene otro producto. "+
-    cota.slice(0,n).map((x,e)=>"cota["+P[e]+"] = "+x).join(", ")+"; después del último producto la cota es 0. S y usada empiezan vacíos y mejorGanancia = −1.");
-  push(4,"Adjudicar(1, 0): se decide el producto "+P[0]+" con ganancia 0. Para cada producto se prueba cada persona que ofertó y esté libre, y por último dejarlo sin vender.");
   adjudicar(0,0);
-  ganancia=mejor;
-  push(5,flush()+"Se agotó el árbol de adjudicaciones. Devuelvo la mejor guardada.",null,{S:mejorS.slice(),result:"Ganancia máxima = "+mejor+" · "+detalle(mejorS),rcls:"good"});
-  return steps;
+  curE=null;cur=null;ganancia=mejor;
+  T.push(5,"devolver mejorGanancia, mejorS. Se agotó el árbol de adjudicaciones. Devuelvo la mejor guardada.",
+    {S:mejorS.slice(),result:"Ganancia máxima = "+mejor+" · "+detalle(mejorS),rcls:"good"});
+  return T.steps;
 }
 
 /* ---------- s4 · Estaciones de actividades: Backtracking (la mejor), recorrido de exactamente K casillas ---------- */
 function s4Estaciones(M,ini,X){
-  const m=M.length, n=M[0].length, K=m*n-X, steps=[];
+  const m=M.length, n=M[0].length, K=m*n-X;
   const visitada=M.map(r=>r.map(()=>false)), rec=[];
-  let mejor=Infinity, mejorR=null, llamadas=0, podas=0, maxK=0, pendiente=[], retrocediendo=false, grupo=null;
-  const tip="una matriz más chica o con un X mayor (menos casillas por visitar)";
-  const foto=(line,msg,k,esf,extra)=>Object.assign({kind:"stations",M,m,n,K,ini,path:rec.map(p=>p.slice()),best:mejorR?mejorR.map(p=>p.slice()):null,k,esfuerzo:esf,mejor,line,msg,
-    vars:["llamadas: "+llamadas,"ramas podadas: "+podas,"esfuerzo actual: "+esf,"mejor esfuerzo: "+sNum(mejor)]},extra);
-  const push=(line,msg,k,esf,extra)=>{ sPush(steps,foto(line,msg,k,esf,extra),tip); retrocediendo=false; };
-  const flush=()=>{ const t=pendiente.length?pendiente.join(" ")+" ":""; pendiente=[]; return t; };
-  /* Los retrocesos seguidos son un solo paso (igual que en el laberinto): el relato los resume y se reemplaza la foto. */
-  const retroceso=(pos,hoja,vuelve,k,esf)=>{
-    const previo=flush();
-    if(!retrocediendo) grupo={previo,items:[]};
-    grupo.items.push({pos,hoja});
-    const it=grupo.items.map(x=>x.pos), q=it.length;
-    const quien=q===1?(hoja?"Agoto "+it[0]+": el recorrido ya tiene sus "+K+" casillas y no se sigue. La desmarco y la saco del recorrido":"Agoto "+it[0]+": ya no quedan movimientos. La desmarco y la saco del recorrido")
-      :"Agoto "+(q<=3?btLista(it):q+" casillas seguidas, de "+it[0]+" a "+it[q-1])+": ninguna tiene ya movimientos por probar. Las desmarco y las saco del recorrido, en ese orden";
-    const msg=grupo.previo+quien+(vuelve?"; vuelvo a "+vuelve+".":".");
-    if(retrocediendo) steps[steps.length-1]=foto(21,msg,k,esf);
-    else{ sPush(steps,foto(21,msg,k,esf),tip); retrocediendo=true; }
-  };
-  function recorrer(f,c,k,esf,desde,kPadre,esfPadre){
-    llamadas++; maxK=Math.max(maxK,k);
-    visitada[f-1][c-1]=true; rec.push([f,c]);
+  let mejor=Infinity, mejorR=null, llamadas=0, podas=0, maxK=0, kCur=0, esfCur=0, look=null;
+  const T=Traza(()=>({kind:"stations",M,m,n,K,ini,path:rec.map(p=>p.slice()),best:mejorR?mejorR.map(p=>p.slice()):null,k:kCur,esfuerzo:esfCur,mejor,look:look?look.slice():null,
+    vars:["llamadas: "+llamadas,"ramas podadas: "+podas,"esfuerzo actual: "+esfCur,"mejor esfuerzo: "+sNum(mejor)]}),"Probá con una matriz más chica o con un X mayor (menos casillas por visitar).");
+  const mov=d=>"("+(d.df>0?"+":"")+d.df+","+(d.dc>0?"+":"")+d.dc+")";
+  T.push(1,"visitada ← matriz m × n de falso; recorrido ← vacío. Todavía no visité ninguna casilla.");
+  T.push(2,"mejorEsfuerzo ← ∞; mejorRecorrido ← sin recorrido.");
+  T.push(3,"Recorrer(f0, c0, 1, M[f0,c0]): arranco en la casilla de partida "+btPos(ini[0],ini[1])+": cuenta como la casilla 1 y su esfuerzo, "+M[ini[0]-1][ini[1]-1]+", ya está sumado. Hay que visitar K = "+m+"·"+n+" − "+X+" = <b>"+K+"</b> casillas.");
+  function recorrer(f,c,k,esf){
+    llamadas++;maxK=Math.max(maxK,k);
+    T.enter("Recorrer",{f,c,k,esfuerzo:esf});
+    visitada[f-1][c-1]=true;rec.push([f,c]);kCur=k;esfCur=esf;
     const hoja=k===K;
-    push(6,flush()+"Entro a "+btPos(f,c)+" (esfuerzo "+M[f-1][c-1]+"): es la casilla "+k+" de "+K+", con esfuerzo acumulado "+esf+". La marco como visitada y la agrego al recorrido."+(hoja?"":" Pruebo los cuatro movimientos."),k,esf);
+    T.push(6,"Entro a "+btPos(f,c)+" (esfuerzo "+M[f-1][c-1]+"): es la casilla "+k+" de "+K+", con esfuerzo acumulado "+esf+". visitada"+btPos(f,c)+" ← verdadero y la agrego al recorrido.");
+    T.push(7,"¿k = K? ¿"+k+" = "+K+"? → "+trazaTF(hoja)+(hoja?": ya visité las casillas pedidas.":": faltan "+(K-k)+" casilla"+(K-k===1?"":"s")+"."));
     if(hoja){
-      const mejora=esf<mejor, prev=mejor;
-      if(mejora){ mejor=esf; mejorR=rec.map(p=>p.slice()); }
-      push(mejora?9:8,"Ya visité las "+K+" casillas pedidas, con esfuerzo "+esf+". "+(mejora?"Mejora el mejorEsfuerzo anterior ("+sNum(prev)+"): ahora vale "+esf+" y guardo una copia del recorrido.":"No mejora "+mejor+": no lo guardo."),k,esf);
-    } else S4_MOVES.forEach(d=>{
-      const nf=f+d.df, nc=c+d.dc;
-      if(nf<1||nf>m||nc<1||nc>n){ pendiente.push(d.nombre+": fuera de la matriz."); return; }
-      if(visitada[nf-1][nc-1]){ pendiente.push(d.nombre+": "+btPos(nf,nc)+" ya está en el recorrido."); return; }
-      const val=M[nf-1][nc-1], nuevo=esf+val;
-      const cond=d.nombre+", "+btPos(nf,nc)+": está dentro y libre. ¿"+esf+" + "+val+" = "+nuevo+" &lt; mejorEsfuerzo "+sNum(mejor)+"? ";
-      if(nuevo>=mejor){ podas++; push(15,flush()+cond+"<b>No</b> → poda: esa rama no puede mejorar lo guardado.",k,esf); return; }
-      push(16,flush()+cond+"<b>Sí</b> → Recorrer("+nf+", "+nc+", "+(k+1)+", "+nuevo+").",k,esf);
-      recorrer(nf,nc,k+1,nuevo,[f,c],k,esf);
-    });
-    visitada[f-1][c-1]=false; rec.pop();
-    retroceso(btPos(f,c),hoja,desde?btPos(desde[0],desde[1]):null,kPadre,esfPadre);
+      const mejora=esf<mejor;
+      T.push(8,"¿esfuerzo &lt; mejorEsfuerzo? ¿"+esf+" &lt; "+sNum(mejor)+"? → "+trazaTF(mejora)+(mejora?".":": no mejora lo guardado, no lo guardo."));
+      if(mejora){
+        const prev=mejor;mejor=esf;mejorR=rec.map(p=>p.slice());
+        T.push(9,"mejorEsfuerzo ← esfuerzo; mejorRecorrido ← copia(recorrido): mejora "+sNum(prev)+" y ahora vale "+esf+". Guardo una copia porque el recorrido se va a seguir modificando.");
+      }
+    }else{
+      for(const d of S4_MOVES){
+        T.vars({f,c,k,esfuerzo:esf,"(df,dc)":mov(d)});look=null;
+        T.push(12,"para cada movimiento (df,dc): ahora "+mov(d)+" ("+d.nombre.toLowerCase()+").");
+        const nf=f+d.df,nc=c+d.dc;
+        T.vars({f,c,k,esfuerzo:esf,"(df,dc)":mov(d),nf,nc});look=[nf,nc];
+        T.push(13,"(nf,nc) ← (f + df, c + dc) = ("+f+" + "+d.df+", "+c+" + "+d.dc+") = "+btPos(nf,nc)+".");
+        T.push(14,"dentro(nf,nc): llamo a dentro("+nf+", "+nc+").");
+        const dentro=btDentro(T,nf,nc,m,n,["m","n"]);
+        T.push(14,"dentro devolvió "+trazaTF(dentro)+(dentro?". Sigo con NO visitada.":": la casilla está fuera de la matriz y la condición entera es falsa."));
+        if(!dentro)continue;
+        const vis=visitada[nf-1][nc-1];
+        T.push(14,"¿NO visitada[nf,nc]? visitada"+btPos(nf,nc)+" es "+(vis?"verdadero":"falso")+" → NO da "+trazaTF(!vis)+(vis?": ya está en el recorrido.":": la condición completa es verdadera."));
+        if(vis)continue;
+        const val=M[nf-1][nc-1],nuevo=esf+val,go=nuevo<mejor;
+        if(!go)podas++;
+        T.push(15,"¿esfuerzo + M[nf,nc] &lt; mejorEsfuerzo? ¿"+esf+" + "+val+" = "+nuevo+" &lt; "+sNum(mejor)+"? → "+trazaTF(go)+(go?".":": poda, esa rama no puede mejorar lo guardado."));
+        if(!go)continue;
+        T.push(16,"Recorrer(nf, nc, k + 1, esfuerzo + M[nf,nc]): llamo a Recorrer("+nf+", "+nc+", "+(k+1)+", "+nuevo+").");
+        recorrer(nf,nc,k+1,nuevo);
+        kCur=k;esfCur=esf;look=[nf,nc];
+        T.push(16,"Recorrer volvió a "+btPos(f,c)+" (k = "+k+", esfuerzo "+esf+"). Sigo con el movimiento siguiente.");
+      }
+      look=null;T.vars({f,c,k,esfuerzo:esf});
+      T.push(12,"No quedan movimientos por probar: el para termina.");
+    }
+    visitada[f-1][c-1]=false;rec.pop();
+    T.push(21,"visitada"+btPos(f,c)+" ← falso; eliminar(recorrido): saco "+btPos(f,c)+" del recorrido. Recorrer vuelve a quien la llamó.");
+    T.leave();
   }
-  push(3,"Arranco en la casilla de partida "+btPos(ini[0],ini[1])+": cuenta como la casilla 1 y su esfuerzo, "+M[ini[0]-1][ini[1]-1]+", ya está sumado. Hay que visitar K = "+m+"·"+n+" − "+X+" = <b>"+K+"</b> casillas. mejorEsfuerzo = ∞.",0,0);
-  recorrer(ini[0],ini[1],1,M[ini[0]-1][ini[1]-1],null,0,0);
-  push(4,flush()+"Se agotó el árbol de recorridos. "+(mejorR?"Devuelvo el esfuerzo mínimo y la copia guardada.":"Ningún recorrido llegó a visitar "+K+" casillas: el más largo que existe desde "+btPos(ini[0],ini[1])+" tiene "+maxK+"."),0,0,
+  recorrer(ini[0],ini[1],1,M[ini[0]-1][ini[1]-1]);
+  kCur=0;esfCur=0;
+  T.push(4,"devolver mejorEsfuerzo, mejorRecorrido. Se agotó el árbol de recorridos. "+(mejorR?"Devuelvo el esfuerzo mínimo y la copia guardada.":"Ningún recorrido llegó a visitar "+K+" casillas: el más largo que existe desde "+btPos(ini[0],ini[1])+" tiene "+maxK+"."),
     {result:mejorR?"Esfuerzo mínimo = "+mejor+" · "+mejorR.map(p=>btPos(p[0],p[1])).join(" → "):"No existe un recorrido de "+K+" casillas desde "+btPos(ini[0],ini[1])+" · el más largo tiene "+maxK,rcls:mejorR?"good":"bad"});
-  return steps;
+  return T.steps;
 }
 
 /* ---------- s5 · Ciudad base: Floyd como caja negra + la suma de cada fila ---------- */
@@ -6888,17 +7126,24 @@ function s5Parse(text){
 }
 
 /* ---------- renderers ---------- */
-function s2Render(st){
+function s2Render(st,steps,idx){
   if(st.error) return btError(st);
-  const L=S2_PERSONAS, P=S2_PRODUCTOS;
+  const L=S2_PERSONAS, P=S2_PRODUCTOS, prev=btPrev(steps,idx), same=prev&&prev.kind===st.kind;
   const rows=st.O.map((_,p)=>L[p]), cols=st.O[0].map((_,e)=>P[e]);
   const M=st.O.map(r=>r.map(v=>v===null?undefined:v));
   const sCells=[], bestCells=[];
   st.S.forEach((p,e)=>{ if(p!==null&&p>=0) sCells.push([p,e]); });
   if(st.mejorS) st.mejorS.forEach((p,e)=>{ if(p>=0) bestCells.push([p,e]); });
   const fmtS=s=>s.map((p,e)=>P[e]+" → "+(p===null?"·":(p<0?"sin vender":L[p]+" ("+st.O[p][e]+")"))).join(" · ");
+  const letter=p=>p===null?null:(p<0?0:L[p]);
+  const marks={}; if(st.stage!==null&&st.stage!==undefined&&st.stage<st.n) marks[st.stage]={cls:"act",p:"e"};
+  const uMarks={}; if(st.cur) uMarks[st.cur[0]]={cls:"act",p:"p"};
   return '<div>'+dpTable({rows,cols:st.n,colLabels:cols,corner:"p \\ e",M,cur:st.cur||undefined,deps:sCells,path:bestCells})+'</div>'+
     '<div class="vlabel">Fila = persona, columna = producto, «·» = no ofertó · naranja: la oferta que se prueba · celeste: adjudicaciones de S · verde: mejor adjudicación guardada.</div>'+
+    '<div><div class="vlabel">S[e]: persona que se lleva el producto e · 0 = sin vender · «·» = todavía sin decidir (en el pseudocódigo vale 0) · borde naranja = cambió en este paso</div>'+cellsChg(st.S.map(letter),same?prev.S.map(letter):null,marks,1)+'</div>'+
+    '<div><div class="vlabel">usada[p] por persona (1 = X, 2 = Y, …)</div>'+cellsChg(st.usada.map(b=>b?"sí":"no"),same?prev.usada.map(b=>b?"sí":"no"):null,uMarks,1)+'</div>'+
+    '<div><div class="vlabel">cota[e], con e = 1 … n + 1 · «·» = todavía sin calcular</div>'+cellsChg(st.cota,same?prev.cota:null,{},1)+'</div>'+
+    trazaPanel(st,prev)+
     '<div class="setbox"><span class="k">S · ganancia '+st.ganancia+'</span>'+esc(fmtS(st.S))+'</div>'+
     '<div class="setbox"><span class="k">Mejor adjudicación guardada · ganancia '+(st.mejor<0?"—":st.mejor)+'</span>'+(st.mejorS?esc(fmtS(st.mejorS)):"todavía ninguna")+'</div>'+btFoot(st);
 }
@@ -6910,12 +7155,12 @@ function sFrame(m,n,label,inner){
   return '<svg class="bt-grid" viewBox="0 0 '+w+' '+h+'" role="img" aria-label="'+esc(label)+'">'+ax+inner+'</svg>';
 }
 function s4Board(st){
-  const m=st.m,n=st.n,S=BT_CELL,Mg=BT_MARGIN,order={},inBest={};
+  const m=st.m,n=st.n,S=BT_CELL,Mg=BT_MARGIN,order={},inBest={},look=btLook(st);
   st.path.forEach((p,i)=>{ order[p[0]+","+p[1]]=i+1; }); (st.best||[]).forEach(p=>{ inBest[p[0]+","+p[1]]=true; });
   const now=st.path.length?st.path[st.path.length-1].join(","):"";
   let o="",texts="";
   for(let f=0;f<m;f++)for(let c=0;c<n;c++){
-    const key=(f+1)+","+(c+1),cls="sq"+(order[key]?" path":inBest[key]?" best":"")+(key===now?" now":"");
+    const key=(f+1)+","+(c+1),cls="sq"+(order[key]?" path":inBest[key]?" best":"")+(key===now?" now":"")+(key===look?" look":"");
     o+='<g><title>Casilla '+btPos(f+1,c+1)+', esfuerzo '+st.M[f][c]+'</title><rect class="'+cls+'" x="'+(Mg+c*S)+'" y="'+(Mg+f*S)+'" width="'+S+'" height="'+S+'"/></g>';
     texts+='<text class="val" x="'+btCx(c)+'" y="'+btCy(f)+'">'+st.M[f][c]+'</text>';
     if(order[key]) texts+='<text class="lab" x="'+(Mg+c*S+10)+'" y="'+(Mg+f*S+11)+'">'+order[key]+'</text>';
@@ -6925,10 +7170,11 @@ function s4Board(st){
   if(st.path.length>1) o+='<polyline class="trail" points="'+btPts(st.path)+'"/>';
   return sFrame(m,n,"Matriz de esfuerzos de "+m+" por "+n+"; filas y columnas desde 1",o+texts);
 }
-function s4Render(st){
+function s4Render(st,steps,idx){
   if(st.error) return btError(st);
   const seq=P=>P.map(p=>btPos(p[0],p[1])).join(" → ");
-  return s4Board(st)+'<div class="vlabel">Número chico: orden en el recorrido · naranja: recorrido actual · verde: mejor recorrido guardado · el número grande es el esfuerzo de la casilla.</div>'+
+  return s4Board(st)+'<div class="vlabel">Número chico: orden en el recorrido · naranja: recorrido actual · verde: mejor recorrido guardado · celeste punteado: la casilla que se está mirando · el número grande es el esfuerzo de la casilla.</div>'+
+    trazaPanel(st,btPrev(steps,idx))+
     '<div class="setbox"><span class="k">Recorrido actual · '+st.path.length+' de '+st.K+' casillas · esfuerzo '+st.esfuerzo+'</span>'+(st.path.length?seq(st.path):"vacío")+'</div>'+
     '<div class="setbox"><span class="k">Mejor recorrido guardado · esfuerzo '+sNum(st.mejor)+'</span>'+(st.best?seq(st.best):"todavía ninguno")+'</div>'+btFoot(st);
 }

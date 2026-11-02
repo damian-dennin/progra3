@@ -13,7 +13,7 @@ function call(method,params={}){
 }
 async function evaluate(expression){const r=await call('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true});if(r.exceptionDetails)throw new Error(JSON.stringify(r.exceptionDetails));return r.result.value;}
 async function waitFor(expression){for(let t=0;t<100;t++){if(await evaluate(expression))return;await sleep(100);}throw new Error('Timeout: '+expression);}
-async function finish(id){return evaluate(`(()=>{const root=document.getElementById(${JSON.stringify(id)}),next=root.querySelector('[data-a="next"]');let steps=0;while(!next.disabled&&steps<6000){next.click();steps++;}if(!next.disabled)throw Error('No terminó');return {steps,result:root.querySelector('[data-viz]').innerText,count:root.querySelector('.count').textContent};})()`);}
+async function finish(id){return evaluate(`(()=>{const root=document.getElementById(${JSON.stringify(id)}),next=root.querySelector('[data-a="next"]');let steps=0;while(!next.disabled&&steps<70000){next.click();steps++;}if(!next.disabled)throw Error('No terminó');return {steps,result:root.querySelector('[data-viz]').innerText,count:root.querySelector('.count').textContent};})()`);}
 async function capture(id,name){await evaluate(`document.getElementById(${JSON.stringify(id)}).scrollIntoView({block:'start',behavior:'instant'})`);await sleep(150);const r=await call('Page.captureScreenshot',{format:'png'});fs.writeFileSync(path.join(output,name+'.png'),Buffer.from(r.data,'base64'));}
 (async()=>{
   try{
@@ -35,7 +35,7 @@ async function capture(id,name){await evaluate(`document.getElementById(${JSON.s
     await waitFor(`document.readyState==='complete' && !!document.querySelector('#quizbox-c10 .q')`);
     assert.equal(await evaluate(`document.querySelectorAll('.c10-sim [data-controls] .count').length`),4);
     assert.equal(await evaluate(`document.querySelectorAll('#quizbox-c10 .q').length`),10);
-    assert.equal(await evaluate(`document.querySelectorAll('.classbar').length`),10);
+    assert.equal(await evaluate(`document.querySelectorAll('.classbar').length`),11);
     assert.equal(await evaluate(`Array.from(document.querySelectorAll('a[href^="#"]')).filter(a=>!document.getElementById(a.hash.slice(1))).length`),0);
     // Recorrer todos los pasos reales prueba el renderer con helpers del documento y el resaltado.
     const expected={reinas:'Solución: [0, 4, 7, 5, 2, 6, 1, 3]',suma:'4 soluciones',particion:'2 asignaciones',procesadores:'Tiempo mínimo = 7'};
@@ -53,6 +53,36 @@ async function capture(id,name){await evaluate(`document.getElementById(${JSON.s
     await evaluate(`document.querySelector('#sim-c10-reinas [data-a="play"]').click()`);await sleep(1000);
     await evaluate(`document.querySelector('#sim-c10-reinas [data-a="play"]').click()`);
     assert(!(await evaluate(`document.querySelector('#sim-c10-reinas .count').textContent`)).startsWith('1/'));
+    // Traza: botones de salto, ir al final, velocidad y clic en la barra. Todo se prueba sobre Reinas con N = 4.
+    {
+      const R='#sim-c10-reinas',click=sel=>evaluate(`document.querySelector(${JSON.stringify(sel)}).click()`);
+      const onLine=()=>evaluate(`(document.querySelector('${R} .cl.on')||{dataset:{}}).dataset.l`),explain=()=>evaluate(`document.querySelector('${R} [data-explain]').innerText`);
+      const count=()=>evaluate(`document.querySelector('${R} .count').textContent`);
+      await evaluate(`document.getElementById('c10-reinas-n').value='4';document.querySelector('${R} [data-reload]').click()`);
+      for(const a of ['over','out','last'])assert.equal(await evaluate(`document.querySelector('${R} [data-a="${a}"]').hidden`),false,'botón '+a);
+      assert.equal(await evaluate(`document.querySelector('${R} [data-speed]').hidden`),false);
+      // «Saltar llamada» desde la línea que llama a ReinaValida cae en la línea 5 con el resultado, sin pasar por la 20–26
+      for(let i=0;i<80&&!(await explain()).includes('llamo a ReinaValida');i++)await click(`${R} [data-a="next"]`);
+      assert.equal(await onLine(),'5');assert((await explain()).includes('llamo a ReinaValida'));
+      const antes=+(await count()).split('/')[0];
+      await click(`${R} [data-a="over"]`);
+      assert.equal(await onLine(),'5');assert((await explain()).includes('ReinaValida devolvió'),await explain());
+      assert(+(await count()).split('/')[0]>antes+2,'saltó por encima de los pasos de ReinaValida');
+      // «Salir de la función» desde adentro de ReinaValida vuelve a la línea 5
+      await evaluate(`document.querySelector('${R} [data-a="first"]').click()`);
+      for(let i=0;i<200&&!(await explain()).includes('Entro a ReinaValida');i++)await click(`${R} [data-a="next"]`);
+      assert.equal(await onLine(),'20');assert((await evaluate(`document.querySelector('${R} .traza').innerText`)).includes('ReinaValida'));
+      // pila y variables visibles, con lo que cambió resaltado: el marco recién creado aparece con sus variables marcadas
+      assert(await evaluate(`document.querySelectorAll('${R} .traza .frame').length===2 && document.querySelectorAll('${R} .traza .tv.chg').length>=1`));
+      await click(`${R} [data-a="out"]`);
+      assert.equal(await onLine(),'5');assert((await explain()).includes('ReinaValida devolvió'));
+      // clic en la barra salta a esa parte; «Ir al final» termina la ejecución
+      await evaluate(`(()=>{const b=document.querySelector('${R} .bar'),r=b.getBoundingClientRect();b.dispatchEvent(new MouseEvent('click',{bubbles:true,clientX:r.left+r.width*0.5,clientY:r.top+2}));})()`);
+      const mitad=(await count()).split('/').map(Number);assert(mitad[0]>mitad[1]*0.4&&mitad[0]<mitad[1]*0.6,'la barra salta a la mitad: '+mitad);
+      await click(`${R} [data-a="last"]`);const fin=(await count()).split('/');assert.equal(fin[0],fin[1]);
+      assert((await evaluate(`document.querySelector('${R} [data-viz]').innerText`)).includes('Solución'));
+      await evaluate(`document.getElementById('c10-reinas-n').value='8';document.querySelector('${R} [data-reload]').click()`);
+    }
     // Selector literal, presets, mensajes de error y recuperación.
     await evaluate(`document.getElementById('c10-suma-modo').value='literal';document.getElementById('c10-suma-modo').dispatchEvent(new Event('change'))`);
     assert((await finish('sim-c10-suma')).result.includes('1 solución'));
@@ -85,10 +115,13 @@ async function capture(id,name){await evaluate(`document.getElementById(${JSON.s
     }
     await evaluate(`document.querySelector('a[href="#clase10"]').click()`);
     assert.equal(await evaluate('location.hash'),'#clase10');
-    // Página de práctica: enlace relativo y sus 20 simuladores existentes.
+    // Página de práctica: enlace relativo y sus 29 simuladores existentes.
     const practice=pathToFileURL(path.resolve(__dirname,'../apuntes interactivos/prog3-ejercicios.html')).href;
     await call('Page.navigate',{url:practice});await waitFor(`document.readyState==='complete' && !!document.querySelector('#sim-g1 .count')`);
-    assert.equal(await evaluate(`document.querySelectorAll('.sim [data-controls] .count').length`),20);
+    assert.equal(await evaluate(`document.querySelectorAll('.sim [data-controls] .count').length`),29);
+    // Los cinco simuladores de Backtracking de la página traen la traza y los botones de salto; los demás, no.
+    for(const id of ['g15','g16','g17','s2','s4'])assert.equal(await evaluate(`document.querySelector('#sim-${id} [data-a="over"]').hidden`),false,'sim-'+id);
+    for(const id of ['g1','g12','s1','s5'])assert.equal(await evaluate(`document.querySelector('#sim-${id} [data-a="over"]').hidden`),true,'sim-'+id);
     assert(await evaluate(`!!document.querySelector('a[href="index.html#clase10"]')`));
     assert.equal(errors.length,0,JSON.stringify(errors));
     console.log(JSON.stringify({status:'OK',totals,errors:errors.length,screenshots:output},null,2));

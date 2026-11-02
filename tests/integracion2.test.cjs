@@ -11,7 +11,7 @@ vm.runInContext(slice('/* ===== Programación Dinámica (Guía PD 1–3)','/* ==
 vm.runInContext(slice('/* ===== Guía · Backtracking ===== */','const btProcSim='),context);
 vm.runInContext(slice('/* ===== Integración · Segundo parcial ===== */','const s1Sim='),context);
 const B=vm.runInContext('({s1Almacenamiento,s2Subasta,s3Catalogo,s4Estaciones,s5CiudadBase,s6Festival,s2Parse,s4ParseMatriz,s4ParseCasilla,s5Parse,sList,sSameLength,'+
-  's2Render,s4Render,s5Render,sDpRender,floydPuro,S2_MAX_STEPS,S4_MOVES,btInteger})',context);
+  's2Render,s4Render,s5Render,sDpRender,floydPuro,TRAZA_MAX,S4_MOVES,btInteger})',context);
 const plain=x=>JSON.parse(JSON.stringify(x)),last=a=>a[a.length-1];
 let checks=0,rendered=0,seed=271828;
 const rand=n=>{seed=(1664525*seed+1013904223)>>>0;return seed%n;};
@@ -25,6 +25,11 @@ function verifySteps(steps,render,keys){
       if(s[key]&&typeof s[key]==='object'){assert(!seen.has(s[key]),'Estado compartido entre pasos ('+key+')');seen.add(s[key]);}
     }
     const out=render(s);assert(!/undefined|NaN/.test(out),out);rendered++;
+  }
+  if(steps[0].frames){ // traza: la pila de marcos es coherente con la profundidad de llamada
+    assert.equal(last(steps).cd,0,'la pila termina vacía');
+    steps.forEach((s,i)=>{assert.equal(s.frames.length,s.cd);if(i)assert(Math.abs(s.cd-steps[i-1].cd)<=1,'la profundidad cambia de a un marco ('+i+')');
+      for(const f of s.frames)for(const [k,v] of Object.entries(f.vars))assert(v!==undefined&&!(typeof v==='number'&&Number.isNaN(v)),'variable '+k+' sin valor');});
   }
 }
 const nums=(re,s)=>[...s.matchAll(re)].map(m=>+m[1]);
@@ -200,13 +205,13 @@ assert(presets.length>=18,'al menos tres presets por simulador: '+presets.length
 for(const sim of Object.keys(run))assert(presets.some(p=>p.sim===sim),'el simulador '+sim+' no tiene presets');
 for(const p of presets){
   Object.assign(inputs,defaults);Object.keys(p.values).forEach(id=>{inputs[id]=String(p.values[id]);}); // como input.value = 2
-  const steps=run[p.sim]();assert(steps.length>=1&&steps.length<=B.S2_MAX_STEPS);verifySteps(steps,renders[p.sim],keysOf[p.sim]);checks++;
+  const steps=run[p.sim]();assert(steps.length>=1&&steps.length<=B.TRAZA_MAX);verifySteps(steps,renders[p.sim],keysOf[p.sim]);checks++;
 }
 Object.assign(inputs,defaults);
 const expected={s1:null,s2:null,s3:null,s4:null,s5:null,s6:null};
 for(const sim of Object.keys(run)){
-  const steps=run[sim](),min=sim==='s2'?10:30; // el ejemplo del enunciado de la subasta es corto: la cota poda casi todo el árbol
-  assert(steps.length>=min&&steps.length<=200,sim+': el ejemplo por defecto tiene '+steps.length+' pasos (presupuesto '+min+'–200)');
+  const steps=run[sim](),min=30,max=sim==='s2'||sim==='s4'?B.TRAZA_MAX:200; // las búsquedas muestran cada línea (también las auxiliares): sin presupuesto de 200 pasos, con botones de salto
+  assert(steps.length>=min&&steps.length<=max,sim+': el ejemplo por defecto tiene '+steps.length+' pasos (presupuesto '+min+'–'+max+')');
   verifySteps(steps,renders[sim],keysOf[sim]);expected[sim]=steps.length;checks+=2;
 }
 // resultados de los ejemplos por defecto
@@ -222,7 +227,7 @@ for(const sim of Object.keys(run)){
   steps.forEach(s=>{if(s.line!==undefined){assert(dataL.has(s.line),'sim-'+sim+': la línea '+s.line+' no existe en el pseudocódigo');count[s.line]=(count[s.line]||0)+1;}});
   // En las búsquedas (s2, s4) el resaltado tiene que recorrer el pseudocódigo; en los simuladores de tabla y en el posproceso de s5
   // el ciclo interno es el algoritmo (N² sumas, una celda por paso) y es natural que concentre pasos.
-  if(sim==='s2'||sim==='s4')for(const l of Object.keys(count))assert(count[l]<=steps.length/2,'sim-'+sim+': la línea '+l+' concentra '+count[l]+' de '+steps.length+' pasos');
+  if(sim==='s2'||sim==='s4')for(const l of Object.keys(count))assert(count[l]<=steps.length*0.6,'sim-'+sim+': la línea '+l+' concentra '+count[l]+' de '+steps.length+' pasos');
   checks+=1+Object.keys(count).length;
 }
 

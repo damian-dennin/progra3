@@ -282,6 +282,23 @@ table.dp td.cur{border-color:var(--acc);background:var(--acc-w);font-weight:700;
 .c11-section pre.ps{overflow-x:auto;max-width:100%}
 @media(max-width:1100px){.c11-sim .sim-body{grid-template-columns:1fr}}
 @media(max-width:600px){.c11-sim .code{max-height:300px}.c11-sim .inputs{width:100%}.c11-sim .inputs label{flex-basis:100%}}
+
+/* --- traza de ejecución: pila de marcos, variables y botones de salto (compartido por ambos apuntes) --- */
+.controls [hidden]{display:none!important}
+.controls select{font-family:var(--sans);font-size:13px;border:1px solid var(--line);border-radius:6px;padding:5px 6px;background:#fff;color:var(--ink)}
+.bar{cursor:pointer}
+.traza{min-width:0}
+.traza .frame{flex-wrap:wrap;justify-content:flex-start;align-items:baseline;gap:4px 10px;overflow-wrap:anywhere}
+.traza .frame>b{color:var(--ink)}
+.tvs{display:flex;flex-wrap:wrap;gap:4px}
+.tv{background:#fff;border:1px solid var(--line);border-radius:4px;padding:0 6px;font-size:12px}
+.tv.chg{border-color:var(--acc);background:var(--acc-w);color:#a24b12;font-weight:700}
+.cell.chg .v{box-shadow:0 0 0 2px var(--acc)}
+.setbox.hl{border-color:var(--acc);background:var(--acc-w)}
+.c10-board .cmp{stroke:var(--c-log);stroke-width:3}
+.c10-board .cand{fill:var(--acc-w);stroke:var(--acc);stroke-width:2;stroke-dasharray:4 3}
+.c10-board .cmpline{stroke:var(--c-log);stroke-width:2.5;stroke-dasharray:5 3;pointer-events:none}
+.c10-board .cmpline.bad{stroke:var(--bad)}
 </style>
 </head>
 <body>
@@ -4803,7 +4820,7 @@ devolver verdadero</pre></div>
 
 <div class="note"><b>La inicialización omite una columna</b><code>S[E] ← 0</code>, seguida del incremento antes de verificar y de la condición <code>S[E] &lt; n−1</code>, solo prueba columnas 1…n−1. No se pueden poner n reinas sin repetir columna en n−1 columnas. La corrección mínima es iniciar S[E] en −1 y llamar <code>Reinas(S, 0, n)</code>. La prosa del PDF habla de columnas 1…N: es otra numeración; no se puede mezclar con ese límite del ciclo. Probá N = 1 para ver la diferencia.</div>
 <h3>Simulador</h3>
-<p>Las candidatas rechazadas y los retrocesos consecutivos se agrupan en un paso con su explicación. La búsqueda sigue completa. El vector solo muestra el prefijo activo; una posición pendiente no representa una reina. El código del simulador refleja el modo elegido.</p>
+<p>Cada línea del pseudocódigo es un paso, también las de <code>ReinaValida</code>: vas a ver cómo <code>i</code> recorre las filas anteriores y cuál es el primer ataque que corta la función. Abajo del vector aparece la <strong>pila de llamadas</strong> con las variables locales de cada marco (<code>E</code>, <code>solucion</code>, <code>S[E]</code>, <code>i</code>…); lo que cambió en el paso tiene el borde naranja. Los valores en gris del vector son restos de una rama ya abandonada: el pseudocódigo no los borra, se pisan al volver a entrar. Con N = 8 son miles de pasos: usá <b>Saltar llamada</b> para ejecutar de una vez un <code>ReinaValida</code> o una llamada recursiva entera, <b>Salir de la función</b> para terminar la actual, la barra de progreso para ir a otra parte y el selector de velocidad para reproducir. El código del simulador refleja el modo elegido.</p>
 <div class="sim c10-sim" id="sim-c10-reinas">
   <div class="sim-head"><div class="title">N reinas<small>Una solución · tablero y vector desde 0</small></div>
     <div class="inputs"><label for="c10-reinas-n">N (1–8)</label><input type="number" id="c10-reinas-n" min="1" max="8" value="8"><label for="c10-reinas-modo">Versión</label><select id="c10-reinas-modo"><option value="corregido">Corregido</option><option value="literal">Literal del PDF</option></select><button class="ghost" data-c10-sim="queens" data-c10-preset="{&quot;c10-reinas-n&quot;: 1}">N = 1</button><button class="ghost" data-c10-sim="queens" data-c10-preset="{&quot;c10-reinas-n&quot;: 2}">N = 2</button><button class="ghost" data-c10-sim="queens" data-c10-preset="{&quot;c10-reinas-n&quot;: 3}">N = 3</button><button class="ghost" data-c10-sim="queens" data-c10-preset="{&quot;c10-reinas-n&quot;: 4}">N = 4</button><button class="ghost" data-c10-sim="queens" data-c10-preset="{&quot;c10-reinas-n&quot;: 8}">N = 8</button><button class="ghost" data-reload>Ejecutar</button></div>
@@ -5014,7 +5031,13 @@ fin para</pre></div>
 <div class="cl" data-l="12"><span class="ln">13</span><span class="tx">    fin si</span></div>
 <div class="cl" data-l="13"><span class="ln">14</span><span class="tx">    cargas[p] ← cargas[p] − tiempos[E]</span></div>
 <div class="cl" data-l="14"><span class="ln">15</span><span class="tx">    S[E] ← sin asignar</span></div>
-<div class="cl" data-l="15"><span class="ln">16</span><span class="tx">fin para</span></div></div><div class="viz" data-viz></div></div>
+<div class="cl" data-l="15"><span class="ln">16</span><span class="tx">fin para</span></div>
+<div class="cl hdr" data-l="40"><span class="ln">17</span><span class="tx">Máximo(cargas)  // auxiliar propio</span></div>
+<div class="cl" data-l="41"><span class="ln">18</span><span class="tx">    m ← cargas[0]</span></div>
+<div class="cl" data-l="42"><span class="ln">19</span><span class="tx">    para q = 1 hasta longitud(cargas) − 1</span></div>
+<div class="cl" data-l="43"><span class="ln">20</span><span class="tx">        si cargas[q] &gt; m</span></div>
+<div class="cl" data-l="44"><span class="ln">21</span><span class="tx">            m ← cargas[q]</span></div>
+<div class="cl" data-l="45"><span class="ln">22</span><span class="tx">    devolver m</span></div></div><div class="viz" data-viz></div></div>
   <div class="explain" data-explain></div><div class="controls" data-controls></div>
 </div>
 <h3>Complejidad temporal</h3>
@@ -5147,9 +5170,15 @@ fin para</pre></div>
 <div class="cl" data-l="11"><span class="ln">11</span><span class="tx">        Buscar(E + 1)</span></div>
 <div class="cl" data-l="12"><span class="ln">12</span><span class="tx">        cargas[p] ← cargas[p] − t.tiempo; S[t.id] ← pendiente</span></div>
 <div class="cl" data-l="13"><span class="ln">13</span><span class="tx">Buscar(0)</span></div>
-<div class="cl" data-l="14"><span class="ln">14</span><span class="tx">devolver mejorTiempo, mejorS</span></div></div><div class="viz" data-viz></div></div>
+<div class="cl" data-l="14"><span class="ln">14</span><span class="tx">devolver mejorTiempo, mejorS</span></div>
+<div class="cl hdr" data-l="40"><span class="ln">15</span><span class="tx">Máximo(cargas)  // auxiliar propio</span></div>
+<div class="cl" data-l="41"><span class="ln">16</span><span class="tx">    m ← cargas[0]</span></div>
+<div class="cl" data-l="42"><span class="ln">17</span><span class="tx">    para q = 1 hasta longitud(cargas) − 1</span></div>
+<div class="cl" data-l="43"><span class="ln">18</span><span class="tx">        si cargas[q] &gt; m</span></div>
+<div class="cl" data-l="44"><span class="ln">19</span><span class="tx">            m ← cargas[q]</span></div>
+<div class="cl" data-l="45"><span class="ln">20</span><span class="tx">    devolver m</span></div></div><div class="viz" data-viz></div></div>
 <div class="explain" data-explain></div><div class="controls" data-controls></div></div>
-<p>La tabla final compara ambos recorridos. Se cuentan nodos, incluidos la raíz y los podados. Las podas consecutivas pueden agruparse en un paso; ninguna alternativa se omite por motivos de animación. El costo de generar la cota Greedy no forma parte de ese conteo de nodos.</p>
+<p>La tabla final compara ambos recorridos. Se cuentan nodos, incluidos la raíz y los podados. Cada línea es un paso (también <code>Máximo</code>, el auxiliar que calcula la cota inferior): usá <b>Saltar llamada</b> y <b>Salir de la función</b> para no recorrer el cálculo de cada máximo. El costo de generar la cota Greedy no forma parte de ese conteo de nodos, y acá se toma como un dato: el recorrido de Greedy está en el simulador anterior.</p>
 <h3>Complejidad temporal</h3>
 <p>Sin una poda útil hay m alternativas por tarea y profundidad t: hasta mᵗ asignaciones. Cada nodo calcula un máximo O(m), y copiar una mejora cuesta O(t). Para m ≥ 2, una cota superior del costo es <span class="tag t-exp">O((m + t)·mᵗ)</span>, más el ordenamiento O(t log t) y, cuando se usa, Greedy O(t log t + t·m). Con m = 1 la búsqueda es O(t), y el ordenamiento mantiene el costo total O(t log t). Memoria de la búsqueda: O(t + m), aparte de las instantáneas del simulador.</p>
 <div class="first"><b>Menos nodos no es otra clase de complejidad</b>Una buena solución inicial puede ahorrar muchas ramas. El peor caso sigue siendo exponencial: no alcanza con escribir «tiene poda» para justificar tiempo polinomial.</div>
@@ -5246,7 +5275,7 @@ Se conserva el original a la vista. El simulador ejecuta únicamente la versión
     devolver (total, 1)  // par (numerador, denominador)</pre></div>
 <p>El orden por valor/peso se prepara una sola vez; cada evaluación recorre ese orden y saltea los objetos ya decididos. Los empates conservan el índice original. Solo puede haber un objeto fraccionado. Se compara <code>numerador ≤ mejorValor × denominador</code>, con enteros exactos; el decimal se muestra únicamente para facilitar la lectura.</p>
 <h3>Versión corregida y simulador</h3>
-<p>Elegí de uno a seis objetos, con valores y pesos enteros entre 1 y 1000, y capacidad entre 0 y 6000. El orden de búsqueda siempre es O1…On y primero excluir, después incluir, como el <code>para i = 0 hasta 1</code>. Los árboles ilustrativos del PDF dibujan primero la rama «Sí»; por eso su recorrido visual no coincide con este orden.</p>
+<p>Elegí de uno a seis objetos, con valores y pesos enteros entre 1 y 1000, y capacidad entre 0 y 6000. El orden de búsqueda siempre es O1…On y primero excluir, después incluir, como el <code>para i = 0 hasta 1</code>. Los árboles ilustrativos del PDF dibujan primero la rama «Sí»; por eso su recorrido visual no coincide con este orden. Cada línea es un paso, también las de <code>CotaFraccionaria</code>: en el panel de variables ves <code>restante</code>, <code>total</code> y el objeto que se mira, y con <b>Saltar llamada</b> pasás de golpe por encima del cálculo de una cota o de un <code>Buscar</code> entero.</p>
 <div class="sim c11-sim" id="sim-c11-mochila">
 <div class="sim-head"><div class="title">Mochila 0/1: factibilidad y cota superior<small>Versión corregida · Salida: valor óptimo y selección de objetos enteros</small></div>
 <div class="inputs"><label for="c11-mochila-valores">Valores</label><input id="c11-mochila-valores" type="text" value="35,30,20,12">
@@ -5267,7 +5296,16 @@ Se conserva el original a la vista. El simulador ejecuta únicamente la versión
 <div class="cl" data-l="11"><span class="ln">11</span><span class="tx">        S[E] ← i; Buscar(E + 1, peso + i × pesos[E], valor + i × valores[E])</span></div>
 <div class="cl" data-l="12"><span class="ln">12</span><span class="tx">        S[E] ← pendiente</span></div>
 <div class="cl" data-l="13"><span class="ln">13</span><span class="tx">Buscar(0, 0, 0)</span></div>
-<div class="cl" data-l="14"><span class="ln">14</span><span class="tx">devolver mejorValor, mejorS</span></div></div><div class="viz" data-viz></div></div>
+<div class="cl" data-l="14"><span class="ln">14</span><span class="tx">devolver mejorValor, mejorS</span></div>
+<div class="cl hdr" data-l="40"><span class="ln">15</span><span class="tx">CotaFraccionaria(E, restante, valorActual)  // auxiliar propio</span></div>
+<div class="cl" data-l="41"><span class="ln">16</span><span class="tx">    total ← valorActual</span></div>
+<div class="cl" data-l="42"><span class="ln">17</span><span class="tx">    recorrer objetos pendientes (índice ≥ E) por valor/peso decreciente</span></div>
+<div class="cl" data-l="43"><span class="ln">18</span><span class="tx">        si restante = 0: terminar recorrido</span></div>
+<div class="cl" data-l="44"><span class="ln">19</span><span class="tx">        si pesoObjeto ≤ restante</span></div>
+<div class="cl" data-l="45"><span class="ln">20</span><span class="tx">            total ← total + valorObjeto</span></div>
+<div class="cl" data-l="46"><span class="ln">21</span><span class="tx">            restante ← restante − pesoObjeto</span></div>
+<div class="cl" data-l="48"><span class="ln">22</span><span class="tx">        sino: devolver (total × pesoObjeto + restante × valorObjeto, pesoObjeto)</span></div>
+<div class="cl" data-l="49"><span class="ln">23</span><span class="tx">    devolver (total, 1)  // par (numerador, denominador)</span></div></div><div class="viz" data-viz></div></div>
 <div class="explain" data-explain></div><div class="controls" data-controls></div></div>
 <h3>Complejidad temporal</h3>
 <p>Sin cota superior, el recorrido binario cumple <code>T(n) = 2·T(n−1) + O(1)</code>: caso resta, a = 2, b = 1, k = 0 → <span class="tag t-exp">O(2ⁿ)</span>. La lámina 26 da esos parámetros. Copiar cada mejora agrega O(n); una cota superior que incluye esas copias es O(n·2ⁿ).</p>
@@ -5310,10 +5348,17 @@ function Sim(rootId, build, render){
   const codeEl=root.querySelector("[data-code]"), vizEl=root.querySelector("[data-viz]");
   const expEl=root.querySelector("[data-explain]"), ctlEl=root.querySelector("[data-controls]");
   const lines=Array.from(codeEl.querySelectorAll(".cl"));
+  /* Los botones «Saltar llamada», «Salir de la función», «Ir al final» y el selector de velocidad
+     solo aparecen si los steps traen `cd` (profundidad de llamada) y hay llamadas anidadas. */
   ctlEl.innerHTML='<button data-a="first">|◀</button><button data-a="prev">Anterior</button>'+
-    '<button class="primary" data-a="next">Siguiente paso</button><button data-a="play">Reproducir</button>'+
-    '<div class="bar"><i></i></div><span class="count"></span>';
-  const bar=ctlEl.querySelector(".bar i"), cnt=ctlEl.querySelector(".count");
+    '<button class="primary" data-a="next">Siguiente paso</button>'+
+    '<button data-a="over" hidden title="Ejecuta de una vez toda la llamada de esta línea y se detiene al volver (Mayús + →)">Saltar llamada</button>'+
+    '<button data-a="out" hidden title="Ejecuta lo que falta de la función actual y se detiene al volver a quien la llamó">Salir de la función</button>'+
+    '<button data-a="play">Reproducir</button>'+
+    '<select data-speed hidden aria-label="Velocidad de reproducción"><option value="800">1×</option><option value="200">4×</option><option value="50">16×</option><option value="12">64×</option></select>'+
+    '<button data-a="last" hidden>Ir al final</button>'+
+    '<div class="bar" title="Clic para saltar a esa parte de la ejecución"><i></i></div><span class="count"></span>';
+  const bar=ctlEl.querySelector(".bar i"), cnt=ctlEl.querySelector(".count"), speed=ctlEl.querySelector("[data-speed]");
   const btn=a=>ctlEl.querySelector('[data-a="'+a+'"]');
   const S={steps:[],i:0,timer:null};
   function paint(){
@@ -5324,7 +5369,7 @@ function Sim(rootId, build, render){
       l.classList.toggle("dim", st.line!==undefined && n!==st.line);
     });
     expEl.innerHTML='<span class="step-n">Paso '+(S.i+1)+' de '+S.steps.length+'</span>'+(st.msg||"");
-    vizEl.innerHTML=render(st,S.steps);
+    vizEl.innerHTML=render(st,S.steps,S.i);
     const on=codeEl.querySelector(".cl.on");
     if(on && on.offsetTop < codeEl.scrollTop || (on && on.offsetTop > codeEl.scrollTop+codeEl.clientHeight-30))
       codeEl.scrollTop = Math.max(0, on.offsetTop - codeEl.clientHeight/2);
@@ -5332,29 +5377,50 @@ function Sim(rootId, build, render){
     cnt.textContent=(S.i+1)+"/"+S.steps.length;
     btn("prev").disabled=S.i===0; btn("first").disabled=S.i===0;
     btn("next").disabled=S.i>=S.steps.length-1;
+    btn("over").disabled=btn("out").disabled=btn("last").disabled=S.i>=S.steps.length-1;
     btn("play").textContent=S.timer?"Pausar":"Reproducir";
   }
   function stop(){ if(S.timer){clearInterval(S.timer);S.timer=null;} }
   function go(i){ S.i=Math.max(0,Math.min(S.steps.length-1,i)); if(S.i===S.steps.length-1) stop(); paint(); }
+  /* over: primer paso posterior con profundidad ≤ la actual · out: primero con profundidad < la actual */
+  function jump(kind){
+    stop();
+    const d=S.steps[S.i].cd||0; let j=S.i+1;
+    while(j<S.steps.length-1){ const c=S.steps[j].cd||0; if(kind==="over"?c<=d:c<d) break; j++; }
+    go(j);
+  }
+  function tick(){ if(S.i>=S.steps.length-1){stop();paint();} else go(S.i+1); }
   ctlEl.addEventListener("click",e=>{
     const b=e.target.closest("button"); if(!b) return;
     const k=b.dataset.a;
     if(k==="next") go(S.i+1);
     if(k==="prev") go(S.i-1);
     if(k==="first"){stop();go(0);}
+    if(k==="last"){stop();go(S.steps.length-1);}
+    if(k==="over"||k==="out") jump(k);
     if(k==="play"){
       if(S.timer){stop();paint();}
       else{ if(S.i>=S.steps.length-1) S.i=0;
-        S.timer=setInterval(()=>{ if(S.i>=S.steps.length-1){stop();paint();} else go(S.i+1); },800); paint(); }
+        S.timer=setInterval(tick,+speed.value||800); paint(); }
     }
+  });
+  speed.addEventListener("change",()=>{ if(S.timer){clearInterval(S.timer);S.timer=setInterval(tick,+speed.value||800);} });
+  ctlEl.querySelector(".bar").addEventListener("click",e=>{
+    const r=e.currentTarget.getBoundingClientRect(); if(!r.width) return;
+    stop(); go(Math.round(((e.clientX-r.left)/r.width)*(S.steps.length-1)));
   });
   root.tabIndex=0;
   root.addEventListener("keydown",e=>{
-    if(e.key==="ArrowRight"){stop();go(S.i+1);e.preventDefault();}
+    if(e.target.closest("input,select,textarea")) return;
+    if(e.key==="ArrowRight"){ if(e.shiftKey&&!btn("over").hidden) jump("over"); else {stop();go(S.i+1);} e.preventDefault(); }
     if(e.key==="ArrowLeft"){stop();go(S.i-1);e.preventDefault();}
   });
   root.querySelectorAll("[data-reload]").forEach(b=>b.addEventListener("click",()=>api.reload()));
-  const api={ reload(){ stop(); S.steps=build()||[{msg:"Sin pasos."}]; S.i=0; paint(); }, root };
+  const api={ reload(){
+    stop(); S.steps=build()||[{msg:"Sin pasos."}]; S.i=0;
+    const traced=S.steps.some(s=>(s.cd||0)>=2);
+    ["over","out","last"].forEach(a=>btn(a).hidden=!traced); speed.hidden=!traced;
+    paint(); }, root };
   api.reload(); return api;
 }
 const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
@@ -8187,147 +8253,366 @@ const QUESTIONS_C9=[
 
 
 /* ==================== CLASE 10: BACKTRACKING ==================== */
-/* Builders puros: la interfaz y las pruebas usan exactamente la misma búsqueda.
-   Cada paso guarda sus propios vectores; nunca se corta la búsqueda para acortar la animación. */
-function c10Queens(n, literal){
-  const S=new Array(n).fill(null), steps=[];
-  let calls=0, checks=0, backtracks=0, pending=[];
-  const state=(line,msg,more={})=>steps.push(Object.assign({kind:"queens",n,arr:S.slice(),line,msg,
-    vars:["llamadas: "+calls,"candidatas probadas: "+checks,"retrocesos: "+backtracks]},more));
-  state(2,"Arranco en E = 0. "+(literal?"Modo literal: S[E] empieza en 0 y se incrementa antes de probar; la columna 0 queda afuera.":"Modo corregido: S[E] empieza en −1; el primer incremento permite probar la columna 0."));
-  function visit(E){
-    calls++;
-    const rejected=[];
-    for(let c=literal?1:0;c<n;c++){
-      checks++;
-      const attackers=[];
-      for(let i=0;i<E;i++) if(S[i]===c || Math.abs(S[i]-c)===E-i) attackers.push(i);
-      if(attackers.length){rejected.push({col:c,rows:attackers});continue;}
-      S[E]=c;
-      const prior=pending.length?pending.join(" ")+" ":""; pending=[];
-      state(5,prior+"E = "+E+": "+(rejected.length?"descarto columnas "+rejected.map(r=>r.col).join(", ")+" por ataques. ":"")+"Coloco la reina en ("+E+", "+c+"): no comparte columna ni diagonal con las anteriores. "+(E===n-1?"Es la última fila.":"Avanzo a E = "+(E+1)+"."),{stage:E,rejected:rejected.map(r=>({col:r.col,rows:r.rows.slice()}))});
-      rejected.length=0;
-      if(E===n-1) return true;
-      if(visit(E+1)) return true;
-      pending.push("Retiro la reina de ("+E+", "+c+") y sigo con otra columna.");
-      S[E]=null; backtracks++;
+/* ===== Traza de ejecución: una pila de marcos con las variables locales ===== */
+/* Un step por cada línea ejecutada del pseudocódigo, incluidas las funciones auxiliares. `cd` es la
+   profundidad de llamada (cantidad de marcos activos) y `frames` la pila con las variables locales de cada
+   marco; Sim usa `cd` para «Saltar llamada» y «Salir de la función». El tope evita colgar el navegador con
+   entradas gigantes: se informa con un error visible, no se recorta en silencio. */
+const TRAZA_MAX=60000;
+function Traza(snap,tip){
+  const steps=[],stack=[];
+  const copy=v=>Array.isArray(v)?v.slice():v;
+  const clone=o=>{const r={};Object.keys(o).forEach(k=>{r[k]=copy(o[k]);});return r;};
+  return {
+    steps,stack,
+    enter(fn,vars){stack.push({fn,vars:clone(vars||{})});},
+    leave(){stack.pop();},
+    set(k,v){stack[stack.length-1].vars[k]=copy(v);},
+    vars(o){stack[stack.length-1].vars=clone(o);},
+    push(line,msg,extra){
+      if(steps.length>=TRAZA_MAX)throw new Error('La búsqueda necesita más de '+TRAZA_MAX+' pasos para mostrarse.'+(tip?' '+tip:''));
+      steps.push(Object.assign({line,msg,cd:stack.length,frames:stack.map(f=>({fn:f.fn,vars:clone(f.vars)}))},snap(),extra));
     }
-    pending.push("Fila "+E+" agotada"+(rejected.length?": las columnas "+rejected.map(r=>r.col).join(", ")+" tienen conflicto":"")+"; vuelvo a la anterior.");
-    S[E]=null;
-    return false;
+  };
+}
+const trazaFmt=v=>Array.isArray(v)?'['+v.join(', ')+']':String(v);
+const trazaTF=b=>b?'<b>verdadero</b>':'<b>falso</b>';
+function trazaPanel(st,prev){
+  if(!st.frames||!st.frames.length)return '';
+  const old=(prev&&prev.frames)||[];
+  return '<div class="traza"><div class="vlabel">Pila de llamadas y variables locales · borde naranja = cambió en este paso</div><div class="stack">'+
+    st.frames.map((f,i,a)=>{
+      const o=old[i]&&old[i].fn===f.fn?old[i].vars:null;
+      const chips=Object.keys(f.vars).map(k=>{
+        const v=trazaFmt(f.vars[k]),changed=!o||!(k in o)||trazaFmt(o[k])!==v;
+        return '<span class="tv'+(changed?' chg':'')+'">'+esc(k)+' = '+esc(v)+'</span>';
+      }).join('');
+      return '<div class="frame'+(i===a.length-1?' top':'')+'"><b>'+esc(f.fn)+'</b><span class="tvs">'+(chips||'<span class="tv">sin variables todavía</span>')+'</span></div>';
+    }).join('')+'</div></div>';
+}
+/* Como cells(), pero las celdas que cambiaron respecto del paso anterior llevan un borde naranja. */
+function cellsChg(arr,prev,marks,base){
+  const m={};
+  arr.forEach((v,i)=>{
+    const o=Object.assign({},marks&&marks[i]);
+    if(prev&&String(prev[i])!==String(v))o.cls=(o.cls?o.cls+' ':'')+'chg';
+    m[i]=o;
+  });
+  return cells(arr,m,base);
+}
+
+/* Builders puros: la interfaz y las pruebas usan exactamente la misma búsqueda.
+   Un step por cada línea ejecutada, incluidas las funciones auxiliares (ReinaValida, Máximo). Nada se agrupa:
+   el alumno puede avanzar de a una línea o usar «Saltar llamada» / «Salir de la función» del motor.
+   Cada step guarda sus propias copias de los vectores y de la pila de marcos. */
+const c10Inf=x=>x===Infinity?'∞':String(x);
+/* Máximo(cargas): auxiliar propio que usan Procesadores (clases 10 y 11). `mark(q)` resalta la carga que se mira. */
+function c10MaxTrace(T,loads,mark){
+  const m=loads.length;
+  T.enter('Máximo',{cargas:loads});
+  let mx=loads[0];
+  T.set('m',mx);
+  T.push(41,'m ← cargas[0] = '+mx+': arranco suponiendo que la primera carga es la mayor.');
+  for(let q=1;q<m;q++){
+    mark(q);T.set('q',q);
+    T.push(42,'para q = 1 hasta longitud(cargas) − 1 = '+(m-1)+': q = '+q+'. Miro cargas['+q+'] = '+loads[q]+'.');
+    const gt=loads[q]>mx;
+    T.push(43,'¿cargas[q] &gt; m? ¿'+loads[q]+' &gt; '+mx+'? → '+trazaTF(gt)+(gt?'.':': m no cambia.'));
+    if(gt){mx=loads[q];T.set('m',mx);T.push(44,'m ← cargas[q] = '+mx+'.');}
   }
+  mark(null);
+  if(m>1)T.set('q',m);
+  T.push(42,m>1?'q = '+m+' supera '+(m-1)+': el para termina.':'para q = 1 hasta longitud(cargas) − 1 = 0: no da ninguna vuelta, hay un solo procesador.');
+  T.push(45,'devolver m = '+mx+': es la mayor carga.');
+  T.leave();
+  return mx;
+}
+function c10Queens(n, literal){
+  const S=new Array(n).fill(null), rej=[], valid=[];
+  let calls=0, checks=0, backtracks=0, curE=0, cmp=null, attack=false;
+  const T=Traza(()=>({kind:'queens',n,arr:S.slice(),stage:curE,rejected:(rej[curE]||[]).map(r=>({col:r.col,rows:r.rows.slice()})),
+    valid:valid[curE],cmp,attack,vars:['llamadas a Reinas: '+calls,'candidatas probadas: '+checks,'retrocesos: '+backtracks]}),'Probá con un N más chico.');
+  const start=literal?0:-1;
+  function valida(E){
+    T.enter('ReinaValida',{E});
+    T.push(20,'Entro a ReinaValida(S, E = '+E+'). Comparo la candidata ('+E+', '+S[E]+') con las reinas de las filas 0 a '+(E-1)+'.'+(E===0?' Todavía no hay ninguna.':''));
+    for(let i=0;i<E;i++){
+      cmp=i;attack=false;
+      T.vars({E,i});
+      T.push(21,'para i = 0 hasta E − 1 = '+(E-1)+': ahora i = '+i+'. Miro la reina de la fila '+i+', que está en la columna S['+i+'] = '+S[i]+'.');
+      const dc=Math.abs(S[i]-S[E]), dr=Math.abs(i-E), sameCol=S[i]===S[E], diag=dc===dr, hit=sameCol||diag;
+      attack=hit;
+      T.vars({E,i,'S[i]':S[i],'S[E]':S[E],'|S[i] − S[E]|':dc,'|i − E|':dr});
+      T.push(22,'¿S[i] = S[E]? ¿'+S[i]+' = '+S[E]+'? → '+trazaTF(sameCol)+'. ¿|S[i] − S[E]| = |i − E|? ¿'+dc+' = '+dr+'? → '+trazaTF(diag)+'. '+
+        (hit?'Con O alcanza una verdadera: '+(sameCol?'misma columna':'misma diagonal')+'.':'Las dos son falsas: esta reina no ataca a la candidata.'));
+      if(hit){
+        rej[E].push({col:S[E],rows:[i]});
+        T.push(23,'devolver falso: la reina de la fila '+i+' ataca a la candidata ('+E+', '+S[E]+'). La función termina sin mirar las filas que faltan.');
+        T.leave();cmp=null;attack=false;
+        return false;
+      }
+    }
+    cmp=null;attack=false;
+    T.vars({E,i:E});
+    T.push(21,'i = '+E+' supera E − 1 = '+(E-1)+': el para termina sin encontrar ataques.');
+    T.push(26,'devolver verdadero: la candidata ('+E+', '+S[E]+') no comparte columna ni diagonal con ninguna reina anterior.');
+    T.leave();
+    return true;
+  }
+  function visit(E){
+    calls++;curE=E;rej[E]=[];valid[E]=null;
+    let solucion=false;
+    T.enter('Reinas',{E,n});
+    T.set('solucion','falso');
+    T.push(1,'Entro a Reinas(S, E = '+E+', n = '+n+'). Declaro solucion y la dejo en falso: todavía no sé si la fila '+E+' tiene salida.');
+    const start0=start;
+    S[E]=start0;T.set('S[E]',start0);
+    T.push(2,'S[E] ← '+start0+': la columna de la fila '+E+' arranca en '+start0+'. '+(literal?'Modo literal: el primer incremento la lleva a la columna 1, así que la columna 0 nunca se prueba.':'Modo corregido: el primer incremento la lleva a la columna 0.'));
+    for(;;){
+      const c1=S[E]<n-1, go=c1&&!solucion;
+      T.push(3,'¿S[E] &lt; n − 1? ¿'+S[E]+' &lt; '+(n-1)+'? → '+trazaTF(c1)+(c1?'. ¿NO solucion? solucion es '+(solucion?'verdadero':'falso')+' → '+trazaTF(!solucion):'')+'. '+
+        (go?'Pruebo otra columna.':solucion?'Ya hay solución: salgo del mientras.':'Se probaron todas las columnas de la fila '+E+': salgo del mientras.'));
+      if(!go)break;
+      S[E]++;T.set('S[E]',S[E]);valid[E]=null;checks++;
+      T.push(4,'S[E] ← S[E] + 1 = '+S[E]+': la candidata es la casilla ('+E+', '+S[E]+').');
+      T.push(5,'si ReinaValida(S, E): llamo a ReinaValida(S, '+E+') para saber si la candidata ('+E+', '+S[E]+') es compatible con las reinas anteriores.');
+      const ok=valida(E);
+      valid[E]=ok;
+      T.push(5,'ReinaValida devolvió '+trazaTF(ok)+'. '+(ok?'La reina de ('+E+', '+S[E]+') queda ubicada: entro al si.':'La candidata se descarta: no entro al si y vuelvo al mientras.'));
+      if(!ok)continue;
+      const last=E===n-1;
+      T.push(6,'¿E = n − 1? ¿'+E+' = '+(n-1)+'? → '+trazaTF(last)+(last?': acabo de ubicar la última reina.':': faltan '+(n-1-E)+' reinas, sigo con la fila '+(E+1)+'.'));
+      if(last){
+        solucion=true;T.set('solucion','verdadero');
+        T.push(7,'solucion ← verdadero: las '+n+' reinas están ubicadas.');
+      }else{
+        T.push(9,'solucion ← Reinas(S, E + 1, n): llamo a Reinas(S, '+(E+1)+', '+n+') para ubicar la reina de la fila '+(E+1)+'.');
+        const r=visit(E+1);
+        curE=E;solucion=r;T.set('solucion',r?'verdadero':'falso');
+        if(!r)backtracks++;
+        T.push(9,'Reinas(S, '+(E+1)+', '+n+') devolvió '+trazaTF(r)+': solucion ← '+(r?'verdadero':'falso')+'. '+
+          (r?'Hay solución completa; el mientras no sigue buscando.':'La fila '+(E+1)+' no tiene columna válida con la reina de ('+E+', '+S[E]+'): retrocedo y pruebo otra columna en la fila '+E+'.'));
+      }
+    }
+    T.push(13,'devolver solucion = '+(solucion?'verdadero':'falso')+(solucion?'.':': ninguna columna de la fila '+E+' llevó a una solución; vuelvo a la fila anterior.'));
+    T.leave();
+    return solucion;
+  }
+  T.push(undefined,'Llamada inicial: Reinas(S, 0, '+n+') con S sin valores. '+(literal?'Modo literal: S[E] empieza en 0 y se incrementa antes de probar; la columna 0 queda afuera.':'Modo corregido: S[E] empieza en −1; el primer incremento permite probar la columna 0.'));
   const found=visit(0), answer=found?S.slice():null;
-  state(13,(pending.length?pending.join(" ")+" ":"")+(found?"Devuelvo verdadero y conservo S. Corto al encontrar la primera solución.":literal?"Devuelvo falso. El código literal solo prueba n − 1 columnas para n reinas: este fallo no demuestra que el problema no tenga solución.":"Devuelvo falso: se agotaron todas las alternativas sin ubicar las n reinas."),
-    {found,answer,result:found?"Solución: ["+S.join(", ")+"]":literal?"Sin solución en el modo literal":"No hay solución",rcls:found?"good":"bad"});
-  return steps;
+  curE=found?n:-1;
+  T.push(undefined,'Terminó la llamada inicial. '+(found?'Devolvió verdadero y S conserva la solución: cortó al encontrar la primera.':literal?'Devolvió falso. El código literal solo prueba n − 1 columnas para n reinas: este fallo no demuestra que el problema no tenga solución.':'Devolvió falso: se agotaron todas las alternativas sin ubicar las n reinas.'),
+    {found,answer,result:found?'Solución: ['+S.join(', ')+']':literal?'Sin solución en el modo literal':'No hay solución',rcls:found?'good':'bad'});
+  return T.steps;
 }
 function c10Subsets(A,target,literal){
-  const S=new Array(A.length).fill(null), solutions=[], steps=[], negative=A.some(x=>x<0);
-  let decisions=0,pruned=0;
-  const push=(line,msg,stage)=>steps.push({kind:"subsets",input:A.slice(),arr:S.slice(),stage,line,msg,
-    sum:S.reduce((v,x,i)=>v+(x===1?A[i]:0),0),solutions:solutions.map(s=>s.slice()),
-    vars:["objetivo: "+target,"decisiones: "+decisions,"ramas podadas: "+pruned]});
-  push(1,"Inicio con suma 0 y etapa 1. Los índices visibles van de 1 a n. "+(literal?"Modo literal: solo continúa si ActSuma < m.":negative?"Hay negativos: desactivo la poda por exceso; una suma alta todavía puede bajar.":"Sin negativos, solo podo si la suma supera el objetivo; la igualdad sigue explorando."),0);
-  function visit(e,sum){
-    for(let value=0;value<=1;value++){
-      S[e]=value; decisions++;
-      const next=sum+A[e]*value,leaf=e===A.length-1;
-      const prune=!leaf && (literal?!(next<target):!negative && next>target);
-      if(prune) pruned++;
-      if(leaf && next===target) solutions.push(S.slice());
-      push(leaf?(next===target?6:5):prune?8:9,
-        "Etapa "+(e+1)+": "+(value?"incluyo":"excluyo")+" "+A[e]+" (i = "+(e+1)+"). Suma: "+sum+" + "+A[e]+"·"+value+" = "+next+". "+
-        (leaf?(next===target?"Iguala el objetivo: muestro una copia de la solución y sigo buscando.":"Es la última etapa y no iguala el objetivo: descarto esta hoja."):prune?(literal?"La condición estricta "+next+" < "+target+" es falsa: podo esta rama.":"La suma supera el objetivo y ningún valor restante es negativo: podo."):"Continúo con la etapa "+(e+2)+". Las decisiones siguientes se deshacen antes de probar la otra alternativa."),e);
-      if(!leaf && !prune) visit(e+1,next);
-      S[e]=null;
+  const n=A.length, S=new Array(n).fill(null), solutions=[], negative=A.some(x=>x<0);
+  let decisions=0, pruned=0, curE=0, curSum=0;
+  const T=Traza(()=>({kind:'subsets',input:A.slice(),arr:S.slice(),stage:curE,sum:curSum,solutions:solutions.map(s=>s.slice()),
+    vars:['objetivo m = '+target,'decisiones: '+decisions,'ramas podadas: '+pruned]}),'Probá con menos elementos.');
+  T.push(undefined,'Llamada inicial: sumaM(v, m = '+target+', ActSolucion, ActSuma = 0, etapa = 1). Los índices visibles van de 1 a n. '+
+    (literal?'Modo literal: solo continúa si ActSuma &lt; m.':negative?'Hay negativos: desactivo la poda por exceso; una suma alta todavía puede bajar.':'Sin negativos, solo podo si la suma supera el objetivo; la igualdad sigue explorando.'));
+  function visit(e,sumIn){
+    let sum=sumIn;
+    curE=e;curSum=sum;
+    T.enter('sumaM',{etapa:e+1,ActSuma:sum});
+    for(let i=0;i<=1;i++){
+      curE=e;curSum=sum;
+      T.set('i',i);
+      T.push(1,'para i = 0 hasta 1: ahora i = '+i+'. '+(i===0?'Primero pruebo excluir el '+A[e]+'.':'Ahora pruebo incluir el '+A[e]+'.'));
+      S[e]=i;decisions++;
+      T.push(2,'ActSolucion[etapa] ← i: ActSolucion['+(e+1)+'] ← '+i+' ('+(i?'incluyo':'excluyo')+' el valor '+A[e]+').');
+      const before=sum;sum=sum+A[e]*i;curSum=sum;T.set('ActSuma',sum);
+      T.push(3,'ActSuma ← ActSuma + v[etapa] · i = '+before+' + '+A[e]+' · '+i+' = '+sum+'. '+(i===0?'Con i = 0 no cambia.':'La suma sube porque incluyo el valor.'));
+      const leaf=e===n-1;
+      T.push(4,'¿etapa = tamaño(v)? ¿'+(e+1)+' = '+n+'? → '+trazaTF(leaf)+(leaf?': es la última decisión.':': todavía quedan decisiones.'));
+      if(leaf){
+        const eq=sum===target;
+        T.push(5,'¿ActSuma = m? ¿'+sum+' = '+target+'? → '+trazaTF(eq)+(eq?'.':': esta hoja no es solución.'));
+        if(eq){
+          solutions.push(S.slice());
+          T.push(6,'mostrar(ActSolucion): solución número '+solutions.length+', una copia de S. Sigo buscando las demás.');
+        }
+      }else{
+        const ok=literal?sum<target:(negative||sum<=target);
+        if(!ok)pruned++;
+        T.push(8,'¿'+(literal?'ActSuma &lt; m':'hayNegativos O ActSuma ≤ m')+'? '+
+          (literal?'¿'+sum+' &lt; '+target+'?':'hayNegativos es '+(negative?'verdadero':'falso')+'; ¿'+sum+' ≤ '+target+'?')+' → '+trazaTF(ok)+
+          (ok?'. Sigo con la etapa '+(e+2)+'.':literal?': la condición estricta falla, podo esta rama.':': la suma supera el objetivo y ningún valor restante es negativo, podo esta rama.'));
+        if(ok){
+          T.push(9,'sumaM(v, m, ActSolucion, '+sum+', '+(e+2)+'): llamo con ActSuma = '+sum+' y etapa = '+(e+2)+'. ActSuma se pasa por valor.');
+          visit(e+1,sum);
+          curE=e;curSum=sum;
+          T.push(9,'sumaM volvió. Mi ActSuma sigue valiendo '+sum+' (la llamada tenía su propia copia). Continúo con el para.');
+        }
+      }
     }
+    curE=e;
+    T.set('i',2);
+    T.push(1,'i = 2 supera 1: el para termina y sumaM vuelve a quien la llamó.');
+    T.leave();
   }
   visit(0,0);
-  push(undefined,"Se agotó el árbol. "+(literal?"El modo literal puede omitir soluciones: una rama con suma igual al objetivo antes de la última etapa no continúa.":"Cada vector 0/1 corresponde a una elección de posiciones. El subconjunto vacío también cuenta si suma 0."),undefined);
-  Object.assign(steps[steps.length-1],{result:solutions.length+(solutions.length===1?" solución":" soluciones"),rcls:solutions.length?"good":"bad"});
-  return steps;
+  curE=-1;curSum=0;
+  T.push(undefined,'Se agotó el árbol. '+(literal?'El modo literal puede omitir soluciones: una rama con suma igual al objetivo antes de la última etapa no continúa.':'Cada vector 0/1 corresponde a una elección de posiciones. El subconjunto vacío también cuenta si suma 0.'));
+  Object.assign(T.steps[T.steps.length-1],{result:solutions.length+(solutions.length===1?' solución':' soluciones'),rcls:solutions.length?'good':'bad'});
+  return T.steps;
 }
 function c10Partition(A){
-  const S=new Array(A.length).fill(null),solutions=[],steps=[];
-  let decisions=0,leaves=0;
-  const push=(line,msg,stage)=>steps.push({kind:"partition",input:A.slice(),arr:S.slice(),stage,line,msg,
-    solutions:solutions.map(s=>s.slice()),vars:["decisiones: "+decisions,"hojas verificadas: "+leaves]});
-  push(1,"E = 0: cada posición va al conjunto 1 o al 2. La suma se calcula al completar una asignación, como en el PDF.",0);
+  const n=A.length, S=new Array(n).fill(null), solutions=[];
+  let decisions=0, leaves=0, curE=0, cmp=null;
+  const T=Traza(()=>({kind:'partition',input:A.slice(),arr:S.slice(),stage:curE,cmp,solutions:solutions.map(s=>s.slice()),
+    vars:['decisiones: '+decisions,'hojas verificadas: '+leaves]}),'Probá con menos elementos.');
+  T.push(undefined,'Llamada inicial: particionMitad(S, 0, v). Cada posición va al conjunto 1 o al 2. La suma se calcula al completar una asignación, como en el PDF.');
   function visit(E){
-    for(let group=1;group<=2;group++){
-      S[E]=group; decisions++;
-      if(E===A.length-1){
+    curE=E;
+    T.enter('particionMitad',{E});
+    for(let g=1;g<=2;g++){
+      curE=E;
+      T.set('i',g);
+      T.push(1,'para i = 1 hasta 2: ahora i = '+g+'. Pruebo poner v['+E+'] = '+A[E]+' en el conjunto '+g+'.');
+      S[E]=g;decisions++;
+      T.push(2,'S[E] ← i: S['+E+'] ← '+g+'.');
+      const leaf=E===n-1;
+      T.push(3,'¿E = longitud(v) − 1? ¿'+E+' = '+(n-1)+'? → '+trazaTF(leaf)+(leaf?': todas las posiciones tienen destino.':': faltan posiciones.'));
+      if(leaf){
         leaves++;
-        let a=0,b=0; A.forEach((x,i)=>{if(S[i]===1)a+=x;else b+=x;});
-        if(a===b) solutions.push(S.slice());
-        push(a===b?13:12,"Asigno "+A[E]+" (i = "+E+") al conjunto "+group+". Vector completo: recorro sus "+A.length+" posiciones. Suma 1 = "+a+", suma 2 = "+b+" → "+(a===b?"iguales: muestro S y sigo.":"distintas: descarto esta hoja."),E);
+        let s1=0,s2=0;
+        T.set('suma1',0);T.set('suma2',0);
+        T.push(4,'suma1 ← 0; suma2 ← 0.');
+        for(let k=0;k<n;k++){
+          cmp=k;T.set('j',k);
+          T.push(5,'para j = 0 hasta longitud(v) − 1 = '+(n-1)+': j = '+k+'. Miro v['+k+'] = '+A[k]+', que está en el conjunto S['+k+'] = '+S[k]+'.');
+          const in1=S[k]===1;
+          T.push(6,'¿S[j] = 1? ¿'+S[k]+' = 1? → '+trazaTF(in1)+'.');
+          if(in1){s1+=A[k];T.set('suma1',s1);T.push(7,'suma1 ← suma1 + v[j] = '+(s1-A[k])+' + '+A[k]+' = '+s1+'.');}
+          else{s2+=A[k];T.set('suma2',s2);T.push(9,'suma2 ← suma2 + v[j] = '+(s2-A[k])+' + '+A[k]+' = '+s2+'.');}
+        }
+        cmp=null;T.set('j',n);
+        T.push(5,'j = '+n+' supera '+(n-1)+': el para termina. suma1 = '+s1+', suma2 = '+s2+'.');
+        const eq=s1===s2;
+        T.push(12,'¿suma1 = suma2? ¿'+s1+' = '+s2+'? → '+trazaTF(eq)+(eq?'.':': descarto esta hoja.'));
+        if(eq){
+          solutions.push(S.slice());
+          T.push(13,'Mostrar(S): solución número '+solutions.length+'. Sigo con las demás asignaciones.');
+        }
       }else{
-        push(16,"Asigno "+A[E]+" (i = "+E+") al conjunto "+group+" y llamo particionMitad(S, "+(E+1)+", v). Al volver, pruebo la otra alternativa.",E);
+        T.push(16,'particionMitad(S, E + 1, v): llamo para decidir la posición '+(E+1)+'. Al volver, pruebo la otra alternativa.');
         visit(E+1);
+        curE=E;
+        T.push(16,'particionMitad volvió. Continúo con el para de la posición '+E+'.');
       }
-      S[E]=null;
     }
+    curE=E;
+    T.set('i',3);
+    T.push(1,'i = 3 supera 2: el para termina y particionMitad vuelve a quien la llamó.');
+    T.leave();
   }
   visit(0);
-  push(undefined,"Búsqueda completa. Conjuntos etiquetados: cada partición aparece dos veces, al intercambiar 1 y 2. Los elementos repetidos se distinguen por su índice; no los elimino.",undefined);
-  Object.assign(steps[steps.length-1],{result:solutions.length+" asignaciones · "+(solutions.length/2)+" particiones sin intercambiar etiquetas",rcls:solutions.length?"good":"bad"});
-  return steps;
+  curE=-1;
+  T.push(undefined,'Búsqueda completa. Conjuntos etiquetados: cada partición aparece dos veces, al intercambiar 1 y 2. Los elementos repetidos se distinguen por su índice; no los elimino.');
+  Object.assign(T.steps[T.steps.length-1],{result:solutions.length+' asignaciones · '+(solutions.length/2)+' particiones sin intercambiar etiquetas',rcls:solutions.length?'good':'bad'});
+  return T.steps;
 }
 function c10Processors(A,m){
-  const S=new Array(A.length).fill(null),loads=new Array(m).fill(0),steps=[];
-  let best=Infinity,bestAssignment=null,decisions=0,pruned=0;
-  const push=(line,msg,stage)=>steps.push({kind:"processors",input:A.slice(),arr:S.slice(),loads:loads.slice(),stage,line,msg,best,
-    bestAssignment:bestAssignment?bestAssignment.slice():null,vars:["decisiones: "+decisions,"ramas podadas: "+pruned]});
-  push(1,"Todas las cargas empiezan en 0; mejorTiempo = ∞. Cada tarea se ejecuta completa en un único procesador. Se busca minimizar el momento en que termina el último.",0);
+  const n=A.length, S=new Array(n).fill(null), loads=new Array(m).fill(0);
+  let best=Infinity, bestAssignment=null, decisions=0, pruned=0, curE=0, cmpLoad=null;
+  const T=Traza(()=>({kind:'processors',input:A.slice(),arr:S.slice(),loads:loads.slice(),stage:curE,cmpLoad,best,
+    bestAssignment:bestAssignment?bestAssignment.slice():null,vars:['decisiones: '+decisions,'ramas podadas: '+pruned]}),'Probá con menos tareas o menos procesadores.');
+  T.push(undefined,'Inicio: S sin asignar, cargas = ['+loads.join(', ')+'] y mejorTiempo = ∞. Cada tarea se ejecuta completa en un único procesador. Se busca minimizar el momento en que termina el último. Llamo a Asignar(0).');
   function visit(E){
+    curE=E;
+    T.enter('Asignar',{E});
     for(let p=0;p<m;p++){
-      S[E]=p; loads[p]+=A[E]; decisions++;
-      const maximum=Math.max(...loads),leaf=E===A.length-1;
+      curE=E;
+      T.set('p',p);
+      T.push(1,'para p = 0 hasta m − 1: p = '+p+'. Pruebo la tarea '+(E+1)+' ('+A[E]+') en el procesador P'+(p+1)+'.');
+      S[E]=p;decisions++;
+      T.push(2,'S[E] ← p: S['+E+'] ← '+p+'. La tarea '+(E+1)+' va a P'+(p+1)+'.');
+      loads[p]+=A[E];
+      T.push(3,'cargas[p] ← cargas[p] + tiempos[E] = '+(loads[p]-A[E])+' + '+A[E]+' = '+loads[p]+'.');
+      T.push(4,'actual ← máximo(cargas): llamo a Máximo con cargas = ['+loads.join(', ')+'].');
+      const actual=c10MaxTrace(T,loads,q=>{cmpLoad=q;});
+      T.set('actual',actual);
+      T.push(4,'máximo(cargas) devolvió '+actual+': actual ← '+actual+'.');
+      const leaf=E===n-1;
+      T.push(5,'¿E = n − 1? ¿'+E+' = '+(n-1)+'? → '+trazaTF(leaf)+(leaf?': la asignación está completa.':': faltan tareas.'));
       if(leaf){
-        const improves=maximum<best,previous=best;
-        if(improves){best=maximum;bestAssignment=S.slice();}
-        push(improves?7:6,"Tarea "+(E+1)+" ("+A[E]+") → P"+(p+1)+". Asignación completa: máx("+loads.join(", ")+") = "+maximum+". "+(improves?"Mejora "+(previous===Infinity?"∞":previous)+": guardo una copia de S.":"No mejora "+best+": conservo la primera mejor asignación."),E);
-      }else if(maximum>=best){
-        pruned++;
-        push(9,"Tarea "+(E+1)+" → P"+(p+1)+". La carga máxima parcial "+maximum+" ≥ mejorTiempo "+best+". Las duraciones no son negativas: esta rama no puede mejorar, así que la podo.",E);
+        const improves=actual<best;
+        T.push(6,'¿actual &lt; mejorTiempo? ¿'+actual+' &lt; '+c10Inf(best)+'? → '+trazaTF(improves)+(improves?'.':': no mejora, conservo la primera mejor asignación.'));
+        if(improves){
+          const previous=best;best=actual;bestAssignment=S.slice();
+          T.push(7,'mejorTiempo ← actual; mejorS ← copia(S): mejora '+c10Inf(previous)+' y ahora vale '+actual+'. La copia queda aparte porque S se va a seguir modificando.');
+        }
       }else{
-        push(10,"Tarea "+(E+1)+" ("+A[E]+") → P"+(p+1)+"; cargas ["+loads.join(", ")+"]. Sigo con la próxima tarea. Al volver resto esta duración antes de probar otro procesador.",E);
-        visit(E+1);
+        const go=actual<best;
+        if(!go)pruned++;
+        T.push(9,'¿actual &lt; mejorTiempo? ¿'+actual+' &lt; '+c10Inf(best)+'? → '+trazaTF(go)+(go?'. Sigo con la tarea '+(E+2)+'.':': la carga máxima parcial ya no puede mejorar lo guardado (las duraciones no son negativas): podo.'));
+        if(go){
+          T.push(10,'Asignar(E + 1): llamo para asignar la tarea '+(E+2)+'.');
+          visit(E+1);
+          curE=E;
+          T.push(10,'Asignar volvió. Antes de probar otro procesador deshago esta decisión.');
+        }
       }
-      loads[p]-=A[E]; S[E]=null;
+      loads[p]-=A[E];
+      T.push(13,'cargas[p] ← cargas[p] − tiempos[E] = '+(loads[p]+A[E])+' − '+A[E]+' = '+loads[p]+': restauro la carga.');
+      S[E]=null;
+      T.push(14,'S[E] ← sin asignar: libero la posición '+E+'.');
     }
+    curE=E;
+    T.set('p',m);
+    T.push(1,'p = '+m+' supera m − 1 = '+(m-1)+': el para termina y Asignar vuelve a quien la llamó.');
+    T.leave();
   }
   visit(0);
-  push(undefined,"Terminé de explorar todas las ramas que podían mejorar. Las cargas de trabajo se restauraron a 0; la mejor asignación quedó guardada aparte.",undefined);
-  Object.assign(steps[steps.length-1],{result:"Tiempo mínimo = "+best,rcls:"good"});
-  return steps;
+  curE=-1;
+  T.push(undefined,'Terminé de explorar todas las ramas que podían mejorar. Las cargas de trabajo se restauraron a 0; la mejor asignación quedó guardada aparte.');
+  Object.assign(T.steps[T.steps.length-1],{result:'Tiempo mínimo = '+best,rcls:'good'});
+  return T.steps;
 }
-function c10Items(A,S,value,base){
-  const selected=A.map((x,i)=>S[i]===value?esc(x)+" <small>(i="+(i+base)+")</small>":null).filter(x=>x!==null);
+function c10Items(A,S,value,base,limit){
+  const top=limit===undefined?Infinity:limit;
+  const selected=A.map((x,i)=>i<=top&&S[i]===value?esc(x)+" <small>(i="+(i+base)+")</small>":null).filter(x=>x!==null);
   return selected.length?"{ "+selected.join("; ")+" }":"∅";
 }
 function c10Board(st){
-  const side=36,n=st.n,dim=(n+1)*side;
+  const side=36,n=st.n,dim=(n+1)*side,E=st.stage;
   let out='<svg class="c10-board" viewBox="0 0 '+dim+' '+dim+'" role="img" aria-label="Tablero de '+n+' por '+n+'; filas y columnas desde 0">';
   for(let i=0;i<n;i++)out+='<text class="axis" x="'+((i+1.5)*side)+'" y="18">'+i+'</text><text class="axis" x="18" y="'+((i+1.5)*side)+'">'+i+'</text>';
+  const mid=(r,c)=>[(c+1.5)*side,(r+1.5)*side];
   for(let r=0;r<n;r++)for(let c=0;c<n;c++){
-    const reject=r===st.stage&&(st.rejected||[]).find(x=>x.col===c),queen=st.arr[r]===c;
-    const label='Fila '+r+', columna '+c+(queen?': reina':reject?': conflicto con fila(s) '+reject.rows.join(', '):': libre');
-    out+='<g><title>'+label+'</title><rect class="square '+((r+c)%2?'dark':'light')+(queen?' queen':reject?' conflict':'')+'" x="'+((c+1)*side)+'" y="'+((r+1)*side)+'" width="36" height="36"/>';
-    if(queen||reject)out+='<text class="'+(queen?'piece':'cross')+'" x="'+((c+1.5)*side)+'" y="'+((r+1.5)*side)+'">'+(queen?'♛':'×')+'</text>';
+    const mine=st.arr[r]===c,confirmed=mine&&(r<E||(r===E&&st.valid===true)),candidate=mine&&r===E&&!confirmed&&st.valid!==false;
+    const reject=r===E&&(st.rejected||[]).find(x=>x.col===c),cmpSquare=st.cmp!==null&&st.cmp!==undefined&&r===st.cmp&&mine;
+    const label='Fila '+r+', columna '+c+(confirmed?': reina ubicada':candidate?': candidata en prueba':reject?': conflicto con la fila '+reject.rows.join(', '):': libre');
+    out+='<g><title>'+label+'</title><rect class="square '+((r+c)%2?'dark':'light')+(confirmed?' queen':candidate?' cand':reject?' conflict':'')+(cmpSquare?' cmp':'')+'" x="'+((c+1)*side)+'" y="'+((r+1)*side)+'" width="36" height="36"/>';
+    if(confirmed||candidate||reject)out+='<text class="'+(confirmed||candidate?'piece':'cross')+'" x="'+((c+1.5)*side)+'" y="'+((r+1.5)*side)+'">'+(confirmed||candidate?'♛':'×')+'</text>';
     out+='</g>';
   }
-  return out+'</svg><div class="vlabel">♛ reina válida · × candidata descartada por columna o diagonal en esta etapa. Los retrocesos y las candidatas rechazadas se agrupan en el relato del paso.</div>';
+  if(st.cmp!==null&&st.cmp!==undefined&&st.arr[st.cmp]!==null&&st.arr[E]!==null&&st.arr[E]!==undefined){
+    const a=mid(st.cmp,st.arr[st.cmp]),b=mid(E,st.arr[E]);
+    out+='<line class="cmpline'+(st.attack?' bad':'')+'" x1="'+a[0]+'" y1="'+a[1]+'" x2="'+b[0]+'" y2="'+b[1]+'"/>';
+  }
+  return out+'</svg><div class="vlabel">♛ reina ubicada · ♛ con borde punteado = candidata que se está probando · × candidata descartada · línea celeste = la comparación que hace ReinaValida (roja si encuentra un ataque).</div>';
 }
-function c10Render(st){
+function c10Render(st,steps,idx){
   if(st.error)return '<div class="result bad" role="alert">'+esc(st.error)+'</div>';
+  const prev=steps&&idx>0?steps[idx-1]:null, sameKind=prev&&prev.kind===st.kind&&prev.arr;
   let out='',base=st.kind==='subsets'?1:0;
-  const marks={}; if(st.stage!==undefined)marks[st.stage]={cls:'act',p:st.kind==='subsets'?'etapa':'E'};
+  const limit=st.stage===undefined||st.stage<0?-1:st.stage, marks={}, inMarks={};
+  if(st.kind!=='processors')st.arr.forEach((x,i)=>{if(i>limit&&x!==null)marks[i]={cls:'out'};});
+  if(limit>=0&&limit<st.arr.length)marks[limit]={cls:'act',p:st.kind==='subsets'?'etapa':'E'};
+  if(st.cmp!==null&&st.cmp!==undefined){
+    if(st.kind==='queens')marks[st.cmp]={cls:'cmp',p:'i'};
+    else if(st.cmp<st.arr.length){marks[st.cmp]={cls:'cmp',p:'j'};inMarks[st.cmp]={cls:'cmp',p:'j'};}
+  }
   if(st.kind==='queens')out+=c10Board(st);
-  else out+='<div><div class="vlabel">'+(st.kind==='processors'?'Duraciones (tareas desde 1)':'Valores de entrada (índice visible en cada celda)')+'</div>'+cells(st.input,{},st.kind==='processors'?1:base)+'</div>';
-  out+='<div><div class="vlabel">'+(st.kind==='queens'?'S[fila] = columna (desde 0)':st.kind==='subsets'?'S[i]: 0 = excluir · 1 = incluir':st.kind==='partition'?'S[i]: conjunto 1 o 2':'S[tarea]: número de procesador (desde 1)')+' · «·» = pendiente</div>'+cells(st.kind==='processors'?st.arr.map(x=>x===null?null:x+1):st.arr,marks,st.kind==='processors'?1:base)+'</div>';
-  if(st.kind==='subsets')out+='<div class="setbox"><span class="k">Subconjunto parcial · suma '+st.sum+'</span>'+c10Items(st.input,st.arr,1,1)+'</div>';
-  if(st.kind==='partition')for(let g=1;g<=2;g++)out+='<div class="setbox"><span class="k">Conjunto '+g+' · suma parcial '+st.input.reduce((a,x,i)=>a+(st.arr[i]===g?x:0),0)+'</span>'+c10Items(st.input,st.arr,g,0)+'</div>';
+  else out+='<div><div class="vlabel">'+(st.kind==='processors'?'Duraciones (tareas desde 1)':'Valores de entrada (índice visible en cada celda)')+'</div>'+cells(st.input,inMarks,st.kind==='processors'?1:base)+'</div>';
+  const proc=x=>x===null?null:x+1, shown=st.kind==='processors'?st.arr.map(proc):st.arr, prevShown=sameKind?(st.kind==='processors'?prev.arr.map(proc):prev.arr):null;
+  out+='<div><div class="vlabel">'+(st.kind==='queens'?'S[fila] = columna (desde 0)':st.kind==='subsets'?'ActSolucion[i]: 0 = excluir · 1 = incluir':st.kind==='partition'?'S[i]: conjunto 1 o 2':'S[tarea]: número de procesador (desde 1)')+' · «·» = pendiente'+(st.kind==='processors'?'':' · gris = valor viejo de una rama ya abandonada (se sobrescribe al volver a entrar) · borde naranja = cambió en este paso')+'</div>'+cellsChg(shown,prevShown,marks,st.kind==='processors'?1:base)+'</div>';
+  if(st.kind==='subsets')out+='<div class="setbox"><span class="k">Subconjunto parcial · ActSuma de esta llamada = '+st.sum+'</span>'+c10Items(st.input,st.arr,1,1,limit)+'</div>';
+  if(st.kind==='partition')for(let g=1;g<=2;g++)out+='<div class="setbox"><span class="k">Conjunto '+g+' · suma de lo decidido '+st.input.reduce((a,x,i)=>a+(i<=limit&&st.arr[i]===g?x:0),0)+'</span>'+c10Items(st.input,st.arr,g,0,limit)+'</div>';
+  out+=trazaPanel(st,prev);
   if(st.solutions){
     out+='<div class="setbox c10-solutions"><span class="k">Soluciones encontradas: '+st.solutions.length+'</span>';
     if(!st.solutions.length)out+='<span class="vlabel">Todavía ninguna.</span>';
@@ -8336,7 +8621,7 @@ function c10Render(st){
   }
   if(st.kind==='processors'){
     out+='<div class="c10-loads">';
-    st.loads.forEach((load,p)=>{out+='<div class="setbox"><span class="k">P'+(p+1)+' · carga actual '+load+'</span><div class="c10-load"><i style="width:'+(100*load/Math.max(1,...st.loads))+'%"></i></div>'+c10Items(st.input,st.arr,p,1)+'</div>';});
+    st.loads.forEach((load,p)=>{out+='<div class="setbox'+(st.cmpLoad===p?' hl':'')+'"><span class="k">P'+(p+1)+' · carga actual '+load+'</span><div class="c10-load"><i style="width:'+(100*load/Math.max(1,...st.loads))+'%"></i></div>'+c10Items(st.input,st.arr,p,1)+'</div>';});
     out+='</div><div class="setbox"><span class="k">Mejor tiempo: '+(st.best===Infinity?'∞':st.best)+'</span>';
     if(st.bestAssignment){
       for(let p=0;p<st.loads.length;p++)out+='<div>P'+(p+1)+': '+c10Items(st.input,st.bestAssignment,p,1)+' · carga '+st.input.reduce((a,x,i)=>a+(st.bestAssignment[i]===p?x:0),0)+'</div>';
@@ -8418,64 +8703,107 @@ const QUESTIONS_C10=[
 
 
 /* ==================== CLASE 11: BACKTRACKING CON COTAS ==================== */
-/* Búsquedas puras. La agrupación visual de podas no modifica el recorrido. */
-function c11Record(steps,st){
-  const previous=steps[steps.length-1];
-  if(st.event==='prune' && previous && previous.event==='prune' && previous.line===st.line){
-    st.group=(previous.group||[previous.msg]).concat(st.msg);
-    st.msg='Podas consecutivas ('+st.group.length+'). Se muestra el estado de la última: <ul>'+st.group.map(x=>'<li>'+x+'</li>').join('')+'</ul>';
-    steps[steps.length-1]=st;
-  }else steps.push(st);
-}
+/* Búsquedas puras. Un step por línea ejecutada (Máximo y CotaFraccionaria incluidas); nada se agrupa. */
 function c11Order(A){return A.map((time,id)=>({time,id})).sort((a,b)=>b.time-a.time||a.id-b.id);}
 function c11Greedy(A,m){
-  const order=c11Order(A),loads=new Array(m).fill(0),S=new Array(A.length).fill(null),steps=[];
-  const push=(line,msg,stage)=>steps.push({kind:'greedy',input:A.slice(),arr:S.slice(),loads:loads.slice(),order:order.map(x=>x.id),line,msg,stage});
-  push(8,'Ordeno por duración decreciente conservando la identidad de cada tarea: '+order.map(x=>'T'+(x.id+1)+' ('+x.time+')').join(', ')+'. Los empates respetan el orden original.');
-  push(10,'Inicializo las '+m+' cargas en 0. Una carga indica cuándo queda libre ese procesador.');
-  for(const task of order){
-    let p=0;
-    for(let j=1;j<m;j++)if(loads[j]<loads[p])p=j;
-    push(15,'Para T'+(task.id+1)+' = '+task.time+', comparo las cargas ['+loads.join(', ')+']. Elijo P'+(p+1)+', con carga mínima '+loads[p]+'. En empate gana el menor número.',task.id);
-    const before=loads[p]; S[task.id]=p;loads[p]+=task.time;
-    push(20,'Asigno T'+(task.id+1)+' a P'+(p+1)+': '+before+' + '+task.time+' = '+loads[p]+'. La tarea se ejecuta completa.',task.id);
+  const n=A.length, order=c11Order(A), loads=new Array(m).fill(0), S=new Array(n).fill(null);
+  let stageId=null, cmpLoad=null;
+  const T=Traza(()=>({kind:'greedy',input:A.slice(),arr:S.slice(),loads:loads.slice(),order:order.map(x=>x.id),stage:stageId===null?undefined:stageId,cmpLoad}),'Probá con menos tareas.');
+  T.enter('AsignarTareasGreedy',{m});
+  T.push(4,'Entro a AsignarTareasGreedy con '+n+' tareas y m = '+m+'. carga ← InicializarVector(): todavía no tiene valores.');
+  T.push(5,'asignación ← InicializarVector(): tampoco. Las declaraciones de i, j, p y mejorProcesador no ejecutan nada.');
+  T.set('tareas',order.map(x=>x.time));
+  T.push(8,'MergeSort(tareas): ordeno por duración decreciente conservando la identidad de cada tarea: '+order.map(x=>'T'+(x.id+1)+' ('+x.time+')').join(', ')+'. Los empates respetan el orden original.');
+  for(let j=1;j<=m;j++){
+    T.set('j',j);
+    T.push(9,'Para j ← 1 hasta m: j = '+j+'.');
+    loads[j-1]=0;
+    T.push(10,'carga['+j+'] ← 0: una carga indica cuándo queda libre ese procesador.');
   }
-  push(22,'Devuelvo la asignación en el orden de entrada. Su tiempo es la mayor carga; es una solución factible, que todavía puede mejorar.');
-  Object.assign(steps[steps.length-1],{best:Math.max(...loads),bestAssignment:S.slice(),result:'Tiempo Greedy = '+Math.max(...loads),rcls:'good'});
-  return steps;
+  T.set('j',m+1);
+  T.push(9,'j = '+(m+1)+' supera m = '+m+': el para termina. Las '+m+' cargas valen 0.');
+  order.forEach((task,k)=>{
+    const ii=k+1;
+    stageId=task.id;
+    T.set('i',ii);
+    T.push(12,'Para i ← 1 hasta longitud(tareas) = '+n+': i = '+ii+'. Toca tareas['+ii+'] = '+task.time+' (la tarea T'+(task.id+1)+' de la entrada).');
+    let best=0;
+    T.set('mejorProcesador',1);
+    T.push(13,'mejorProcesador ← 1: parto suponiendo que el procesador P1 es el menos cargado.');
+    for(let p=2;p<=m;p++){
+      cmpLoad=p-1;T.set('p',p);
+      T.push(14,'Para p ← 2 hasta m = '+m+': p = '+p+'.');
+      const less=loads[p-1]<loads[best];
+      T.push(15,'¿carga[p] &lt; carga[mejorProcesador]? ¿carga['+p+'] = '+loads[p-1]+' &lt; carga['+(best+1)+'] = '+loads[best]+'? → '+trazaTF(less)+(less?'.':': en empate gana el procesador de menor número.'));
+      if(less){best=p-1;T.set('mejorProcesador',p);T.push(16,'mejorProcesador ← p = '+p+'.');}
+    }
+    cmpLoad=null;
+    if(m>=2)T.set('p',m+1);
+    T.push(14,m>=2?'p = '+(m+1)+' supera m: el para termina. El menos cargado es P'+(best+1)+', con carga '+loads[best]+'.':'Para p ← 2 hasta 1: no da ninguna vuelta, hay un solo procesador.');
+    S[task.id]=best;
+    T.push(19,'asignacion['+ii+'] ← mejorProcesador = '+(best+1)+': T'+(task.id+1)+' va a P'+(best+1)+'. La tarea se ejecuta completa allí.');
+    const before=loads[best];loads[best]+=task.time;
+    T.push(20,'carga[mejorProcesador] ← carga[mejorProcesador] + tareas[i] = '+before+' + '+task.time+' = '+loads[best]+'.');
+  });
+  stageId=null;
+  T.set('i',n+1);
+  T.push(12,'i = '+(n+1)+' supera longitud(tareas) = '+n+': el para termina.');
+  T.push(22,'devolver asignacion: devuelvo la asignación en el orden de entrada. Su tiempo es la mayor carga; es una solución factible, que todavía puede mejorar.');
+  T.leave();
+  Object.assign(T.steps[T.steps.length-1],{best:Math.max(...loads),bestAssignment:S.slice(),result:'Tiempo Greedy = '+Math.max(...loads),rcls:'good'});
+  return T.steps;
 }
 function c11Processors(A,m,seeded){
-  const order=c11Order(A),loads=new Array(m).fill(0),S=new Array(A.length).fill(null),steps=[];
+  const n=A.length, order=c11Order(A), loads=new Array(m).fill(0), S=new Array(n).fill(null);
   const seed=seeded?c11Greedy(A,m).slice(-1)[0]:null;
-  let best=seed?seed.best:Infinity,answer=seed?seed.bestAssignment.slice():null,visited=0,pruned=0;
-  const push=(line,msg,stage,event)=>c11Record(steps,{kind:'processors',input:A.slice(),arr:S.slice(),loads:loads.slice(),order:order.map(x=>x.id),
-    best,bestAssignment:answer?answer.slice():null,visited,pruned,lower:Math.max(...loads),line,msg,stage,event});
-  push(1,seeded?'Guardo la solución Greedy completa: mejorTiempo = '+best+'. Esta cota superior inicial ya tiene una asignación factible que la respalda.':'Inicio sin solución conocida: mejorTiempo = ∞. La primera asignación completa establecerá la cota superior.');
-  function visit(e,description,stage){
-    visited++;
-    const lower=Math.max(...loads);
-    if(lower>=best){
-      pruned++;
-      push(5,description+' Cota inferior = máx('+loads.join(', ')+') = '+lower+' ≥ '+best+'. Las duraciones no negativas no pueden reducirla: podo.',stage,'prune');
-      return;
-    }
-    if(e===order.length){
+  let best=seed?seed.best:Infinity, answer=seed?seed.bestAssignment.slice():null, visited=0, pruned=0, curE=null, cmpLoad=null;
+  const T=Traza(()=>({kind:'processors',input:A.slice(),arr:S.slice(),loads:loads.slice(),order:order.map(x=>x.id),
+    best,bestAssignment:answer?answer.slice():null,visited,pruned,cmpLoad,stage:curE!==null&&curE<n?order[curE].id:undefined}),'Probá con menos tareas o menos procesadores.');
+  T.push(1,seeded?'Guardo la solución Greedy completa (la del simulador anterior): mejorTiempo = '+best+'. Esta cota superior inicial ya tiene una asignación factible que la respalda.':'Inicio sin solución conocida: mejorTiempo = ∞ y mejorS = sin asignación. La primera asignación completa establecerá la cota superior.');
+  T.push(2,'Ordeno las tareas de mayor a menor duración, conservando su identidad: '+order.map(x=>'T'+(x.id+1)+' ('+x.time+')').join(', ')+'. cargas ← ['+loads.join(', ')+']; S ← todo pendiente.');
+  function buscar(e,desc){
+    visited++;curE=e;
+    T.enter('Buscar',{E:e});
+    T.push(4,desc+' inferior ← máximo(cargas): llamo a Máximo con cargas = ['+loads.join(', ')+'].');
+    const lower=c10MaxTrace(T,loads,q=>{cmpLoad=q;});
+    T.set('inferior',lower);
+    const cut=lower>=best;
+    if(cut)pruned++;
+    T.push(4,'máximo(cargas) devolvió '+lower+': inferior ← '+lower+'.');
+    T.push(5,'¿inferior ≥ mejorTiempo? ¿'+lower+' ≥ '+c10Inf(best)+'? → '+trazaTF(cut)+(cut?'. Las duraciones no negativas no pueden reducir la cota inferior: podo y vuelvo.':'. Todavía puede mejorar.'),{event:cut?'prune':'expand'});
+    if(cut){T.leave();return;}
+    const leaf=e===n;
+    T.push(6,'¿E = longitud(tareas)? ¿'+e+' = '+n+'? → '+trazaTF(leaf)+(leaf?': todas las tareas están asignadas.':': faltan '+(n-e)+' tareas.'));
+    if(leaf){
       const old=best;best=lower;answer=S.slice();
-      push(7,description+' Asignación completa: '+best+' < '+(old===Infinity?'∞':old)+'. Guardo una copia de S y actualizo la cota superior.',stage,'improve');
-      return;
+      T.push(7,'mejorTiempo ← inferior = '+lower+' (antes '+c10Inf(old)+'); mejorS ← copia(S). Guardo una copia porque S se va a seguir modificando. Vuelvo.',{event:'improve'});
+      T.leave();return;
     }
-    push(9,description+' La cota inferior '+lower+' es menor que '+(best===Infinity?'∞':best)+'. Pruebo T'+(order[e].id+1)+' en cada procesador.',stage,'expand');
     const task=order[e];
+    T.set('t','T'+(task.id+1)+' ('+task.time+')');
+    T.push(8,'t ← tareas[E]: la tarea que sigue es T'+(task.id+1)+', de duración '+task.time+'.');
     for(let p=0;p<m;p++){
+      curE=e;T.set('p',p+1);
+      T.push(9,'para p ← 1 hasta m: p = '+(p+1)+'. Pruebo T'+(task.id+1)+' en P'+(p+1)+'.');
       S[task.id]=p;loads[p]+=task.time;
-      visit(e+1,'T'+(task.id+1)+' ('+task.time+') → P'+(p+1)+'.',task.id);
+      T.push(10,'S[t.id] ← p; cargas[p] ← cargas[p] + t.tiempo: S[T'+(task.id+1)+'] ← '+(p+1)+' y la carga de P'+(p+1)+' pasa a '+loads[p]+'.');
+      T.push(11,'Buscar(E + 1): llamo para asignar la tarea siguiente.');
+      buscar(e+1,'T'+(task.id+1)+' ('+task.time+') → P'+(p+1)+'.');
+      curE=e;
+      T.push(11,'Buscar volvió. Deshago la decisión antes de probar otro procesador.');
       loads[p]-=task.time;S[task.id]=null;
+      T.push(12,'cargas[p] ← cargas[p] − t.tiempo; S[t.id] ← pendiente: la carga de P'+(p+1)+' vuelve a '+loads[p]+' y T'+(task.id+1)+' queda sin asignar.');
     }
+    T.set('p',m+1);
+    T.push(9,'p = '+(m+1)+' supera m: el para termina y Buscar vuelve a quien la llamó.');
+    T.leave();
   }
-  visit(0,'Raíz: todavía no asigné tareas.');
-  push(14,'Finalizó la búsqueda. Al volver se restauraron las cargas y las decisiones; la mejor asignación se conserva aparte. Podar la igualdad es válido porque buscamos una solución óptima, no todas.');
-  Object.assign(steps[steps.length-1],{result:'Tiempo mínimo = '+best,rcls:'good'});
-  return steps;
+  T.push(13,'Buscar(0): empiezo por la raíz, sin tareas asignadas.');
+  buscar(0,'Raíz: todavía no asigné tareas.');
+  curE=null;
+  T.push(14,'devolver mejorTiempo, mejorS. Finalizó la búsqueda. Al volver se restauraron las cargas y las decisiones; la mejor asignación se conserva aparte. Podar la igualdad es válido porque buscamos una solución óptima, no todas.');
+  Object.assign(T.steps[T.steps.length-1],{result:'Tiempo mínimo = '+best,rcls:'good'});
+  return T.steps;
 }
 /* La única fracción es la del último objeto. Num/den permite comparar exactamente
    con el mejor entero; con n ≤ 6 y valores/pesos ≤ 1000 los productos son seguros. */
@@ -8492,40 +8820,100 @@ function c11Bound(V,W,capacity,stage,weight,value,densityOrder){
   return {num,den,parts,remaining:capacity-weight,baseValue:value};
 }
 function c11Knapsack(V,W,capacity,bounded){
-  const S=new Array(V.length).fill(null),steps=[],order=V.map((_,i)=>i).sort((a,b)=>V[b]*W[a]-V[a]*W[b]||a-b);
-  let best=0,answer=new Array(V.length).fill(0),visited=0,pruned=0,capacityPruned=0,boundPruned=0;
-  const push=(line,msg,e,weight,value,bound,event)=>c11Record(steps,{kind:'knapsack',input:V.slice(),weights:W.slice(),arr:S.slice(),capacity,
-    best,bestAssignment:answer.slice(),visited,pruned,capacityPruned,boundPruned,stage:e<V.length?e:undefined,depth:e,weight,value,
-    bound:bound?{...bound,parts:bound.parts.map(x=>({...x}))}:null,line,msg,event});
-  push(1,'La mochila vacía es factible: mejorValor = 0 y mejorS = [0, …, 0]. '+(bounded?'Preparo el orden valor/peso para calcular cotas; las decisiones conservan el orden original.':'Solo usaré la poda por capacidad; también guardo una sola solución óptima.'),0,0,0,null);
-  function visit(e,weight,value,description){
-    visited++;
-    if(weight>capacity){
-      pruned++;capacityPruned++;
-      push(3,description+' Peso '+weight+' > '+capacity+': rama no factible. Los pesos positivos impiden recuperar capacidad.',e,weight,value,null,'prune');return;
+  const n=V.length, S=new Array(n).fill(null), order=V.map((_,i)=>i).sort((a,b)=>V[b]*W[a]-V[a]*W[b]||a-b), nodeBound=[];
+  let best=0, answer=new Array(n).fill(0), visited=0, pruned=0, capacityPruned=0, boundPruned=0, curE=0, curW=0, curV=0, live=null;
+  const copyBound=b=>b?{...b,parts:b.parts.map(x=>({...x}))}:null;
+  const T=Traza(()=>({kind:'knapsack',input:V.slice(),weights:W.slice(),arr:S.slice(),capacity,best,bestAssignment:answer.slice(),
+    visited,pruned,capacityPruned,boundPruned,stage:curE<n?curE:undefined,depth:curE,weight:curW,value:curV,
+    bound:copyBound(nodeBound[curE]),live:live?{...live,parts:live.parts.map(x=>({...x}))}:null}),'Probá con menos objetos.');
+  /* CotaFraccionaria(E, restante, valorActual): auxiliar propio de la clase, recorrida objeto por objeto. */
+  function cota(e,weight,value){
+    const start=capacity-weight;
+    T.enter('CotaFraccionaria',{E:e,restante:start,valorActual:value});
+    let total=value, restante=start; const parts=[];
+    live={total,restante,parts,obj:null};
+    T.set('total',total);
+    T.push(41,'total ← valorActual = '+value+': parto del valor que ya tengo acumulado.');
+    for(const i of order){
+      if(i<e)continue;
+      live={total,restante,parts,obj:i};
+      T.set('objeto','O'+(i+1));
+      T.push(42,'recorrer objetos pendientes (índice ≥ E = '+e+') por valor/peso decreciente: sigue O'+(i+1)+' (valor '+V[i]+', peso '+W[i]+', valor/peso '+c11Fraction(V[i],W[i])+').');
+      const none=restante===0;
+      T.push(43,'¿restante = 0? ¿'+restante+' = 0? → '+trazaTF(none)+(none?': no queda capacidad, termino el recorrido.':': sigo.'));
+      if(none)break;
+      const fits=W[i]<=restante;
+      T.push(44,'¿pesoObjeto ≤ restante? ¿'+W[i]+' ≤ '+restante+'? → '+trazaTF(fits)+(fits?': entra entero.':': solo entra una fracción.'));
+      if(fits){
+        total+=V[i];parts.push({id:i,used:W[i],weight:W[i],value:V[i]});
+        live={total,restante,parts,obj:i};T.set('total',total);
+        T.push(45,'total ← total + valorObjeto = '+(total-V[i])+' + '+V[i]+' = '+total+'.');
+        restante-=W[i];live={total,restante,parts,obj:i};T.set('restante',restante);
+        T.push(46,'restante ← restante − pesoObjeto = '+(restante+W[i])+' − '+W[i]+' = '+restante+'.');
+      }else{
+        const used=restante;parts.push({id:i,used,weight:W[i],value:V[i]});
+        const num=total*W[i]+used*V[i], den=W[i];
+        live={total,restante:0,parts,obj:i};
+        T.push(48,'devolver (total × pesoObjeto + restante × valorObjeto, pesoObjeto) = ('+total+' × '+W[i]+' + '+used+' × '+V[i]+', '+W[i]+') = ('+num+', '+den+'): tomo '+used+'/'+W[i]+' de O'+(i+1)+'.');
+        T.leave();live=null;
+        return {num,den,parts,remaining:start,baseValue:value};
+      }
     }
-    if(e===V.length || weight===capacity){
+    live={total,restante,parts,obj:null};
+    T.push(49,'devolver (total, 1) = ('+total+', 1): todo lo pendiente que cabía entró entero.');
+    T.leave();live=null;
+    return {num:total,den:1,parts,remaining:start,baseValue:value};
+  }
+  function buscar(e,weight,value,desc){
+    visited++;curE=e;curW=weight;curV=value;nodeBound[e]=null;
+    T.enter('Buscar',{E:e,peso:weight,valor:value});
+    const over=weight>capacity;
+    if(over){pruned++;capacityPruned++;}
+    T.push(3,desc+' ¿peso &gt; capacidad? ¿'+weight+' &gt; '+capacity+'? → '+trazaTF(over)+(over?'. Rama no factible: los pesos positivos impiden recuperar capacidad. Vuelvo.':'.'),{event:over?'prune':undefined});
+    if(over){T.leave();return;}
+    const stop=e===n||weight===capacity;
+    T.push(4,'¿E = n O peso = capacidad? ¿'+e+' = '+n+' O '+weight+' = '+capacity+'? → '+trazaTF(stop)+'.');
+    if(stop){
       const improves=value>best;
       if(improves){best=value;answer=S.map(x=>x===null?0:x);}
-      push(5,description+' '+(weight===capacity?'Capacidad exacta: los objetos pendientes quedan excluidos.':'Ya decidí sobre todos los objetos.')+' Valor '+value+(improves?' mejora la solución: copio S completando con ceros.':' no mejora '+best+': conservo la anterior.'),e,weight,value,null,improves?'improve':'leaf');return;
+      T.push(5,(weight===capacity?'Capacidad exacta: los objetos pendientes quedan excluidos. ':'Ya decidí sobre todos los objetos. ')+'Valor '+value+(improves?' mejora la solución: copio S completando los pendientes con 0.':' no mejora '+best+': conservo la anterior.')+' Vuelvo.',{event:improves?'improve':'leaf'});
+      T.leave();return;
     }
-    const bound=bounded?c11Bound(V,W,capacity,e,weight,value,order):null;
-    if(bound && bound.num<=best*bound.den){
-      pruned++;boundPruned++;
-      push(8,description+' Cota superior '+c11Fraction(bound.num,bound.den)+' ≤ mejorValor '+best+'. Incluso fraccionando lo pendiente no puedo mejorar: podo.',e,weight,value,bound,'prune');return;
-    }
-    push(bounded?7:10,description+' Peso '+weight+'/'+capacity+', valor '+value+'. '+(bound?'Cota superior '+c11Fraction(bound.num,bound.den)+' > '+best+': todavía puede mejorar. ':'')+'Pruebo excluir (0) e incluir (1) O'+(e+1)+'.',e,weight,value,bound,'expand');
+    if(bounded){
+      T.push(6,'usarCota: cota ← CotaFraccionaria(E, capacidad − peso, valor): llamo con restante = '+(capacity-weight)+' y valorActual = '+value+'.');
+      const b=cota(e,weight,value);
+      nodeBound[e]=b;curE=e;
+      T.set('cota',c11Fraction(b.num,b.den));
+      T.push(6,'CotaFraccionaria devolvió (num, den) = ('+b.num+', '+b.den+'), o sea la cota '+c11Fraction(b.num,b.den)+'.');
+      T.push(7,'si usarCota: es verdadero en este modo, así que comparo la cota contra el mejor valor guardado.');
+      const cut=b.num<=best*b.den;
+      if(cut){pruned++;boundPruned++;}
+      T.push(8,'¿cota.num ≤ mejorValor × cota.den? ¿'+b.num+' ≤ '+best+' × '+b.den+'? → '+trazaTF(cut)+(cut?'. Incluso fraccionando lo pendiente no puedo mejorar '+best+': podo y vuelvo.':'. La cota '+c11Fraction(b.num,b.den)+' supera '+best+': todavía puede mejorar.'),{event:cut?'prune':'expand'});
+      if(cut){T.leave();return;}
+    }else T.push(6,'usarCota es falso en este modo: no calculo ninguna cota. Pruebo excluir (0) e incluir (1) O'+(e+1)+'.',{event:'expand'});
     for(let choice=0;choice<=1;choice++){
+      curE=e;curW=weight;curV=value;T.set('i',choice);
+      T.push(10,'para i ← 0 hasta 1: i = '+choice+'. '+(choice?'Ahora incluyo':'Primero excluyo')+' O'+(e+1)+'.');
       S[e]=choice;
-      visit(e+1,weight+choice*W[e],value+choice*V[e],(choice?'Incluyo':'Excluyo')+' O'+(e+1)+'.');
+      T.push(11,'S[E] ← i: S['+e+'] ← '+choice+'. Buscar(E + 1, peso + i × pesos[E], valor + i × valores[E]) = Buscar('+(e+1)+', '+(weight+choice*W[e])+', '+(value+choice*V[e])+').');
+      buscar(e+1,weight+choice*W[e],value+choice*V[e],(choice?'Incluyo':'Excluyo')+' O'+(e+1)+'.');
+      curE=e;curW=weight;curV=value;
+      T.push(11,'Buscar volvió. Mi peso sigue en '+weight+' y mi valor en '+value+': cada llamada tiene los suyos.');
       S[e]=null;
+      T.push(12,'S[E] ← pendiente: S['+e+'] vuelve a quedar sin decidir.');
     }
+    T.set('i',2);
+    T.push(10,'i = 2 supera 1: el para termina y Buscar vuelve a quien la llamó.');
+    T.leave();
   }
-  visit(0,0,0,'Raíz.');
-  push(14,'Terminé todas las ramas capaces de mejorar. Las fracciones solo se usaron para estimar: la solución guardada contiene objetos enteros.',V.length,0,0,null);
+  T.push(1,'La mochila vacía es factible: mejorValor = 0 y mejorS = [0, …, 0]. '+(bounded?'Preparo el orden valor/peso para calcular cotas; las decisiones conservan el orden original.':'Solo usaré la poda por capacidad; también guardo una sola solución óptima.'));
+  T.push(13,'Buscar(0, 0, 0): empiezo por la raíz, con peso 0 y valor 0.');
+  buscar(0,0,0,'Raíz.');
+  curE=n;curW=0;curV=0;
+  T.push(14,'devolver mejorValor, mejorS. Terminé todas las ramas capaces de mejorar. Las fracciones solo se usaron para estimar: la solución guardada contiene objetos enteros.');
   const bestWeight=W.reduce((sum,w,i)=>sum+w*answer[i],0);
-  Object.assign(steps[steps.length-1],{bestWeight,result:'Valor máximo = '+best+' · peso = '+bestWeight,rcls:'good'});
-  return steps;
+  Object.assign(T.steps[T.steps.length-1],{bestWeight,result:'Valor máximo = '+best+' · peso = '+bestWeight,rcls:'good'});
+  return T.steps;
 }
 function c11Fraction(num,den){return num%den===0?String(num/den):num+'/'+den+' ≈ '+(num/den).toLocaleString('es-AR',{maximumFractionDigits:3});}
 function c11Comparison(steps,other,labels){
@@ -8533,15 +8921,24 @@ function c11Comparison(steps,other,labels){
   last.comparison=[{label:labels[0],best:last.best,visited:last.visited,pruned:last.pruned},{label:labels[1],best:alternative.best,visited:alternative.visited,pruned:alternative.pruned}];
   return steps;
 }
-function c11Render(st){
+function c11Render(st,steps,idx){
   if(st.error)return '<div class="result bad" role="alert">'+esc(st.error)+'</div>';
+  const prev=steps&&idx>0?steps[idx-1]:null, sameKind=prev&&prev.kind===st.kind&&prev.arr;
   const knapsack=st.kind==='knapsack',marks={};if(st.stage!==undefined)marks[st.stage]={cls:'act',p:knapsack?'siguiente':'tarea'};
+  const proc=x=>x===null?null:x+1;
   let out='<div><div class="vlabel">'+(knapsack?'Valores de O1…On':'Duraciones de T1…Tn · orden original')+'</div>'+cells(st.input,{},1)+'</div>';
   if(knapsack)out+='<div><div class="vlabel">Pesos de O1…On</div>'+cells(st.weights,{},1)+'</div>';
   else out+='<div class="vlabel">Orden de búsqueda: '+st.order.map(i=>'T'+(i+1)).join(' → ')+'</div>';
-  out+='<div><div class="vlabel">S: '+(knapsack?'0 = excluir · 1 = incluir':'procesador desde 1')+' · «·» = pendiente</div>'+cells(knapsack?st.arr:st.arr.map(x=>x===null?null:x+1),marks,1)+'</div>';
+  out+='<div><div class="vlabel">'+(knapsack?'S: 0 = excluir · 1 = incluir':'S: procesador desde 1')+' · «·» = pendiente · borde naranja = cambió en este paso</div>'+
+    cellsChg(knapsack?st.arr:st.arr.map(proc),sameKind?(knapsack?prev.arr:prev.arr.map(proc)):null,marks,1)+'</div>';
+  out+=trazaPanel(st,prev);
   if(knapsack){
     out+='<div class="vars"><span>Peso actual: '+st.weight+'/'+st.capacity+'</span><span>Valor actual: '+st.value+'</span></div>';
+    if(st.live){
+      const l=st.live;
+      out+='<div class="setbox hl"><span class="k">CotaFraccionaria en curso</span><div>total = '+l.total+' · restante = '+l.restante+(l.obj!==null?' · mirando O'+(l.obj+1):'')+'</div>'+
+        (l.parts.length?'<ul>'+l.parts.map(x=>'<li>O'+(x.id+1)+': '+x.used+'/'+x.weight+' del objeto → valor '+c11Fraction(x.used*x.value,x.weight)+'</li>').join('')+'</ul>':'<div>Todavía no tomé ningún objeto pendiente.</div>')+'</div>';
+    }
     if(st.bound){
       const b=st.bound;
       out+='<div class="setbox"><span class="k">Cota superior fraccionaria: '+c11Fraction(b.num,b.den)+'</span><div>Valor acumulado '+b.baseValue+'; capacidad restante '+b.remaining+'. Solo objetos pendientes:</div>';
@@ -8551,8 +8948,7 @@ function c11Render(st){
     }
   }else{
     out+='<div class="c10-loads">';
-    st.loads.forEach((load,p)=>{out+='<div class="setbox"><span class="k">P'+(p+1)+' · carga actual '+load+'</span><div class="c10-load"><i style="width:'+(100*load/Math.max(1,...st.loads))+'%"></i></div>'+c10Items(st.input,st.arr,p,1)+'</div>';});out+='</div>';
-    if(st.lower!==undefined)out+='<div class="vars"><span>Cota inferior de esta rama: '+st.lower+'</span></div>';
+    st.loads.forEach((load,p)=>{out+='<div class="setbox'+(st.cmpLoad===p?' hl':'')+'"><span class="k">P'+(p+1)+' · carga actual '+load+'</span><div class="c10-load"><i style="width:'+(100*load/Math.max(1,...st.loads))+'%"></i></div>'+c10Items(st.input,st.arr,p,1)+'</div>';});out+='</div>';
   }
   if(st.best!==undefined){
     out+='<div class="setbox"><span class="k">'+(knapsack?'Mejor valor factible: ':'Mejor tiempo factible (cota superior): ')+(st.best===Infinity?'∞':st.best)+'</span>';
@@ -8562,7 +8958,7 @@ function c11Render(st){
     }else out+='Todavía no hay una asignación completa.';out+='</div>';
   }
   if(st.visited!==undefined)out+='<div class="vars"><span>Nodos evaluados: '+st.visited+'</span><span>Nodos podados: '+st.pruned+'</span>'+(knapsack?'<span>Por capacidad: '+st.capacityPruned+'</span><span>Por cota: '+st.boundPruned+'</span>':'')+'</div>';
-  if(st.comparison)out+='<div class="setbox"><span class="k">Misma entrada y orden de alternativas</span><div class="dpwrap"><table><tr><th>Modo</th><th>Óptimo</th><th>Nodos</th><th>Podados</th></tr>'+st.comparison.map(c=>'<tr><td>'+esc(c.label)+'</td><td>'+c.best+'</td><td>'+c.visited+'</td><td>'+c.pruned+'</td></tr>').join('')+'</table></div><small>Se cuenta la raíz y cada nodo evaluado, incluso los podados; los descendientes descartados no se visitan. Un paso puede agrupar varias podas.</small></div>';
+  if(st.comparison)out+='<div class="setbox"><span class="k">Misma entrada y orden de alternativas</span><div class="dpwrap"><table><tr><th>Modo</th><th>Óptimo</th><th>Nodos</th><th>Podados</th></tr>'+st.comparison.map(c=>'<tr><td>'+esc(c.label)+'</td><td>'+c.best+'</td><td>'+c.visited+'</td><td>'+c.pruned+'</td></tr>').join('')+'</table></div><small>Se cuenta la raíz y cada nodo evaluado, incluso los podados; los descendientes descartados no se visitan.</small></div>';
   if(st.result)out+='<div class="result '+st.rcls+'">'+esc(st.result)+'</div>';
   return out;
 }

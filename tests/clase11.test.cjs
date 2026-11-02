@@ -34,7 +34,7 @@ function verifySteps(steps){
     assert(!arrays.has(s.arr),'Estado compartido entre pasos');arrays.add(s.arr);
     if(s.bestAssignment){assert(!answers.has(s.bestAssignment));answers.add(s.bestAssignment);}
     const output=context.c11Render(s);assert(!/undefined|NaN/.test(output),output);rendered++;
-    if(s.group)assert(s.group.length>=2);
+
   }
 }
 const taskCases=[[[8,7,6,5,4],2],[[0],1],[[0,0,0],3],[[5],3],[[2,2,2],2],[[1,2,3,4,5,6],3],[[6,5,4,3,2,1],3],[[Number.MAX_SAFE_INTEGER-1,1],2]];
@@ -82,6 +82,32 @@ for(const [V,W,C] of bagCases){
   }
   assert(last(both[1]).visited<=last(both[0]).visited);assert.equal(JSON.stringify([V,W]),before);
 }
+
+/* ---------- traza: líneas del panel (con Máximo y CotaFraccionaria) y pila coherente ---------- */
+const panel=id=>{const a=html.indexOf('id="'+id+'"'),b=html.indexOf('<div class="viz"',a);assert(a>=0&&b>a,'Falta el simulador '+id);
+  return [...html.slice(a,b).matchAll(/class="cl( hdr)?" data-l="(\d+)"><span class="ln">\d+<\/span><span class="tx">([^<]*)/g)].map(m=>({hdr:!!m[1],l:+m[2],text:m[3].trim()}));};
+const executable=({text,hdr})=>!hdr&&!/^(fin |sino$|\/\/)/i.test(text);
+function checkTrace(id,steps,allowed=[]){
+  const lines=panel(id),known=new Set(lines.map(x=>x.l)),seen=new Set();
+  steps.forEach((s,i)=>{
+    if(s.line!==undefined){assert(known.has(s.line),id+': la línea '+s.line+' no existe en el panel');seen.add(s.line);}
+    assert.equal(s.frames.length,s.cd);
+    if(i)assert(Math.abs(s.cd-steps[i-1].cd)<=1,id+': la profundidad cambia de a un marco ('+i+')');
+    for(const f of s.frames)for(const [k,v] of Object.entries(f.vars))assert(v!==undefined&&!(typeof v==='number'&&Number.isNaN(v)),id+': variable '+k+' sin valor');
+  });
+  for(const l of lines.filter(executable))if(!allowed.includes(l.l))assert(seen.has(l.l),id+': la línea '+l.l+' («'+l.text+'») nunca se ejecuta');
+  checks++;
+}
+checkTrace('sim-c11-greedy',context.c11Greedy([8,7,6,5,4],2),[1,2,3,6,7]);
+checkTrace('sim-c11-procesadores',context.c11Processors([8,7,6,5,4],2,true),[3]);
+checkTrace('sim-c11-procesadores',context.c11Processors([8,7,6,5,4],2,false),[3]);
+{const steps=context.c11Knapsack([35,30,20,12],[5,3,2,1],7,true);
+ checkTrace('sim-c11-mochila',steps,[2]);
+ // CotaFraccionaria se recorre línea por línea y su resultado coincide con c11Bound
+ const calls=steps.filter(s=>s.frames.length&&s.frames[s.frames.length-1].fn==='CotaFraccionaria');
+ assert(calls.some(s=>s.line===44)&&calls.some(s=>s.line===48)&&calls.some(s=>s.line===49));
+ assert(steps.some(s=>s.live&&s.live.parts.length),'el cálculo parcial de la cota es visible');
+ const root=steps.find(s=>s.line===6&&s.bound);assert.equal(root.bound.num/root.bound.den,69);}
 const bound=context.c11Bound([35,30,20,12],[5,3,2,1],7,0,0,0);
 assert.equal(bound.num/bound.den,69);
 assert.deepEqual(plain(last(context.c11Knapsack([35,30,20,12],[5,3,2,1],7,true)).bestAssignment),[0,1,1,1]);
@@ -94,5 +120,5 @@ for(const [id,value] of [['c11-mochila-valores',''],['c11-mochila-valores','1,,2
 }
 const guarded=context.c10Guard(()=>{throw new Error('<entrada inválida>');});assert(context.c11Render(guarded[0]).includes('&lt;entrada inválida&gt;'));
 const defaults=[context.c11Greedy([8,7,6,5,4],2),context.c11Processors([8,7,6,5,4],2,true),context.c11Knapsack([35,30,20,12],[5,3,2,1],7,true)];
-assert(defaults.every(s=>s.length<=200));
+assert(defaults.every(s=>s.length<=20000));
 console.log(`OK: ${checks} casos; ${rendered} pasos renderizados; cotas contrastadas con óptimos exhaustivos. Pasos por defecto: ${defaults.map(s=>s.length).join(' / ')}.`);

@@ -148,6 +148,28 @@ Campos que entiende `arrRender` (el renderer genérico, sirve para la mayoría d
 Si un algoritmo necesita otra visualización (árbol AVL, casilleros de a/b/k), se escribe un
 renderer propio; ver `slotViz` y el renderer SVG de `sim-avl`.
 
+**Traza de ejecución (Backtracking, clases 10–11 y ejercicios).** `Sim` le pasa al renderer también el índice
+del paso (`render(step, allSteps, i)`; los renderers viejos lo ignoran) y entiende dos campos más: `cd`
+(profundidad de llamada = cantidad de marcos activos) y `frames` (la pila: `[{fn, vars:{…}}]`, con las
+variables locales de cada marco). Si algún step tiene `cd ≥ 2`, `Sim` muestra «Saltar llamada» (primer paso
+posterior con `cd ≤` el actual; también Mayús + →), «Salir de la función» (primer paso con `cd <` el actual),
+«Ir al final» y un selector de velocidad (1×, 4×, 16×, 64×); el clic en la barra de progreso salta a esa parte.
+El helper `Traza(snap, tip)` (en la sección de la clase 10 del apunte y en `/* ===== Guía · Backtracking ===== */`
+de la página de ejercicios; copiado en los dos, no es parte del motor) arma esos steps:
+`T.enter(fn, vars)` / `T.leave()` apilan y desapilan un marco **sin** emitir paso, `T.set(k, v)` / `T.vars({…})`
+cambian las locales del marco de arriba y `T.push(line, msg, extra)` emite un step con `cd`, `frames` y lo que
+devuelva `snap()` (copias de los vectores, nunca referencias). Reglas que cumplen todos los builders:
+un step **por cada línea ejecutada** del panel, sin agrupar nada; el paso de la línea que llama se emite **antes**
+de `enter` (con `cd` del que llama) y el de la línea que recibe el resultado **después** de `leave`, así que
+«Saltar llamada» desde una línea de llamada cae justo en el paso del resultado; las condiciones con `Y`/`O`
+se evalúan con cortocircuito, un paso por operando que se evalúa; el primer paso (llamada inicial) y el último
+tienen `cd = 0`. Las funciones auxiliares sin pseudocódigo en la lámina (`Máximo`, `dentro`, `esVecina`) van
+solo en el panel del simulador, como `cl hdr` con `data-l` ≥ 40, rotuladas «auxiliar propio»; los `pre.ps`
+de la página no se tocan. `trazaPanel(st, prev)` dibuja la pila con las variables que cambiaron respecto del
+paso anterior (`.tv.chg`, borde naranja) y `cellsChg(arr, prevArr, marks, base)` hace lo mismo con las celdas
+de un vector (`.cell.chg`). El pseudocódigo no borra los restos de una rama abandonada (p. ej. `S[E+1]` en
+Reinas): se muestran en gris, no se limpian. Tope: `TRAZA_MAX = 60000` pasos con un error visible.
+
 Para algoritmos que llenan una **tabla** (Programación Dinámica) está `dpRender` / `dpTable`
 (sección `CLASE 7` del script). Campos del step: `rows` (rótulos de fila), `cols` (cantidad de
 columnas, rotuladas 0..cols-1), `M[i][j]` (copia en cada step; `undefined` = sin calcular,
@@ -181,7 +203,8 @@ Reglas:
 - Los mensajes narran el *porqué*, con los valores concretos sustituidos. «¿S[4] = 8 ≤ S[6] = 12?
   → true, gana la izquierda» sirve; «se compara» no.
 - Presupuesto de pasos: **30 a 200**. Si un vector de 8 elementos genera 400 pasos, hay que
-  agrupar. Contar antes con un script de Node.
+  agrupar. Contar antes con un script de Node. **Excepción: Backtracking** (ver «Traza de ejecución»): ahí
+  se muestra cada línea, también las auxiliares, y el alumno navega con los botones de salto.
 - Valores por defecto: usar **los mismos ejemplos de las diapositivas** (`6,3,11,15,4,7,9,2` para
   Merge Sort, `6,5,3,11,9,7,15` para Quick Sort, `salas` para palíndromo). El alumno tiene que
   poder seguir la lámina en paralelo.
@@ -384,8 +407,10 @@ No se modifica el contrato de `Sim`. N entre 1 y 8, vectores de 1–6 enteros se
 suma absoluta debe ser segura), procesadores entre 1 y 3, duraciones no negativas. Las entradas
 inválidas se informan en el simulador, sin reemplazarlas silenciosamente. Puntos importantes:
 - Reinas: filas/columnas desde 0; el literal empieza S[E] en 0 y omite la columna 0. El corregido
-  empieza en −1. La búsqueda corta en la primera solución; N = 8 produce 115 pasos. Los rechazos
-  y retrocesos consecutivos se agrupan en el relato sin cortar la búsqueda ni borrar resultados.
+  empieza en −1. La búsqueda corta en la primera solución; N = 8 produce 11037 pasos
+  (sin agrupar nada: `ReinaValida` se ejecuta línea por línea con su propio marco, `i`, `S[i]`, `|S[i] − S[E]|`,
+  `|i − E|`). `S` conserva los restos de las ramas abandonadas, que se ven en gris. El tablero marca la
+  candidata (borde punteado), las rechazadas (×) y la comparación en curso (línea celeste, roja si hay ataque).
 - Suma: índices visibles 1…n para respetar `etapa = tamaño(v)`. El literal usa `< m`; el corregido
   usa `≤ m` y desactiva la poda por exceso si hay negativos. En {5,3,2,6,1,4}, objetivo 6, da cuatro
   soluciones; el literal solo {2,4}. Se explica el cierre de `si` que falta y el paso por valor
@@ -404,7 +429,7 @@ inválidas se informan en el simulador, sin reemplazarlas silenciosamente. Punto
   `node tests/clase10.browser.cjs` usa Chrome headless y CDP (Node 22+, sin npm; `CHROME_PATH`
   permite elegir el ejecutable) para probar navegación, controles, selectores, presets, errores,
   autoevaluación y la página de práctica; guarda capturas de escritorio/celular en el directorio
-  temporal. Los cuatro ejemplos generan 115 / 58 / 64 / 28 pasos. Las secciones de la clase 10
+  temporal. Los ejemplos de la clase 10 generan 11037 / 368 / 857 / 419 pasos y los de la clase 11 47 / 490 / 252 (Greedy / procesadores con cota / mochila con cota). Las secciones de la clase 10
   caben en 390 px; algunas tablas de clases anteriores ya desbordaban ese ancho.
 - `pdf_imagenes.py --componer` omite imágenes con coordenada vertical menor a 40, incluso imágenes
   grandes (páginas 10, 38 y 39 de esta clase). Al inspeccionarlas, excluir solo logos pequeños:
@@ -461,12 +486,12 @@ corta al cerrar; `O(3^(n²))`). Decisiones y observaciones:
   < 2 se explican como poda extra pero **no** están en el pseudocódigo. El 4×4 completo tiene 6 ciclos.
 - Builders puros `btProcesadores`, `btLaberinto`, `btAtila` + parseo, renderers `btProcRender` /
   `btMazeRender` / `btAtilaRender` (SVG compartido `btFrame`) y `btGuard`, entre los marcadores
-  `/* ===== Guía · Backtracking ===== */` y `const btProcSim=`. Laberinto y Atila **cortan en 400 pasos**
-  (`BT_MAX_STEPS`) con un error visible en vez de colgar; Procesadores no tiene tope (igual que la
-  clase 10: hasta ~635 pasos con 6 tareas y 3 procesadores). Pasos de los ejemplos: 28 / 124 / 169.
-  En Laberinto y Atila el resaltado recorre el pseudocódigo (entrada a la casilla, control de destino o de
-  cierre, poda, llamada, retroceso) y los retrocesos consecutivos se agrupan en un solo paso; el test
-  `guia-backtracking.test.cjs` exige que ninguna línea concentre más de la mitad de los pasos.
+  `/* ===== Guía · Backtracking ===== */` y `const btProcSim=`. Los tres usan la traza (`Traza`, `TRAZA_MAX = 60000` con error visible: el jardín 5×5 sin pasto
+  lo alcanza). Pasos de los ejemplos: 419 / 1343 / 2352. Cada línea es un paso, también las auxiliares propias
+  `Máximo` (Procesadores), `dentro` (Laberinto, Atila) y `esVecina` (Atila); las condiciones con `Y` se evalúan
+  de a un operando (`abre[d]`, después `dentro`, después `NO visitada`). La vecina que se mira se dibuja con borde
+  celeste punteado (`.sq.look`). El test `guia-backtracking.test.cjs` exige que cada línea del panel que
+  importa se ejecute, que `cd`/`frames` sean coherentes y que ninguna línea concentre más del 60 % de los pasos.
 - Ids: `g15-t`, `g15-m`, `g16-lab`, `g16-o`, `g16-d`, `g17-jardin`; presets con `data-bt-sim` +
   `data-bt-preset` (JSON con ids → valores). CSS `.bt-*` solo en esta página.
 - Prueba: `node tests/guia-backtracking.test.cjs` (builders reales contra enumeración exhaustiva,
@@ -536,19 +561,19 @@ decisiones:
   (si no, nunca convendría) y el par cuesta c + c/2; costos **pares** o el simulador avisa en vez de
   redondear. Ejemplo r = 6,4,10, c = 8,6,4, P = 12: 24 contra 16 con una sola proyección.
 - JS: entre `/* ===== Integración · Segundo parcial ===== */` y `const s1Sim=`; builders puros
-  `s1Almacenamiento`, `s3Catalogo`, `s6Festival` (sobre `dpSteps`), `s2Subasta`, `s4Estaciones` (con
-  `sPush`, que corta en 400 pasos con un error visible) y `s5CiudadBase`; parseo `sList`, `s2Parse`,
+  `s1Almacenamiento`, `s3Catalogo`, `s6Festival` (sobre `dpSteps`), `s2Subasta`, `s4Estaciones` (los dos con la traza;
+  `s4` usa el auxiliar `dentro` y `s2` muestra `S`, `usada` y `cota` cambiando) y `s5CiudadBase`; parseo `sList`, `s2Parse`,
   `s4ParseMatriz`, `s4ParseCasilla`, `s5Parse`; renderers `sDpRender`, `s2Render` (reusa `dpTable`),
   `s4Render`, `s5Render`. Las entradas inválidas se informan (`btGuard` + `btError`), no se recortan. Presets
   con `data-s-sim` + `data-s-preset`. Inputs: `s1-s`/`s1-d`, `s2-ofertas` (filas por `/`, ofertas por espacios,
   `-` = no ofertó, hasta 4×4), `s3-c`/`s3-p`, `s4-m`/`s4-ini`/`s4-x` (hasta 4×4), `s5-a` (de 2×2 a 6×6),
-  `s6-r`/`s6-c`/`s6-p`. Pasos por defecto: 56 / 14 / 66 / 110 / 45 / 49.
+  `s6-r`/`s6-c`/`s6-p`. Pasos por defecto: 56 / 89 / 66 / 843 / 45 / 49.
 - Prueba: `node tests/integracion2.test.cjs` (8000+ comprobaciones): builders reales contra oráculos
   independientes (subconjuntos, asignaciones inyectivas, sumas alcanzables, DFS y DP de recorridos,
   Dijkstra desde cada nodo, 3ⁿ elecciones), reconstrucciones válidas, entradas inválidas, presets del HTML,
   pasos por defecto, que cada `line` exista como `data-l`, **que cada link `index.html#…` y cada
   `data-apunte-sim` de la página exista como id en el apunte** (`validate.py` no revisa links entre archivos)
-  y, solo para s2 y s4, que ninguna línea concentre más de la mitad de los pasos (en los simuladores de tabla
+  y, solo para s2 y s4, que ninguna línea concentre más del 60 % de los pasos (y que `cd`/`frames` sean coherentes) (en los simuladores de tabla
   y en el posproceso de s5 el ciclo interno es el algoritmo). Chrome headless con un arnés que abre todas las
   resoluciones, avanza cada simulador y aprieta los 24 presets: 29 `Sim`, cero errores de consola.
 
