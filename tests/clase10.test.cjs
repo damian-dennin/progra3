@@ -36,7 +36,14 @@ for(let n=1;n<=8;n++)for(const literal of [false,true]){
   if(end.found){const S=plain(end.answer);assert.equal(new Set(S).size,n);for(let i=0;i<n;i++)for(let j=0;j<i;j++)assert.notEqual(Math.abs(S[i]-S[j]),i-j);}
   checks++;
 }
+for(let n=1;n<=8;n++){ // versión didáctica: misma primera solución que el modo corregido de la lámina, sin omitir la columna 0
+  const steps=context.c10QueensDid(n),end=last(steps);checkSteps(steps);
+  assert.equal(end.found,![2,3].includes(n));
+  if(end.found){const S=plain(end.answer);assert.equal(new Set(S).size,n);for(let i=0;i<n;i++)for(let j=0;j<i;j++)assert.notEqual(Math.abs(S[i]-S[j]),i-j);assert.deepEqual(S,plain(last(context.c10Queens(n,false)).answer));}
+  checks++;
+}
 assert(context.c10Queens(8,false).length<=20000);
+assert(context.c10QueensDid(8).length<=20000);
 const examples=[[[5,3,2,6,1,4],6],[[13,20,7],20],[[5,-3],2],[[0,0,0],0],[[1,1,1],2],[[2,4],3],[[-2,-3],-5],[[6],6],[[0],0]];
 let seed=1729;const rand=n=>{seed=(1664525*seed+1013904223)>>>0;return seed%n;};
 for(let t=0;t<300;t++){const n=1+rand(6);examples.push([Array.from({length:n},()=>rand(13)-6),rand(21)-10]);}
@@ -44,7 +51,8 @@ for(const [A,target] of examples){
   const sum=context.c10Subsets(A,target,false),partition=context.c10Partition(A);
   assert.deepEqual(sort(last(sum).solutions),sort(subsetReference(A,target)));
   assert.deepEqual(sort(last(partition).solutions),sort(subsetReference(A,0,true)));
-  checkSteps(sum);checkSteps(partition);checks+=2;
+  const did=context.c10SubsetsDid(A,target);assert.deepEqual(sort(last(did).solutions),sort(subsetReference(A,target)));
+  checkSteps(sum);checkSteps(partition);checkSteps(did);checks+=3;
 }
 assert.equal(last(context.c10Subsets([5,3,2,6,1,4],6,false)).solutions.length,4);
 assert.equal(last(context.c10Subsets([5,3,2,6,1,4],6,true)).solutions.length,1);
@@ -61,8 +69,8 @@ assert.equal(last(context.c10Processors([2,3,4,5],2)).best,7);
 const panel=id=>{const a=source.indexOf('id="'+id+'"'),b=source.indexOf('<div class="viz"',a);assert(a>=0&&b>a,'Falta el simulador '+id);
   return [...source.slice(a,b).matchAll(/class="cl( hdr)?" data-l="(\d+)"><span class="ln">\d+<\/span><span class="tx">([^<]*)/g)].map(m=>({hdr:!!m[1],l:+m[2],text:m[3].trim()}));};
 const executable=({text,hdr})=>!hdr&&!/^(fin |sino$|\/\/)/i.test(text);
-function checkTrace(id,steps,{cover=true}={}){
-  const lines=panel(id),known=new Set(lines.map(x=>x.l));
+function checkTrace(id,steps,{cover=true,range=null}={}){
+  const lines=panel(id).filter(x=>!range||range(x.l)),known=new Set(lines.map(x=>x.l));
   assert.equal(steps[0].cd,0,id+': el primer paso es la llamada inicial');assert.equal(last(steps).cd,0,id+': la pila termina vacía');
   const seen=new Set();
   steps.forEach((s,i)=>{
@@ -74,10 +82,12 @@ function checkTrace(id,steps,{cover=true}={}){
   if(cover)for(const l of lines.filter(executable))assert(seen.has(l.l),id+': la línea '+l.l+' («'+l.text+'») nunca se ejecuta');
   checks++;
 }
-for(const literal of [false,true])checkTrace('sim-c10-reinas',context.c10Queens(4,literal),{cover:!literal});
-checkTrace('sim-c10-reinas',context.c10Queens(8,false));
+for(const n of [1,4,8])checkTrace('sim-c10-reinas',context.c10QueensDid(n),{cover:n>1,range:l=>l>=200});
+checkTrace('sim-c10-reinas',context.c10Queens(4,true),{cover:false,range:l=>l<200});
 assert.equal(context.c10Queens(1,false).length,context.c10Queens(1,false).filter(s=>s.cd>=0).length);
-checkTrace('sim-c10-suma',context.c10Subsets([5,3,2,6,1,4],6,false));
+checkTrace('sim-c10-suma',context.c10SubsetsDid([5,3,2,6,1,4],6),{range:l=>l>=200});
+checkTrace('sim-c10-suma',context.c10SubsetsDid([5,-3],2),{cover:false,range:l=>l>=200});
+checkTrace('sim-c10-suma',context.c10Subsets([5,3,2,6,1,4],6,true),{cover:false,range:l=>l<200});
 checkTrace('sim-c10-particion',context.c10Partition([2,4,5,6,1]));
 checkTrace('sim-c10-procesadores',context.c10Processors([2,3,4,5],2));
 // ReinaValida se recorre completa: en N = 4 hay un ataque por columna, uno por diagonal y llamadas que terminan sin ataque
@@ -86,6 +96,16 @@ checkTrace('sim-c10-procesadores',context.c10Processors([2,3,4,5],2));
  assert(inside.every(s=>s.cd>=2),'ReinaValida siempre corre dentro de Reinas');
  const cond=inside.filter(s=>s.line===22);assert(cond.every(s=>/¿S\[i\] = S\[E\]\?/.test(s.msg)),'cada comparación muestra los valores');
  assert(steps.some(s=>s.frames.some(f=>f.vars['|S[i] − S[E]|']!==undefined)),'las variables locales de ReinaValida son visibles');}
+{const steps=context.c10QueensDid(4),inside=steps.filter(s=>s.frames.some(f=>f.fn==='ReinaValida'));
+ assert(inside.some(s=>s.line===224)&&inside.some(s=>s.line===225)&&inside.some(s=>s.line===228),'ReinaValida didáctica: segundo operando, ataque y éxito');
+ assert(inside.every(s=>s.cd>=2),'ReinaValida siempre corre dentro de Reinas');
+ assert(inside.filter(s=>s.line===223).every(s=>s.msg.startsWith('¿S[anterior] = columna?')),'el primer operando muestra los valores');
+ assert(inside.filter(s=>s.line===224).every(s=>s.msg.startsWith('¿abs(S[anterior] − columna) = fila − anterior?')),'el segundo operando muestra los valores');
+ // cortocircuito: tras un 223 verdadero viene el devolver falso (225), nunca el 224
+ steps.forEach((s,i)=>{if(s.line===223&&(s.msg.split('→')[1]||'').includes('verdadero'))assert.equal(steps[i+1].line,225,'con O, si la columna coincide no se evalúa la diagonal');});
+ // la candidata no está en S mientras se valida
+ const during=steps.filter(s=>s.cand&&s.line===203&&s.cd===1&&/Todavía no toqué S/.test(s.msg));
+ assert(during.every(s=>s.placed===s.stage),'la reina de la fila actual recién queda en el tablero después de validar');}
 for(const value of ['',',','1,','1,,2','1.5','1e3','1,2,3,4,5,6,7','NaN','9007199254740992','9007199254740991,1']){inputs.v=value;assert.throws(()=>context.c10Vector('v',false));checks++;}
 inputs.v=' 0, -3, +5 ';assert.deepEqual(plain(context.c10Vector('v',false)),[0,-3,5]);assert.throws(()=>context.c10Vector('v',true));
 for(const value of ['','0','9','2.5','x']){inputs.n=value;assert.throws(()=>context.c10Integer('n','N',1,8));checks++;}

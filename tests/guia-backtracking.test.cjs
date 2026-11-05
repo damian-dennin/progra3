@@ -66,10 +66,10 @@ for(let i=0;i<300;i++){
   assert.equal(end.best,exp,JSON.stringify([A,m]));checks++;
   const loads=new Array(m).fill(0);A.forEach((t,j)=>{loads[end.bestAssignment[j]]+=t;});
   assert.equal(Math.max(...loads),exp);checks++;
-  assert(end.arr.every(x=>x===null),'S queda sin restos al terminar');assert(end.loads.every(x=>x===0),'las cargas se restauran');
+  assert.equal(end.placed,0,'al terminar no queda nada asignado (S conserva los restos en gris)');assert(end.loads.every(x=>x===0),'las cargas se restauran');
   if(i<40)verifySteps(steps,B.btProcRender);
 }
-assert.equal(B.btProcesadores([2,3,4,5],2).length,419);
+assert.equal(B.btProcesadores([2,3,4,5],2).length,462);
 same(last(B.btProcesadores([2,3,4,5],2)).bestAssignment.length,4);
 assert.equal(last(B.btProcesadores([2,3,4,5],2)).best,7);
 assert.equal(last(B.btProcesadores([2,3,4,5],1)).best,14);
@@ -101,7 +101,7 @@ for(let i=0;i<700;i++){
 }
 assert(labOk>300&&labNo>20,'cobertura de casos con y sin camino: '+labOk+'/'+labNo);
 const mazeDefault='5E 7ESO 6S 9S / 2ES 7NESO 3NO 5NS / 2NES 7SO 3E 7NSO / 1NE 3NEO 7EO 1NO';
-const mazeCases=[[mazeDefault,'1,1','4,4',1343,'good',35],['1ES 9SO / 1N 1NO','1,1','2,2',86,'good',11],['1ES 1ESO 1SO / 1N 1N 1N / 1 1 1','1,1','3,3',155,'bad',null],[mazeDefault,'1,1','1,1',9,'good',5],['4','1,1','1,1',9,'good',4]];
+const mazeCases=[[mazeDefault,'1,1','4,4',1664,'good',35],['1ES 9SO / 1N 1NO','1,1','2,2',113,'good',11],['1ES 1ESO 1SO / 1N 1N 1N / 1 1 1','1,1','3,3',194,'bad',null],[mazeDefault,'1,1','1,1',19,'good',5],['4','1,1','1,1',19,'good',4]];
 for(const [text,o,d,count,rcls,len] of mazeCases){
   const L=B.btParseLab(text),n=L.length,steps=B.btLaberinto(L,B.btParseCasilla(o,n,'o'),B.btParseCasilla(d,n,'d'));
   assert.equal(steps.length,count,text+' '+o+'→'+d);assert.equal(last(steps).rcls,rcls);if(len!==null)assert.equal(last(steps).mejor,len);
@@ -137,7 +137,7 @@ for(let i=0;i<500;i++){
   if(i<80)verifySteps(steps,B.btAtilaRender);
 }
 assert(atYes>=30&&atNo>100,'cobertura: '+atYes+'/'+atNo);
-const gardens=[['.###./####./#.##./####./.##..',2352,'good',16],['####/#..#/#..#/####',245,'good',12],['####/####/####/####',325,'good',16],['###/###/###',2364,'bad',9],['###../#.#../###../.#.../.#...',618,'bad',10],['##/..',4,'bad',2],['##/##',79,'good',4]];
+const gardens=[['.###./####./#.##./####./.##..',2796,'good',16],['####/#..#/#..#/####',302,'good',12],['####/####/####/####',398,'good',16],['###/###/###',2817,'bad',9],['###../#.#../###../.#.../.#...',735,'bad',10],['##/..',6,'bad',2],['##/##',100,'good',4]];
 for(const [text,count,rcls,k] of gardens){
   const J=B.btParseJardin(text),steps=B.btAtila(J);
   assert.equal(steps.length,count,text);assert.equal(last(steps).rcls,rcls);assert.equal(last(steps).k,k);
@@ -175,12 +175,12 @@ for(const p of presets){
   const steps=run[p.sim]();assert(steps.length>=1&&steps.length<=B.TRAZA_MAX);verifySteps(steps,renders[p.sim]);checks++;
 }
 Object.assign(inputs,defaults);
-for(const [sim,count] of [['proc',419],['maze',1343],['atila',2352]]){ // los ejemplos por defecto, dentro del presupuesto del apunte
+for(const [sim,count] of [['proc',462],['maze',1664],['atila',2796]]){ // los ejemplos por defecto, dentro del presupuesto del apunte
   assert.equal(run[sim]().length,count);checks++;
 }
 /* El resaltado recorre el pseudocódigo: cada `line` existe como data-l del simulador, ninguna línea concentra
    más de la mitad de los pasos y aparecen las líneas que antes nunca se resaltaban. */
-for(const [sim,id,must] of [['maze','sim-g16',[6,9,14,15,16,21,41]],['atila','sim-g17',[8,9,13,14,18,41,51]]]){
+for(const [sim,id,must] of [['maze','sim-g16',[11,12,13,14,16,17,20,21,22,23,24,25,30,31,41,42]],['atila','sim-g17',[21,22,23,25,26,27,28,29,30,33,41,42,51,52]]]){
   const block=html.slice(html.indexOf('id="'+id+'"'));
   const code=block.slice(0,block.indexOf('data-viz'));
   const dataL=new Set([...code.matchAll(/data-l="(\d+)"/g)].map(m=>+m[1]));

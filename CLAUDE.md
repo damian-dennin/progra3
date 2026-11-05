@@ -296,6 +296,37 @@ variables CSS.**
   con la lámina antes de darlos por buenos; si difieren, el simulador calcula lo correcto y una
   `.note` explica la discrepancia.
 
+## Estilo didáctico de los pseudocódigos de Backtracking (pedido de Damián)
+
+Todos los Backtracking propios (procesadores —clases 10 y 11 y guía—, Laberinto, Atila, Subasta, Estaciones, Mochila
+con cota) y las versiones didácticas de Reinas, Suma de subconjuntos y Partición se escriben así; el modelo son el
+`Algoritmo AsignarTareas(T, m)` / `Procedimiento Buscar(…)` y el `ReinaValida(S, fila, columna)` que pasó Damián:
+- **Todo por parámetro** (nada de variables globales implícitas) y **`ref` solo en lo que se reasigna**
+  (`mejorS`, `mejorTiempo`, `mejorValor`…): `mejorS ← copiar(S)` dentro de la recursión se pierde si va por valor (se
+  verificó con 3000 casos aleatorios: `mejorS` quedaba sin asignar). Los vectores que se tocan posición por posición no lo necesitan.
+- **Nombres que dicen qué son**: `etapa`, `carga`, `tiempoActual`, `fila`, `columna`, `anterior`, `filaVecina`, `nuevaLongitud`,
+  `incluir`, `sumaActual`… Índices desde 0 salvo que el enunciado fuerce otra base (Subasta usa productos y personas desde 1).
+- **Una acción por línea**, cierres `Fin algoritmo` / `Fin procedimiento` / `Fin función`, y las auxiliares (`maximo`,
+  `dentro`, `esVecina`, `CotaFraccionaria`) escritas completas como `Función`. Ya no son `cl hdr`: la cabecera de
+  algoritmo/procedimiento/función **se ejecuta** (hay un paso «Entro a …») y las pruebas exigen que cada línea del panel se
+  ejecute (los `fin …`, `sino` y comentarios quedan exentos). Una `O`/`Y` se evalúa de a un operando.
+- El **marco de abajo de la pila** (el del `Algoritmo`) guarda S, carga, mejorS, mejorTiempo…: se mantienen al día con un
+  `P(line, msg)` que sincroniza esos valores antes de cada `T.push` (son los mismos que ve `Buscar`).
+- `S[etapa]` **no se borra al volver** si el pseudocódigo no lo borra: queda en gris (`c10Render`, `btProcRender`, `c11Render`).
+  Para listar «qué procesador tiene qué tareas» el snapshot lleva `placed` / `placedIds` y el render ignora lo demás.
+- **Reinas, Suma y Partición**: el apunte conserva el pseudocódigo **literal de la lámina** y agrega la **versión didáctica** (el
+  `bloque-clase` muestra la didáctica, copiada literal del apunte con una `.note`). Reinas y Suma tienen el selector
+  «Didáctica / Literal del PDF»: las dos versiones van **en el mismo `[data-code]`** (`Sim` captura las `.cl` una sola vez), la
+  didáctica con `data-l` ≥ 200 y el literal con `data-l` < 200, y el builder del simulador pone `hidden` al grupo que no corre
+  (hace falta `.cl[hidden]{display:none}`, ya agregado en los dos HTML). Builders: `c10QueensDid` y `c10SubsetsDid`;
+  `c10Queens(n, literal)` y `c10Subsets(A, t, literal)` siguen en el script (con `literal=false` es el «corregido» viejo, que
+  solo usan las pruebas). `c10Partition` pasó a ser la didáctica, sin selector: el literal con su parche hace lo mismo.
+- Si cambia un pseudocódigo didáctico del apunte hay que actualizar sus copias del `bloque-clase` (c11 Reinas, c12 Suma, c13
+  Partición, c14 procesadores con cota, c15 Mochila) y los `pre.ps` de la guía (`ej-g15`…`ej-g17`, `ej-s2`, `ej-s4`).
+- Pruebas: `clase10.test.cjs` y `clase11.test.cjs` aceptan rangos de líneas por modo; `guia-backtracking.test.cjs` e
+  `integracion2.test.cjs` tienen actualizadas las líneas «que tienen que resaltarse» y los pasos esperados;
+  `clase10.browser.cjs` usa `CHROME_PATH` y los valores de selector `didactico` / `literal`.
+
 ## Validación
 
 ```bash
@@ -350,7 +381,7 @@ de consola.
 | 7 | 23/09/2026 | Programación Dinámica (principio de optimalidad, los 4 pasos), Fibonacci, Cambio, Mochila 0/1; comparación contra Greedy | Fibonacci con PD (vector), Cambio con PD (tabla n × (v+1), selector literal/corregido por los `d[j]` que la lámina dejó sin corregir, reconstrucción y comparación con Greedy), Mochila 0/1 con PD (tabla n × (P+1), reconstrucción y comparación con Greedy por v/p); renderer nuevo `dpTable`/`dpRender` |
 | 8 | 30/09/2026 | Repaso de PD (las tres síntesis), ejercicios de la guía PD 2 y PD 3 (resumen + link a `prog3-ejercicios.html`), qué es una subsecuencia, Subsecuencia común más larga (LCS) | LCS (tabla (m+1) × (n+1) con rótulos de columna `colLabels`, X e Y dibujados con `cells`, reconstrucción con desempate «subir» que también muestra la otra LCS posible; sin selector literal/corregido porque la lámina no tiene errores que rompan) |
 | 9 | 07/10/2026 | Repaso de la LCS, ejercicio «Preparación física de la selección» (PD), Algoritmo de Floyd, ejercicio «Centro logístico óptimo» | Preparación física (Mochila con hasta 2 sesiones, tabla n × (C+1), reconstrucción y comparación con «a lo sumo 1 sesión»), Floyd (matriz n × n con `colLabels`, pivote k en verde, 84 pasos con el grafo de la lámina), Centro logístico (R con una columna extra «máx», A como `extra` en el primer paso); sin selector literal/corregido: el pseudocódigo de Floyd no tiene errores que rompan |
-| 10 | 14/10/2026 | Repaso de Floyd, Backtracking, N reinas, suma de subconjuntos, partición en mitades, tareas a procesadores | Reinas (tablero SVG, modos corregido/literal), suma (decisiones 0/1, modos corregido/literal), partición (conjuntos etiquetados), procesadores (cargas y mejor asignación) |
+| 10 | 14/10/2026 | Repaso de Floyd, Backtracking, N reinas, suma de subconjuntos, partición en mitades, tareas a procesadores | Reinas (tablero SVG, versiones didáctica/literal), suma (decisiones 0/1, modos corregido/literal), partición (conjuntos etiquetados), procesadores (cargas y mejor asignación) |
 
 `index.html`: 40 simuladores, 83 secciones, 110 preguntas de autoevaluación (conteo de `validate.py`). A partir de la clase 7
 el quiz reparte la respuesta correcta entre las cuatro posiciones (los de las clases 1–6 la tienen
@@ -407,7 +438,7 @@ No se modifica el contrato de `Sim`. N entre 1 y 8, vectores de 1–6 enteros se
 suma absoluta debe ser segura), procesadores entre 1 y 3, duraciones no negativas. Las entradas
 inválidas se informan en el simulador, sin reemplazarlas silenciosamente. Puntos importantes:
 - Reinas: filas/columnas desde 0; el literal empieza S[E] en 0 y omite la columna 0. El corregido
-  empieza en −1. La búsqueda corta en la primera solución; N = 8 produce 11037 pasos
+  empieza en −1. La búsqueda corta en la primera solución; N = 8 produce 12210 pasos (versión didáctica; el literal, 11037)
   (sin agrupar nada: `ReinaValida` se ejecuta línea por línea con su propio marco, `i`, `S[i]`, `|S[i] − S[E]|`,
   `|i − E|`). `S` conserva los restos de las ramas abandonadas, que se ven en gris. El tablero marca la
   candidata (borde punteado), las rechazadas (×) y la comparación en curso (línea celeste, roja si hay ataque).
@@ -429,7 +460,7 @@ inválidas se informan en el simulador, sin reemplazarlas silenciosamente. Punto
   `node tests/clase10.browser.cjs` usa Chrome headless y CDP (Node 22+, sin npm; `CHROME_PATH`
   permite elegir el ejecutable) para probar navegación, controles, selectores, presets, errores,
   autoevaluación y la página de práctica; guarda capturas de escritorio/celular en el directorio
-  temporal. Los ejemplos de la clase 10 generan 11037 / 368 / 857 / 419 pasos y los de la clase 11 47 / 490 / 252 (Greedy / procesadores con cota / mochila con cota). Las secciones de la clase 10
+  temporal. Los ejemplos de la clase 10 generan 12210 / 435 / 924 / 462 pasos (Reinas didáctica / suma / partición / procesadores) y los de la clase 11 47 / 500 / 339 (Greedy / procesadores con cota / mochila con cota). Las secciones de la clase 10
   caben en 390 px; algunas tablas de clases anteriores ya desbordaban ese ancho.
 - `pdf_imagenes.py --componer` omite imágenes con coordenada vertical menor a 40, incluso imágenes
   grandes (páginas 10, 38 y 39 de esta clase). Al inspeccionarlas, excluir solo logos pequeños:
@@ -487,7 +518,7 @@ corta al cerrar; `O(3^(n²))`). Decisiones y observaciones:
 - Builders puros `btProcesadores`, `btLaberinto`, `btAtila` + parseo, renderers `btProcRender` /
   `btMazeRender` / `btAtilaRender` (SVG compartido `btFrame`) y `btGuard`, entre los marcadores
   `/* ===== Guía · Backtracking ===== */` y `const btProcSim=`. Los tres usan la traza (`Traza`, `TRAZA_MAX = 60000` con error visible: el jardín 5×5 sin pasto
-  lo alcanza). Pasos de los ejemplos: 419 / 1343 / 2352. Cada línea es un paso, también las auxiliares propias
+  lo alcanza). Pasos de los ejemplos: 462 / 1664 / 2796. Cada línea es un paso, también las auxiliares propias
   `Máximo` (Procesadores), `dentro` (Laberinto, Atila) y `esVecina` (Atila); las condiciones con `Y` se evalúan
   de a un operando (`abre[d]`, después `dentro`, después `NO visitada`). La vecina que se mira se dibuja con borde
   celeste punteado (`.sq.look`). El test `guia-backtracking.test.cjs` exige que cada línea del panel que
@@ -567,7 +598,7 @@ decisiones:
   `s4Render`, `s5Render`. Las entradas inválidas se informan (`btGuard` + `btError`), no se recortan. Presets
   con `data-s-sim` + `data-s-preset`. Inputs: `s1-s`/`s1-d`, `s2-ofertas` (filas por `/`, ofertas por espacios,
   `-` = no ofertó, hasta 4×4), `s3-c`/`s3-p`, `s4-m`/`s4-ini`/`s4-x` (hasta 4×4), `s5-a` (de 2×2 a 6×6),
-  `s6-r`/`s6-c`/`s6-p`. Pasos por defecto: 56 / 89 / 66 / 843 / 45 / 49.
+  `s6-r`/`s6-c`/`s6-p`. Pasos por defecto: 56 / 123 / 66 / 1112 / 45 / 49.
 - Prueba: `node tests/integracion2.test.cjs` (8000+ comprobaciones): builders reales contra oráculos
   independientes (subconjuntos, asignaciones inyectivas, sumas alcanzables, DFS y DP de recorridos,
   Dijkstra desde cada nodo, 3ⁿ elecciones), reconstrucciones válidas, entradas inválidas, presets del HTML,

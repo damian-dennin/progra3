@@ -61,21 +61,21 @@ async function capture(id,name){await evaluate(`document.getElementById(${JSON.s
       await evaluate(`document.getElementById('c10-reinas-n').value='4';document.querySelector('${R} [data-reload]').click()`);
       for(const a of ['over','out','last'])assert.equal(await evaluate(`document.querySelector('${R} [data-a="${a}"]').hidden`),false,'botón '+a);
       assert.equal(await evaluate(`document.querySelector('${R} [data-speed]').hidden`),false);
-      // «Saltar llamada» desde la línea que llama a ReinaValida cae en la línea 5 con el resultado, sin pasar por la 20–26
+      // «Saltar llamada» desde la línea que llama a ReinaValida cae en la línea 203 con el resultado, sin pasar por la 221–229
       for(let i=0;i<80&&!(await explain()).includes('llamo a ReinaValida');i++)await click(`${R} [data-a="next"]`);
-      assert.equal(await onLine(),'5');assert((await explain()).includes('llamo a ReinaValida'));
+      assert.equal(await onLine(),'203');assert((await explain()).includes('llamo a ReinaValida'));
       const antes=+(await count()).split('/')[0];
       await click(`${R} [data-a="over"]`);
-      assert.equal(await onLine(),'5');assert((await explain()).includes('ReinaValida devolvió'),await explain());
+      assert.equal(await onLine(),'203');assert((await explain()).includes('ReinaValida devolvió'),await explain());
       assert(+(await count()).split('/')[0]>antes+2,'saltó por encima de los pasos de ReinaValida');
-      // «Salir de la función» desde adentro de ReinaValida vuelve a la línea 5
+      // «Salir de la función» desde adentro de ReinaValida vuelve a la línea 203
       await evaluate(`document.querySelector('${R} [data-a="first"]').click()`);
       for(let i=0;i<200&&!(await explain()).includes('Entro a ReinaValida');i++)await click(`${R} [data-a="next"]`);
-      assert.equal(await onLine(),'20');assert((await evaluate(`document.querySelector('${R} .traza').innerText`)).includes('ReinaValida'));
+      assert.equal(await onLine(),'221');assert((await evaluate(`document.querySelector('${R} .traza').innerText`)).includes('ReinaValida'));
       // pila y variables visibles, con lo que cambió resaltado: el marco recién creado aparece con sus variables marcadas
       assert(await evaluate(`document.querySelectorAll('${R} .traza .frame').length===2 && document.querySelectorAll('${R} .traza .tv.chg').length>=1`));
       await click(`${R} [data-a="out"]`);
-      assert.equal(await onLine(),'5');assert((await explain()).includes('ReinaValida devolvió'));
+      assert.equal(await onLine(),'203');assert((await explain()).includes('ReinaValida devolvió'));
       // clic en la barra salta a esa parte; «Ir al final» termina la ejecución
       await evaluate(`(()=>{const b=document.querySelector('${R} .bar'),r=b.getBoundingClientRect();b.dispatchEvent(new MouseEvent('click',{bubbles:true,clientX:r.left+r.width*0.5,clientY:r.top+2}));})()`);
       const mitad=(await count()).split('/').map(Number);assert(mitad[0]>mitad[1]*0.4&&mitad[0]<mitad[1]*0.6,'la barra salta a la mitad: '+mitad);
@@ -88,11 +88,11 @@ async function capture(id,name){await evaluate(`document.getElementById(${JSON.s
     assert((await finish('sim-c10-suma')).result.includes('1 solución'));
     await evaluate(`document.getElementById('c10-suma-arr').value='1,,2';document.querySelector('#sim-c10-suma [data-reload]').click()`);
     assert(await evaluate(`!!document.querySelector('#sim-c10-suma [role="alert"]')`));
-    await evaluate(`document.getElementById('c10-suma-modo').value='corregido';document.querySelector('#sim-c10-suma [data-c10-preset]').click()`);
+    await evaluate(`document.getElementById('c10-suma-modo').value='didactico';document.querySelector('#sim-c10-suma [data-c10-preset]').click()`);
     assert((await finish('sim-c10-suma')).result.includes('4 soluciones'));
     await evaluate(`document.getElementById('c10-reinas-n').value='1';document.getElementById('c10-reinas-modo').value='literal';document.getElementById('c10-reinas-modo').dispatchEvent(new Event('change'))`);
     assert((await finish('sim-c10-reinas')).result.includes('Sin solución en el modo literal'));
-    await evaluate(`document.getElementById('c10-reinas-modo').value='corregido';document.getElementById('c10-reinas-n').value='8';document.querySelector('#sim-c10-reinas [data-reload]').click()`);
+    await evaluate(`document.getElementById('c10-reinas-modo').value='didactico';document.getElementById('c10-reinas-n').value='8';document.querySelector('#sim-c10-reinas [data-reload]').click()`);
     // Cuestionario: sin respuestas, todas correctas y restablecimiento.
     await evaluate(`document.getElementById('quiz-check-c10').click()`);
     assert.equal(await evaluate(`document.getElementById('quiz-score-c10').textContent`),'0 de 10 correctas (10 sin responder)');

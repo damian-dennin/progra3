@@ -48,7 +48,7 @@ for(const [A,m] of taskCases){
   for(const steps of both){
     const end=last(steps);assert.equal(end.best,expected);assert(end.bestAssignment.every(p=>Number.isInteger(p)&&p>=0&&p<m));
     assert.equal(Math.max(...Array.from({length:m},(_,p)=>A.reduce((sum,x,i)=>sum+(end.bestAssignment[i]===p?x:0),0))),expected);
-    assert(end.loads.every(x=>x===0));assert(end.arr.every(x=>x===null));verifySteps(steps);checks++;
+    assert(end.loads.every(x=>x===0));assert.equal(end.placedIds.length,0,"al terminar no queda nada asignado (S conserva los restos en gris)");verifySteps(steps);checks++;
   }
   assert(last(both[1]).visited<=last(both[0]).visited);
   if(g.best===expected)assert.deepEqual(plain(last(both[1]).bestAssignment),plain(g.bestAssignment),'Debe conservar la solución inicial si no hay mejora');
@@ -99,15 +99,17 @@ function checkTrace(id,steps,allowed=[]){
   checks++;
 }
 checkTrace('sim-c11-greedy',context.c11Greedy([8,7,6,5,4],2),[1,2,3,6,7]);
-checkTrace('sim-c11-procesadores',context.c11Processors([8,7,6,5,4],2,true),[3]);
-checkTrace('sim-c11-procesadores',context.c11Processors([8,7,6,5,4],2,false),[3]);
+checkTrace('sim-c11-procesadores',context.c11Processors([8,7,6,5,4],2,true));
+checkTrace('sim-c11-procesadores',context.c11Processors([8,7,6,5,4],2,false));
 {const steps=context.c11Knapsack([35,30,20,12],[5,3,2,1],7,true);
- checkTrace('sim-c11-mochila',steps,[2]);
+ checkTrace('sim-c11-mochila',steps,[12,45]); // 12 (peso > capacidad) solo ocurre sin cota en este ejemplo; 45 (restante = 0 con objetos pendientes) necesita otra instancia: abajo
+ assert(context.c11Knapsack([35,30,20,12],[5,3,2,1],7,false).some(s=>s.line===12),'sin cota, O1 + O2 pasa la capacidad y se ejecuta el devolver de la línea 12');
+ assert(context.c11Knapsack([10,10,10],[2,2,2],4,true).some(s=>s.line===45),'restante = 0 con objetos pendientes termina el recorrido');
  // CotaFraccionaria se recorre línea por línea y su resultado coincide con c11Bound
  const calls=steps.filter(s=>s.frames.length&&s.frames[s.frames.length-1].fn==='CotaFraccionaria');
- assert(calls.some(s=>s.line===44)&&calls.some(s=>s.line===48)&&calls.some(s=>s.line===49));
+ assert(calls.some(s=>s.line===47)&&calls.some(s=>s.line===51)&&calls.some(s=>s.line===54));
  assert(steps.some(s=>s.live&&s.live.parts.length),'el cálculo parcial de la cota es visible');
- const root=steps.find(s=>s.line===6&&s.bound);assert.equal(root.bound.num/root.bound.den,69);}
+ const root=steps.find(s=>s.line===22&&s.bound);assert.equal(root.bound.num/root.bound.den,69);}
 const bound=context.c11Bound([35,30,20,12],[5,3,2,1],7,0,0,0);
 assert.equal(bound.num/bound.den,69);
 assert.deepEqual(plain(last(context.c11Knapsack([35,30,20,12],[5,3,2,1],7,true)).bestAssignment),[0,1,1,1]);
