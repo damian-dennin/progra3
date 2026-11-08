@@ -8,7 +8,7 @@ const inputs={};
 const context={document:{getElementById:id=>({value:inputs[id]})},esc:s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])),cells:a=>JSON.stringify(a)};
 vm.createContext(context);
 vm.runInContext(html.slice(html.indexOf(start),html.indexOf(end)),context);
-const B=vm.runInContext('({btProcesadores,btLaberinto,btAtila,btParseLab,btParseJardin,btParseCasilla,btInteger,btVector,btProcRender,btMazeRender,btAtilaRender,BT_DIRS,TRAZA_MAX})',context);
+const B=vm.runInContext('({btProcesadores,btLaberinto,btAtila,btParseLab,btParseJardin,btParseCasilla,btInteger,btVector,btProcRender,btMazeRender,btAtilaRender,BT_DIRS,LAB_DIRS,TRAZA_MAX})',context);
 const plain=x=>JSON.parse(JSON.stringify(x)),last=a=>a[a.length-1];
 let checks=0,rendered=0,seed=161803;
 const rand=n=>{seed=(1664525*seed+1013904223)>>>0;return seed%n;};
@@ -33,20 +33,38 @@ function verifySteps(steps,render){
 /* ---------- oráculos ---------- */
 function procOracle(A,m){let best=Infinity;for(let code=0;code<m**A.length;code++){let r=code;const l=new Array(m).fill(0);for(const t of A){l[r%m]+=t;r=Math.floor(r/m);}best=Math.min(best,Math.max(...l));}return best;}
 function labOracle(L,o,d){ // Bellman-Ford con peso en los nodos (>= 0) y aristas dirigidas válidas
-  const n=L.length,dist=L.map(r=>r.map(()=>Infinity));dist[o[0]-1][o[1]-1]=L[o[0]-1][o[1]-1].valor;
-  for(let it=0;it<n*n+2;it++)for(let f=0;f<n;f++)for(let c=0;c<n;c++){
+  const m=L.length,n=L[0].length,dist=L.map(r=>r.map(()=>Infinity));dist[o[0]-1][o[1]-1]=L[o[0]-1][o[1]-1].valor;
+  for(let it=0;it<m*n+2;it++)for(let f=0;f<m;f++)for(let c=0;c<n;c++){
     if(dist[f][c]===Infinity)continue;
-    for(const dd of B.BT_DIRS){if(!L[f][c].abre[dd.k])continue;const nf=f+dd.df,nc=c+dd.dc;if(nf<0||nf>=n||nc<0||nc>=n)continue;dist[nf][nc]=Math.min(dist[nf][nc],dist[f][c]+L[nf][nc].valor);}
+    for(const dd of B.LAB_DIRS){if(!L[f][c][dd.k])continue;const nf=f+dd.di,nc=c+dd.dj;if(nf<0||nf>=m||nc<0||nc>=n)continue;dist[nf][nc]=Math.min(dist[nf][nc],dist[f][c]+L[nf][nc].valor);}
   }
   return dist[d[0]-1][d[1]-1];
 }
 function labEnum(L,o,d){ // todos los caminos simples, sin poda
-  const n=L.length,vis=L.map(r=>r.map(()=>false));let best=Infinity;
+  const m=L.length,n=L[0].length,vis=L.map(r=>r.map(()=>false));let best=Infinity;
   (function go(f,c,s){vis[f][c]=true;s+=L[f][c].valor;
     if(f===d[0]-1&&c===d[1]-1)best=Math.min(best,s);
-    else for(const dd of B.BT_DIRS){if(!L[f][c].abre[dd.k])continue;const nf=f+dd.df,nc=c+dd.dc;if(nf<0||nf>=n||nc<0||nc>=n||vis[nf][nc])continue;go(nf,nc,s);}
+    else for(const dd of B.LAB_DIRS){if(!L[f][c][dd.k])continue;const nf=f+dd.di,nc=c+dd.dj;if(nf<0||nf>=m||nc<0||nc>=n||vis[nf][nc])continue;go(nf,nc,s);}
     vis[f][c]=false;})(o[0]-1,o[1]-1,0);
   return best;
+}
+/* Réplica literal e independiente del pseudocódigo de la lámina 14 (matrices con borde, 1 a 1, sin Traza ni DOM).
+   Además de la solución cuenta llamadas y podas, y cuántos pasos tiene que generar el simulador: 2 globales (llamada
+   inicial y fin) y, por llamada, 6 de entrada + 1 de la condición del destino (+2 si guarda) o 1 de la poda por mejor
+   solución (+1 de nuevaPos y, por dirección, 1 de la condición y 4 más si hay llamada) + 3 de salida. */
+function labLiteral(L,o,d){
+  const m=L.length,n=L[0].length,vis=Array.from({length:m+2},()=>Array(n+2).fill(false));
+  let mejor=Infinity,res=null,llamadas=0,podasV=0,podasM=0,pasos=2;
+  (function go(i,j,sumaP){
+    llamadas++;pasos+=6;vis[i][j]=true;sumaP+=L[i-1][j-1].valor;
+    if(i===d[0]&&j===d[1]){pasos+=1;if(sumaP<mejor){mejor=sumaP;pasos+=2;res=vis.map(r=>r.slice());}}
+    else{pasos+=1;
+      if(sumaP<mejor){pasos+=1;
+        for(const dd of B.LAB_DIRS){pasos+=1;if(L[i-1][j-1][dd.k]){if(vis[i+dd.di][j+dd.dj])podasV++;else{pasos+=4;go(i+dd.di,j+dd.dj,sumaP);}}}
+      }else podasM++;}
+    vis[i][j]=false;pasos+=3;
+  })(o[0],o[1],0);
+  return {mejor,llamadas,podasV,podasM,pasos,res};
 }
 function hamOracle(J){ // ciclo hamiltoniano por DP de máscaras (k <= 16)
   const cells=[];J.forEach((r,f)=>r.forEach((p,c)=>p&&cells.push([f,c])));const k=cells.length;if(k<4)return false;
@@ -56,7 +74,7 @@ function hamOracle(J){ // ciclo hamiltoniano por DP de máscaras (k <= 16)
     for(let v=0;v<k;v++)if(dp[mask]&(1<<v))for(let w=1;w<k;w++)if(!(mask&(1<<w))&&adj[v][w])dp[mask|(1<<w)]|=1<<w;}
   const full=(1<<k)-1;for(let v=1;v<k;v++)if((dp[full]&(1<<v))&&adj[v][0])return true;return false;
 }
-const labText=L=>L.map(r=>r.map(c=>c.valor+B.BT_DIRS.filter(d=>c.abre[d.k]).map(d=>d.k).join('')).join(' ')).join(' / ');
+const labText=L=>L.map(r=>r.map(c=>c.valor+B.LAB_DIRS.filter(d=>c[d.k]).map(d=>d.sym).join('')).join(' ')).join(' / ');
 const gardenText=J=>J.map(r=>r.map(x=>x?'#':'.').join('')).join('/');
 
 /* ---------- Backtracking 1: procesadores ---------- */
@@ -76,48 +94,66 @@ assert.equal(last(B.btProcesadores([2,3,4,5],1)).best,14);
 assert.equal(last(B.btProcesadores([4],3)).best,4);
 assert.equal(last(B.btProcesadores([0,0],2)).best,0);
 
-/* ---------- Backtracking 2: laberinto ---------- */
-const randLab=(n,pOpen,pZero)=>Array.from({length:n},()=>Array.from({length:n},()=>{
-  const abre={};B.BT_DIRS.forEach(d=>{abre[d.k]=rand(100)<pOpen;});return {valor:rand(100)<pZero?0:1+rand(9),abre};}));
+/* ---------- Backtracking 2: laberinto (clase del 28/10) ---------- */
+const randLab=(m,n,pOpen,pZero)=>Array.from({length:m},(_,f)=>Array.from({length:n},(_,c)=>{
+  const cel={valor:rand(100)<pZero?0:1+rand(9)};
+  B.LAB_DIRS.forEach(d=>{const nf=f+d.di,nc=c+d.dj;cel[d.k]=nf>=0&&nf<m&&nc>=0&&nc<n&&rand(100)<pOpen;});return cel;}));
 let labOk=0,labNo=0,labCap=0;
 for(let i=0;i<700;i++){
-  const n=1+rand(4),L=randLab(n,40+rand(60),rand(3)===0?25:0),o=[1+rand(n),1+rand(n)],d=[1+rand(n),1+rand(n)];
+  const m=1+rand(4),n=1+rand(4),L=randLab(m,n,40+rand(60),rand(3)===0?25:0),o=[1+rand(m),1+rand(n)],d=[1+rand(m),1+rand(n)];
   same(B.btParseLab(labText(L)),L,'el texto vuelve a parsearse igual');
   let steps;try{steps=B.btLaberinto(L,o,d);}catch(e){assert(/más de/.test(e.message));labCap++;continue;}
-  const end=last(steps),exp=labEnum(L,o,d);
+  const end=last(steps),exp=labEnum(L,o,d),lit=labLiteral(L,o,d);
   assert.equal(exp,labOracle(L,o,d),'los dos oráculos discrepan');checks++;
-  if(exp===Infinity){assert.equal(end.rcls,'bad');labNo++;}
+  assert.equal(lit.mejor,exp,'la réplica literal discrepa de la enumeración');
+  assert.equal(end.mejor,exp);assert.deepEqual(plain(end.stats),{llamadas:lit.llamadas,podasV:lit.podasV,podasM:lit.podasM},'el árbol de llamadas y sus podas son los del pseudocódigo literal');
+  assert.equal(steps.length,lit.pasos,'cantidad de pasos');checks+=4;
+  if(exp===Infinity){assert.equal(end.rcls,'bad');assert.equal(end.best,null);labNo++;}
   else{
-    assert.equal(end.rcls,'good');assert.equal(end.mejor,exp);
+    assert.equal(end.rcls,'good');
     const best=steps.reduce((a,s)=>s.best||a,null);let sum=0;
     best.forEach((p,j)=>{sum+=L[p[0]-1][p[1]-1].valor;
-      if(j){const q=best[j-1],dd=B.BT_DIRS.find(x=>q[0]+x.df===p[0]&&q[1]+x.dc===p[1]);assert(dd&&L[q[0]-1][q[1]-1].abre[dd.k],'paso válido');}});
-    assert.equal(sum,exp);assert.equal(best[0].join(),o.join());assert.equal(last(best).join(),d.join());
-    assert.equal(new Set(best.map(p=>p.join())).size,best.length,'camino simple');
+      if(j){const q=best[j-1],dd=B.LAB_DIRS.find(x=>q[0]+x.di===p[0]&&q[1]+x.dj===p[1]);assert(dd&&L[q[0]-1][q[1]-1][dd.k],'paso válido');}});
+    assert.equal(sum,exp);assert.equal(best[0].slice(0,2).join(),o.join());assert.equal(last(best).slice(0,2).join(),d.join());
+    assert.equal(new Set(best.map(p=>p[0]+','+p[1])).size,best.length,'camino simple');
+    // resultado = copia de visitado: las mismas casillas que la matriz de la réplica literal
+    const cellsBest=new Set(best.map(p=>p[0]+','+p[1])),cellsLit=new Set();lit.res.forEach((r,f)=>r.forEach((v,c)=>{if(v)cellsLit.add(f+','+c);}));
+    assert.deepEqual([...cellsBest].sort(),[...cellsLit].sort(),'resultado es visitado en el momento de la mejor solución');checks+=2;
     labOk++;
   }
   assert.equal(end.path.length,0,'el camino actual queda vacío al terminar');
+  steps.forEach(s=>{assert(s.path.every(p=>p[2]===null||typeof p[2]==='number'));});
   if(i<60)verifySteps(steps,B.btMazeRender);
 }
 assert(labOk>300&&labNo>20,'cobertura de casos con y sin camino: '+labOk+'/'+labNo);
-const mazeDefault='5E 7ESO 6S 9S / 2ES 7NESO 3NO 5NS / 2NES 7SO 3E 7NSO / 1NE 3NEO 7EO 1NO';
-const mazeCases=[[mazeDefault,'1,1','4,4',1664,'good',35],['1ES 9SO / 1N 1NO','1,1','2,2',113,'good',11],['1ES 1ESO 1SO / 1N 1N 1N / 1 1 1','1,1','3,3',194,'bad',null],[mazeDefault,'1,1','1,1',19,'good',5],['4','1,1','1,1',19,'good',4]];
+const mazeSlide='4v> 3v< 6v> 8< / 5^v 2^v> 1^v<> 5v< / 7^> 3^< 2^> 1^<'; // el laberinto de la lámina 10: origen (2,1), destino (3,4)
+const mazeCases=[[mazeSlide,'2,1','3,4',303,'good',18],[mazeSlide,'2,1','2,4',371,'good',20],[mazeSlide,'2,1','3,3',251,'good',17],['1v> 9v< / 1^ 1^<','1,1','2,2',71,'good',11],['1v> 1v<> 1v< / 1^ 1^ 1^ / 1 1 1','1,1','3,3',112,'bad',null],[mazeSlide,'2,1','2,1',14,'good',5],['4','1,1','1,1',14,'good',4]];
 for(const [text,o,d,count,rcls,len] of mazeCases){
-  const L=B.btParseLab(text),n=L.length,steps=B.btLaberinto(L,B.btParseCasilla(o,n,'o'),B.btParseCasilla(d,n,'d'));
+  const L=B.btParseLab(text),m=L.length,n=L[0].length,steps=B.btLaberinto(L,B.btParseCasilla(o,m,n,'o'),B.btParseCasilla(d,m,n,'d'));
   assert.equal(steps.length,count,text+' '+o+'→'+d);assert.equal(last(steps).rcls,rcls);if(len!==null)assert.equal(last(steps).mejor,len);
   verifySteps(steps,B.btMazeRender);checks+=3;
 }
-{ // el camino con menos casillas no es el de menor suma en el ejemplo por defecto
-  const L=B.btParseLab(mazeDefault),steps=B.btLaberinto(L,[1,1],[4,4]),best=steps.reduce((a,s)=>s.best||a,null);
-  assert.equal(best.length,9);
-  assert.equal(L[0][0].valor+L[0][1].valor+L[1][1].valor+L[2][1].valor+L[3][1].valor+L[3][2].valor+L[3][3].valor,37,'el camino de 7 casillas por (2,2)→(3,2) cuesta 37');checks+=2;
+{ // el ejemplo de la lámina 10, ejecutado en el orden del pseudocódigo (arriba, abajo, izq, der)
+  const L=B.btParseLab(mazeSlide),steps=B.btLaberinto(L,[2,1],[3,4]),end=last(steps),best=steps.reduce((a,s)=>s.best||a,null);
+  same(end.stats,{llamadas:17,podasV:13,podasM:3},'árbol del ejemplo: 17 llamadas, 13 podas por visitado, 3 por mejor solución');
+  assert.equal(end.mejor,18,'el mejor camino cuesta 18; 17 y 20 de la lámina son sumas parciales sin el valor del destino');
+  same(best.map(p=>p.slice(0,2)),[[2,1],[1,1],[1,2],[2,2],[2,3],[3,3],[3,4]]);
+  same(best.map(p=>p[2]),[5,9,12,14,15,17,18],'las sumaP del camino óptimo');
+  const calls=steps.filter(s=>s.line===1).map(s=>s.frames[s.frames.length-1].vars.posActual+' '+s.frames[s.frames.length-1].vars.sumaP);
+  assert.equal(calls[0],'(2,1) 0');assert.equal(calls.length,17);
+  // las sumas parciales de la lámina: (1,1)=9, (3,1)=12, (1,2)=12, (2,2)=14, (2,3)=15, (3,3)=17, (2,4)=20
+  const sumas={};steps.forEach(s=>{if(s.line===8){const f=s.frames[s.frames.length-1].vars;sumas[f.posActual]=sumas[f.posActual]||new Set();sumas[f.posActual].add(f.sumaP);}});
+  for(const [k,v] of Object.entries({'(1,1)':9,'(3,1)':12,'(1,2)':12,'(2,2)':14,'(2,3)':15,'(3,3)':17,'(2,4)':20}))assert(sumas[k].has(v),k+' con sumaP '+v);
+  checks+=5+7;
 }
 // entradas inválidas: se informan, no se reemplazan
-for(const bad of ['','1E 2 / 3','1E 2X / 3 4','1EE 2 / 3 4','1000 2 / 3 4','a b / c d','1 1 1 1 1 / 1 1 1 1 1 / 1 1 1 1 1 / 1 1 1 1 1 / 1 1 1 1 1'])
+for(const bad of ['','1v 2 / 3','1v 2x / 3 4','1vv 2 / 3 4','1000 2 / 3 4','a b / c d','1 1 1 1 1 / 1 1 1 1 1 / 1 1 1 1 1 / 1 1 1 1 1 / 1 1 1 1 1','1 1 1 1 1','1 / 1 / 1 / 1 / 1','1^','1< 1','1 1>','1v','1 1 / 1 1^v'])
   assert.throws(()=>B.btParseLab(bad),/laberinto|Casilla/,'laberinto inválido: '+bad);
-for(const bad of ['','0,1','1,5','a,b','1;1','1'])assert.throws(()=>B.btParseCasilla(bad,4,'Origen'),/Origen/);
+for(const bad of ['','0,1','1,5','a,b','1;1','1','3,1','1,4'])assert.throws(()=>B.btParseCasilla(bad,2,3,'Origen'),/Origen/);
+assert.equal(B.btParseLab('1V> 1< / 1 1')[0][0].abajo,true,'los símbolos se aceptan también en mayúscula');
+same(B.btParseCasilla(' 2 , 3 ',2,3,'o'),[2,3]);
 assert.throws(()=>B.btAtila(B.btParseJardin('#####/#####/#####/#####/#####')),/más de 60000 pasos/,'el tope de pasos del jardín se informa');
-checks+=13;
+checks+=14+8+2;
 
 /* ---------- Backtracking 3: caballo de Atila ---------- */
 let atYes=0,atNo=0,atCap=0;
@@ -160,13 +196,14 @@ for(const bad of ['0','4','1.5','','abc','1e1']){inputs.x=bad;assert.throws(()=>
 for(const ok of ['2,3,4,5','0,0','4','1,2,3,4,5,6']){inputs.v=ok;assert.equal(B.btVector('v').length,ok.split(',').length);}
 for(const bad of ['','1,,2','-1,2','1,2,3,4,5,6,7','a','1.5']){inputs.v=bad;assert.throws(()=>B.btVector('v'),/entre 1 y 6/);}
 checks+=16;
-const defaults={};for(const m of html.matchAll(/<input[^>]*\bid="(g1[567]-[a-z]+)"[^>]*\bvalue="([^"]*)"/g))defaults[m[1]]=m[2];
+const unesc=s=>s.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&amp;/g,'&'); // como lo lee el navegador
+const defaults={};for(const m of html.matchAll(/<input[^>]*\bid="(g1[567]-[a-z]+)"[^>]*\bvalue="([^"]*)"/g))defaults[m[1]]=unesc(m[2]);
 assert.deepEqual(Object.keys(defaults).sort(),['g15-m','g15-t','g16-d','g16-lab','g16-o','g17-jardin']);
-const presets=[...html.matchAll(/data-bt-sim="(\w+)" data-bt-preset="([^"]*)"/g)].map(m=>({sim:m[1],values:JSON.parse(m[2].replace(/&quot;/g,'"'))}));
-assert.equal(presets.length,13,'4 de procesadores + 4 de laberinto + 5 de jardín');
+const presets=[...html.matchAll(/data-bt-sim="(\w+)" data-bt-preset="([^"]*)"/g)].map(m=>({sim:m[1],values:JSON.parse(unesc(m[2]))}));
+assert.equal(presets.length,15,'4 de procesadores + 6 de laberinto + 5 de jardín');
 const run={
   proc:()=>B.btProcesadores(B.btVector('g15-t'),B.btInteger('g15-m','Procesadores',1,3)),
-  maze:()=>{const L=B.btParseLab(inputs['g16-lab']),n=L.length;return B.btLaberinto(L,B.btParseCasilla(inputs['g16-o'],n,'Origen'),B.btParseCasilla(inputs['g16-d'],n,'Destino'));},
+  maze:()=>{const L=B.btParseLab(inputs['g16-lab']),m=L.length,n=L[0].length;return B.btLaberinto(L,B.btParseCasilla(inputs['g16-o'],m,n,'Origen'),B.btParseCasilla(inputs['g16-d'],m,n,'Destino'));},
   atila:()=>B.btAtila(B.btParseJardin(inputs['g17-jardin']))
 };
 const renders={proc:B.btProcRender,maze:B.btMazeRender,atila:B.btAtilaRender};
@@ -175,12 +212,12 @@ for(const p of presets){
   const steps=run[p.sim]();assert(steps.length>=1&&steps.length<=B.TRAZA_MAX);verifySteps(steps,renders[p.sim]);checks++;
 }
 Object.assign(inputs,defaults);
-for(const [sim,count] of [['proc',462],['maze',1664],['atila',2796]]){ // los ejemplos por defecto, dentro del presupuesto del apunte
+for(const [sim,count] of [['proc',462],['maze',303],['atila',2796]]){ // los ejemplos por defecto, dentro del presupuesto del apunte
   assert.equal(run[sim]().length,count);checks++;
 }
 /* El resaltado recorre el pseudocódigo: cada `line` existe como data-l del simulador, ninguna línea concentra
    más de la mitad de los pasos y aparecen las líneas que antes nunca se resaltaban. */
-for(const [sim,id,must] of [['maze','sim-g16',[11,12,13,14,16,17,20,21,22,23,24,25,30,31,41,42]],['atila','sim-g17',[21,22,23,25,26,27,28,29,30,33,41,42,51,52]]]){
+for(const [sim,id,must] of [['maze','sim-g16',[1,5,6,7,8,9,10,11,12,16,17,18,19,20,21,23,24,25,26,28,29,30,31,33,34,35,36,39,40,41]],['atila','sim-g17',[21,22,23,25,26,27,28,29,30,33,41,42,51,52]]]){
   const block=html.slice(html.indexOf('id="'+id+'"'));
   const code=block.slice(0,block.indexOf('data-viz'));
   const dataL=new Set([...code.matchAll(/data-l="(\d+)"/g)].map(m=>+m[1]));

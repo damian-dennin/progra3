@@ -384,6 +384,7 @@ table.dp td.cur{border-color:var(--acc);background:var(--acc-w);font-weight:700;
     <li><a href="#ej-c13">13 · Partición en mitades</a></li>
     <li><a href="#ej-c14">14 · Procesadores con cota Greedy</a></li>
     <li><a href="#ej-c15">15 · Mochila con cota</a></li>
+    <li><a href="#ej-c16">16 · Asignación de tareas</a></li>
   </ol>
   <div class="navgroup">Integración · Segundo parcial</div>
   <ol>
@@ -404,13 +405,13 @@ table.dp td.cur{border-color:var(--acc);background:var(--acc-w);font-weight:700;
 <header class="hero">
   <div class="kicker">UADE · Programación III — Diseño y Análisis de Algoritmos</div>
   <h1>Ejercicios resueltos para los parciales</h1>
-  <p>Los enunciados de la <b>Guía de Ejercitación</b>, de los problemas de las clases 7 a 11 y de los
+  <p>Los enunciados de la <b>Guía de Ejercitación</b>, de los problemas de las clases 7 a 12 y de los
   <b>Ejercicios de Integración</b> (primer y segundo parcial), trabajados con el formato que pide la cátedra en el parcial.
   Cada ejercicio arranca con la consigna textual, sigue con qué te están pidiendo en criollo y una serie de razonamientos para
   que lo intentes solo; recién ahí, apretando un botón, aparece la resolución completa: estrategia, pseudocódigo y
   un simulador para ejecutarlo paso a paso (en los problemas de clase, el simulador está en el apunte y se enlaza).</p>
   <div class="hero-meta">
-    <b>41 ejercicios</b><b>29 simuladores aquí + 12 en el apunte</b><b>Divide y Conquista · Greedy · Grafos · Programación Dinámica · Backtracking</b><b>Primer parcial 16/09/2026 · Integrador 11/11/2026</b>
+    <b>42 ejercicios</b><b>29 simuladores aquí + 13 en el apunte</b><b>Divide y Conquista · Greedy · Grafos · Programación Dinámica · Backtracking</b><b>Primer parcial 16/09/2026 · Integrador 11/11/2026</b>
   </div>
   <p style="margin-top:18px"><button class="primary" id="abrir-todo">Abrir todas las resoluciones</button>
   <span class="srcnote" style="border:0;padding:0;margin-left:10px">o abrí cada una por separado, después de pensarla</span></p>
@@ -429,7 +430,7 @@ table.dp td.cur{border-color:var(--acc);background:var(--acc-w);font-weight:700;
   <div class="note"><b>Alcance de esta página</b>
   Divide y Conquista, Greedy y Grafos (los temas del <b>primer parcial</b>, 16/09/2026) y, desde la
   clase 7, <b>Programación Dinámica</b> (que entra en el <b>integrador</b>, 11/11/2026) y, desde la
-  clase 10, <b>Backtracking</b>. La teoría de Backtracking está en la <a href="index.html#clase10">clase 10 del apunte</a>; la <a href="index.html#clase11">clase 11</a> desarrolla cotas, la mejora de procesadores con Greedy y Mochila con cota superior. El bloque <b>Problemas de clase</b> trae, con la resolución tapada, los 12 problemas de la hoja de práctica (clases 7 a 11) que no son de la guía, con su simulador enlazado en el apunte; el bloque <b>Integración · Segundo parcial</b>, los seis ejercicios de integración del segundo parcial (sin técnica indicada: reconocerla es el punto a).</div>
+  clase 10, <b>Backtracking</b>. La teoría de Backtracking está en la <a href="index.html#clase10">clase 10 del apunte</a>; la <a href="index.html#clase11">clase 11</a> desarrolla cotas, la mejora de procesadores con Greedy y Mochila con cota superior; la <a href="index.html#clase12">clase 12</a> las usa en el laberinto y en la asignación de tareas. El bloque <b>Problemas de clase</b> trae, con la resolución tapada, los 12 problemas de la hoja de práctica (clases 7 a 11) que no son de la guía, más la asignación de tareas de la clase 12, con su simulador enlazado en el apunte; el bloque <b>Integración · Segundo parcial</b>, los seis ejercicios de integración del segundo parcial (sin técnica indicada: reconocerla es el punto a).</div>
 </header>
 
 <div class="exbar" id="bloque-dyc"><span>Guía</span><b>Divide y Conquista</b><em>Se pide: a) estrategia · b) pseudocódigo · c) complejidad temporal</em></div>
@@ -2281,24 +2282,26 @@ La poda hace que en muchas entradas se visiten bastante menos nodos que mⁿ, pe
 <!-- Backtracking 2 -->
 <section id="ej-g16">
 <h2>Guía · Backtracking 2 — Laberinto de longitud mínima</h2>
-<p class="sub">Backtracking · buscar la mejor solución · <span class="tag t-exp">O(n²·3<sup>n²</sup>)</span></p>
+<p class="sub">Backtracking · buscar la mejor solución · <span class="tag t-exp">O(3<sup>n</sup>)</span> con n = cantidad de celdas</p>
 
 <div class="enun"><b>Enunciado</b>
 Dado un laberinto consistente en una matriz cuadrada que tiene en cada posición un valor natural y cuatro valores booleanos, indicando estos últimos si desde esa casilla se puede ir al norte, este, sur y oeste, encontrar un camino de longitud mínima entre dos casillas dadas, siendo la longitud de un camino la suma de los valores naturales de las casillas por las que pasa.</div>
 <div class="note"><b>El enunciado de la guía sale cortado</b>
 En el PDF esta consigna es una imagen y le falta el borde derecho: se lee «…un valor natural y cuatro valores booleanos, indicando estos últimos si desde esa casilla se puede i…», «…dadas,». Se transcribió con la lectura natural de esas palabras; si en la hoja impresa dice otra cosa, vale lo de la hoja.</div>
+<div class="note"><b>La resolución sigue la clase del 28/10</b>
+Estrategia, pseudocódigo, ejemplo y complejidad son los de las láminas 9 a 15 de <code>Clase-28-10-2026.pdf</code>, donde la cátedra resuelve este mismo problema. La clase está en el apunte (<a href="index.html#laberinto-c12">clase 12 · el problema del laberinto</a>), con este mismo simulador. La cátedra nombra las direcciones <i>arriba, abajo, izquierda y derecha</i>; la guía, <i>norte, sur, oeste y este</i>: son las mismas cuatro.</div>
 
 <h3>Qué te están pidiendo</h3>
-<p>Un tablero de n × n casillas. Cada casilla tiene un <b>número</b> (lo que «cuesta» pasar por ella) y <b>cuatro booleanos</b>: si desde ahí se puede salir hacia el norte, el este, el sur o el oeste. Dadas una casilla de origen y una de destino, hay que encontrar el camino cuya <b>suma de valores</b> es mínima, contando todas las casillas por las que pasa, también la primera y la última. No pide el camino con menos pasos: un camino corto por casillas caras puede perder contra uno más largo por casillas baratas.</p>
+<p>Una matriz de casillas. Cada casilla tiene un <b>número</b> (lo que «cuesta» pasar por ella) y <b>cuatro booleanos</b>: si desde ahí se puede ir hacia arriba, hacia abajo, a la izquierda o a la derecha. Dadas una casilla de origen y una de destino, hay que encontrar el camino cuya <b>suma de valores</b> es mínima, contando todas las casillas por las que pasa, también la primera y la última. No pide el camino con menos pasos: un camino corto por casillas caras puede perder contra uno más largo por casillas baratas. En la clase se pide lo de siempre: plantear la estrategia por backtracking, desarrollar el pseudocódigo y calcular la complejidad temporal. El ejemplo de la clase es de 3 × 4, así que la matriz no tiene por qué ser cuadrada.</p>
 
 <h3>Razonamientos antes de mirar la resolución</h3>
 <ol class="razon">
   <li><b>¿Qué significa «longitud»?</b> Releé la última parte del enunciado. ¿Es la cantidad de casillas o la suma de lo que dice cada una? ¿Entra el valor del origen?</li>
-  <li><b>¿Qué es S?</b> Pensá en un camino que va creciendo casilla por casilla. ¿Qué guardás para saber por dónde pasaste? ¿Y qué es una «etapa»?</li>
-  <li><b>¿Cuántas alternativas tiene cada etapa y cuándo una es factible?</b> Hay cuatro direcciones, pero ¿todas se pueden usar? Mirá los booleanos de la casilla actual, los bordes del tablero, y qué pasaría si volvieras a una casilla que ya está en tu camino.</li>
-  <li><b>¿El booleano «este» de una casilla A es el mismo que el «oeste» de la que está a su derecha?</b> ¿El enunciado dice que tienen que coincidir?</li>
-  <li><b>¿Qué hacés al llegar al destino y qué poda podés aplicar?</b> Los valores son naturales: ¿puede bajar la longitud si seguís agregando casillas? Entonces, ¿cuándo conviene dejar de seguir un camino?</li>
-  <li><b>¿Qué se deshace al retroceder?</b> Hay una marca por casilla y una longitud acumulada. Y recordá: la mejor solución se guarda como copia.</li>
+  <li><b>¿Qué tenés que recordar mientras recorrés?</b> Un camino va creciendo casilla por casilla. ¿Cómo sabés por dónde ya pasaste? ¿Cómo sabés cuánto llevás acumulado? Y cuando aparece un camino mejor, ¿cómo te lo guardás sin que se te modifique mientras la búsqueda sigue?</li>
+  <li><b>¿Cuántas alternativas tiene cada llamada y cuándo es factible una?</b> Hay cuatro direcciones, pero ¿todas se pueden usar? Mirá los booleanos de la casilla actual y qué pasaría si volvieras a una casilla que ya está en tu camino.</li>
+  <li><b>¿El booleano «derecha» de una casilla A es el mismo que el «izquierda» de la que está a su derecha?</b> ¿El enunciado dice que tienen que coincidir?</li>
+  <li><b>¿Qué hacés al llegar al destino y qué poda podés aplicar?</b> Los valores son naturales: ¿puede bajar la suma si seguís agregando casillas? Entonces, ¿cuándo conviene dejar de seguir un camino?</li>
+  <li><b>¿Qué se deshace al retroceder?</b> Hay una marca por casilla y una suma acumulada. ¿Cuál de las dos tenés que restaurar a mano y cuál se «restaura sola» según cómo se pasa el parámetro?</li>
 </ol>
 
 <button class="primary rev" data-sol="sol-g16">Ver la resolución</button>
@@ -2306,126 +2309,202 @@ En el PDF esta consigna es una imagen y le falta el borde derecho: se lee «…u
 
 <h3>a) Estrategia de Backtracking</h3>
 <div class="grid2">
-  <div class="def"><h4>Solución parcial S</h4>El <code>camino</code> actual: la secuencia de casillas desde el origen hasta la casilla en que estás. Va con una matriz <code>visitada</code> (n × n) que marca las casillas de ese camino y con <code>longitudActual</code>, la suma de sus valores. Filas y columnas desde 1.</div>
-  <div class="def"><h4>Etapa y alternativas</h4>La etapa es la posición en el camino (la casilla número k). Las alternativas son las cuatro direcciones: norte, este, sur y oeste.</div>
-  <div class="def"><h4>Factibilidad y poda</h4>Una dirección es <b>factible</b> si el booleano de esa dirección en la casilla actual es verdadero, la vecina está dentro del tablero y <b>no está visitada</b>. Se <b>poda</b> por optimalidad: si <code>nuevaLongitud ≥ mejorLongitud</code>, esa rama no puede mejorar (los valores no son negativos).</div>
-  <div class="def"><h4>Caso base</h4>La casilla actual es el <code>destino</code>. Si <code>longitudActual &lt; mejorLongitud</code>, se guarda una <b>copia</b> del camino. No se sigue más allá: el camino ya terminó (y no podría volver a pasar por el destino).</div>
-  <div class="def"><h4>Retroceso</h4>Al volver se desmarca <code>visitada[fila, columna]</code> y se saca la casilla del camino. <code>longitudActual</code> no hay que restaurarla si va como parámetro (cada llamada tiene la suya). <code>mejorLongitud</code> y <code>mejorCamino</code> se conservan, y por eso van con <code>ref</code>.</div>
-  <div class="def"><h4>Objetivo</h4>La <b>mejor</b> solución: la de menor longitud. Se exploran todos los caminos que no se puedan podar, sin cortar en el primero que llega.</div>
+  <div class="def"><h4>Solución parcial S</h4>El camino recorrido hasta la casilla actual, marcado en <code>visitado</code> (una matriz booleana del tamaño del laberinto), y <code>sumaP</code>, la suma de los valores de las casillas de ese camino. Cuando un camino llega al destino y es el mejor hasta ahora, <code>visitado</code> se <b>copia</b> en la matriz <code>resultado</code>. Filas y columnas desde 1.</div>
+  <div class="def"><h4>Etapa y alternativas</h4>Cada llamada es una casilla más del camino. Las alternativas son las cuatro direcciones, en el orden en que las prueba el pseudocódigo: arriba, abajo, izquierda y derecha.</div>
+  <div class="def"><h4>Factibilidad y poda</h4>Una dirección es <b>factible</b> si el booleano de esa dirección en la casilla actual es verdadero y la vecina <b>no está visitada</b>; si ya está visitada se poda (la ✗ roja de la lámina 10). Además se <b>poda</b> si <code>sumaP ≥ mejorSuma</code>: la mejor solución ya tiene ese valor parcial o lo supera, y como los valores son naturales la suma solo puede crecer (la ✗ violeta).</div>
+  <div class="def"><h4>Caso base</h4>La casilla actual es el <code>destino</code>. Si <code>sumaP &lt; mejorSuma</code>, <code>mejorSuma ← sumaP</code> y se copia <code>visitado</code> en <code>resultado</code>. No se sigue más allá: el camino ya terminó.</div>
+  <div class="def"><h4>Retroceso</h4>Al volver se desmarca <code>visitado[i][j]</code>, para que otros caminos puedan pasar por esa casilla. <code>sumaP</code> no hay que restaurarla: va por valor, cada llamada tiene la suya. <code>mejorSuma</code> y <code>resultado</code> se conservan, y por eso <code>mejorSuma</code> tiene que ir por referencia.</div>
+  <div class="def"><h4>Objetivo</h4>La <b>mejor</b> solución: la de menor suma. Se exploran todos los caminos que no se puedan podar, sin cortar en el primero que llega.</div>
 </div>
 
 <h3>b) Pseudocódigo</h3>
+<p>Así lo escribe la cátedra (láminas 13 y 14). Primero lo que hay que tener en cuenta sobre los datos:</p>
 <div class="card">
-<pre class="ps">Algoritmo Laberinto(L, origen, destino)
-    n ← longitud(L)
-    visitada ← matriz n × n de falso
-    camino ← vector vacío
-    mejorCamino ← vector vacío
-    mejorLongitud ← infinito
-    Explorar(L, destino, origen.fila, origen.columna, L[origen.fila, origen.columna].valor, visitada, camino, mejorCamino, mejorLongitud)
-    devolver (mejorCamino, mejorLongitud)
-Fin algoritmo
+<pre class="ps">Consideraciones:
 
-Procedimiento Explorar(L, destino, fila, columna, longitudActual, visitada, camino, ref mejorCamino, ref mejorLongitud)
-    visitada[fila, columna] ← verdadero
-    agregar(camino, (fila, columna))
-    si (fila, columna) = destino
-        si longitudActual &lt; mejorLongitud
-            mejorLongitud ← longitudActual
-            mejorCamino ← copiar(camino)
-        fin si
-    sino
-        para cada direccion ∈ {N, E, S, O}
-            (filaVecina, columnaVecina) ← casilla vecina de (fila, columna) hacia direccion
-            si L[fila, columna].abre[direccion] Y dentro(L, filaVecina, columnaVecina) Y NO visitada[filaVecina, columnaVecina]
-                nuevaLongitud ← longitudActual + L[filaVecina, columnaVecina].valor
-                si nuevaLongitud &lt; mejorLongitud
-                    Explorar(L, destino, filaVecina, columnaVecina, nuevaLongitud, visitada, camino, mejorCamino, mejorLongitud)
-                fin si
-            fin si
-        fin para
-    fin si
-    visitada[fila, columna] ← falso
-    eliminar(camino)
-Fin procedimiento
+Celda:
+    valor: ENTERO
+    arriba: BOOLEANO
+    abajo: BOOLEANO
+    izq: BOOLEANO
+    der: BOOLEANO
 
-Función dentro(L, fila, columna): booleano
-    devolver 1 ≤ fila ≤ longitud(L) Y 1 ≤ columna ≤ longitud(L)
-Fin función</pre>
+Posicion:
+    i: ENTERO
+    j: ENTERO</pre>
 </div>
-<div class="note"><b>Pseudocódigo y ejemplo propios</b>
-La cátedra no publica pseudocódigo de este ejercicio: este está derivado de la estrategia. <code>dentro(L, fila, columna)</code> es <code>1 ≤ fila ≤ n Y 1 ≤ columna ≤ n</code>; un booleano verdadero en el borde no saca del tablero. Los booleanos <b>no tienen por qué ser simétricos</b>: «de A se puede ir al este» no implica «de la casilla de al lado se puede ir al oeste». Eso da pasajes de un solo sentido, que el simulador dibuja con una flecha. Los valores del ejemplo son propios (el enunciado no trae números); el simulador acepta también 0, y el algoritmo funciona igual.</div>
-<div class="note"><b>Sin la marca «visitada» no termina</b>
-Si no se marcan las casillas del camino, se puede ir y volver entre dos casillas abiertas una y otra vez. Mientras no haya una solución guardada (<code>mejorLongitud = ∞</code>) la poda no corta nada, así que la búsqueda podría no llegar nunca al destino; y con valores 0 la longitud ni siquiera crece. La marca es lo que hace que cada camino sea <b>simple</b> y que el árbol sea finito.</div>
-
-<div class="note"><b>Qué lleva ref</b>
-Dentro de <code>Explorar</code> se reasignan <code>mejorCamino</code> y <code>mejorLongitud</code>: por eso van con <code>ref</code>, para que el cambio le llegue a quien llamó y <code>Laberinto</code> no devuelva el valor inicial. Los vectores y las matrices que solo se modifican posición por posición no lo necesitan.</div>
+<div class="card">
+<pre class="ps">Algoritmo Laberinto
+Entradas: Matriz&lt;celda&gt; laberinto, entero n, Posicion posActual, Posicion destino,
+          Matriz&lt;booleano&gt; visitado, Matriz&lt;booleano&gt; resultado, entero sumaP, entero mejorSuma
+Salida: --
+    Entero i ← posActual.i
+    Entero j ← posActual.j
+    visitado[i][j] ← verdadero
+    sumaP ← sumaP + laberinto[i][j].valor
+    Si i = destino.i Y j = destino.j
+        Si sumaP &lt; mejorSuma
+            mejorSuma ← sumaP
+            copiar(resultado, visitado)
+        fin si
+    fin si
+    sino
+    Si sumaP &lt; mejorSuma
+        Posicion nuevaPos
+        Si laberinto[i][j].arriba = verdadero Y visitado[i-1][j] = falso
+            nuevaPos.i ← i - 1
+            nuevaPos.j ← j
+            backtrack(laberinto, n, nuevaPos, destino, visitado, resultado, sumaP, mejorSuma)
+        fin si
+        Si laberinto[i][j].abajo = verdadero Y visitado[i+1][j] = falso
+            nuevaPos.i ← i + 1
+            nuevaPos.j ← j
+            backtrack(laberinto, n, nuevaPos, destino, visitado, resultado, sumaP, mejorSuma)
+        fin si
+        Si laberinto[i][j].izq = verdadero Y visitado[i][j-1] = falso
+            nuevaPos.i ← i
+            nuevaPos.j ← j - 1
+            backtrack(laberinto, n, nuevaPos, destino, visitado, resultado, sumaP, mejorSuma)
+        fin si
+        Si laberinto[i][j].der = verdadero Y visitado[i][j+1] = falso
+            nuevaPos.i ← i
+            nuevaPos.j ← j + 1
+            backtrack(laberinto, n, nuevaPos, destino, visitado, resultado, sumaP, mejorSuma)
+        fin si
+fin sino
+visitado[i][j] ← falso
+sumaP ← sumaP + laberinto[i][j].valor
+fin laberinto</pre>
+</div>
+<div class="note"><b>Rarezas de la lámina (se transcribió tal cual)</b>
+<ul>
+  <li>El algoritmo se llama <code>Laberinto</code>, pero la recursión lo llama <code>backtrack</code>: es la misma función.</li>
+  <li>Los <code>si</code> no cierran: el <code>sino</code> viene después del <code>fin si</code> de <code>Si i = destino.i Y j = destino.j</code>, y el <code>Si sumaP &lt; mejorSuma</code> de abajo no tiene su propio <code>fin si</code> (el último <code>fin si</code> es el de <code>der</code>). Se lee así: si es el destino, guarda la solución si mejora; si no, y mientras <code>sumaP &lt; mejorSuma</code>, prueba las cuatro direcciones.</li>
+  <li>La última línea suma el valor de la casilla otra vez, en lugar de restarlo. Como <code>sumaP</code> va por valor (cada llamada tiene la suya) y la llamada termina ahí, no afecta a nadie: el simulador la ejecuta tal cual y lo avisa. Si <code>sumaP</code> fuera por referencia, ahí habría que restar.</li>
+  <li><code>mejorSuma</code> se reasigna dentro de una llamada y la tienen que ver todas las demás, así que tiene que ir por referencia. La lámina no marca ninguna de las dos cosas. <code>resultado</code> no lo necesita: <code>copiar</code> lo modifica posición por posición.</li>
+  <li><code>n</code> se recibe y se pasa a cada llamada, pero no se usa. Tampoco hay control de bordes: alcanza con que los booleanos de las casillas del borde sean falsos hacia afuera (por eso el simulador rechaza un laberinto que abra hacia donde no hay casilla).</li>
+  <li>No hay llamada inicial: se supone <code>visitado</code> y <code>resultado</code> en falso, <code>sumaP = 0</code> y <code>mejorSuma = ∞</code>. Sin ese infinito la primera solución nunca se guardaría.</li>
+  <li>La lámina 11 enumera los booleanos como izquierda, arriba, abajo y derecha, pero la <code>Celda</code> de la lámina 13 los declara como arriba, abajo, izq y der, y el pseudocódigo los prueba en ese orden. Se sigue el del pseudocódigo.</li>
+</ul></div>
 
 <h3>Ejecutalo paso a paso</h3>
 <div class="sim bt-sim" id="sim-g16">
   <div class="sim-head">
-    <div class="title">Laberinto<small>Naranja: camino actual · verde: mejor camino guardado · gruesa: pared · ▶: pasaje de un solo sentido</small></div>
+    <div class="title">Laberinto<small>Naranja: visitado (Σ = sumaP de cada casilla) · verde: resultado · gruesa: pared · ▶: pasaje de un solo sentido</small></div>
     <div class="inputs">
-      <label for="g16-lab">laberinto</label><input type="text" class="bt-wide" id="g16-lab" value="5E 7ESO 6S 9S / 2ES 7NESO 3NO 5NS / 2NES 7SO 3E 7NSO / 1NE 3NEO 7EO 1NO">
-      <label for="g16-o">origen</label><input type="text" class="bt-short" id="g16-o" value="1,1">
-      <label for="g16-d">destino</label><input type="text" class="bt-short" id="g16-d" value="4,4">
+      <label for="g16-lab">laberinto</label><input type="text" class="bt-wide" id="g16-lab" value="4v&gt; 3v&lt; 6v&gt; 8&lt; / 5^v 2^v&gt; 1^v&lt;&gt; 5v&lt; / 7^&gt; 3^&lt; 2^&gt; 1^&lt;">
+      <label for="g16-o">origen</label><input type="text" class="bt-short" id="g16-o" value="2,1">
+      <label for="g16-d">destino</label><input type="text" class="bt-short" id="g16-d" value="3,4">
       <button class="ghost" data-reload>Ejecutar</button>
     </div>
   </div>
   <div class="bt-presets">
-    <button class="ghost" data-bt-sim="maze" data-bt-preset="{&quot;g16-lab&quot;: &quot;5E 7ESO 6S 9S / 2ES 7NESO 3NO 5NS / 2NES 7SO 3E 7NSO / 1NE 3NEO 7EO 1NO&quot;, &quot;g16-o&quot;: &quot;1,1&quot;, &quot;g16-d&quot;: &quot;4,4&quot;}">Ejemplo 4×4</button>
-    <button class="ghost" data-bt-sim="maze" data-bt-preset="{&quot;g16-lab&quot;: &quot;1ES 9SO / 1N 1NO&quot;, &quot;g16-o&quot;: &quot;1,1&quot;, &quot;g16-d&quot;: &quot;2,2&quot;}">Un pasaje de un solo sentido</button>
-    <button class="ghost" data-bt-sim="maze" data-bt-preset="{&quot;g16-lab&quot;: &quot;1ES 1ESO 1SO / 1N 1N 1N / 1 1 1&quot;, &quot;g16-o&quot;: &quot;1,1&quot;, &quot;g16-d&quot;: &quot;3,3&quot;}">Sin camino</button>
-    <button class="ghost" data-bt-sim="maze" data-bt-preset="{&quot;g16-lab&quot;: &quot;5E 7ESO 6S 9S / 2ES 7NESO 3NO 5NS / 2NES 7SO 3E 7NSO / 1NE 3NEO 7EO 1NO&quot;, &quot;g16-o&quot;: &quot;1,1&quot;, &quot;g16-d&quot;: &quot;1,1&quot;}">Origen = destino</button>
+    <button class="ghost" data-bt-sim="maze" data-bt-preset="{&quot;g16-lab&quot;:&quot;4v&gt; 3v&lt; 6v&gt; 8&lt; / 5^v 2^v&gt; 1^v&lt;&gt; 5v&lt; / 7^&gt; 3^&lt; 2^&gt; 1^&lt;&quot;,&quot;g16-o&quot;:&quot;2,1&quot;,&quot;g16-d&quot;:&quot;3,4&quot;}">Ejemplo de la lámina 3×4</button>
+    <button class="ghost" data-bt-sim="maze" data-bt-preset="{&quot;g16-lab&quot;:&quot;4v&gt; 3v&lt; 6v&gt; 8&lt; / 5^v 2^v&gt; 1^v&lt;&gt; 5v&lt; / 7^&gt; 3^&lt; 2^&gt; 1^&lt;&quot;,&quot;g16-o&quot;:&quot;2,1&quot;,&quot;g16-d&quot;:&quot;2,4&quot;}">Destino (2,4): da 20</button>
+    <button class="ghost" data-bt-sim="maze" data-bt-preset="{&quot;g16-lab&quot;:&quot;4v&gt; 3v&lt; 6v&gt; 8&lt; / 5^v 2^v&gt; 1^v&lt;&gt; 5v&lt; / 7^&gt; 3^&lt; 2^&gt; 1^&lt;&quot;,&quot;g16-o&quot;:&quot;2,1&quot;,&quot;g16-d&quot;:&quot;3,3&quot;}">Destino (3,3): da 17</button>
+    <button class="ghost" data-bt-sim="maze" data-bt-preset="{&quot;g16-lab&quot;:&quot;1v&gt; 9v&lt; / 1^ 1^&lt;&quot;,&quot;g16-o&quot;:&quot;1,1&quot;,&quot;g16-d&quot;:&quot;2,2&quot;}">Un pasaje de un solo sentido</button>
+    <button class="ghost" data-bt-sim="maze" data-bt-preset="{&quot;g16-lab&quot;:&quot;1v&gt; 1v&lt;&gt; 1v&lt; / 1^ 1^ 1^ / 1 1 1&quot;,&quot;g16-o&quot;:&quot;1,1&quot;,&quot;g16-d&quot;:&quot;3,3&quot;}">Sin camino</button>
+    <button class="ghost" data-bt-sim="maze" data-bt-preset="{&quot;g16-lab&quot;:&quot;4v&gt; 3v&lt; 6v&gt; 8&lt; / 5^v 2^v&gt; 1^v&lt;&gt; 5v&lt; / 7^&gt; 3^&lt; 2^&gt; 1^&lt;&quot;,&quot;g16-o&quot;:&quot;2,1&quot;,&quot;g16-d&quot;:&quot;2,1&quot;}">Origen = destino</button>
   </div>
   <div class="sim-body">
-    <div class="code" data-code><div class="cl" data-l="1"><span class="ln">1</span><span class="tx">Algoritmo Laberinto(L, origen, destino)</span></div>
-<div class="cl" data-l="2"><span class="ln">2</span><span class="tx">    n ← longitud(L)</span></div>
-<div class="cl" data-l="3"><span class="ln">3</span><span class="tx">    visitada ← matriz n × n de falso</span></div>
-<div class="cl" data-l="4"><span class="ln">4</span><span class="tx">    camino ← vector vacío</span></div>
-<div class="cl" data-l="5"><span class="ln">5</span><span class="tx">    mejorCamino ← vector vacío</span></div>
-<div class="cl" data-l="6"><span class="ln">6</span><span class="tx">    mejorLongitud ← infinito</span></div>
-<div class="cl" data-l="7"><span class="ln">7</span><span class="tx">    Explorar(L, destino, origen.fila, origen.columna, L[origen.fila, origen.columna].valor, visitada, camino, mejorCamino, mejorLongitud)</span></div>
-<div class="cl" data-l="8"><span class="ln">8</span><span class="tx">    devolver (mejorCamino, mejorLongitud)</span></div>
-<div class="cl" data-l="9"><span class="ln">9</span><span class="tx">Fin algoritmo</span></div>
-<div class="cl" data-l="11"><span class="ln">10</span><span class="tx">Procedimiento Explorar(L, destino, fila, columna, longitudActual, visitada, camino, ref mejorCamino, ref mejorLongitud)</span></div>
-<div class="cl" data-l="12"><span class="ln">11</span><span class="tx">    visitada[fila, columna] ← verdadero</span></div>
-<div class="cl" data-l="13"><span class="ln">12</span><span class="tx">    agregar(camino, (fila, columna))</span></div>
-<div class="cl" data-l="14"><span class="ln">13</span><span class="tx">    si (fila, columna) = destino</span></div>
-<div class="cl" data-l="15"><span class="ln">14</span><span class="tx">        si longitudActual &lt; mejorLongitud</span></div>
-<div class="cl" data-l="16"><span class="ln">15</span><span class="tx">            mejorLongitud ← longitudActual</span></div>
-<div class="cl" data-l="17"><span class="ln">16</span><span class="tx">            mejorCamino ← copiar(camino)</span></div>
-<div class="cl" data-l="18"><span class="ln">17</span><span class="tx">        fin si</span></div>
-<div class="cl" data-l="19"><span class="ln">18</span><span class="tx">    sino</span></div>
-<div class="cl" data-l="20"><span class="ln">19</span><span class="tx">        para cada direccion ∈ {N, E, S, O}</span></div>
-<div class="cl" data-l="21"><span class="ln">20</span><span class="tx">            (filaVecina, columnaVecina) ← casilla vecina de (fila, columna) hacia direccion</span></div>
-<div class="cl" data-l="22"><span class="ln">21</span><span class="tx">            si L[fila, columna].abre[direccion] Y dentro(L, filaVecina, columnaVecina) Y NO visitada[filaVecina, columnaVecina]</span></div>
-<div class="cl" data-l="23"><span class="ln">22</span><span class="tx">                nuevaLongitud ← longitudActual + L[filaVecina, columnaVecina].valor</span></div>
-<div class="cl" data-l="24"><span class="ln">23</span><span class="tx">                si nuevaLongitud &lt; mejorLongitud</span></div>
-<div class="cl" data-l="25"><span class="ln">24</span><span class="tx">                    Explorar(L, destino, filaVecina, columnaVecina, nuevaLongitud, visitada, camino, mejorCamino, mejorLongitud)</span></div>
-<div class="cl" data-l="26"><span class="ln">25</span><span class="tx">                fin si</span></div>
-<div class="cl" data-l="27"><span class="ln">26</span><span class="tx">            fin si</span></div>
-<div class="cl" data-l="28"><span class="ln">27</span><span class="tx">        fin para</span></div>
-<div class="cl" data-l="29"><span class="ln">28</span><span class="tx">    fin si</span></div>
-<div class="cl" data-l="30"><span class="ln">29</span><span class="tx">    visitada[fila, columna] ← falso</span></div>
-<div class="cl" data-l="31"><span class="ln">30</span><span class="tx">    eliminar(camino)</span></div>
-<div class="cl" data-l="32"><span class="ln">31</span><span class="tx">Fin procedimiento</span></div>
-<div class="cl" data-l="41"><span class="ln">32</span><span class="tx">Función dentro(L, fila, columna): booleano</span></div>
-<div class="cl" data-l="42"><span class="ln">33</span><span class="tx">    devolver 1 ≤ fila ≤ longitud(L) Y 1 ≤ columna ≤ longitud(L)</span></div>
-<div class="cl" data-l="43"><span class="ln">34</span><span class="tx">Fin función</span></div></div>
+    <div class="code" data-code><div class="cl" data-l="1"><span class="ln">1</span><span class="tx">Algoritmo Laberinto</span></div>
+<div class="cl" data-l="2"><span class="ln">2</span><span class="tx">Entradas: Matriz&lt;celda&gt; laberinto, entero n, Posicion posActual, Posicion destino,</span></div>
+<div class="cl" data-l="3"><span class="ln">3</span><span class="tx">          Matriz&lt;booleano&gt; visitado, Matriz&lt;booleano&gt; resultado, entero sumaP, entero mejorSuma</span></div>
+<div class="cl" data-l="4"><span class="ln">4</span><span class="tx">Salida: --</span></div>
+<div class="cl" data-l="5"><span class="ln">5</span><span class="tx">    Entero i ← posActual.i</span></div>
+<div class="cl" data-l="6"><span class="ln">6</span><span class="tx">    Entero j ← posActual.j</span></div>
+<div class="cl" data-l="7"><span class="ln">7</span><span class="tx">    visitado[i][j] ← verdadero</span></div>
+<div class="cl" data-l="8"><span class="ln">8</span><span class="tx">    sumaP ← sumaP + laberinto[i][j].valor</span></div>
+<div class="cl" data-l="9"><span class="ln">9</span><span class="tx">    Si i = destino.i Y j = destino.j</span></div>
+<div class="cl" data-l="10"><span class="ln">10</span><span class="tx">        Si sumaP &lt; mejorSuma</span></div>
+<div class="cl" data-l="11"><span class="ln">11</span><span class="tx">            mejorSuma ← sumaP</span></div>
+<div class="cl" data-l="12"><span class="ln">12</span><span class="tx">            copiar(resultado, visitado)</span></div>
+<div class="cl" data-l="13"><span class="ln">13</span><span class="tx">        fin si</span></div>
+<div class="cl" data-l="14"><span class="ln">14</span><span class="tx">    fin si</span></div>
+<div class="cl" data-l="15"><span class="ln">15</span><span class="tx">    sino</span></div>
+<div class="cl" data-l="16"><span class="ln">16</span><span class="tx">    Si sumaP &lt; mejorSuma</span></div>
+<div class="cl" data-l="17"><span class="ln">17</span><span class="tx">        Posicion nuevaPos</span></div>
+<div class="cl" data-l="18"><span class="ln">18</span><span class="tx">        Si laberinto[i][j].arriba = verdadero Y visitado[i-1][j] = falso</span></div>
+<div class="cl" data-l="19"><span class="ln">19</span><span class="tx">            nuevaPos.i ← i - 1</span></div>
+<div class="cl" data-l="20"><span class="ln">20</span><span class="tx">            nuevaPos.j ← j</span></div>
+<div class="cl" data-l="21"><span class="ln">21</span><span class="tx">            backtrack(laberinto, n, nuevaPos, destino, visitado, resultado, sumaP, mejorSuma)</span></div>
+<div class="cl" data-l="22"><span class="ln">22</span><span class="tx">        fin si</span></div>
+<div class="cl" data-l="23"><span class="ln">23</span><span class="tx">        Si laberinto[i][j].abajo = verdadero Y visitado[i+1][j] = falso</span></div>
+<div class="cl" data-l="24"><span class="ln">24</span><span class="tx">            nuevaPos.i ← i + 1</span></div>
+<div class="cl" data-l="25"><span class="ln">25</span><span class="tx">            nuevaPos.j ← j</span></div>
+<div class="cl" data-l="26"><span class="ln">26</span><span class="tx">            backtrack(laberinto, n, nuevaPos, destino, visitado, resultado, sumaP, mejorSuma)</span></div>
+<div class="cl" data-l="27"><span class="ln">27</span><span class="tx">        fin si</span></div>
+<div class="cl" data-l="28"><span class="ln">28</span><span class="tx">        Si laberinto[i][j].izq = verdadero Y visitado[i][j-1] = falso</span></div>
+<div class="cl" data-l="29"><span class="ln">29</span><span class="tx">            nuevaPos.i ← i</span></div>
+<div class="cl" data-l="30"><span class="ln">30</span><span class="tx">            nuevaPos.j ← j - 1</span></div>
+<div class="cl" data-l="31"><span class="ln">31</span><span class="tx">            backtrack(laberinto, n, nuevaPos, destino, visitado, resultado, sumaP, mejorSuma)</span></div>
+<div class="cl" data-l="32"><span class="ln">32</span><span class="tx">        fin si</span></div>
+<div class="cl" data-l="33"><span class="ln">33</span><span class="tx">        Si laberinto[i][j].der = verdadero Y visitado[i][j+1] = falso</span></div>
+<div class="cl" data-l="34"><span class="ln">34</span><span class="tx">            nuevaPos.i ← i</span></div>
+<div class="cl" data-l="35"><span class="ln">35</span><span class="tx">            nuevaPos.j ← j + 1</span></div>
+<div class="cl" data-l="36"><span class="ln">36</span><span class="tx">            backtrack(laberinto, n, nuevaPos, destino, visitado, resultado, sumaP, mejorSuma)</span></div>
+<div class="cl" data-l="37"><span class="ln">37</span><span class="tx">        fin si</span></div>
+<div class="cl" data-l="38"><span class="ln">38</span><span class="tx">fin sino</span></div>
+<div class="cl" data-l="39"><span class="ln">39</span><span class="tx">visitado[i][j] ← falso</span></div>
+<div class="cl" data-l="40"><span class="ln">40</span><span class="tx">sumaP ← sumaP + laberinto[i][j].valor</span></div>
+<div class="cl" data-l="41"><span class="ln">41</span><span class="tx">fin laberinto</span></div></div>
     <div class="viz" data-viz></div>
   </div>
   <div class="explain" data-explain></div>
   <div class="controls" data-controls></div>
 </div>
-<p class="srcnote" style="max-width:76ch">Cómo se escribe el laberinto: filas separadas por <code>/</code> y casillas por espacios. Cada casilla es su valor seguido de las letras de las direcciones abiertas (N, E, S, O); por ejemplo <code>3ES</code> es una casilla de valor 3 desde la que se puede ir al este y al sur. Filas y columnas desde 1; el origen y el destino se escriben <code>fila,columna</code>. Hasta 4 × 4. Cada línea es un paso, también las de <code>dentro</code>: el panel de arriba muestra la pila de llamadas con <code>fila</code>, <code>columna</code>, <code>longitudActual</code>, <code>direccion</code>, <code>filaVecina</code>, <code>columnaVecina</code>, <code>nuevaLongitud</code>, y la vecina que se está mirando se dibuja con borde celeste punteado. Con <b>Saltar llamada</b> pasás de golpe por encima de una llamada (a <code>dentro</code> o a un <code>Explorar</code> entero) y con <b>Salir de la función</b> terminás la actual. Si la búsqueda necesitara más de 60000 pasos, el simulador lo avisa.</p>
+<p class="srcnote" style="max-width:76ch">Cómo se escribe el laberinto: filas separadas por <code>/</code> y casillas por espacios. Cada casilla es su valor seguido de los símbolos de las direcciones a las que se puede ir: <code>^</code> arriba, <code>v</code> abajo, <code>&lt;</code> izquierda, <code>&gt;</code> derecha. Son los cuatro booleanos de la <code>Celda</code>: lo que no se escribe es falso. Por ejemplo <code>3v&gt;</code> es una casilla de valor 3 desde la que se puede ir hacia abajo y hacia la derecha. Los booleanos del borde tienen que ser falsos hacia afuera. Filas y columnas desde 1; el origen y el destino se escriben <code>fila,columna</code>. Hasta 4 × 4, no hace falta que sea cuadrado. Cada línea del pseudocódigo es un paso. El panel de arriba muestra la pila de llamadas con <code>posActual</code>, <code>sumaP</code>, <code>i</code>, <code>j</code>, <code>nuevaPos</code> y <code>mejorSuma</code>, y la vecina que se está mirando se dibuja con borde celeste punteado. Con <b>Saltar llamada</b> pasás de golpe por encima de una llamada y con <b>Salir de la función</b> terminás la actual. Si la búsqueda necesitara más de 60000 pasos, el simulador lo avisa.</p>
+
+<h3>El árbol del ejemplo</h3>
+<p>La lámina 10 dibuja el árbol de llamadas del ejemplo de 3 × 4, con origen en (2,1), destino en (3,4) y la suma parcial de cada nodo. Éste es el árbol que resulta de ejecutar el pseudocódigo en su orden: 17 llamadas, 13 podas por visitado y 3 podas por mejor solución. El mejor camino cuesta 18.</p>
+<div class="card">
+<pre class="ps">(2,1)  sumaP = 5
+├─ arriba → (1,1)  sumaP = 9
+│  ├─ abajo → ✗ poda por visitado: (2,1) ya está en el camino
+│  └─ der → (1,2)  sumaP = 12
+│     ├─ abajo → (2,2)  sumaP = 14
+│     │  ├─ arriba → ✗ poda por visitado: (1,2) ya está en el camino
+│     │  ├─ abajo → (3,2)  sumaP = 17
+│     │  │  ├─ arriba → ✗ poda por visitado: (2,2) ya está en el camino
+│     │  │  └─ izq → (3,1)  sumaP = 24
+│     │  │     ├─ arriba → ✗ poda por visitado: (2,1) ya está en el camino
+│     │  │     └─ der → ✗ poda por visitado: (3,2) ya está en el camino
+│     │  └─ der → (2,3)  sumaP = 15
+│     │     ├─ arriba → (1,3)  sumaP = 21
+│     │     │  ├─ abajo → ✗ poda por visitado: (2,3) ya está en el camino
+│     │     │  └─ der → (1,4)  sumaP = 29
+│     │     │     └─ izq → ✗ poda por visitado: (1,3) ya está en el camino
+│     │     ├─ abajo → (3,3)  sumaP = 17
+│     │     │  ├─ arriba → ✗ poda por visitado: (2,3) ya está en el camino
+│     │     │  └─ der → (3,4)  sumaP = 18   ← destino: mejorSuma = 18
+│     │     ├─ izq → ✗ poda por visitado: (2,2) ya está en el camino
+│     │     └─ der → (2,4)  sumaP = 20   ← poda por mejor solución: 20 ≥ mejorSuma = 18
+│     └─ izq → ✗ poda por visitado: (1,1) ya está en el camino
+└─ abajo → (3,1)  sumaP = 12
+   ├─ arriba → ✗ poda por visitado: (2,1) ya está en el camino
+   └─ der → (3,2)  sumaP = 15
+      ├─ arriba → (2,2)  sumaP = 17
+      │  ├─ arriba → (1,2)  sumaP = 20   ← poda por mejor solución: 20 ≥ mejorSuma = 18
+      │  ├─ abajo → ✗ poda por visitado: (3,2) ya está en el camino
+      │  └─ der → (2,3)  sumaP = 18   ← poda por mejor solución: 18 ≥ mejorSuma = 18
+      └─ izq → ✗ poda por visitado: (3,1) ya está en el camino</pre>
+</div>
+<div class="note"><b>Los números de la lámina 10 no son los de la ejecución</b>
+Bajo (2,4) y (3,3) la lámina rotula «mejorSol = 20» y «mejorSol = 17», que son las sumas parciales de esas dos casillas: no incluyen el valor del destino, (3,4) = 1. El pseudocódigo sí suma el valor de la casilla en la que entra, así que llegando a (3,4) por (3,3) el camino cuesta 18, y por (2,4) costaría 21. Además la lámina marca como podas por mejor solución a (3,2) con 17 y a (1,3) con 21, como si ya se conociera la solución; con el orden del pseudocódigo todavía no hay ninguna guardada cuando se pasa por ahí, y esas ramas se exploran (es la parte del árbol de arriba que no está en la lámina). Para ver los dos números de la lámina en el simulador: con destino (2,4) el mínimo da 20 y con destino (3,3) da 17.</div>
 
 <h3>c) Complejidad temporal</h3>
-<p>Sea N = n² la cantidad de casillas. Como no se repiten casillas en un camino, la profundidad del árbol es a lo sumo N. Desde el origen hay hasta 4 alternativas; desde cada casilla siguiente, a lo sumo 3 (una de las cuatro direcciones lleva a la casilla de la que se vino, que ya está visitada). Entonces hay a lo sumo <code>1 + 4 + 4·3 + 4·3² + … + 4·3<sup>N−1</sup> = O(3<sup>N</sup>)</code> nodos, cada uno con trabajo constante (se miran 4 direcciones). Cada vez que se mejora la solución se copia el camino, en O(N).</p>
+<p>Es un <b>caso resta</b>: cada llamada recursiva trabaja con una casilla menos por recorrer, y como no se repite ninguna casilla, la profundidad del árbol es a lo sumo la cantidad de celdas. Por eso <code>n</code> es la <b>cantidad de celdas</b> del laberinto.</p>
+<ul>
+  <li><code>a = 3</code>: desde cada casilla hay cuatro direcciones, pero una lleva a la casilla de la que se vino, que ya está visitada. Quedan a lo sumo tres llamadas recursivas (desde el origen serían hasta cuatro, lo que no cambia el orden).</li>
+  <li><code>b = 1</code>: cada llamada tiene una casilla menos por recorrer.</li>
+  <li><code>k = 0</code>: el trabajo propio de cada llamada (mirar cuatro booleanos, sumar, asignar) es constante.</li>
+</ul>
+<p>La recurrencia es <code>T(n) = 3·T(n−1) + O(1)</code>. Con a = 3 &gt; 1, el caso resta da <code>O(a<sup>n div b</sup>)</code>.</p>
 <div class="card" style="font-family:var(--mono);text-align:center">
-O(3<sup>N</sup>) nodos × O(1) por nodo, y copias de O(N) → <span class="tag t-exp" style="font-size:15px">O(n²·3<sup>n²</sup>)</span>
+a = 3, b = 1, k = 0 · caso resta → <span class="tag t-exp" style="font-size:15px">O(3<sup>n</sup>)</span> siendo n la cantidad de celdas
 </div>
-<p>Se justifica contando el árbol, no con el teorema de recurrencias: la ramificación (3) y la profundidad (N) no salen de dividir ni de restar una constante al tamaño de un parámetro de entrada. La poda <code>nuevaLongitud ≥ mejorLongitud</code> ahorra ramas pero no cambia el peor caso.</p>
+<div class="note"><b>Lo que el O(3ⁿ) de la cátedra no cuenta</b>
+La cuenta de la lámina 15 solo cuenta llamadas. Cada vez que se mejora la solución se hace <code>copiar(resultado, visitado)</code>, que recorre toda la matriz: O(n) por copia. Como mucho se copia una vez por cada camino que llega al destino, de modo que, contándolo, una cota superior es O(n·3<sup>n</sup>). El resultado que se espera en el parcial es el de la cátedra, O(3<sup>n</sup>). La poda <code>sumaP &lt; mejorSuma</code> ahorra ramas pero no cambia el peor caso.</div>
 <div class="first"><b>El mismo problema, mucho más barato</b>
 Este laberinto es un grafo dirigido con peso en las casillas, y camino mínimo con pesos no negativos es el problema de <b>Dijkstra</b>, que es <a href="#graf-cajas">O(N²)</a> con la matriz o mejor con una cola de prioridad. La guía lo pone en el bloque de Backtracking para practicar la técnica con un problema que se entiende de un vistazo; en un parcial que no lo exija, conviene saber decir que existe una solución polinomial.</div>
 </div>
@@ -3213,10 +3292,10 @@ filtrado Θ(a) + Dijkstra(G') O(n²) → <span class="tag t-cuad" style="font-si
 </section>
 
 
-<div class="exbar" id="bloque-clase"><span>Práctica</span><b>Problemas de clase · clases 7 a 11</b><em>Se pide: a) estrategia con sus elementos · b) pseudocódigo · c) complejidad temporal</em></div>
+<div class="exbar" id="bloque-clase"><span>Práctica</span><b>Problemas de clase · clases 7 a 12</b><em>Se pide: a) estrategia con sus elementos · b) pseudocódigo · c) complejidad temporal</em></div>
 
 <div class="note" style="max-width:76ch"><b>Qué hay en este bloque</b>
-Son los problemas de la hoja de práctica «desde Programación Dinámica en adelante» que no son de la guía. Los números 4, 5 y 6 de la hoja son los ejercicios <a href="#ej-g12">PD 1</a>, <a href="#ej-g13">PD 2</a> y <a href="#ej-g14">PD 3</a> de la guía, y la parte de la clase 10 del 14 es <a href="#ej-g15">Backtracking 1</a>: están más arriba, con su simulador. Acá van los otros <b>doce</b>, con la numeración de la hoja. Se trabajan como el resto de la página: enunciado, razonamientos y, tapada, la resolución. Los pseudocódigos son <b>los del apunte</b>, tal cual; el simulador paso a paso de cada uno vive ahí y se enlaza desde cada resolución, para no tener el mismo código en dos lugares.</div>
+Son los problemas de la hoja de práctica «desde Programación Dinámica en adelante» que no son de la guía. Los números 4, 5 y 6 de la hoja son los ejercicios <a href="#ej-g12">PD 1</a>, <a href="#ej-g13">PD 2</a> y <a href="#ej-g14">PD 3</a> de la guía, y la parte de la clase 10 del 14 es <a href="#ej-g15">Backtracking 1</a>: están más arriba, con su simulador. Acá van los otros <b>doce</b>, con la numeración de la hoja, y el <b>16</b>, la asignación de tareas de la clase 12, que no está en la hoja (el laberinto de esa clase es <a href="#ej-g16">Backtracking 2</a>). Se trabajan como el resto de la página: enunciado, razonamientos y, tapada, la resolución. Los pseudocódigos son <b>los del apunte</b>, tal cual; el simulador paso a paso de cada uno vive ahí y se enlaza desde cada resolución, para no tener el mismo código en dos lugares.</div>
 
 <!-- Clase 7 · 1 -->
 <section id="ej-c1">
@@ -4264,6 +4343,127 @@ sin cota <span class="tag t-exp" style="font-size:15px">O(2ⁿ)</span> &nbsp;·&
 <hr class="rule">
 </section>
 
+<!-- Clase 12 · 16 -->
+<section id="ej-c16">
+<h2>Clase 12 · 16 — Asignación de tareas con matriz de costos</h2>
+<p class="sub">Backtracking con una estimación por nodo · <span class="tag t-exp">O(nⁿ)</span>, que se afina a <span class="tag t-fact">O(n!)</span></p>
+
+<div class="enun"><b>Enunciado · lámina 17</b>
+Las reglas de juego son las siguientes: hay m personas para m tareas, y cualquiera de ellas podría realizar cualquiera de las tareas. Cada asignación de tareas implica un costo, dependiendo de la tarea y de la persona a quien se la asignó. Es necesario que se realicen todas las tareas, que cada tarea esté asignada a una persona y que cada persona realice sólo una tarea. Se quiere minimizar el costo total de las asignaciones de tareas.</div>
+<div class="note"><b>Este problema no está en la hoja de práctica</b>
+Se numera 16 porque sigue a los 15 de la hoja. El enunciado es el de la lámina 17 de la clase del 28/10, que en el apunte es la <a href="index.html#clase12">clase 12</a>. El laberinto de esa misma clase es el ejercicio <a href="#ej-g16">Backtracking 2</a> de la guía.</div>
+
+<h3>Qué te están pidiendo</h3>
+<p>Una matriz de costos: la fila i es la persona i, la columna j es la tarea j, y <code>costo[i][j]</code> es lo que cuesta que la persona i haga la tarea j. Hay que armar una asignación uno a uno entre personas y tareas —todas las tareas hechas, cada persona con una sola— cuyo costo total sea mínimo. Ejemplo de la clase, con cuatro personas (a, b, c, d) y cuatro tareas:</p>
+<div class="dpwrap"><table><tr><th></th><th>tarea 1</th><th>tarea 2</th><th>tarea 3</th><th>tarea 4</th></tr><tr><th>a</th><td>11</td><td>12</td><td>18</td><td>40</td></tr><tr><th>b</th><td>14</td><td>15</td><td>13</td><td>22</td></tr><tr><th>c</th><td>11</td><td>17</td><td>19</td><td>23</td></tr><tr><th>d</th><td>17</td><td>14</td><td>20</td><td>28</td></tr></table></div>
+<p>La mejor asignación del ejemplo cuesta <b>61</b>: a hace la tarea 1, d la 2, b la 3 y c la 4 (11 + 14 + 13 + 23). Una asignación cualquiera, como la diagonal (a→1, b→2, c→3, d→4), cuesta 73.</p>
+
+<h3>Razonamientos antes de mirar la resolución</h3>
+<ol class="razon">
+  <li><b>¿Qué es S y qué es una etapa?</b> Una asignación se arma tarea por tarea. ¿Qué guardás para saber a quién le tocó cada tarea y quién ya está ocupado?</li>
+  <li><b>¿Qué alternativas tiene cada etapa y cuáles son factibles?</b> ¿Cuántas personas hay para elegir? ¿Alguna se descarta?</li>
+  <li><b>¿Cómo estimás cuánto va a costar lo que falta?</b> Pensá en cada tarea pendiente y en las personas que siguen libres: ¿cuál es lo menos que podría costar? ¿Esa suma puede sobrestimar el costo real de la mejor continuación? ¿Y subestimarlo?</li>
+  <li><b>¿Con qué valor arrancás el límite?</b> Si armás cualquier asignación completa, ¿qué te asegura sobre el costo del óptimo?</li>
+  <li><b>¿Qué guardás al llegar a una asignación completa?</b> ¿Alcanza con el costo? ¿Qué pasa si la primera asignación que armaste ya era la mejor?</li>
+  <li><b>¿Cuántas alternativas hay por nivel y cuántos niveles?</b> ¿La cantidad de personas libres es la misma en todos los niveles?</li>
+</ol>
+
+<button class="primary rev" data-sol="sol-c16">Ver la resolución</button>
+<div class="sol" id="sol-c16">
+
+<h3>a) Estrategia de Backtracking</h3>
+<div class="grid2">
+  <div class="def"><h4>Solución parcial S</h4>El vector <code>asignacion_actual</code>: <code>asignacion_actual[tarea]</code> es la persona a cargo de esa tarea. Va con <code>usado</code> (qué personas ya tienen tarea) y <code>costo_actual</code> (la suma de los costos asignados). Las tareas y las personas se numeran desde 0.</div>
+  <div class="def"><h4>Etapa y alternativas</h4>La etapa es la <code>tarea</code> a asignar. Las alternativas son las <code>m</code> personas.</div>
+  <div class="def"><h4>Factibilidad y poda</h4>Una persona es <b>factible</b> si <code>usado[persona] = falso</code>. Se <b>poda</b> la rama si <code>estimado ≥ lim</code>, con <code>estimado = costo_actual + suma de los mínimos de las tareas que faltan, entre las personas libres</code>: ni en el mejor caso puede mejorar la mejor solución conocida.</div>
+  <div class="def"><h4>Caso base</h4><code>tarea = m</code>: las m tareas tienen persona. Si <code>costo_actual &lt; lim</code>, se actualiza <code>lim</code> y se copia <code>asignacion_actual</code> en <code>mejor_asignacion</code>.</div>
+  <div class="def"><h4>Retroceso</h4>Al volver, <code>usado[persona] ← falso</code>. <code>costo_actual</code> va por valor; <code>lim</code> va por referencia (<code>var</code>) y <code>mejor_asignacion</code> se conserva.</div>
+  <div class="def"><h4>Objetivo</h4>La <b>mejor</b> solución: la de menor costo total. El <code>lim</code> inicial es el costo de una asignación cualquiera.</div>
+</div>
+<div class="first"><b>Por qué el estimado es una cota inferior válida</b>
+Cada tarea que falta tendrá que asignarse a alguna persona libre, y le va a costar al menos el mínimo de su columna entre esas personas. Sumar esos mínimos puede subestimar (dos tareas pueden querer a la misma persona), pero nunca sobreestima: ninguna continuación cuesta menos.</div>
+
+<h3>b) Pseudocódigo</h3>
+<div class="card">
+<pre class="ps">Algoritmo BackTareas
+Entradas: costo Matriz&lt;Entero&gt;, m: Entero, tarea: Entero, costo_actual: Entero, usado: Vector&lt;Booleano&gt;,
+asignacion_actual: Vector&lt;Entero&gt;, mejor_asignacion: Vector&lt;Entero&gt;, var lim: Entero
+    si tarea = m entonces
+        si costo_actual &lt; lim
+            lim ← costo_actual
+            mejor_asignacion ← copiar(asignacion_actual)
+        fin si
+fin si
+sino
+    estimado: Entero ← costo_actual + COSTO_MIN_RESTANTE(costo, m, tarea, usado)
+    si estimado &lt; lim
+        para persona: entero desde 0 hasta m-1
+            si usado[persona] = falso
+                usado[persona] ← verdadero
+                asignacion_actual[tarea] ← persona
+                BackTareas (costo,m, tarea + 1, costo_actual + costo[persona][tarea], usado, asignacion_actual,  mejor_asignacion, lim)
+                usado[persona] ← falso
+            fin si
+        fin para
+    fin si
+fin sino
+fin Algoritmo</pre>
+</div>
+<div class="card">
+<pre class="ps">Algoritmo COSTO_MIN_RESTANTE
+Entradas: costo: Matriz&lt;Entero&gt;, m: Entero, tarea_actual: Entero, usado: Vector&lt;Booleano&gt;
+Salida: valor: Entero
+    suma: Entero ← 0
+    para t:entrero desde tarea_actual hasta m-1
+        minimo: Entero ← +infinito
+        para persona:entero desde 0 hasta m-1
+            si usado[persona] = falso
+                minimo ← min(minimo, costo[persona][t])
+            fin si
+        fin para
+        suma ← suma + minimo
+    fin para
+    devolver suma</pre>
+</div>
+<div class="card">
+<pre class="ps">Algoritmo CALCULAR_SOLUCION_INICIAL
+Entradas: costo: Matriz&lt;Entero&gt;,   m: Entero
+Salidas: valor: Entero
+    total: Entero ← 0
+    usado: Vector&lt;booleano&gt;
+    para i:entero desde 0 hasta m-1
+        usado[i] ← falso
+    fin para
+    para tarea: Entero desde 0 hasta m-1
+        persona: Entero ← -1
+        salir : booleano ←falso
+        para i:entero desde 0 hasta m-1 y salir =falso
+            si usado[i] = falso
+                persona ← i
+                salir=verdadero
+            fin si
+        fin para
+        usado[persona] ← verdadero
+        total ← total + costo[persona][tarea]
+    fin para
+    devolver total</pre>
+</div>
+<div class="note"><b>Pseudocódigos de la cátedra (láminas 20 a 22)</b>
+Se copian tal cual, con sus erratas («entrero», <code>para i … y salir =falso</code>). Las observaciones están en la <a href="index.html#asignacion-c12">sección del apunte</a>. Las dos que más importan: <code>CALCULAR_SOLUCION_INICIAL</code> devuelve solo el valor, así que si la asignación inicial ya es la óptima <code>mejor_asignacion</code> no se asigna nunca (el simulador tiene una versión corregida que también la guarda); y ejecutado el pseudocódigo el límite baja 73 → 69 → 61, no «73 64 61» como rotula la lámina.</div>
+
+<h3>Ejecutalo paso a paso</h3>
+<p>El simulador paso a paso de este problema está en el apunte: <a href="index.html#asignacion-c12" data-apunte-sim="sim-c12-asignacion">Asignación de tareas</a>. Ahí ves la matriz con la celda en cálculo, <code>usado</code>, <code>asignacion_actual</code>, la suma de mínimos de <code>COSTO_MIN_RESTANTE</code> y la pila de llamadas; con el ejemplo de la lámina 19 hace 23 llamadas, poda 11 ramas y llega a 61.</p>
+
+<h3>c) Complejidad temporal</h3>
+<p>Caso resta: cada llamada asigna una tarea más (<code>b = 1</code>). Según la lámina 23, <code>a</code> es la cantidad de personas y <code>n</code> la de tareas, y <code>k</code> «no influye». Con a = n queda <code>O(nⁿ)</code>. Se puede afinar: en el nivel k solo quedan n − k personas libres, así que hay a lo sumo n·(n−1)·…·1 = n! asignaciones completas, <code>O(n!)</code>.</p>
+<p>La lámina no cuenta que cada nodo ejecuta <code>COSTO_MIN_RESTANTE</code>, que recorre hasta n tareas por n personas: O(n²). Contándolo, el peor caso es O(n²·n!). La poda por estimado ahorra ramas pero no cambia el peor caso.</p>
+<div class="card" style="font-family:var(--mono);text-align:center">
+a = personas = n, b = 1 · caso resta → <span class="tag t-exp" style="font-size:15px">O(nⁿ)</span> &nbsp;·&nbsp; ajustado <span class="tag t-fact" style="font-size:15px">O(n!)</span>
+</div>
+</div>
+<hr class="rule">
+</section>
+
 <div class="exbar" id="bloque-integ2"><span>Integración</span><b>Segundo parcial</b><em>Se pide, por ejercicio: a) técnica · b) estrategia · c) pseudocódigo · d) complejidad temporal</em></div>
 
 <div class="note" style="max-width:76ch"><b>De dónde salen estos ejercicios</b>
@@ -4792,7 +4992,7 @@ Función dentro(M, fila, columna): booleano
 Fin función</pre>
 </div>
 <div class="note"><b>Pseudocódigo y ejemplo propios</b>
-La cátedra no publica pseudocódigo de este ejercicio: este está derivado de la estrategia, con la misma forma que el del <a href="#ej-g16">laberinto</a>. <code>dentro(M, fila, columna)</code> es <code>1 ≤ fila ≤ m Y 1 ≤ columna ≤ n</code>. La matriz del ejemplo (esfuerzos 4 2 7 / 1 6 3 / 5 2 8, partida (1,1), X = 4, o sea K = 5) es propia.</div>
+La cátedra no publica pseudocódigo de este ejercicio: este está derivado de la estrategia, en el estilo didáctico de los de la clase 10 (todo por parámetro, <code>ref</code> en lo que se reasigna y <code>dentro</code> como función). El <a href="#ej-g16">laberinto</a>, en cambio, va tal cual lo escribió la cátedra, con otra forma. <code>dentro(M, fila, columna)</code> es <code>1 ≤ fila ≤ m Y 1 ≤ columna ≤ n</code>. La matriz del ejemplo (esfuerzos 4 2 7 / 1 6 3 / 5 2 8, partida (1,1), X = 4, o sea K = 5) es propia.</div>
 
 <div class="note"><b>Qué lleva ref</b>
 Dentro de <code>Recorrer</code> se reasignan <code>mejorRecorrido</code> y <code>mejorEsfuerzo</code>: por eso van con <code>ref</code>, para que el cambio le llegue a quien llamó y <code>Estaciones</code> no devuelva el valor inicial. Los vectores y las matrices que solo se modifican posición por posición no lo necesitan.</div>
@@ -5165,7 +5365,7 @@ n·(P + 1) celdas × Θ(1) por celda (≤ 3 opciones) → <span class="tag t-cua
 <tr><td>Pide la <b>mejor</b> asignación entre personas y productos (cada uno a lo sumo una vez) y un criterio local falla</td><td>Backtracking</td><td>S[producto] = persona o «sin vender»; poda por <b>cota superior</b> (lo que falta, a su mejor oferta); la mejor se guarda como copia</td><td><span class="tag t-exp">exponencial</span></td></tr>
 </table>
 
-<h3>Los 41 ejercicios, en una línea cada uno</h3>
+<h3>Los 42 ejercicios, en una línea cada uno</h3>
 <table>
 <tr><th>Ejercicio</th><th>Técnica</th><th>Criterio / clave</th><th>Complejidad</th></tr>
 <tr><td><a href="#ej-g1">G · DyC 1</a> ¿ordenada?</td><td>DyC división</td><td>2 mitades + costura S[medio] ≤ S[medio+1]</td><td><span class="tag t-lin">O(n)</span></td></tr>
@@ -5183,7 +5383,7 @@ n·(P + 1) celdas × Θ(1) por celda (≤ 3 opciones) → <span class="tag t-cua
 <tr><td><a href="#ej-g13">G · PD 2</a> revistas de Howard</td><td>Programación Dinámica</td><td>Mochila 0/1: no la compro / la compro (fila i−1)</td><td><span class="tag t-cuad">Θ(n·P)</span></td></tr>
 <tr><td><a href="#ej-g14">G · PD 3</a> compras en el shopping</td><td>Programación Dinámica</td><td>hasta 3 unidades, costos p / 2p−1 / 3p−3: máx de hasta 4 opciones, todas a la fila i−1</td><td><span class="tag t-cuad">Θ(m·K)</span></td></tr>
 <tr><td><a href="#ej-g15">G · Backtracking 1</a> tareas a procesadores</td><td>Backtracking (la mejor)</td><td>S[tarea] = procesador; minimizar la carga máxima; podar si el máximo parcial ≥ mejor</td><td><span class="tag t-exp">O((m+n)·mⁿ)</span></td></tr>
-<tr><td><a href="#ej-g16">G · Backtracking 2</a> laberinto</td><td>Backtracking (la mejor)</td><td>S = camino con casillas marcadas; 4 direcciones; podar si long + valor ≥ mejor</td><td><span class="tag t-exp">O(n²·3<sup>n²</sup>)</span></td></tr>
+<tr><td><a href="#ej-g16">G · Backtracking 2</a> laberinto</td><td>Backtracking (la mejor)</td><td>visitado + resultado; 4 direcciones (arriba, abajo, izq, der); podar si sumaP ≥ mejorSuma</td><td><span class="tag t-exp">O(3<sup>n</sup>)</span> n = celdas</td></tr>
 <tr><td><a href="#ej-g17">G · Backtracking 3</a> caballo de Atila</td><td>Backtracking (una)</td><td>S = recorrido de las k pisadas; 4 vecinas factibles; cierra si S[k−1] es vecina de S[0]</td><td><span class="tag t-exp">O(3<sup>n²</sup>)</span></td></tr>
 <tr><td><a href="#ej-i1">I · 1</a> actividades compatibles</td><td>Greedy</td><td>por fin ↑, tomar si c ≥ finUltima</td><td><span class="tag t-nlogn">O(n log n)</span></td></tr>
 <tr><td><a href="#ej-i2">I · 2</a> vector bitónico</td><td>DyC división</td><td>binaria: comparar A[m] con A[m+1]</td><td><span class="tag t-log">O(log n)</span></td></tr>
@@ -5203,6 +5403,7 @@ n·(P + 1) celdas × Θ(1) por celda (≤ 3 opciones) → <span class="tag t-cua
 <tr><td><a href="#ej-c13">C · 13</a> partición en mitades</td><td>Backtracking (todas)</td><td>S[e] ∈ {1,2}; comparar las sumas en cada hoja</td><td><span class="tag t-exp">Θ(n·2ⁿ)</span></td></tr>
 <tr><td><a href="#ej-c14">C · 14</a> procesadores con cota Greedy</td><td>Backtracking + Greedy</td><td>cota inicial LPT; podar si máx(cargas) ≥ mejorTiempo</td><td><span class="tag t-exp">O((m+t)·mᵗ)</span></td></tr>
 <tr><td><a href="#ej-c15">C · 15</a> mochila con cota</td><td>Backtracking (la mejor)</td><td>S[e] ∈ {0,1}; podar por exceso y por cota fraccionaria</td><td><span class="tag t-exp">O(n·2ⁿ + n log n)</span></td></tr>
+<tr><td><a href="#ej-c16">C · 16</a> asignación de tareas</td><td>Backtracking (la mejor)</td><td>una persona por tarea; podar si costo actual + mínimos de lo que falta ≥ lim; lim inicial = una asignación cualquiera</td><td><span class="tag t-exp">O(nⁿ)</span> · <span class="tag t-fact">O(n!)</span></td></tr>
 <tr><td><a href="#ej-s1">S · 1</a> almacenamiento</td><td>Programación Dinámica</td><td>Mochila 0/1 con valor = peso: M[i−1, j − Sᵢ] + Sᵢ</td><td><span class="tag t-cuad">Θ(n·D)</span></td></tr>
 <tr><td><a href="#ej-s2">S · 2</a> subasta</td><td>Backtracking (la mejor)</td><td>S[producto] = persona o «sin vender»; poda por cota superior</td><td><span class="tag t-exp">O((m+n)·(m+1)ⁿ)</span></td></tr>
 <tr><td><a href="#ej-s3">S · 3</a> catálogo de premios</td><td>Programación Dinámica</td><td>stock ilimitado: «lo uso» en la misma fila</td><td><span class="tag t-cuad">Θ(n·P)</span></td></tr>
@@ -5221,7 +5422,8 @@ n·(P + 1) celdas × Θ(1) por celda (≤ 3 opciones) → <span class="tag t-cua
   <li><a href="#ej-c2">Cambio</a> y <a href="#ej-s3">Catálogo de premios</a>: cantidad ilimitada de cada elemento, así que «lo uso» se queda en la <b>misma fila</b>. El Cambio minimiza monedas para un valor exacto; el catálogo maximiza lo gastado sin pasarse.</li>
   <li><a href="#ej-g14">PD 3</a>, <a href="#ej-c8">Preparación física</a> y <a href="#ej-s6">Festival de cine</a>: la Mochila 0/1 con más de una opción por objeto (hasta 3 unidades, hasta 2 sesiones, hasta 2 proyecciones). Todas apuntan a la fila anterior y los rangos de j separan las opciones que entran.</li>
   <li><a href="#ej-c10">Centro logístico</a> y <a href="#ej-s5">Ciudad base de la Selección</a>: Floyd y después una cuenta por fila. En uno se minimiza el <b>máximo</b> de la fila; en el otro, la <b>suma</b>.</li>
-  <li><a href="#ej-g16">Laberinto</a> y <a href="#ej-s4">Estaciones de actividades</a>: Backtracking para el mejor camino en una matriz, con la marca «visitada», el acumulador y la poda por «lo acumulado ya no mejora lo guardado».</li>
+  <li><a href="#ej-g16">Laberinto</a> y <a href="#ej-s4">Estaciones de actividades</a>: Backtracking para el mejor camino en una matriz, con la marca «visitado», el acumulado (sumaP) y la poda por «lo acumulado ya no mejora lo guardado».</li>
+  <li><a href="#ej-c16">Asignación de tareas</a> y <a href="#ej-s2">Subasta</a>: Backtracking con una estimación optimista de lo que falta (los mínimos que quedan, al minimizar; la mayor oferta de cada producto, al maximizar) y la mejor solución guardada como límite de poda.</li>
 </ul>
 
 <h3>Errores que cuestan puntos</h3>
@@ -5311,8 +5513,14 @@ function Sim(rootId, build, render){
     expEl.innerHTML='<span class="step-n">Paso '+(S.i+1)+' de '+S.steps.length+'</span>'+(st.msg||"");
     vizEl.innerHTML=render(st,S.steps,S.i);
     const on=codeEl.querySelector(".cl.on");
-    if(on && on.offsetTop < codeEl.scrollTop || (on && on.offsetTop > codeEl.scrollTop+codeEl.clientHeight-30))
-      codeEl.scrollTop = Math.max(0, on.offsetTop - codeEl.clientHeight/2);
+    /* La línea se ubica con getBoundingClientRect, relativa al panel: `on.offsetTop` se mide contra el
+       offsetParent, que acá es el body (.code no es position:relative), y mandaba el panel al fondo. */
+    if(on){
+      const cr=codeEl.getBoundingClientRect(), r=on.getBoundingClientRect();
+      const top=r.top-cr.top+codeEl.scrollTop, bottom=top+r.height;
+      if(top<codeEl.scrollTop || bottom>codeEl.scrollTop+codeEl.clientHeight)
+        codeEl.scrollTop=Math.max(0, top-codeEl.clientHeight/2);
+    }
     bar.style.width=(S.steps.length>1?(S.i/(S.steps.length-1))*100:100)+"%";
     cnt.textContent=(S.i+1)+"/"+S.steps.length;
     btn("prev").disabled=S.i===0; btn("first").disabled=S.i===0;
@@ -6722,121 +6930,117 @@ function btProcesadores(A,m){
   return T.steps;
 }
 
-/* ---------- Guía · Backtracking 2: laberinto ---------- */
-/* Texto: filas separadas por «/», casillas por espacios; cada casilla es «valor» + letras de las
-   direcciones abiertas (N, E, S, O). Filas y columnas desde 1, como las matrices de PD. */
+/* ---------- Guía · Backtracking 2: laberinto (clase del 28/10, láminas 10 a 15) ---------- */
+/* Texto: filas separadas por «/», casillas por espacios. Cada casilla es «valor» + los símbolos de las direcciones a las
+   que se puede ir: ^ arriba, v abajo, < izq, > der. Son los cuatro booleanos de la Celda de la lámina 13 (sin símbolo =
+   falso). Filas y columnas desde 1. El orden de LAB_DIRS es el que prueba el pseudocódigo: arriba, abajo, izq, der. */
+const LAB_DIRS=[
+  {k:"arriba",sym:"^",di:-1,dj:0,ei:"i - 1",ej:"j",vis:"visitado[i-1][j]"},
+  {k:"abajo",sym:"v",di:1,dj:0,ei:"i + 1",ej:"j",vis:"visitado[i+1][j]"},
+  {k:"izq",sym:"<",di:0,dj:-1,ei:"i",ej:"j - 1",vis:"visitado[i][j-1]"},
+  {k:"der",sym:">",di:0,dj:1,ei:"i",ej:"j + 1",vis:"visitado[i][j+1]"}];
 function btParseLab(text){
   const t=String(text).trim();
   const rows=t?t.split("/").map(r=>r.trim().split(/\s+/)):[];
-  const n=rows.length;
-  if(!n||n>4||rows.some(r=>r.length!==n)) throw new Error("El laberinto tiene que ser cuadrado, de 1×1 a 4×4: filas separadas por «/» y casillas por espacios.");
+  const m=rows.length,n=m?rows[0].length:0;
+  if(!m||m>4||n>4||rows.some(r=>r.length!==n)) throw new Error("El laberinto tiene que ser rectangular, de 1×1 a 4×4: filas separadas por «/» y casillas por espacios.");
   return rows.map((r,f)=>r.map((tok,c)=>{
-    const m=/^(\d{1,3})([NESO]*)$/i.exec(tok);
-    if(!m) throw new Error("Casilla "+btPos(f+1,c+1)+" inválida: «"+tok+"». Escribí un número seguido de las direcciones abiertas, por ejemplo 3ES.");
-    const letters=m[2].toUpperCase();
-    if(new Set(letters).size!==letters.length) throw new Error("Casilla "+btPos(f+1,c+1)+": hay una dirección repetida en «"+tok+"».");
-    const abre={}; BT_DIRS.forEach(d=>{abre[d.k]=letters.includes(d.k);});
-    return {valor:+m[1],abre};
+    const mt=/^(\d{1,3})([\^v<>]*)$/i.exec(tok);
+    if(!mt) throw new Error("Casilla "+btPos(f+1,c+1)+" inválida: «"+tok+"». Escribí un número seguido de los símbolos de las direcciones a las que se puede ir, por ejemplo 3v> (^ arriba, v abajo, < izquierda, > derecha).");
+    const s=mt[2].toLowerCase();
+    if(new Set(s).size!==s.length) throw new Error("Casilla "+btPos(f+1,c+1)+": hay una dirección repetida en «"+tok+"».");
+    const celda={valor:+mt[1]};
+    LAB_DIRS.forEach(d=>{
+      celda[d.k]=s.includes(d.sym);
+      if(celda[d.k]&&(f+d.di<0||f+d.di>=m||c+d.dj<0||c+d.dj>=n)) throw new Error("Casilla "+btPos(f+1,c+1)+": «"+tok+"» abre hacia "+d.k+" pero no hay casilla ahí. El pseudocódigo de la lámina no revisa los bordes: los booleanos que apuntan afuera tienen que ser falsos.");
+    });
+    return celda;
   }));
 }
-function btParseCasilla(text,n,label){
-  const m=/^\s*(\d+)\s*,\s*(\d+)\s*$/.exec(String(text));
-  if(!m||+m[1]<1||+m[1]>n||+m[2]<1||+m[2]>n) throw new Error(label+": escribí fila,columna entre 1 y "+n+" (por ejemplo 1,1).");
-  return [+m[1],+m[2]];
+function btParseCasilla(text,filas,cols,label){
+  const mt=/^\s*(\d+)\s*,\s*(\d+)\s*$/.exec(String(text));
+  if(!mt||+mt[1]<1||+mt[1]>filas||+mt[2]<1||+mt[2]>cols) throw new Error(label+": escribí fila,columna con la fila entre 1 y "+filas+" y la columna entre 1 y "+cols+" (por ejemplo 2,1).");
+  return [+mt[1],+mt[2]];
 }
+/* Número de línea (data-l) de cada renglón del pseudocódigo de la lámina 14. Las cuatro direcciones ocupan 5 renglones
+   cada una a partir de la 18: Si (+0), nuevaPos.i (+1), nuevaPos.j (+2), backtrack (+3) y fin si (+4). */
+const LAB_L={entrada:1,i:5,j:6,visitar:7,suma:8,esDestino:9,mejora:10,guardarSuma:11,copiar:12,sigue:16,nuevaPos:17,dir0:18,desmarcar:39,sumaFinal:40,fin:41};
 function btLaberinto(L,origen,destino){
-  const n=L.length,visitada=L.map(r=>r.map(()=>false)),camino=[];
-  let mejor=Infinity,mejorCamino=null,llamadas=0,podas=0,largoCur=0,look=null;
+  const m=L.length,n=L[0].length,visitado=L.map(r=>r.map(()=>false)),camino=[];
+  let mejor=Infinity,mejorCamino=null,llamadas=0,podasV=0,podasM=0,sumaCur=0,look=null;
   const num=x=>x===Infinity?"∞":x;
   const txt=p=>p&&p.length?p.map(q=>btPos(q[0],q[1])).join(" → "):"vacío";
-  const T=Traza(()=>({kind:"maze",grid:L,n,origen,destino,path:camino.map(p=>p.slice()),best:mejorCamino?mejorCamino.map(p=>p.slice()):null,
-    largo:largoCur,mejor,look:look?look.slice():null,
-    vars:["llamadas: "+llamadas,"ramas podadas: "+podas,"largo actual: "+largoCur,"mejor largo: "+num(mejor)]}),"Probá con un tablero más chico o con más paredes.");
-  /* El marco de Laberinto guarda camino, mejorCamino y mejorLongitud: son los mismos que usa Explorar, así que se mantienen al día. */
-  const P=(line,msg,extra)=>{
-    if(T.stack.length){const v=T.stack[0].vars;
-      if("camino" in v)v.camino=txt(camino);
-      if("mejorCamino" in v)v.mejorCamino=txt(mejorCamino);
-      if("mejorLongitud" in v)v.mejorLongitud=num(mejor);}
-    T.push(line,msg,extra);
-  };
-  const inicial=L[origen[0]-1][origen[1]-1];
-  function explorar(fila,columna,largo){
+  const T=Traza(()=>({kind:"maze",grid:L,rows:m,cols:n,origen,destino,path:camino.map(p=>p.slice()),best:mejorCamino?mejorCamino.map(p=>p.slice()):null,
+    sumaP:sumaCur,mejor,look:look?look.slice():null,stats:{llamadas,podasV,podasM},
+    vars:["llamadas: "+llamadas,"podas por visitado: "+podasV,"podas por mejor solución: "+podasM,"sumaP: "+sumaCur,"mejorSuma: "+num(mejor)]}),"Probá con un laberinto más chico o con más paredes.");
+  /* mejorSuma va por referencia: es la misma para todas las llamadas pendientes, así que se mantiene al día en cada marco. */
+  const P=(line,msg,extra)=>{T.stack.forEach(f=>{f.vars.mejorSuma=num(mejor);});T.push(line,msg,extra);};
+  function laberinto(pos,sumaIn){
     llamadas++;
-    T.enter("Explorar",{fila,columna,longitudActual:largo});
-    const celda=L[fila-1][columna-1],esDestino=fila===destino[0]&&columna===destino[1];
-    P(11,"Entro a Explorar en "+btPos(fila,columna)+" (valor "+celda.valor+") con longitudActual = "+largo+".");
-    visitada[fila-1][columna-1]=true;largoCur=largo;
-    P(12,"visitada"+btPos(fila,columna)+" ← verdadero: la casilla pasa a formar parte del camino actual.");
-    camino.push([fila,columna]);
-    P(13,"agregar(camino, "+btPos(fila,columna)+"): es la última casilla del camino actual.");
-    P(14,"¿(fila, columna) = destino? ¿"+btPos(fila,columna)+" = "+btPos(destino[0],destino[1])+"? → "+trazaTF(esDestino)+(esDestino?": llegué al destino.":": no es el destino, recorro las cuatro direcciones."));
+    const i=pos[0],j=pos[1],celda=L[i-1][j-1],valor=celda.valor;
+    T.enter("Laberinto",{posActual:btPos(i,j),sumaP:sumaIn});
+    sumaCur=sumaIn;look=null;
+    P(LAB_L.entrada,"Entro a Laberinto con posActual = "+btPos(i,j)+", sumaP = "+sumaIn+" y mejorSuma = "+num(mejor)+".");
+    T.set("i",i);
+    P(LAB_L.i,"Entero i ← posActual.i = "+i+".");
+    T.set("j",j);
+    P(LAB_L.j,"Entero j ← posActual.j = "+j+".");
+    visitado[i-1][j-1]=true;camino.push([i,j,null]);
+    P(LAB_L.visitar,"visitado[i][j] ← verdadero: visitado"+btPos(i,j)+" = verdadero. La casilla pasa a formar parte del camino actual.");
+    const suma=sumaIn+valor;
+    T.set("sumaP",suma);sumaCur=suma;camino[camino.length-1][2]=suma;
+    P(LAB_L.suma,"sumaP ← sumaP + laberinto[i][j].valor = "+sumaIn+" + "+valor+" = "+suma+".");
+    const esDestino=i===destino[0]&&j===destino[1];
+    P(LAB_L.esDestino,"¿i = destino.i Y j = destino.j? ¿"+i+" = "+destino[0]+" Y "+j+" = "+destino[1]+"? → "+trazaTF(esDestino)+(esDestino?": llegué al destino.":": todavía no es el destino, sigo por el sino."));
     if(esDestino){
-      const mejora=largo<mejor;
-      P(15,"¿longitudActual &lt; mejorLongitud? ¿"+largo+" &lt; "+num(mejor)+"? → "+trazaTF(mejora)+(mejora?".":": no mejora lo guardado, no lo guardo."));
+      const mejora=suma<mejor;
+      P(LAB_L.mejora,"¿sumaP &lt; mejorSuma? ¿"+suma+" &lt; "+num(mejor)+"? → "+trazaTF(mejora)+(mejora?".":": este camino no mejora lo guardado, no lo guardo."));
       if(mejora){
-        const prev=mejor;mejor=largo;
-        P(16,"mejorLongitud ← longitudActual = "+largo+" (antes "+num(prev)+"). Como es <code>ref</code>, el cambio le llega a quien llamó.");
-        mejorCamino=camino.map(p=>p.slice());
-        P(17,"mejorCamino ← copiar(camino): guardo una copia porque camino se va a seguir modificando.");
+        const prev=mejor;mejor=suma;mejorCamino=camino.map(p=>p.slice());
+        P(LAB_L.guardarSuma,"mejorSuma ← sumaP = "+suma+" (antes "+num(prev)+"). mejorSuma va por referencia: el cambio le llega a todas las llamadas que siguen pendientes.");
+        P(LAB_L.copiar,"copiar(resultado, visitado): resultado queda con las casillas marcadas en visitado, que son las del camino actual: "+txt(camino)+".");
       }
     }else{
-      for(const d of BT_DIRS){
-        T.vars({fila,columna,longitudActual:largo,direccion:d.k});look=null;
-        P(20,"para cada direccion ∈ {N, E, S, O}: direccion = "+d.k+" ("+d.nombre+").");
-        const filaV=fila+d.df,colV=columna+d.dc;
-        T.vars({fila,columna,longitudActual:largo,direccion:d.k,filaVecina:filaV,columnaVecina:colV});look=[filaV,colV];
-        P(21,"(filaVecina, columnaVecina) ← casilla vecina de "+btPos(fila,columna)+" hacia el "+d.nombre+" = "+btPos(filaV,colV)+".");
-        const abre=celda.abre[d.k];
-        P(22,"¿L[fila, columna].abre[direccion]? ¿Desde "+btPos(fila,columna)+" se puede ir al "+d.nombre+"? → "+trazaTF(abre)+(abre?". Sigo con el resto del Y.":": hay pared (o un pasaje que solo va en el otro sentido). Con Y, si el primero es falso la condición entera lo es y no evalúo el resto."));
-        if(!abre)continue;
-        P(22,"dentro(L, filaVecina, columnaVecina): llamo a dentro("+filaV+", "+colV+").");
-        const dentro=btDentro(T,filaV,colV,n,n,41);
-        P(22,"dentro devolvió "+trazaTF(dentro)+(dentro?". Sigo con NO visitada.":": la casilla está fuera del tablero y la condición entera es falsa."));
-        if(!dentro)continue;
-        const vis=visitada[filaV-1][colV-1];
-        P(22,"¿NO visitada[filaVecina, columnaVecina]? visitada"+btPos(filaV,colV)+" es "+(vis?"verdadero":"falso")+" → NO da "+trazaTF(!vis)+(vis?": la casilla ya está en el camino, no la repito.":": la condición completa es verdadera."));
-        if(vis)continue;
-        const valor=L[filaV-1][colV-1].valor,nueva=largo+valor,go=nueva<mejor;
-        T.set("nuevaLongitud",nueva);
-        P(23,"nuevaLongitud ← longitudActual + L[filaVecina, columnaVecina].valor = "+largo+" + "+valor+" = "+nueva+".");
-        if(!go)podas++;
-        P(24,"¿nuevaLongitud &lt; mejorLongitud? ¿"+nueva+" &lt; "+num(mejor)+"? → "+trazaTF(go)+(go?".":": poda, esa rama no puede mejorar lo guardado."));
-        if(!go)continue;
-        P(25,"Explorar(L, destino, filaVecina, columnaVecina, nuevaLongitud, …): llamo a Explorar("+filaV+", "+colV+", "+nueva+").");
-        explorar(filaV,colV,nueva);
-        largoCur=largo;look=[filaV,colV];
-        P(25,"Explorar volvió a "+btPos(fila,columna)+" (longitudActual = "+largo+"). Sigo con la dirección siguiente.");
+      const sigue=suma<mejor;
+      if(!sigue)podasM++;
+      P(LAB_L.sigue,"¿sumaP &lt; mejorSuma? ¿"+suma+" &lt; "+num(mejor)+"? → "+trazaTF(sigue)+(sigue?": todavía puede mejorar, pruebo las cuatro direcciones.":": <b>poda porque la mejor solución ya tiene ese valor parcial o lo supera</b> (la ✗ violeta de la lámina). No miro ningún vecino."));
+      if(sigue){
+        P(LAB_L.nuevaPos,"Posicion nuevaPos: declaro la posición que voy a armar para cada llamada.");
+        LAB_DIRS.forEach((d,k)=>{
+          const base=LAB_L.dir0+5*k,ni=i+d.di,nj=j+d.dj,abre=celda[d.k],vis=abre?visitado[ni-1][nj-1]:null,ok=abre&&!vis;
+          look=abre?[ni,nj]:null;
+          if(abre&&vis)podasV++;
+          const cond="¿laberinto[i][j]."+d.k+" = verdadero Y "+d.vis+" = falso? ";
+          P(base,cond+(!abre?"laberinto"+btPos(i,j)+"."+d.k+" es <b>falso</b>: desde "+btPos(i,j)+" no se puede ir "+d.k+" (pared o borde). Con Y, si el primero es falso la condición entera lo es y no miro visitado → "+trazaTF(false)+".":
+            (vis?"laberinto"+btPos(i,j)+"."+d.k+" es verdadero, pero visitado"+btPos(ni,nj)+" es verdadero: esa casilla ya está en el camino actual → "+trazaTF(false)+": <b>poda por visitado</b> (la ✗ roja de la lámina).":
+              "laberinto"+btPos(i,j)+"."+d.k+" es verdadero y visitado"+btPos(ni,nj)+" es falso → "+trazaTF(true)+".")));
+          if(!ok)return;
+          T.set("nuevaPos","("+ni+", ·)");
+          P(base+1,"nuevaPos.i ← "+d.ei+": con i = "+i+" queda "+ni+".");
+          T.set("nuevaPos",btPos(ni,nj));
+          P(base+2,"nuevaPos.j ← "+d.ej+": con j = "+j+" queda "+nj+". Ahora nuevaPos = "+btPos(ni,nj)+".");
+          P(base+3,"backtrack(laberinto, n, nuevaPos, destino, visitado, resultado, sumaP, mejorSuma): llamo con nuevaPos = "+btPos(ni,nj)+" y sumaP = "+suma+". La lámina la llama <code>backtrack</code>: es el mismo algoritmo.");
+          laberinto([ni,nj],suma);
+          sumaCur=suma;look=[ni,nj];
+          P(base+3,"Volví a "+btPos(i,j)+": mi sumaP sigue valiendo "+suma+" (va por valor, la llamada tenía la suya) y mejorSuma = "+num(mejor)+".");
+        });
+        look=null;
       }
-      look=null;T.vars({fila,columna,longitudActual:largo});
-      P(20,"No quedan direcciones por probar: el para termina.");
     }
-    visitada[fila-1][columna-1]=false;
-    P(30,"visitada"+btPos(fila,columna)+" ← falso: otro camino va a poder pasar por acá.");
-    camino.pop();
-    P(31,"eliminar(camino): saco "+btPos(fila,columna)+" del camino. Explorar vuelve a quien la llamó.");
+    visitado[i-1][j-1]=false;camino.pop();look=null;
+    P(LAB_L.desmarcar,"visitado[i][j] ← falso: desmarco "+btPos(i,j)+" para que otros caminos puedan pasar por acá.");
+    const despues=suma+valor;
+    T.set("sumaP",despues);sumaCur=despues;
+    P(LAB_L.sumaFinal,"sumaP ← sumaP + laberinto[i][j].valor = "+suma+" + "+valor+" = "+despues+". Ojo: la lámina <b>suma</b> otra vez, no resta. Como sumaP va por valor y la llamada termina acá, quien llamó no se entera.");
+    P(LAB_L.fin,"fin laberinto: la llamada en "+btPos(i,j)+" termina y vuelve a quien la llamó.");
     T.leave();
   }
-  P(1,"Llamada inicial: Laberinto(L, origen, destino) con origen "+btPos(origen[0],origen[1])+" y destino "+btPos(destino[0],destino[1])+".");
-  T.enter("Laberinto",{origen:btPos(origen[0],origen[1]),destino:btPos(destino[0],destino[1])});
-  T.set("n",n);
-  P(2,"n ← longitud(L) = "+n+": el laberinto es de "+n+" × "+n+".");
-  T.set("visitada","matriz "+n+" × "+n+" de falso");
-  P(3,"visitada ← matriz n × n de falso. Todavía no pisé ninguna casilla.");
-  T.set("camino","vacío");
-  P(4,"camino ← vector vacío.");
-  T.set("mejorCamino","vacío");
-  P(5,"mejorCamino ← vector vacío: todavía no hay ningún camino guardado.");
-  T.set("mejorLongitud","∞");
-  P(6,"mejorLongitud ← infinito. Cualquier camino que llegue al destino va a ser mejor.");
-  P(7,"Explorar(L, destino, origen.fila, origen.columna, …): arranco en el origen "+btPos(origen[0],origen[1])+". La longitud ya incluye su valor, "+inicial.valor+". <code>mejorCamino</code> y <code>mejorLongitud</code> van con <code>ref</code> porque Explorar los reasigna.");
-  explorar(origen[0],origen[1],inicial.valor);
-  largoCur=0;
-  P(7,"Explorar terminó: se agotó el árbol de caminos.");
-  P(8,"devolver (mejorCamino, mejorLongitud). "+(mejorCamino?"Devuelvo el largo mínimo y la copia guardada.":"Nunca llegué al destino: no hay camino."));
-  T.leave();
-  P(undefined,"Fin.",
-    {result:mejorCamino?"Longitud mínima = "+mejor+" · "+mejorCamino.map(p=>btPos(p[0],p[1])).join(" → "):"No existe un camino de "+btPos(origen[0],origen[1])+" a "+btPos(destino[0],destino[1]),rcls:mejorCamino?"good":"bad"});
+  const o=origen;
+  P(undefined,"Llamada inicial (no está en la lámina): visitado y resultado son matrices de falso de "+m+" × "+n+", sumaP = 0, mejorSuma = ∞ y posActual = el origen "+btPos(o[0],o[1])+". La primera llamada le suma a sumaP el valor del origen, "+L[o[0]-1][o[1]-1].valor+". El destino es "+btPos(destino[0],destino[1])+".");
+  laberinto(o,0);
+  sumaCur=0;look=null;
+  P(undefined,"Fin. Se agotó el árbol de caminos.",
+    {result:mejorCamino?"mejorSuma = "+mejor+" · resultado: "+txt(mejorCamino):"No existe un camino de "+btPos(o[0],o[1])+" a "+btPos(destino[0],destino[1])+": mejorSuma sigue en ∞ y resultado vacío",rcls:mejorCamino?"good":"bad"});
   return T.steps;
 }
 
@@ -6972,53 +7176,55 @@ function btProcRender(st,steps,idx){
 }
 /* Tablero SVG compartido por el laberinto y el jardín: la misma grilla, otros marcadores. */
 const BT_CELL=64,BT_MARGIN=22;
-function btFrame(n,label,inner){
-  const dim=BT_MARGIN+n*BT_CELL+6; let ax="";
-  for(let i=0;i<n;i++) ax+='<text class="axis" x="'+(BT_MARGIN+i*BT_CELL+BT_CELL/2)+'" y="11">'+(i+1)+'</text><text class="axis" x="11" y="'+(BT_MARGIN+i*BT_CELL+BT_CELL/2)+'">'+(i+1)+'</text>';
-  return '<svg class="bt-grid" viewBox="0 0 '+dim+' '+dim+'" role="img" aria-label="'+esc(label)+'">'+ax+inner+'</svg>';
+function btFrame(rows,label,inner,cols){
+  const C=cols===undefined?rows:cols,w=BT_MARGIN+C*BT_CELL+6,h=BT_MARGIN+rows*BT_CELL+6; let ax="";
+  for(let c=0;c<C;c++) ax+='<text class="axis" x="'+(BT_MARGIN+c*BT_CELL+BT_CELL/2)+'" y="11">'+(c+1)+'</text>';
+  for(let f=0;f<rows;f++) ax+='<text class="axis" x="11" y="'+(BT_MARGIN+f*BT_CELL+BT_CELL/2)+'">'+(f+1)+'</text>';
+  return '<svg class="bt-grid" viewBox="0 0 '+w+' '+h+'" role="img" aria-label="'+esc(label)+'">'+ax+inner+'</svg>';
 }
 const btCx=c=>BT_MARGIN+c*BT_CELL+BT_CELL/2, btCy=f=>BT_MARGIN+f*BT_CELL+BT_CELL/2;
 const btPts=P=>P.map(p=>btCx(p[1]-1)+","+btCy(p[0]-1)).join(" ");
 const btLook=st=>st.look?st.look[0]+","+st.look[1]:"";   // casilla vecina que se está mirando (puede estar fuera del tablero)
 function btMazeBoard(st){
-  const n=st.n,L=st.grid,inPath={},inBest={},S=BT_CELL,M=BT_MARGIN,look=btLook(st);
-  st.path.forEach(p=>{inPath[p[0]+","+p[1]]=true;}); (st.best||[]).forEach(p=>{inBest[p[0]+","+p[1]]=true;});
-  const now=st.path.length?st.path[st.path.length-1].join(","):"";
+  const R=st.rows,C=st.cols,L=st.grid,inPath={},inBest={},S=BT_CELL,M=BT_MARGIN,look=btLook(st);
+  st.path.forEach(p=>{inPath[p[0]+","+p[1]]=p[2];}); (st.best||[]).forEach(p=>{inBest[p[0]+","+p[1]]=true;});
+  const now=st.path.length?st.path[st.path.length-1][0]+","+st.path[st.path.length-1][1]:"";
   let o="",texts=""; // los textos van en una capa aparte, encima de los trazos y de las paredes
-  for(let f=0;f<n;f++)for(let c=0;c<n;c++){
-    const key=(f+1)+","+(c+1),cls="sq"+(inPath[key]?" path":inBest[key]?" best":"")+(key===now?" now":"")+(key===look?" look":"");
+  for(let f=0;f<R;f++)for(let c=0;c<C;c++){
+    const key=(f+1)+","+(c+1),on=key in inPath,cls="sq"+(on?" path":inBest[key]?" best":"")+(key===now?" now":"")+(key===look?" look":"");
     o+='<g><title>Casilla '+btPos(f+1,c+1)+', valor '+L[f][c].valor+'</title><rect class="'+cls+'" x="'+(M+c*S)+'" y="'+(M+f*S)+'" width="'+S+'" height="'+S+'"/></g>';
     texts+='<text class="val" x="'+btCx(c)+'" y="'+btCy(f)+'">'+L[f][c].valor+'</text>';
+    if(on&&inPath[key]!==null) texts+='<text class="lab" x="'+btCx(c)+'" y="'+(M+(f+1)*S-11)+'">Σ '+inPath[key]+'</text>';
     if(f+1===st.origen[0]&&c+1===st.origen[1]) texts+='<text class="lab" x="'+(M+c*S+10)+'" y="'+(M+f*S+11)+'">O</text>';
     if(f+1===st.destino[0]&&c+1===st.destino[1]) texts+='<text class="lab" x="'+(M+(c+1)*S-10)+'" y="'+(M+(f+1)*S-11)+'">D</text>';
   }
   if(st.best&&st.best.length>1) o+='<polyline class="trail best" points="'+btPts(st.best)+'"/>';
   if(st.path.length>1) o+='<polyline class="trail" points="'+btPts(st.path)+'"/>';
   const arrow=(pts,title)=>'<g><title>'+title+'</title><polygon class="one" points="'+pts+'"/></g>';
-  for(let f=0;f<n;f++)for(let c=0;c<n;c++){
-    if(c+1<n){ // arista vertical entre (f,c) y (f,c+1)
-      const a=L[f][c].abre.E,b=L[f][c+1].abre.O,x=M+(c+1)*S,y0=M+f*S,ym=y0+S/2;
+  for(let f=0;f<R;f++)for(let c=0;c<C;c++){
+    if(c+1<C){ // arista vertical entre (f,c) y (f,c+1): der de la de la izquierda, izq de la de la derecha
+      const a=L[f][c].der,b=L[f][c+1].izq,x=M+(c+1)*S,y0=M+f*S,ym=y0+S/2;
       if(!a&&!b) o+='<line class="wall" x1="'+x+'" y1="'+y0+'" x2="'+x+'" y2="'+(y0+S)+'"/>';
       else if(a&&!b) o+=arrow((x-7)+","+(ym-9)+" "+(x-7)+","+(ym+9)+" "+(x+9)+","+ym,"Un solo sentido: de "+btPos(f+1,c+1)+" a "+btPos(f+1,c+2));
       else if(!a&&b) o+=arrow((x+7)+","+(ym-9)+" "+(x+7)+","+(ym+9)+" "+(x-9)+","+ym,"Un solo sentido: de "+btPos(f+1,c+2)+" a "+btPos(f+1,c+1));
     }
-    if(f+1<n){ // arista horizontal entre (f,c) y (f+1,c)
-      const a=L[f][c].abre.S,b=L[f+1][c].abre.N,y=M+(f+1)*S,x0=M+c*S,xm=x0+S/2;
+    if(f+1<R){ // arista horizontal entre (f,c) y (f+1,c): abajo de la de arriba, arriba de la de abajo
+      const a=L[f][c].abajo,b=L[f+1][c].arriba,y=M+(f+1)*S,x0=M+c*S,xm=x0+S/2;
       if(!a&&!b) o+='<line class="wall" x1="'+x0+'" y1="'+y+'" x2="'+(x0+S)+'" y2="'+y+'"/>';
       else if(a&&!b) o+=arrow((xm-9)+","+(y-7)+" "+(xm+9)+","+(y-7)+" "+xm+","+(y+9),"Un solo sentido: de "+btPos(f+1,c+1)+" a "+btPos(f+2,c+1));
       else if(!a&&b) o+=arrow((xm-9)+","+(y+7)+" "+(xm+9)+","+(y+7)+" "+xm+","+(y-9),"Un solo sentido: de "+btPos(f+2,c+1)+" a "+btPos(f+1,c+1));
     }
   }
-  o+='<rect class="wall" fill="none" x="'+M+'" y="'+M+'" width="'+(n*S)+'" height="'+(n*S)+'"/>';
-  return btFrame(n,"Laberinto de "+n+" por "+n+"; filas y columnas desde 1",o+texts);
+  o+='<rect class="wall" fill="none" x="'+M+'" y="'+M+'" width="'+(C*S)+'" height="'+(R*S)+'"/>';
+  return btFrame(R,"Laberinto de "+R+" filas por "+C+" columnas; filas y columnas desde 1",o+texts,C);
 }
 function btMazeRender(st,steps,idx){
   if(st.error) return btError(st);
   const seq=P=>P.map(p=>btPos(p[0],p[1])).join(" → "),prev=btPrev(steps,idx);
-  return btMazeBoard(st)+'<div class="vlabel">Pared gruesa: no se puede pasar · ▶ pasaje de un solo sentido · O origen · D destino · naranja: camino actual · verde: mejor camino guardado · celeste punteado: la vecina que se está mirando.</div>'+
+  return btMazeBoard(st)+'<div class="vlabel">Pared gruesa: no se puede pasar · ▶ pasaje de un solo sentido · O origen · D destino · naranja: visitado, con la sumaP de cada casilla (Σ) · verde: resultado · celeste punteado: la vecina que se está mirando.</div>'+
     trazaPanel(st,prev)+
-    '<div class="setbox"><span class="k">Camino actual · largo '+st.largo+'</span>'+(st.path.length?seq(st.path):"vacío")+'</div>'+
-    '<div class="setbox"><span class="k">Mejor camino guardado · largo '+(st.mejor===Infinity?"∞":st.mejor)+'</span>'+(st.best?seq(st.best):"todavía ninguno")+'</div>'+btFoot(st);
+    '<div class="setbox"><span class="k">visitado · camino actual · sumaP = '+st.sumaP+'</span>'+(st.path.length?seq(st.path):"vacío")+'</div>'+
+    '<div class="setbox"><span class="k">resultado · mejor camino guardado · mejorSuma = '+(st.mejor===Infinity?"∞":st.mejor)+'</span>'+(st.best?seq(st.best):"todavía ninguno")+'</div>'+btFoot(st);
 }
 function btGardenBoard(st){
   const n=st.n,J=st.grid,S=BT_CELL,M=BT_MARGIN,order={},ok=st.found===true,look=btLook(st);
@@ -7063,8 +7269,8 @@ function btGuard(build){
 }
 const btProcSim=Sim("sim-g15",()=>btGuard(()=>btProcesadores(btVector("g15-t"),btInteger("g15-m","Procesadores",1,3))),btProcRender);
 const btMazeSim=Sim("sim-g16",()=>btGuard(()=>{
-  const L=btParseLab(document.getElementById("g16-lab").value),n=L.length;
-  return btLaberinto(L,btParseCasilla(document.getElementById("g16-o").value,n,"Origen"),btParseCasilla(document.getElementById("g16-d").value,n,"Destino"));
+  const L=btParseLab(document.getElementById("g16-lab").value),m=L.length,n=L[0].length;
+  return btLaberinto(L,btParseCasilla(document.getElementById("g16-o").value,m,n,"Origen"),btParseCasilla(document.getElementById("g16-d").value,m,n,"Destino"));
 }),btMazeRender);
 const btAtilaSim=Sim("sim-g17",()=>btGuard(()=>btAtila(btParseJardin(document.getElementById("g17-jardin").value))),btAtilaRender);
 document.querySelectorAll("[data-bt-preset]").forEach(b=>b.addEventListener("click",()=>{

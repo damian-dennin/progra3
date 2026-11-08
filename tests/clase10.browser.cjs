@@ -35,7 +35,7 @@ async function capture(id,name){await evaluate(`document.getElementById(${JSON.s
     await waitFor(`document.readyState==='complete' && !!document.querySelector('#quizbox-c10 .q')`);
     assert.equal(await evaluate(`document.querySelectorAll('.c10-sim [data-controls] .count').length`),4);
     assert.equal(await evaluate(`document.querySelectorAll('#quizbox-c10 .q').length`),10);
-    assert.equal(await evaluate(`document.querySelectorAll('.classbar').length`),11);
+    assert.equal(await evaluate(`document.querySelectorAll('.classbar').length`),12);
     assert.equal(await evaluate(`Array.from(document.querySelectorAll('a[href^="#"]')).filter(a=>!document.getElementById(a.hash.slice(1))).length`),0);
     // Recorrer todos los pasos reales prueba el renderer con helpers del documento y el resaltado.
     const expected={reinas:'Solución: [0, 4, 7, 5, 2, 6, 1, 3]',suma:'4 soluciones',particion:'2 asignaciones',procesadores:'Tiempo mínimo = 7'};
@@ -101,6 +101,37 @@ async function capture(id,name){await evaluate(`document.getElementById(${JSON.s
     await evaluate(`document.getElementById('quiz-reset-c10').click()`);
     assert.equal(await evaluate(`document.querySelectorAll('#quizbox-c10 input:checked,#quizbox-c10 .fb.show,#quizbox-c10 .right').length`),0);
     await capture('quiz-c10','desktop-quiz');
+    // Clase 12: laberinto y asignación de tareas, de punta a punta en el navegador.
+    {
+      assert.equal(await evaluate(`document.querySelectorAll('.c12-sim [data-controls] .count').length`),2);
+      assert.equal(await evaluate(`document.querySelectorAll('#quizbox-c12 .q').length`),10);
+      const lab=await finish('sim-c12-laberinto');assert(lab.result.includes('mejorSuma = 18'),lab.result);assert(!/undefined|NaN/.test(lab.result));assert.equal(lab.steps,302,'303 pasos en total');
+      await capture('sim-c12-laberinto','desktop-c12-laberinto');
+      assert.equal(await evaluate(`document.querySelector('#sim-c12-laberinto [data-a="over"]').hidden`),false);
+      await evaluate(`document.querySelectorAll('#sim-c12-laberinto [data-c12-preset]')[1].click()`);
+      assert((await finish('sim-c12-laberinto')).result.includes('mejorSuma = 20'),'destino (2,4)');
+      await evaluate(`document.querySelectorAll('#sim-c12-laberinto [data-c12-preset]')[4].click()`);
+      assert((await finish('sim-c12-laberinto')).result.includes('No existe un camino'),'sin camino');
+      await evaluate(`document.getElementById('c12-lab-mapa').value='1^';document.querySelector('#sim-c12-laberinto [data-reload]').click()`);
+      assert(await evaluate(`!!document.querySelector('#sim-c12-laberinto [role="alert"]')`),'un booleano que apunta afuera se informa');
+      await evaluate(`document.querySelectorAll('#sim-c12-laberinto [data-c12-preset]')[0].click()`);
+      const asig=await finish('sim-c12-asignacion');assert(asig.result.includes('lim = 61')&&asig.result.includes('tarea 1 → a'),asig.result);assert(!/undefined|NaN/.test(asig.result));assert.equal(asig.steps,587);
+      await capture('sim-c12-asignacion','desktop-c12-asignacion');
+      assert.equal(await evaluate(`document.querySelector('#sim-c12-asignacion [data-l="99"]').hidden`),true,'la corrección propia está oculta en modo literal');
+      await evaluate(`document.querySelectorAll('#sim-c12-asignacion [data-c12-preset]')[1].click()`);
+      assert((await finish('sim-c12-asignacion')).result.includes('quedó sin asignar'),'el hueco de la lámina');
+      await evaluate(`document.getElementById('c12-asig-modo').value='corregido';document.getElementById('c12-asig-modo').dispatchEvent(new Event('change'))`);
+      assert.equal(await evaluate(`document.querySelector('#sim-c12-asignacion [data-l="99"]').hidden`),false,'la corrección propia aparece en modo corregido');
+      const cor=await finish('sim-c12-asignacion');assert(cor.result.includes('mejor_asignacion: tarea 1 → a')&&!cor.result.includes('quedó sin asignar'),cor.result);
+      await evaluate(`document.getElementById('c12-asig-modo').value='literal';document.getElementById('c12-asig-costos').value='1 2 / 3';document.querySelector('#sim-c12-asignacion [data-reload]').click()`);
+      assert(await evaluate(`!!document.querySelector('#sim-c12-asignacion [role="alert"]')`),'matriz inválida');
+      await evaluate(`document.querySelectorAll('#sim-c12-asignacion [data-c12-preset]')[0].click()`);
+      await evaluate(`document.getElementById('quiz-check-c12').click()`);
+      assert.equal(await evaluate(`document.getElementById('quiz-score-c12').textContent`),'0 de 10 correctas (10 sin responder)');
+      await evaluate(`QUESTIONS_C12.forEach((q,i)=>document.querySelector('input[name="c12q'+i+'"][value="'+q.c+'"]').click());document.getElementById('quiz-check-c12').click()`);
+      assert.equal(await evaluate(`document.getElementById('quiz-score-c12').textContent`),'10 de 10 correctas');
+      await evaluate(`document.getElementById('quiz-reset-c12').click()`);
+    }
     await call('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
     // Las tablas de clases anteriores desbordan en celular. Verificar la clase nueva contra
     // el viewport CSS de 390 px, sin aceptar ese desborde heredado como ancho disponible.
@@ -112,6 +143,13 @@ async function capture(id,name){await evaluate(`document.getElementById(${JSON.s
       assert(box.left>=0&&box.right<=box.width+1,JSON.stringify(box));
       const overflow=await evaluate(`Array.from(document.querySelectorAll('#${id} .inputs input,#${id} .inputs select,#${id} .viz')).filter(e=>e.getBoundingClientRect().right>document.documentElement.clientWidth+1).length`);
       assert.equal(overflow,0);await capture(id,'mobile-'+id);
+    }
+    assert.equal(await evaluate(`Array.from(document.querySelectorAll('section[id$="-c12"]')).filter(e=>e.scrollWidth>e.clientWidth+1).length`),0);
+    for(const id of ['sim-c12-laberinto','sim-c12-asignacion']){
+      const box=await evaluate(`(()=>{const r=document.getElementById('${id}').getBoundingClientRect();return {left:r.left,right:r.right,width:document.documentElement.clientWidth}})()`);
+      assert(box.left>=0&&box.right<=box.width+1,JSON.stringify(box));
+      const overflow=await evaluate(`Array.from(document.querySelectorAll('#${id} .inputs input,#${id} .inputs select,#${id} .viz')).filter(e=>e.getBoundingClientRect().right>document.documentElement.clientWidth+1).length`);
+      assert.equal(overflow,0,id);await capture(id,'mobile-'+id);
     }
     await evaluate(`document.querySelector('a[href="#clase10"]').click()`);
     assert.equal(await evaluate('location.hash'),'#clase10');

@@ -14,8 +14,10 @@ aprobar los parciales: primer parcial 16/09/2026, integrador 11/11/2026.
 | `pdf_imagenes.py` | Extractor de imágenes de los PDF de las clases (`Clase-NN_fecha.pdf`, en la raíz). Ver «Trampas conocidas». |
 | `CLAUDE.md` | Este archivo. |
 
-Los PDF de las clases están en la raíz (`Clase-01_2026-08-05.pdf` … `Clase-09_2026-10-07.pdf`); los
-enunciados de la cátedra en `ejercicios/`.
+Los PDF de las clases están en `Clases/` (`Clase-01_2026-08-05.pdf` … `Clase-28-10-2026.pdf`; desde la 10 el nombre
+cambió de formato; los comandos de más abajo que dicen «en la raíz» hay que correrlos con esa ruta); los
+enunciados de la cátedra en `ejercicios/`. Los videos de las clases (`Videos/`, mp4) están en `.gitignore`: no se
+versionan.
 
 ## Restricciones no negociables
 
@@ -291,6 +293,11 @@ variables CSS.**
   etiqueta a un `<b>` que sea el primer *elemento* de un `<li>`/párrafo aunque haya texto antes.
   Si un `<b>` en medio de una frase aparece partido en su propia línea, es eso: sacarle la negrita
   o poner antes un `<code>`. El override está en los dos HTML.
+- **`offsetTop` en el autoscroll del pseudocódigo**: `.code` no es `position:relative`, así que `on.offsetTop` se mide contra el
+  `body` y no contra el panel; el panel saltaba al fondo apenas el pseudocódigo desbordaba los 560 px (8 simuladores del apunte y 6 de
+  la guía). `Sim` ahora ubica la línea con `getBoundingClientRect()` relativa a `[data-code]`. Si se toca el autoscroll, probar con un
+  simulador de pseudocódigo largo (`sim-c11-mochila`, `sim-c12-asignacion`, `sim-g16`) y avanzar paso a paso: la línea `.on` tiene que
+  quedar siempre dentro del panel. Ojo: en la guía los simuladores están dentro de `.sol` (`display:none`), hay que abrirla para medir.
 - **Un error de la propia lámina en una tabla de ejemplo** (clase 7, Mochila: la celda (4, 6) dice
   13 y la regla da 15). Por eso los resultados de ejemplo se **recalculan** en Node y se comparan
   con la lámina antes de darlos por buenos; si difieren, el simulador calcula lo correcto y una
@@ -298,8 +305,8 @@ variables CSS.**
 
 ## Estilo didáctico de los pseudocódigos de Backtracking (pedido de Damián)
 
-Todos los Backtracking propios (procesadores —clases 10 y 11 y guía—, Laberinto, Atila, Subasta, Estaciones, Mochila
-con cota) y las versiones didácticas de Reinas, Suma de subconjuntos y Partición se escriben así; el modelo son el
+Todos los Backtracking propios (procesadores —clases 10 y 11 y guía—, Atila, Subasta, Estaciones, Mochila
+con cota; **el Laberinto ya no**: ver la excepción al final de esta sección) y las versiones didácticas de Reinas, Suma de subconjuntos y Partición se escriben así; el modelo son el
 `Algoritmo AsignarTareas(T, m)` / `Procedimiento Buscar(…)` y el `ReinaValida(S, fila, columna)` que pasó Damián:
 - **Todo por parámetro** (nada de variables globales implícitas) y **`ref` solo en lo que se reasigna**
   (`mejorS`, `mejorTiempo`, `mejorValor`…): `mejorS ← copiar(S)` dentro de la recursión se pierde si va por valor (se
@@ -326,6 +333,13 @@ con cota) y las versiones didácticas de Reinas, Suma de subconjuntos y Partici�
 - Pruebas: `clase10.test.cjs` y `clase11.test.cjs` aceptan rangos de líneas por modo; `guia-backtracking.test.cjs` e
   `integracion2.test.cjs` tienen actualizadas las líneas «que tienen que resaltarse» y los pasos esperados;
   `clase10.browser.cjs` usa `CHROME_PATH` y los valores de selector `didactico` / `literal`.
+- **Excepción: el Laberinto (`ej-g16`) va con el pseudocódigo literal de la cátedra** (clase del 28/10, lámina 14), sin
+  versión didáctica, porque Damián pidió «como está en el pdf del 28-10». Por eso **no** cumple las reglas de arriba:
+  `sumaP` y `mejorSuma` no marcan `ref`, no hay `dentro` ni llamada inicial, el `sino` y el `fin si` están desparejos y la
+  última línea suma en vez de restar. Cada rareza se explica en la `.note` de la sección y el simulador las ejecuta tal cual.
+  La versión didáctica anterior (`Explorar`, `dentro`, `ref mejorCamino`, N/E/S/O, `O(n²·3^(n²))`) quedó en el historial de
+  git (commit `75f2c76` y anteriores); si Damián la quiere de vuelta como en Reinas/Suma, el modelo es el selector
+  «Didáctica / Literal del PDF» de arriba.
 
 ## Validación
 
@@ -382,8 +396,10 @@ de consola.
 | 8 | 30/09/2026 | Repaso de PD (las tres síntesis), ejercicios de la guía PD 2 y PD 3 (resumen + link a `prog3-ejercicios.html`), qué es una subsecuencia, Subsecuencia común más larga (LCS) | LCS (tabla (m+1) × (n+1) con rótulos de columna `colLabels`, X e Y dibujados con `cells`, reconstrucción con desempate «subir» que también muestra la otra LCS posible; sin selector literal/corregido porque la lámina no tiene errores que rompan) |
 | 9 | 07/10/2026 | Repaso de la LCS, ejercicio «Preparación física de la selección» (PD), Algoritmo de Floyd, ejercicio «Centro logístico óptimo» | Preparación física (Mochila con hasta 2 sesiones, tabla n × (C+1), reconstrucción y comparación con «a lo sumo 1 sesión»), Floyd (matriz n × n con `colLabels`, pivote k en verde, 84 pasos con el grafo de la lámina), Centro logístico (R con una columna extra «máx», A como `extra` en el primer paso); sin selector literal/corregido: el pseudocódigo de Floyd no tiene errores que rompan |
 | 10 | 14/10/2026 | Repaso de Floyd, Backtracking, N reinas, suma de subconjuntos, partición en mitades, tareas a procesadores | Reinas (tablero SVG, versiones didáctica/literal), suma (decisiones 0/1, modos corregido/literal), partición (conjuntos etiquetados), procesadores (cargas y mejor asignación) |
+| 11 | 21/10/2026 | Backtracking con cotas: cota inferior/superior, Greedy (LPT) como cota inicial, procesadores con cota, Mochila 0/1 con cota superior fraccionaria | Greedy de tareas, procesadores (con/sin cota inicial, comparación de nodos), Mochila (con/sin cota superior) |
+| 12 | 28/10/2026 | Repaso de cotas, Problema del laberinto (pseudocódigo literal, árbol del ejemplo, `O(3ⁿ)`), Asignación de tareas con matriz de costos (BackTareas, COSTO_MIN_RESTANTE, CALCULAR_SOLUCION_INICIAL; `O(nⁿ)` / `O(n!)`) | Laberinto (tablero SVG rectangular, traza con pila de llamadas), Asignación de tareas (matriz de costos con `dpTable`, selector literal/corregido por el `mejor_asignacion` que la lámina no guarda) |
 
-`index.html`: 40 simuladores, 83 secciones, 110 preguntas de autoevaluación (conteo de `validate.py`). A partir de la clase 7
+`index.html`: 42 simuladores, 83 secciones, 120 preguntas de autoevaluación (conteo de `validate.py`). A partir de la clase 7
 el quiz reparte la respuesta correcta entre las cuatro posiciones (los de las clases 1–6 la tienen
 casi siempre en la segunda).
 
@@ -463,9 +479,41 @@ inválidas se informan en el simulador, sin reemplazarlas silenciosamente. Punto
   temporal. Los ejemplos de la clase 10 generan 12210 / 435 / 924 / 462 pasos (Reinas didáctica / suma / partición / procesadores) y los de la clase 11 47 / 500 / 339 (Greedy / procesadores con cota / mochila con cota). Las secciones de la clase 10
   caben en 390 px; algunas tablas de clases anteriores ya desbordaban ese ancho.
 - `pdf_imagenes.py --componer` omite imágenes con coordenada vertical menor a 40, incluso imágenes
-  grandes (páginas 10, 38 y 39 de esta clase). Al inspeccionarlas, excluir solo logos pequeños:
+  grandes (páginas 10, 38 y 39 de esta clase; en `Clase-28-10-2026.pdf` pasa con las láminas 13–15, el pseudocódigo del
+  Laberinto: salen en blanco). Al inspeccionarlas, excluir solo logos pequeños:
   condición `cm[5] < 40 and cm[3] < 40`, usando una copia temporal o adaptación en memoria del helper.
   Completar siempre los parches de texto con `pdftotext`.
+
+**Clase 12** (`clase12`, secciones `repaso-c12`, `laberinto-c12`, `asignacion-c12`, `quiz-c12`, `chuleta-c12`; sims
+`sim-c12-laberinto` —inputs `c12-lab-mapa`/`c12-lab-o`/`c12-lab-d`— y `sim-c12-asignacion` —`c12-asig-costos` y el selector
+`c12-asig-modo` literal/corregido—; CSS `.c12-*` solo en el apunte, más `.t-fact`). Fuente: `Clases/Clase-28-10-2026.pdf` (24 láminas:
+repaso de cotas 3–9, laberinto 8–15, asignación de tareas 16–23; la 4 es un separador y la 19 es vectorial, su texto sale de `pdftotext`).
+- **Laberinto**: es el mismo código que `ej-g16` (decisión de Damián: simulador propio en el apunte). El JS se **generó por script**
+  renombrando `bt*` / `LAB_*` → `c12*` / `C12_*` desde `prog3-ejercicios.html`, y `tests/clase12.test.cjs` exige que los dos den
+  **exactamente los mismos pasos** (JSON idéntico en ~700 laberintos al azar): un cambio en uno hay que hacerlo en el otro.
+  `.c12-maze` es `.bt-grid` renombrado. Pseudocódigo, 7 rarezas, árbol y complejidad: ver «Bloque Backtracking» (`ej-g16`).
+- **Asignación de tareas**: pseudocódigos **literales** de las láminas 20–22 (BackTareas 1–23, COSTO_MIN_RESTANTE 24–37,
+  CALCULAR_SOLUCION_INICIAL 38–58; `data-l` = número visible; 99 = corrección propia, oculta salvo en «Corregido»), con sus erratas
+  («entrero», `y salir =falso`). Builders puros `c12Assign(M, literal)`, `c12Bound(M, usado, desde | lista de tareas)`,
+  `c12InitialSolution`, `c12ParseCosts` (cuadrada de 2×2 a 5×5, enteros 0–99, filas = personas, columnas = tareas) y el renderer
+  `c12AssignRender` sobre `dpTable`. Un paso por línea, salvo el `para persona` de COSTO_MIN_RESTANTE (líneas 30–34, una vez por columna) y
+  el `para i … usado[i] ← falso` de la solución inicial. Pasos del ejemplo: **588** (literal) / 589 (corregido).
+  Ejemplo de la lámina 19: matriz 4×4, `lim` inicial 73 (la diagonal), cota de la raíz 58, óptimo **61** = tarea1→a, 2→d, 3→b, 4→c; 23
+  llamadas, 2 hojas, 11 podas. Observaciones (todas en `.note`): (1) el árbol de la lámina es **por personas** y BackTareas va **por
+  tareas**; (2) la lámina rotula `lim = 73 64 61`, la ejecución da **73 → 69 → 61** (también con la matriz transpuesta);
+  (3) **`mejor_asignacion` no se asigna nunca si la inicial ya es la óptima** (`<` estricto, y CALCULAR_SOLUCION_INICIAL solo devuelve el
+  valor): de ahí el selector y los presets «La asignación inicial ya es óptima» y «Todo empata»; (4) la lámina 23 dice «k no influye» pero
+  cada nodo paga `O(n²)`: lo esperado es `O(nⁿ)` / `O(n!)` y la nota lo matiza (`O(n²·n!)`). Las 14 cotas del árbol de la lámina 19
+  (60, 58, 65, 78, 68, 61, 66, 68, 59, 64, 69, 61, 64, 65) se recalcularon y coinciden. **La cota es el mínimo por *tarea* entre las personas
+  libres**, así que la matriz transpuesta **no** las reproduce (se probó y daba 55 en vez de 60): por eso `c12Bound` acepta una lista de tareas.
+- Quiz de 10 preguntas (respuesta correcta 2/3/3/2 por posición), chuleta y `srcnote`. Hero: 12 clases · 42 algoritmos · 120 preguntas.
+- Pruebas: `node tests/clase12.test.cjs` (laberinto contra enumeración, Bellman-Ford, réplica literal con la fórmula exacta de pasos y la
+  paridad con la guía; asignación contra permutaciones en 400 matrices × 2 modos con el mismo conteo de pasos, el ejemplo, la diagonal
+  óptima, presets, quiz y los árboles estáticos del HTML). Se verificó por mutación (poda `<=`, dirección invertida, hueco «arreglado» en
+  modo literal, un texto distinto al de la guía). `tests/clase10.browser.cjs` ahora espera 12 `.classbar` y recorre los dos simuladores,
+  el selector, los errores, el quiz y el ancho de 390 px.
+- **Trampa del PRNG** de las pruebas: el congruencial `seed % n` es periódico en los bits bajos (`rand(4)` caía siempre en el mismo valor
+  y la cobertura daba 0/400/399). `clase12.test.cjs` usa los bits altos (`seed/2³²·n`); `clase10`, `clase11` y `guia-backtracking` siguen con `% n`.
 
 **Sección `estrategia-parcial`** (clase 7, sin simulador propio): cómo escribe la profesora la
 estrategia de PD en el parcial (fotos de pizarra del Cambio y de la mochila con hasta 3 unidades).
@@ -481,14 +529,15 @@ apunte.
 
 ### `prog3-ejercicios.html`
 
-Página aparte con **41 ejercicios**: Guía de Ejercitación (Divide y Conquista 1–4, Greedy 1–4,
+Página aparte con **42 ejercicios**: Guía de Ejercitación (Divide y Conquista 1–4, Greedy 1–4,
 Grafos 1–3, **Programación Dinámica 1–3**, **Backtracking 1–3**) y Ejercicios de Integración del
 primer parcial (1, 2, 5, 6, 7, 8 — el PDF de la cátedra no trae el 3 ni el 4), más —en este orden,
-antes del mapa de reconocimiento— **12 problemas de clase** (`bloque-clase`) y los **6 ejercicios de
+antes del mapa de reconocimiento— **13 problemas de clase** (`bloque-clase`: los 12 de la hoja más el
+`c16` de la clase 12) y los **6 ejercicios de
 integración del segundo parcial** (`bloque-integ2`). Ya no es solo «primer parcial»: PD, Backtracking
 y Floyd entran en el integrador (11/11/2026). Con el bloque de Backtracking la guía queda completa;
-la teoría está en las clases 10 y 11 del apunte. Hero: «41 ejercicios · 29 simuladores aquí + 12 en
-el apunte» (los 12 problemas de clase no tienen simulador propio: enlazan al del apunte).
+la teoría está en las clases 10, 11 y 12 del apunte. Hero: «42 ejercicios · 29 simuladores aquí + 13 en
+el apunte» (los 13 problemas de clase no tienen simulador propio: enlazan al del apunte).
 
 Fuentes de los bloques nuevos, en `ejercicios/` (sin trackear al escribir esto):
 `Progra3-Ejercicios-desde-PD.pdf` (la hoja de práctica «desde PD en adelante»: **Parte A** = 15
@@ -502,31 +551,59 @@ limpio).
 **imágenes** en la pág. 6 de la guía: leer las imágenes sueltas, `pdf_imagenes.py --paginas 6` sin
 `--componer`; la vista compuesta omite el ejercicio 1 — sin verificar, probablemente por la regla de
 `cm[5] < 40` de la clase 10). Procesadores (la mejor; mismo pseudocódigo que la clase 10,
-simulador propio; `O((m+n)·mⁿ)`), Laberinto (la mejor; `O(n²·3^(n²))`) y Caballo de Atila (una; se
-corta al cerrar; `O(3^(n²))`). Decisiones y observaciones:
+simulador propio; `O((m+n)·mⁿ)`), Laberinto (la mejor; **resuelto como en la clase del 28/10**, ver abajo;
+`O(3ⁿ)` con n = celdas) y Caballo de Atila (una; se corta al cerrar; `O(3^(n²))`). Decisiones y observaciones:
 - El enunciado del laberinto sale **cortado a la derecha** en el PDF («ur…», «i…», «dadas,»): se
-  transcribió completando las palabras y una `.note` lo avisa. Laberinto y Atila **no traen números**:
-  pseudocódigo y ejemplos propios (lo dicen sus `.note`). El de Atila supone que la entrada es el
+  transcribió completando las palabras y una `.note` lo avisa. Atila **no trae números**:
+  pseudocódigo y ejemplos propios (lo dice su `.note`). El de Atila supone que la entrada es el
   jardín con las casillas pisadas marcadas; con `k < 4` devuelve falso (con 2 casillas contiguas
   `esVecina` daría verdadero, pero se pisaría dos veces cada una).
-- Laberinto: longitud = suma de los valores **incluidos origen y destino**; los booleanos no tienen por
+- **Laberinto = `Clase-28-10-2026.pdf`, láminas 9–15** (la clase completa está en el apunte como **clase 12**, con
+  este mismo simulador copiado: ver «Clase 12» más arriba; la `.note` de esta sección linkea a `index.html#laberinto-c12`). Pseudocódigo **literal**
+  de la lámina 14 (41 renglones, `data-l` = número visible; los `fin …` y el encabezado no se resaltan), con `Celda`
+  (`valor, arriba, abajo, izq, der`) y `Posicion` de la 13. Está en una imagen **grande** que `pdf_imagenes.py
+  --componer` descarta (`cm[5] < 40`): se leyó con una copia con `cm[5] < 40 and cm[3] < 40`, y se confirmó que las
+  páginas 14 y 15 traen la misma imagen sin parches. Ejemplo de la lámina 10: laberinto de **3×4**, origen (2,1),
+  destino (3,4); las paredes se leyeron **del píxel** de la imagen (hay pared entre (1,2)|(1,3), (2,1)|(2,2),
+  (3,2)|(3,3) y bajo (1,4); la entrada verde está a la izquierda de (2,1) y la salida abajo de (3,4), y no son
+  movimientos). Orden de exploración: arriba, abajo, izq, der. Ejecutado así da **mejorSuma = 18**, 17 llamadas,
+  13 podas por visitado y 3 por mejor solución, y el camino (2,1)→(1,1)→(1,2)→(2,2)→(2,3)→(3,3)→(3,4). **La lámina 10
+  rotula «mejorSol = 20 / 17»**: son las sumaP de (2,4) y (3,3) sin el valor del destino (con destino (2,4) da 20 y con
+  (3,3) da 17: hay presets). También dibuja como podas por mejor solución a (3,2)=17 y (1,3)=21, que con ese orden
+  todavía se exploran. Todo eso está en una `.note` y el árbol real (generado por script, no a mano) va en un `<pre>`.
+  Complejidad de la lámina 15: caso resta, a = 3, b = 1, k = 0, `O(3ⁿ)` con n = cantidad de celdas; una `.note`
+  dice que no cuenta el `copiar(resultado, visitado)` (cota `O(n·3ⁿ)`).
+- Laberinto, datos: longitud = suma de los valores **incluidos origen y destino**; los booleanos no tienen por
   qué ser simétricos (pasajes de un solo sentido, dibujados con ▶). Entrada de texto: filas separadas por
-  `/`, casillas por espacios, `valor` + letras N/E/S/O (`3ES`); filas y columnas desde 1; hasta 4×4. El
-  simulador acepta valor 0. Se aclara en una `.first` que el mismo problema es Dijkstra (polinomial).
+  `/`, casillas por espacios, `valor` + símbolos **`^ v < >`** (arriba, abajo, izq, der; `3v>`); filas y columnas desde
+  1; hasta 4×4 y **no hace falta que sea cuadrado**. Un booleano que apunta afuera del tablero es un **error de
+  entrada** (el pseudocódigo no revisa bordes: `visitado[i-1][j]` se saldría). El simulador acepta valor 0. Se
+  aclara en una `.first` que el mismo problema es Dijkstra (polinomial).
 - Atila: `#` pisada / `.` pasto, cuadrado de 2×2 a 5×5. La paridad (k impar ⇒ sin recorrido) y el grado
   < 2 se explican como poda extra pero **no** están en el pseudocódigo. El 4×4 completo tiene 6 ciclos.
 - Builders puros `btProcesadores`, `btLaberinto`, `btAtila` + parseo, renderers `btProcRender` /
   `btMazeRender` / `btAtilaRender` (SVG compartido `btFrame`) y `btGuard`, entre los marcadores
   `/* ===== Guía · Backtracking ===== */` y `const btProcSim=`. Los tres usan la traza (`Traza`, `TRAZA_MAX = 60000` con error visible: el jardín 5×5 sin pasto
-  lo alcanza). Pasos de los ejemplos: 462 / 1664 / 2796. Cada línea es un paso, también las auxiliares propias
-  `Máximo` (Procesadores), `dentro` (Laberinto, Atila) y `esVecina` (Atila); las condiciones con `Y` se evalúan
-  de a un operando (`abre[d]`, después `dentro`, después `NO visitada`). La vecina que se mira se dibuja con borde
+  lo alcanza). Pasos de los ejemplos: 462 / **303** / 2796. Cada línea es un paso, también las auxiliares propias
+  `Máximo` (Procesadores) y `dentro` / `esVecina` (Atila); en Procesadores y Atila las condiciones con `Y` se evalúan
+  de a un operando. **En el Laberinto cada `Si … Y …` es un solo paso** (la lámina lo escribe en una línea) cuyo mensaje
+  distingue pared, «poda por visitado» y factible. La vecina que se mira se dibuja con borde
   celeste punteado (`.sq.look`). El test `guia-backtracking.test.cjs` exige que cada línea del panel que
   importa se ejecute, que `cd`/`frames` sean coherentes y que ninguna línea concentre más del 60 % de los pasos.
+  Laberinto: `btParseLab` (rectangular), `LAB_DIRS` (orden del pseudocódigo), `btFrame(filas, rótulo, interior,
+  columnas)` generalizado a rectángulos (el jardín lo sigue llamando con un solo lado), el marco inferior no existe:
+  cada llamada es un marco `Laberinto` y `mejorSuma` se sincroniza en todos (va por referencia). `sumaP` es local
+  (por valor), y la línea 40 de la lámina (`sumaP ← sumaP + valor`) se ejecuta tal cual y lo avisa. Los pasos tienen
+  `stats {llamadas, podasV, podasM}` y las casillas del camino llevan su sumaP (`Σ`) para compararlas con la lámina.
 - Ids: `g15-t`, `g15-m`, `g16-lab`, `g16-o`, `g16-d`, `g17-jardin`; presets con `data-bt-sim` +
   `data-bt-preset` (JSON con ids → valores). CSS `.bt-*` solo en esta página.
 - Prueba: `node tests/guia-backtracking.test.cjs` (builders reales contra enumeración exhaustiva,
-  Bellman-Ford y DP de ciclo hamiltoniano; valida también los presets escritos en el HTML). En vm,
+  Bellman-Ford y DP de ciclo hamiltoniano; valida también los presets escritos en el HTML, **desescapando
+  `&lt;`/`&gt;`** porque el laberinto usa `<` y `>`). Para el laberinto hay además una **réplica literal e
+  independiente** del pseudocódigo (`labLiteral`) que compara mejorSuma, llamadas, podas, la matriz `resultado` y la
+  **cantidad exacta de pasos** (2 + por llamada 6 + …) en 700 laberintos aleatorios de hasta 4×4, más el ejemplo de la
+  lámina (17/13/3, 18, sumaP del camino óptimo, y 20 / 17 con los destinos (2,4) / (3,3)). Se verificó por mutación
+  (poda `<=`, abajo con `di:-1`) que la prueba falla. En vm,
   las comparaciones entre arrays/errores de dos realms fallan con `deepEqual`/`instanceof`: comparar
   por JSON o por mensaje.
 - Falta una prueba de navegador como `clase10.browser.cjs`; la verificación visual se hizo con capturas
@@ -545,8 +622,12 @@ p ≥ 2 (con p = 1 la 3.ª unidad costaría −1 y los rangos se pisan: 44 de 49
 simuladores comparten `dpSteps` (esqueleto: inicializar, un paso por fila y por celda, y un `after`
 con el devolver + reconstrucción sin línea); `dpTable`/`dpRender` están copiados del apunte.
 
-**Bloque Problemas de clase** (`bloque-clase`, `ej-c1`…`ej-c15` **con la numeración de la hoja**, Parte A):
-existen `c1, c2, c3, c7, c8, c9, c10, c11, c12, c13, c14, c15`. Faltan c4–c6 porque son PD 1–3 de la guía
+**Bloque Problemas de clase** (`bloque-clase`, `ej-c1`…`ej-c15` **con la numeración de la hoja**, Parte A, y `ej-c16`):
+existen `c1, c2, c3, c7, c8, c9, c10, c11, c12, c13, c14, c15` y `c16`. **`c16` no está en la hoja**: es la «Asignación de
+tareas» con matriz de costos de la lámina 17 de la clase 12 (decisión de Damián: sumarla como práctica); sus tres pseudocódigos se
+copiaron literal, por script, de las `.tx` de `sim-c12-asignacion` del apunte (**si cambian allá, actualizar acá**) y enlaza con
+`data-apunte-sim="sim-c12-asignacion"`. El laberinto de la clase 12 no es un `c`: es `ej-g16` (guía, Backtracking 2), que ahora linkea a
+`index.html#laberinto-c12`. Faltan c4–c6 porque son PD 1–3 de la guía
 (`ej-g12`…`ej-g14`), y la parte de la clase 10 del c14 es `ej-g15`; una `.note` al principio del bloque lo
 explica. Cada ítem: enunciado de la hoja → qué piden → razonamientos → «Ver la resolución» con estrategia
 (`.grid2`/`.def`; en Backtracking los seis elementos), pseudocódigo, complejidad y un link «Ejecutalo paso a
